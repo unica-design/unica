@@ -6,7 +6,7 @@
   <title>ůnica — Design System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens/tokens.css" />
   <style>
 
@@ -37,98 +37,92 @@
     .page {
       max-width: 1120px;
       margin: 0 auto;
-      padding: var(--space-1000) var(--space-700);
+      padding: 0 var(--space-700) var(--space-1000);
     }
 
     /* ─────────────────────────────────────────
-       HEADER
+       HEADER — light, editorial, studio style
     ───────────────────────────────────────── */
     .site-header {
+      background: var(--color-background-page);
+      padding: 48px 40px 24px;
+      transition: background 0.2s ease;
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: var(--space-600);
-      margin-bottom: var(--space-600);
     }
 
     .header-identity {
       display: flex;
-      flex-direction: column;
-      gap: var(--space-100);
+      align-items: center;
+      gap: 32px;
     }
 
-    .wordmark {
-      font-family: var(--font-family-serif);
-      font-size: var(--font-size-display-xl);
-      font-weight: var(--font-weight-default);
+    /* Logo mark image */
+    .header-logo-mark {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    /* Wordmark: Inter Light */
+    .header-wordmark {
+      font-family: var(--font-family-sans);
+      font-weight: 300;
+      font-size: 44px;
       line-height: 1;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.01em;
+      color: #03060D;
+      white-space: nowrap;
+    }
+
+    [data-theme="dark"] .header-wordmark {
       color: var(--color-content-default);
     }
 
-    .wordmark-sub {
-      display: flex;
-      align-items: center;
-      gap: var(--space-300);
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-s);
-      font-weight: var(--font-weight-default);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-content-subtle);
+    .header-wordmark-dim {
+      color: rgba(3, 6, 13, 0.38);
+      font-weight: 300;
     }
 
-    .wordmark-sub::before {
-      content: '';
-      display: block;
-      width: 16px;
-      height: 1px;
-      background: var(--color-content-subtle);
-      flex-shrink: 0;
+    [data-theme="dark"] .header-wordmark-dim {
+      color: rgba(242, 239, 237, 0.35);
     }
 
-    .wordmark-tagline {
-      font-family: var(--font-family-serif);
-      font-style: italic;
-      font-size: var(--font-size-body-m);
-      line-height: var(--font-leading-body-m);
-      color: var(--color-content-subtle);
-      margin-top: var(--space-500);
-    }
-
-    /* ─────────────────────────────────────────
-       THEME TOGGLE
-    ───────────────────────────────────────── */
+    /* Theme toggle: pill-shaped, ink-100 bg */
     .theme-toggle {
+      width: 56px;
+      height: 56px;
+      border-radius: 180px;
+      background: var(--primitive-ink-100, #EAEBF0);
       display: flex;
       align-items: center;
-      gap: var(--space-200);
-      padding: var(--space-200) var(--space-400);
-      background: var(--color-background-container);
-      border: var(--border-width-default) solid var(--color-border-default);
-      border-radius: var(--corner-radius-round);
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-xs);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-content-subtle);
-      white-space: nowrap;
+      justify-content: center;
       flex-shrink: 0;
-      margin-top: var(--space-200);
-      transition: background 0.15s ease, color 0.15s ease;
+      color: var(--color-content-default);
+      transition: background 0.15s ease;
     }
 
     .theme-toggle:hover {
-      background: var(--color-background-selection);
-      color: var(--color-content-default);
+      background: var(--primitive-ink-200, #D5D7E0);
     }
 
     .theme-toggle svg {
-      width: 14px;
-      height: 14px;
+      width: 20px;
+      height: 20px;
     }
 
     /* ─────────────────────────────────────────
-       JUMP NAV
+       JUMP NAV — full-bleed sticky
     ───────────────────────────────────────── */
     .jump-nav-wrap {
       position: sticky;
@@ -136,15 +130,18 @@
       z-index: 100;
       background: var(--color-background-page);
       border-bottom: var(--border-width-default) solid var(--color-border-default);
-      margin: 0 calc(-1 * var(--space-700));
-      padding: 0 var(--space-700);
       transition: background 0.2s ease;
+    }
+
+    .jump-nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 var(--space-700);
     }
 
     .jump-nav {
       display: flex;
       align-items: center;
-      gap: 0;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
@@ -631,12 +628,13 @@
     }
 
     /* ─────────────────────────────────────────
-       FOOTER
+       FOOTER — light, minimal, mirrors header
     ───────────────────────────────────────── */
     .site-footer {
-      border-top: var(--border-width-default) solid var(--color-border-subtle);
-      padding: var(--space-700) var(--space-700);
-      margin: var(--space-400) calc(-1 * var(--space-700)) 0;
+      background: var(--color-background-page);
+      border-top: var(--border-width-default) solid var(--color-border-default);
+      padding: 40px;
+      transition: background 0.2s ease;
     }
 
     .footer-inner {
@@ -647,26 +645,30 @@
       gap: var(--space-400);
     }
 
-    .footer-mark {
-      font-family: var(--font-family-serif);
-      font-size: var(--font-size-heading-m);
-      line-height: 1;
-      color: var(--color-content-subtle);
+    /* Small logo mark */
+    .footer-logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      overflow: hidden;
       flex-shrink: 0;
+      display: block;
     }
 
     .footer-text {
+      font-family: var(--font-family-sans);
       font-size: var(--font-size-body-xs);
       color: var(--color-content-subtle);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
     }
 
     .footer-link {
+      font-family: var(--font-family-sans);
       font-size: var(--font-size-body-xs);
       font-weight: var(--font-weight-semibold);
       color: var(--color-content-subtle);
       text-decoration: none;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       margin-left: auto;
       transition: color 0.15s ease;
     }
@@ -677,14 +679,10 @@
        RESPONSIVE — LARGE TABLET (≤1024px)
     ───────────────────────────────────────── */
     @media (max-width: 1024px) {
-      .page {
-        padding: var(--space-800) var(--space-600);
-      }
-
-      .jump-nav-wrap {
-        margin: 0 calc(-1 * var(--space-600));
-        padding: 0 var(--space-600);
-      }
+      .site-header { padding: 40px var(--space-600) 24px; }
+      .jump-nav-inner { padding: 0 var(--space-600); }
+      .page { padding: 0 var(--space-600) var(--space-800); }
+      .site-footer { padding: 32px var(--space-600); }
     }
 
     /* ─────────────────────────────────────────
@@ -717,27 +715,15 @@
        RESPONSIVE — MOBILE (≤640px)
     ───────────────────────────────────────── */
     @media (max-width: 640px) {
-      .page {
-        padding: var(--space-600) var(--space-400);
-      }
-
-      .jump-nav-wrap {
-        margin: 0 calc(-1 * var(--space-400));
-        padding: 0 var(--space-400);
-      }
-
-      .wordmark {
-        font-size: var(--font-size-display-m);
-      }
-
-      .site-header {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: var(--space-300);
-        margin-bottom: var(--space-400);
-      }
-
-      .theme-toggle { margin-top: 0; }
+      .site-header { padding: var(--space-600) var(--space-400) var(--space-400); }
+      .header-logo-mark { width: 48px; height: 48px; font-size: 24px; }
+      .header-identity { gap: var(--space-400); }
+      .header-wordmark { font-size: 32px; }
+      .theme-toggle { width: 48px; height: 48px; }
+      .jump-nav-inner { padding: 0 var(--space-400); }
+      .page { padding: 0 var(--space-400) var(--space-700); }
+      .site-footer { padding: var(--space-600) var(--space-400); }
+      .footer-inner { flex-wrap: wrap; gap: var(--space-300); }
 
       .section { padding-top: var(--space-700); }
 
@@ -789,23 +775,16 @@
        RESPONSIVE — SMALL MOBILE (≤480px)
     ───────────────────────────────────────── */
     @media (max-width: 480px) {
-      .page {
-        padding: var(--space-500) var(--space-300);
-      }
-
-      .jump-nav-wrap {
-        margin: 0 calc(-1 * var(--space-300));
-        padding: 0 var(--space-300);
-      }
-
-      .wordmark {
-        font-size: var(--font-size-display-s);
-      }
-
-      .wordmark-tagline {
-        font-size: var(--font-size-body-s);
-        margin-top: var(--space-300);
-      }
+      .site-header { padding: var(--space-500) var(--space-300) var(--space-400); }
+      .header-logo-mark { width: 40px; height: 40px; font-size: 20px; }
+      .header-identity { gap: var(--space-300); }
+      .header-wordmark { font-size: 26px; }
+      .header-wordmark-dim { display: none; }
+      .theme-toggle { width: 40px; height: 40px; }
+      .jump-nav-inner { padding: 0 var(--space-300); }
+      .page { padding: 0 var(--space-300) var(--space-600); }
+      .site-footer { padding: var(--space-500) var(--space-300); }
+      .footer-link { margin-left: 0; }
 
       /* Brand: 2 cols on tiny screens */
       .brand-grid {
@@ -829,14 +808,12 @@
 </head>
 <body>
 
-<div class="page">
-
-  <!-- ══ HEADER ══ -->
-  <header class="site-header">
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <div class="header-inner">
     <div class="header-identity">
-      <h1 class="wordmark">ůnica</h1>
-      <p class="wordmark-sub">Design System</p>
-      <p class="wordmark-tagline">Precision crafted design.</p>
+      <img class="header-logo-mark" src="assets/unica-mark.png" alt="ůnica mark" />
+      <h1 class="header-wordmark">ůnica Design System</h1>
     </div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle colour mode">
       <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
@@ -848,12 +825,13 @@
       <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </svg>
-      <span id="toggle-label">Dark</span>
     </button>
-  </header>
+  </div>
+</header>
 
-  <!-- ══ JUMP NAV ══ -->
-  <div class="jump-nav-wrap">
+<!-- ══ JUMP NAV ══ -->
+<div class="jump-nav-wrap">
+  <div class="jump-nav-inner">
     <nav class="jump-nav" aria-label="Jump to section">
       <a href="#brand">Brand</a>
       <a href="#primitives">Primitives</a>
@@ -865,6 +843,9 @@
       <a href="#border">Border</a>
     </nav>
   </div>
+</div>
+
+<div class="page">
 
 
   <!-- ══ BRAND PALETTE ══ -->
@@ -1342,16 +1323,16 @@
     <div style="height:var(--space-1000)"></div>
   </section>
 
-  <!-- ══ FOOTER ══ -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <span class="footer-mark">ů</span>
-      <span class="footer-text">ůnica Design System &nbsp;·&nbsp; v0.1 &nbsp;·&nbsp; 2026</span>
-      <a class="footer-link" href="https://github.com/unica-design/unica" target="_blank" rel="noopener">GitHub ↗</a>
-    </div>
-  </footer>
-
 </div><!-- /page -->
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <img class="footer-logo-mark" src="assets/unica-mark.png" alt="" aria-hidden="true" />
+    <span class="footer-text">ůnica Design System &nbsp;·&nbsp; v0.1 &nbsp;·&nbsp; 2026</span>
+    <a class="footer-link" href="https://github.com/unica-design/unica" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</footer>
 
 
 <!-- ══ COPY TOAST ══ -->
@@ -1366,7 +1347,6 @@
     html.setAttribute('data-theme', isDark ? 'light' : 'dark');
     document.getElementById('icon-sun').style.display  = isDark ? 'none'  : 'block';
     document.getElementById('icon-moon').style.display = isDark ? 'block' : 'none';
-    document.getElementById('toggle-label').textContent = isDark ? 'Dark' : 'Light';
     // Re-compute hex values after theme switch
     setTimeout(computeHexValues, 50);
   }
