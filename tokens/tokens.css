@@ -1,0 +1,368 @@
+/* ==========================================================================
+   ůnica Design System — Design Tokens
+   Generated from Figma variables (Light.tokens.json + Dark.tokens.json)
+
+   Usage:
+   - Light mode is the default (:root)
+   - Add data-theme="dark" to <html> (or any wrapper) to activate dark mode
+   ========================================================================== */
+
+
+/* ==========================================================================
+   PRIMITIVES — Raw color palette. These never change between modes.
+   Don't use these directly in components — use the semantic tokens below.
+   ========================================================================== */
+
+:root {
+
+  /* --- Café (warm whites → browns) --- */
+  --primitive-cafe-0:    #FFFFFF;
+  --primitive-cafe-100:  #FCF9F7;
+  --primitive-cafe-200:  #F2EFED;
+  --primitive-cafe-300:  #E5E2E0;
+  --primitive-cafe-400:  #D9D5D2;
+  --primitive-cafe-500:  #CCC6C2;
+  --primitive-cafe-600:  #B2ABA6;
+  --primitive-cafe-700:  #99908A;
+  --primitive-cafe-800:  #736962;
+  --primitive-cafe-900:  #4D4641;
+  --primitive-cafe-1000: #332D29;
+
+  /* --- Ink (cool light grays → near-black) --- */
+  --primitive-ink-50:    #F7F8FA;
+  --primitive-ink-100:   #F2F3F5;
+  --primitive-ink-200:   #E4E6EB;
+  --primitive-ink-300:   #CED2D9;
+  --primitive-ink-400:   #BCC1CC;
+  --primitive-ink-500:   #9DA4B2;
+  --primitive-ink-600:   #7A8599;
+  --primitive-ink-700:   #515C73;
+  --primitive-ink-800:   #2E384D;
+  --primitive-ink-900:   #0F1726;
+  --primitive-ink-1000:  #03060D;
+
+  /* --- Apricot (warm orange) --- */
+  --primitive-apricot-100:  #FFEBE0;
+  --primitive-apricot-200:  #FFDFCC;
+  --primitive-apricot-300:  #FCC4A4;
+  --primitive-apricot-400:  #FCAD7E;
+  --primitive-apricot-500:  #F79257;
+  --primitive-apricot-600:  #E57839;
+  --primitive-apricot-700:  #BF5213;
+  --primitive-apricot-800:  #993800;
+  --primitive-apricot-900:  #662500;
+  --primitive-apricot-1000: #4D1C00;
+
+  /* --- Berry (pink / magenta) --- */
+  --primitive-berry-100:  #FFEBF2;
+  --primitive-berry-200:  #FFD9E6;
+  --primitive-berry-300:  #FCBDD2;
+  --primitive-berry-400:  #FC97B9;
+  --primitive-berry-500:  #F279A1;
+  --primitive-berry-600:  #D94C7B;
+  --primitive-berry-700:  #BF3060;
+  --primitive-berry-800:  #991742;
+  --primitive-berry-900:  #660022;
+  --primitive-berry-1000: #4D001A;
+
+  /* --- Mint (fresh green) --- */
+  --primitive-mint-100:  #D1FFF0;
+  --primitive-mint-200:  #BAF7E4;
+  --primitive-mint-300:  #6FF7CC;
+  --primitive-mint-400:  #2FEDB1;
+  --primitive-mint-500:  #04D995;
+  --primitive-mint-600:  #00BF83;
+  --primitive-mint-700:  #0D805B;
+  --primitive-mint-800:  #006646;
+  --primitive-mint-900:  #004D34;
+  --primitive-mint-1000: #003323;
+
+  /* --- Pool (teal / cyan) --- */
+  --primitive-pool-100:  #CFFCFA;
+  --primitive-pool-200:  #ADF7F3;
+  --primitive-pool-300:  #79F2EC;
+  --primitive-pool-400:  #39E5DC;
+  --primitive-pool-500:  #0ACCC2;
+  --primitive-pool-600:  #12B2AB;
+  --primitive-pool-700:  #068079;
+  --primitive-pool-800:  #006661;
+  --primitive-pool-900:  #004D49;
+  --primitive-pool-1000: #003330;
+
+  /* --- Violet (purple) --- */
+  --primitive-violet-100:  #F3EDFF;
+  --primitive-violet-200:  #E9E1FA;
+  --primitive-violet-300:  #D9C8FA;
+  --primitive-violet-400:  #C6ADF7;
+  --primitive-violet-500:  #B291F2;
+  --primitive-violet-600:  #9973E5;
+  --primitive-violet-700:  #6C3DCC;
+  --primitive-violet-800:  #4D21A6;
+  --primitive-violet-900:  #2F0680;
+  --primitive-violet-1000: #1E0059;
+
+  /* --- Citron (yellow-green) --- */
+  --primitive-citron-100:  #F0F7C6;
+  --primitive-citron-200:  #E7F29D;
+  --primitive-citron-300:  #DBEB76;
+  --primitive-citron-400:  #CBE043;
+  --primitive-citron-500:  #B5CC1F;
+  --primitive-citron-600:  #9DB212;
+  --primitive-citron-700:  #7A8C07;
+  --primitive-citron-800:  #637300;
+  --primitive-citron-900:  #434D00;
+  --primitive-citron-1000: #2C3300;
+
+}
+
+
+/* ==========================================================================
+   SEMANTIC TOKENS — LIGHT MODE (default)
+   These are what components should reference.
+   ========================================================================== */
+
+:root {
+
+  /* --- Action --- */
+  --color-action-default:       var(--primitive-ink-900);
+  --color-action-hover:         var(--primitive-ink-1000);
+  --color-action-hover-subtle:  rgba(31, 24, 46, 0.08);
+  --color-action-active:        var(--primitive-ink-900);
+  --color-action-active-subtle: rgba(31, 24, 46, 0.5);
+  --color-action-visited:       var(--primitive-ink-600);
+  --color-action-disabled:      var(--primitive-ink-300);
+
+  /* --- Background --- */
+  --color-background-page:       var(--primitive-cafe-0);
+  --color-background-section:    var(--primitive-cafe-100);
+  --color-background-container:  var(--primitive-cafe-200);
+  --color-background-success:    var(--primitive-mint-100);
+  --color-background-warning:    var(--primitive-apricot-100);
+  --color-background-danger:     var(--primitive-berry-100);
+  --color-background-neutral:    var(--primitive-cafe-200);
+  --color-background-disabled:   var(--primitive-ink-100);
+  --color-background-contrast:   var(--primitive-ink-900);
+  --color-background-selection:  var(--primitive-cafe-100);
+  --color-background-ui:         var(--primitive-ink-100);
+
+  /* --- Brand --- */
+  --color-brand-berry:       var(--primitive-berry-400);
+  --color-brand-cream:       var(--primitive-cafe-200);
+  --color-brand-pool:        var(--primitive-pool-1000);
+  --color-brand-ink:         #1F182E;
+  --color-brand-mint:        var(--primitive-mint-500);
+  --color-brand-citron:      var(--primitive-citron-300);
+  --color-brand-ultraviolet: #8955F2;
+  --color-brand-violet:      var(--primitive-violet-300);
+
+  /* --- Border --- */
+  --color-border-default:     var(--primitive-cafe-400);
+  --color-border-subtle:      var(--primitive-cafe-200);
+  --color-border-strong:      var(--primitive-ink-900);
+  --color-border-interactive: var(--primitive-violet-600);
+  --color-border-disabled:    var(--primitive-cafe-300);
+  --color-border-inverse:     var(--primitive-cafe-0);
+
+  /* --- Content (text & icons) --- */
+  --color-content-default:  var(--primitive-ink-900);
+  --color-content-subtle:   var(--primitive-ink-700);
+  --color-content-disabled: rgba(31, 24, 46, 0.5);
+
+  /* --- Contrast --- */
+  --color-contrast:          var(--primitive-ink-1000);
+  --color-inverse:           var(--primitive-cafe-0);
+  --color-inverse-disabled:  rgba(255, 255, 255, 0.5);
+
+  /* --- System --- */
+  --color-success: var(--primitive-mint-800);
+  --color-warning: var(--primitive-apricot-800);
+  --color-danger:  var(--primitive-berry-800);
+  --color-info:    var(--color-brand-ink);
+
+}
+
+
+/* ==========================================================================
+   SEMANTIC TOKENS — DARK MODE
+   Applied when data-theme="dark" is set on <html> or a wrapper element.
+   ========================================================================== */
+
+[data-theme="dark"] {
+
+  /* --- Action --- */
+  --color-action-default:       var(--primitive-cafe-0);
+  --color-action-hover:         var(--primitive-ink-100);
+  --color-action-hover-subtle:  rgba(255, 255, 255, 0.08);
+  --color-action-active:        var(--primitive-cafe-0);
+  --color-action-active-subtle: rgba(255, 255, 255, 0.5);
+  --color-action-visited:       var(--primitive-ink-200);
+  --color-action-disabled:      var(--primitive-ink-700);
+
+  /* --- Background --- */
+  --color-background-page:       var(--primitive-ink-900);
+  --color-background-section:    var(--primitive-ink-800);
+  --color-background-container:  var(--primitive-ink-700);
+  --color-background-success:    var(--primitive-mint-300);
+  --color-background-warning:    var(--primitive-apricot-300);
+  --color-background-danger:     var(--primitive-berry-300);
+  --color-background-neutral:    var(--primitive-ink-600);
+  --color-background-disabled:   var(--primitive-ink-800);
+  --color-background-contrast:   var(--primitive-cafe-0);
+  --color-background-selection:  var(--primitive-ink-800);
+  --color-background-ui:         var(--primitive-ink-600);
+
+  /* --- Brand (unchanged between modes) --- */
+  --color-brand-berry:       var(--primitive-berry-400);
+  --color-brand-cream:       var(--primitive-cafe-200);
+  --color-brand-pool:        var(--primitive-pool-1000);
+  --color-brand-ink:         #1F182E;
+  --color-brand-mint:        var(--primitive-mint-500);
+  --color-brand-citron:      var(--primitive-citron-300);
+  --color-brand-ultraviolet: #8955F2;
+  --color-brand-violet:      var(--primitive-violet-300);
+
+  /* --- Border --- */
+  --color-border-default:     var(--primitive-ink-700);
+  --color-border-subtle:      var(--primitive-ink-800);
+  --color-border-strong:      var(--primitive-ink-100);
+  --color-border-interactive: var(--primitive-violet-500);
+  --color-border-disabled:    var(--primitive-ink-700);
+  --color-border-inverse:     var(--primitive-ink-900);
+
+  /* --- Content (text & icons) --- */
+  --color-content-default:  var(--primitive-ink-100);
+  --color-content-subtle:   var(--primitive-ink-400);
+  --color-content-disabled: rgba(255, 255, 255, 0.5);
+
+  /* --- Contrast --- */
+  --color-contrast:         var(--primitive-cafe-0);
+  --color-inverse:          var(--primitive-ink-900);
+  --color-inverse-disabled: rgba(3, 6, 13, 0.5);
+
+  /* --- System --- */
+  --color-success: var(--primitive-mint-400);
+  --color-warning: var(--primitive-apricot-400);
+  --color-danger:  var(--primitive-berry-400);
+  --color-info:    var(--primitive-ink-100);
+
+}
+
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+
+:root {
+
+  /* --- Font families --- */
+  --font-family-serif: "Noto Serif", Georgia, serif;
+  --font-family-sans:  "Inter", system-ui, -apple-system, sans-serif;
+
+  /* --- Font weights --- */
+  --font-weight-default:  400;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* --- Font sizes --- */
+  --font-size-display-xl: 64px;
+  --font-size-display-l:  56px;
+  --font-size-display-m:  48px;
+  --font-size-display-s:  32px;
+  --font-size-heading-xl: 40px;
+  --font-size-heading-l:  32px;
+  --font-size-heading-m:  24px;
+  --font-size-heading-s:  18px;
+  --font-size-body-l:     18px;
+  --font-size-body-m:     16px;
+  --font-size-body-s:     14px;
+  --font-size-body-xs:    12px;
+
+  /* --- Line heights --- */
+  --font-leading-display-xl: 64px;
+  --font-leading-display-l:  64px;
+  --font-leading-display-m:  56px;
+  --font-leading-display-s:  40px;
+  --font-leading-heading-xl: 48px;
+  --font-leading-heading-l:  40px;
+  --font-leading-heading-m:  28px;
+  --font-leading-heading-s:  22px;
+  --font-leading-body-l:     28px;
+  --font-leading-body-m:     22px;
+  --font-leading-body-s:     20px;
+  --font-leading-body-xs:    18px;
+
+}
+
+
+/* ==========================================================================
+   SHAPE — Border radius
+   ========================================================================== */
+
+:root {
+
+  --corner-radius-square: 0px;
+  --corner-radius-xs:     4px;
+  --corner-radius-s:      8px;
+  --corner-radius-m:      16px;
+  --corner-radius-l:      24px;
+  --corner-radius-xl:     32px;
+  --corner-radius-round:  9999px;
+
+}
+
+
+/* ==========================================================================
+   LAYOUT — Spacing scale
+   ========================================================================== */
+
+:root {
+
+  --space-100:  4px;
+  --space-200:  8px;
+  --space-300:  12px;
+  --space-400:  16px;
+  --space-500:  24px;
+  --space-600:  32px;
+  --space-700:  40px;
+  --space-800:  48px;
+  --space-900:  56px;
+  --space-1000: 64px;
+  --space-1100: 72px;
+  --space-1200: 80px;
+  --space-1300: 88px;
+  --space-1400: 96px;
+
+}
+
+
+/* ==========================================================================
+   SIZE — Fixed component sizes (icons, avatars, controls)
+   ========================================================================== */
+
+:root {
+
+  --size-xxxs:  4px;
+  --size-xxs:   8px;
+  --size-xs:    12px;
+  --size-s:     16px;
+  --size-m:     24px;
+  --size-l:     32px;
+  --size-xl:    40px;
+  --size-xxl:   48px;
+  --size-xxxl:  56px;
+  --size-xxxxl: 64px;
+
+}
+
+
+/* ==========================================================================
+   BORDER — Stroke widths
+   ========================================================================== */
+
+:root {
+
+  --border-width-subtle:  0.5px;
+  --border-width-default: 1px;
+  --border-width-strong:  1.5px;
+
+}
