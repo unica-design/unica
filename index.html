@@ -242,10 +242,18 @@
       color: var(--color-content-default);
       text-decoration: none;
       border-radius: var(--corner-radius-m);
-      transition: background 0.1s ease, color 0.1s ease;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
     }
 
-    .sidebar-link:hover:not(.active) { background: var(--color-background-subtle); }
+    .sidebar-link:hover:not(.active) {
+      background: var(--color-action-hover-subtle);
+    }
+
+    .sidebar-link:active:not(.active) {
+      background: var(--color-action-hover-subtle);
+      transform: scale(0.97);
+      transition: background 0.05s ease, transform 0.08s ease;
+    }
 
     .sidebar-link.active {
       background: var(--color-content-default);
