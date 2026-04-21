@@ -866,6 +866,512 @@
       .border-row { grid-template-columns: 1fr auto; }
       .border-demo { display: none; }
       .footer-inner { flex-wrap: wrap; gap: var(--space-300); }
+      .usage-grid { grid-template-columns: 1fr; }
+      .preview-canvas { gap: var(--space-600); padding: var(--space-700) var(--space-500); }
+    }
+
+    /* ─────────────────────────────────────────
+       COMPONENT DOC PAGES
+    ───────────────────────────────────────── */
+
+    .comp-header {
+      padding: var(--space-1000) 0 var(--space-700);
+      border-bottom: var(--border-width-default) solid var(--color-border-default);
+      margin-bottom: var(--space-700);
+    }
+
+    .comp-eyebrow {
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+      margin-bottom: var(--space-300);
+    }
+
+    .comp-title {
+      font-family: var(--font-family-serif);
+      font-size: var(--font-size-display-s);
+      font-weight: var(--font-weight-default);
+      line-height: var(--font-leading-display-s);
+      letter-spacing: -0.02em;
+      color: var(--color-content-default);
+      margin-bottom: var(--space-400);
+    }
+
+    .comp-description {
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+      color: var(--color-content-subtle);
+      max-width: 560px;
+      margin-bottom: var(--space-500);
+    }
+
+    .comp-badges {
+      display: flex;
+      align-items: center;
+      gap: var(--space-200);
+      flex-wrap: wrap;
+    }
+
+    .comp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-100);
+      padding: 3px var(--space-300);
+      border-radius: var(--corner-radius-round);
+      font-size: var(--font-size-body-xs);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.03em;
+      border: var(--border-width-default) solid var(--color-border-default);
+      color: var(--color-content-subtle);
+    }
+
+    .comp-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-success);
+      flex-shrink: 0;
+    }
+
+    .doc-section { padding-top: var(--space-800); }
+
+    .doc-rule {
+      border: none;
+      border-top: var(--border-width-default) solid var(--color-border-default);
+      margin: 0 0 var(--space-700);
+    }
+
+    .doc-section-title {
+      font-family: var(--font-family-serif);
+      font-size: var(--font-size-heading-m);
+      font-weight: var(--font-weight-default);
+      line-height: var(--font-leading-heading-m);
+      letter-spacing: -0.01em;
+      color: var(--color-content-default);
+      margin-bottom: var(--space-400);
+    }
+
+    .doc-body {
+      font-size: var(--font-size-body-s);
+      line-height: var(--font-leading-body-m);
+      color: var(--color-content-subtle);
+      max-width: 560px;
+      margin-bottom: var(--space-500);
+    }
+
+    /* Preview canvas */
+    .preview-canvas {
+      background: var(--color-background-section);
+      border-radius: var(--corner-radius-l);
+      border: var(--border-width-default) solid var(--color-border-subtle);
+      padding: var(--space-1000) var(--space-800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-1000);
+      flex-wrap: wrap;
+      min-height: 160px;
+    }
+
+    .preview-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-300);
+    }
+
+    .preview-label {
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      letter-spacing: 0.02em;
+    }
+
+    /* Settings list preview */
+    .preview-settings {
+      background: var(--color-background-section);
+      border-radius: var(--corner-radius-l);
+      border: var(--border-width-default) solid var(--color-border-subtle);
+      overflow: hidden;
+      margin-top: var(--space-500);
+    }
+
+    .preview-settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-600);
+      padding: var(--space-500) var(--space-600);
+      border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+    }
+
+    .preview-settings-row:last-child { border-bottom: none; }
+
+    .preview-settings-title {
+      font-size: var(--font-size-body-m);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-default);
+      line-height: var(--font-leading-body-m);
+    }
+
+    .preview-settings-sub {
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-subtle);
+      margin-top: 2px;
+    }
+
+    /* Variants table */
+    .variants-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .variants-table th {
+      padding: var(--space-300) var(--space-500);
+      text-align: left;
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+      background: var(--color-background-section);
+      border-bottom: var(--border-width-default) solid var(--color-border-default);
+    }
+
+    .variants-table th:not(:first-child) { text-align: center; }
+
+    .variants-table td {
+      padding: var(--space-500) var(--space-500);
+      border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+      vertical-align: middle;
+    }
+
+    .variants-table tr:last-child td { border-bottom: none; }
+
+    .variants-table td:first-child {
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-subtle);
+      width: 120px;
+    }
+
+    .variants-table td:not(:first-child) { text-align: center; }
+
+    /* Do / Don't */
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-500);
+      margin-bottom: var(--space-500);
+    }
+
+    .usage-card {
+      border-radius: var(--corner-radius-m);
+      overflow: hidden;
+      border: var(--border-width-default) solid var(--color-border-subtle);
+    }
+
+    .usage-card-demo {
+      padding: var(--space-800) var(--space-600);
+      background: var(--color-background-section);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+      flex-direction: column;
+      gap: var(--space-300);
+    }
+
+    .usage-card-body {
+      padding: var(--space-400) var(--space-500) var(--space-500);
+      border-top: 3px solid var(--color-success);
+    }
+
+    .usage-card.dont .usage-card-body { border-top-color: var(--color-danger); }
+
+    .usage-card-tag {
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-200);
+    }
+
+    .usage-card.do   .usage-card-tag { color: var(--color-success); }
+    .usage-card.dont .usage-card-tag { color: var(--color-danger); }
+
+    .usage-card-text {
+      font-size: var(--font-size-body-s);
+      line-height: var(--font-leading-body-s);
+      color: var(--color-content-subtle);
+    }
+
+    /* Doc tables */
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-size-body-s);
+    }
+
+    .doc-table th {
+      text-align: left;
+      padding: var(--space-200) var(--space-400);
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+      background: var(--color-background-section);
+      border-bottom: var(--border-width-default) solid var(--color-border-default);
+    }
+
+    .doc-table td {
+      padding: var(--space-300) var(--space-400);
+      border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+      vertical-align: top;
+      line-height: var(--font-leading-body-s);
+      color: var(--color-content-default);
+    }
+
+    .doc-table tr:last-child td { border-bottom: none; }
+
+    .doc-table .td-mono {
+      font-family: monospace;
+      font-size: var(--font-size-body-xs);
+      color: var(--color-brand-ultraviolet);
+      white-space: nowrap;
+      padding-right: var(--space-600);
+    }
+
+    .doc-table .td-type {
+      font-family: monospace;
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      white-space: nowrap;
+    }
+
+    .doc-table .td-subtle { color: var(--color-content-subtle); }
+
+    .table-wrap {
+      border: var(--border-width-default) solid var(--color-border-default);
+      border-radius: var(--corner-radius-m);
+      overflow: hidden;
+    }
+
+    /* Code block */
+    .code-block {
+      background: var(--color-background-contrast);
+      border-radius: var(--corner-radius-m);
+      padding: var(--space-600);
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block pre {
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--color-inverse);
+      white-space: pre;
+      margin: 0;
+    }
+
+    .code-copy-btn {
+      position: absolute;
+      top: var(--space-400);
+      right: var(--space-400);
+      padding: var(--space-100) var(--space-300);
+      background: rgba(255,255,255,0.1);
+      border-radius: var(--corner-radius-xs);
+      font-size: var(--font-size-body-xs);
+      font-weight: var(--font-weight-semibold);
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+      border: none;
+      font-family: var(--font-family-sans);
+    }
+
+    .code-copy-btn:hover {
+      background: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Related cards */
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--space-300);
+    }
+
+    .related-card {
+      padding: var(--space-400) var(--space-500);
+      border: var(--border-width-default) solid var(--color-border-default);
+      border-radius: var(--corner-radius-m);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .related-card:hover {
+      background: var(--color-action-hover-subtle);
+      border-color: var(--color-border-strong);
+    }
+
+    .related-card-name {
+      font-size: var(--font-size-body-s);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-default);
+      margin-bottom: var(--space-100);
+    }
+
+    .related-card-desc {
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      line-height: var(--font-leading-body-xs);
+    }
+
+    /* ─────────────────────────────────────────
+       TOGGLE SWITCH COMPONENT
+    ───────────────────────────────────────── */
+
+    .toggle-switch {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 40px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .toggle-track {
+      width: 48px;
+      height: 32px;
+      border-radius: var(--corner-radius-round);
+      background: var(--color-action-disabled);
+      position: relative;
+      pointer-events: none;
+      transition: background 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .toggle-handle {
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      width: 26px;
+      height: 26px;
+      border-radius: var(--corner-radius-round);
+      background: var(--color-inverse);
+      box-shadow: var(--shadow-elevation-s);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: left 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 150ms ease;
+    }
+
+    .toggle-icon {
+      width: 12px;
+      height: 12px;
+      position: relative;
+      transform: rotate(180deg);
+      transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .toggle-icon svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 12px; height: 12px;
+      color: var(--color-content-default);
+      transition: opacity 100ms ease;
+    }
+
+    .toggle-icon .icon-check { opacity: 0; }
+    .toggle-icon .icon-x     { opacity: 1; }
+
+    /* ON state */
+    .toggle-switch input:checked ~ .toggle-track {
+      background: var(--color-action-default);
+    }
+
+    .toggle-switch input:checked ~ .toggle-track .toggle-handle {
+      left: 19px;
+    }
+
+    .toggle-switch input:checked ~ .toggle-track .toggle-icon {
+      transform: rotate(0deg);
+    }
+
+    .toggle-switch input:checked ~ .toggle-track .toggle-icon .icon-check { opacity: 1; }
+    .toggle-switch input:checked ~ .toggle-track .toggle-icon .icon-x     { opacity: 0; }
+
+    /* Hover ring */
+    .toggle-switch:hover .toggle-handle {
+      box-shadow: var(--shadow-elevation-s), 0 0 0 6px var(--color-action-hover-subtle);
+    }
+
+    /* Keyboard focus ring */
+    .toggle-switch input:focus-visible ~ .toggle-track {
+      outline: 2px solid var(--color-border-interactive);
+      outline-offset: 3px;
+      border-radius: var(--corner-radius-round);
+    }
+
+    .toggle-switch input:focus-visible ~ .toggle-track .toggle-handle {
+      box-shadow: var(--shadow-elevation-s), 0 0 0 6px var(--color-action-hover-subtle);
+    }
+
+    /* Disabled */
+    .toggle-switch:has(input:disabled) { cursor: not-allowed; }
+    .toggle-switch input:disabled      { cursor: not-allowed; }
+
+    .toggle-switch input:disabled ~ .toggle-track {
+      background: var(--color-action-disabled);
+    }
+
+    .toggle-switch input:checked:disabled ~ .toggle-track {
+      background: var(--color-action-disabled);
+    }
+
+    .toggle-switch input:disabled ~ .toggle-track .toggle-icon svg {
+      color: var(--color-action-disabled);
+      opacity: 0.4;
+    }
+
+    .toggle-switch:has(input:disabled):hover .toggle-handle {
+      box-shadow: var(--shadow-elevation-s);
+    }
+
+    /* Forced variant demo states */
+    .toggle-switch--hover .toggle-handle {
+      box-shadow: var(--shadow-elevation-s), 0 0 0 6px var(--color-action-hover-subtle) !important;
+    }
+
+    .toggle-switch--focused .toggle-track {
+      outline: 2px solid var(--color-border-interactive) !important;
+      outline-offset: 3px;
+      border-radius: var(--corner-radius-round);
+    }
+
+    .toggle-switch--focused .toggle-handle {
+      box-shadow: var(--shadow-elevation-s), 0 0 0 6px var(--color-action-hover-subtle) !important;
     }
 
     /* ─────────────────────────────────────────
@@ -1307,7 +1813,479 @@
     <div class="page-panel" id="page-search-field"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Search Field</h2><p class="section-description">Inline search input with icon and clear action.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-checkbox"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Check Box</h2><p class="section-description">Single and group checkbox, all states.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-radio"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Radio</h2><p class="section-description">Radio button group for mutually exclusive selection.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-toggle-switch"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Toggle Switch</h2><p class="section-description">Binary on/off control.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-toggle-switch">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Forms</p>
+        <h1 class="comp-title">Toggle Switch</h1>
+        <p class="comp-description">A binary control for settings that take immediate effect — no confirmation required. The toggle switch communicates state clearly through position, color, and icon.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/6a9exH34OJFXMn073PH4sG/%C5%AFnica-Design-System?node-id=343-1382" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── 1. Preview ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <!-- Basic toggles -->
+        <div class="preview-canvas">
+          <div class="preview-item">
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" aria-label="Off">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+            <span class="preview-label">Off</span>
+          </div>
+          <div class="preview-item">
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" checked aria-label="On">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+            <span class="preview-label">On</span>
+          </div>
+          <div class="preview-item">
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" disabled aria-label="Disabled off">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+            <span class="preview-label">Disabled</span>
+          </div>
+          <div class="preview-item">
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" checked disabled aria-label="Disabled on">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+            <span class="preview-label">Disabled on</span>
+          </div>
+        </div>
+
+        <!-- Settings list pattern -->
+        <div class="preview-settings">
+          <div class="preview-settings-row">
+            <div>
+              <div class="preview-settings-title">Push notifications</div>
+              <div class="preview-settings-sub">Receive alerts when something requires your attention.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" checked id="ts-preview-1" aria-labelledby="ts-label-1">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+          </div>
+          <div class="preview-settings-row">
+            <div>
+              <div class="preview-settings-title">Dark mode</div>
+              <div class="preview-settings-sub">Switch the interface to a dark colour scheme.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" id="ts-preview-2" aria-labelledby="ts-label-2">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+          </div>
+          <div class="preview-settings-row">
+            <div>
+              <div class="preview-settings-title" style="color:var(--color-content-disabled);">Location services</div>
+              <div class="preview-settings-sub">Managed by your organisation.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" checked disabled id="ts-preview-3">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 2. Variants ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="variants-table">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Off</th>
+                <th>On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Default</td>
+                <td>
+                  <label class="toggle-switch" style="pointer-events:none;">
+                    <input type="checkbox" role="switch" tabindex="-1" aria-hidden="true">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </td>
+                <td>
+                  <label class="toggle-switch" style="pointer-events:none;">
+                    <input type="checkbox" role="switch" checked tabindex="-1" aria-hidden="true">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td>Hover</td>
+                <td>
+                  <label class="toggle-switch toggle-switch--hover" style="pointer-events:none;">
+                    <input type="checkbox" role="switch" tabindex="-1" aria-hidden="true">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </td>
+                <td>
+                  <label class="toggle-switch toggle-switch--hover" style="pointer-events:none;">
+                    <input type="checkbox" role="switch" checked tabindex="-1" aria-hidden="true">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td>Focused</td>
+                <td>
+                  <label class="toggle-switch toggle-switch--focused" style="pointer-events:none;">
+                    <input type="checkbox" role="switch" tabindex="-1" aria-hidden="true">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </td>
+                <td>
+                  <label class="toggle-switch toggle-switch--focused" style="pointer-events:none;">
+                    <input type="checkbox" role="switch" checked tabindex="-1" aria-hidden="true">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td>Disabled</td>
+                <td>
+                  <label class="toggle-switch" style="pointer-events:none;">
+                    <input type="checkbox" role="switch" disabled tabindex="-1" aria-hidden="true">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </td>
+                <td>
+                  <label class="toggle-switch" style="pointer-events:none;">
+                    <input type="checkbox" role="switch" checked disabled tabindex="-1" aria-hidden="true">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 3. Usage ───────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Usage</h2>
+        <hr class="doc-rule">
+
+        <div class="usage-grid">
+          <div class="usage-card do">
+            <div class="usage-card-demo">
+              <div class="preview-settings" style="width:100%;max-width:280px;">
+                <div class="preview-settings-row" style="padding:var(--space-400) var(--space-500);">
+                  <div>
+                    <div class="preview-settings-title">Notifications</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" role="switch" checked aria-label="Notifications">
+                    <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                      <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                      <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                    </span></span></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="usage-card-body">
+              <div class="usage-card-tag">Do</div>
+              <p class="usage-card-text">Use for settings that take immediate effect — no save or confirmation step needed.</p>
+            </div>
+          </div>
+          <div class="usage-card dont">
+            <div class="usage-card-demo" style="flex-direction:row;gap:var(--space-400);">
+              <label class="toggle-switch">
+                <input type="checkbox" role="switch" aria-label="Option A">
+                <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                  <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                  <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                </span></span></span>
+              </label>
+              <label class="toggle-switch">
+                <input type="checkbox" role="switch" checked aria-label="Option B">
+                <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                  <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                  <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                </span></span></span>
+              </label>
+              <label class="toggle-switch">
+                <input type="checkbox" role="switch" aria-label="Option C">
+                <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                  <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                  <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                </span></span></span>
+              </label>
+            </div>
+            <div class="usage-card-body">
+              <div class="usage-card-tag">Don't</div>
+              <p class="usage-card-text">Don't use multiple toggles for a single multi-option choice. Use a radio group or segmented control instead.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="usage-grid">
+          <div class="usage-card do">
+            <div class="usage-card-demo" style="flex-direction:column;gap:var(--space-200);align-items:flex-start;padding:var(--space-600) var(--space-600);">
+              <span style="font-size:var(--font-size-body-s);color:var(--color-content-subtle);">Wi-Fi</span>
+              <label class="toggle-switch">
+                <input type="checkbox" role="switch" checked aria-label="Wi-Fi">
+                <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                  <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                  <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                </span></span></span>
+              </label>
+            </div>
+            <div class="usage-card-body">
+              <div class="usage-card-tag">Do</div>
+              <p class="usage-card-text">Always pair the toggle with a concise, specific label. The label should describe the feature — not the on/off state.</p>
+            </div>
+          </div>
+          <div class="usage-card dont">
+            <div class="usage-card-demo" style="flex-direction:column;gap:var(--space-200);align-items:flex-start;padding:var(--space-600) var(--space-600);">
+              <span style="font-size:var(--font-size-body-s);color:var(--color-content-subtle);text-decoration:line-through;opacity:0.6;">Accept all pending invitations</span>
+              <label class="toggle-switch">
+                <input type="checkbox" role="switch" aria-label="Accept all">
+                <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                  <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                  <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+                </span></span></span>
+              </label>
+            </div>
+            <div class="usage-card-body">
+              <div class="usage-card-tag">Don't</div>
+              <p class="usage-card-text">Don't use a toggle for actions that need confirmation or that aren't reversible. Use a button instead.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 4. Accessibility ───────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body">The toggle switch is built on a native <code style="font-family:monospace;font-size:0.9em;">input[type="checkbox"]</code> with <code style="font-family:monospace;font-size:0.9em;">role="switch"</code>. The browser automatically exposes the checked state to assistive technology. Every toggle must have an accessible name — either via a visible <code style="font-family:monospace;font-size:0.9em;">&lt;label&gt;</code>, <code style="font-family:monospace;font-size:0.9em;">aria-label</code>, or <code style="font-family:monospace;font-size:0.9em;">aria-labelledby</code>.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Interaction</th><th>Behaviour</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">Tab / Shift+Tab</td>
+                <td>Move focus to / away from the toggle.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Space</td>
+                <td>Toggle the switch between on and off.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">role="switch"</td>
+                <td>Applied to the <code style="font-family:monospace;font-size:0.9em;">input</code>. Communicates a binary on/off semantics — distinct from a standard checkbox.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-checked</td>
+                <td>Automatically derived from the <code style="font-family:monospace;font-size:0.9em;">checked</code> property by the browser. No manual management required.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-disabled</td>
+                <td>Automatically derived from the <code style="font-family:monospace;font-size:0.9em;">disabled</code> attribute. Disabled toggles remain in the reading order but are announced as unavailable.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-label</td>
+                <td>Required when there is no visible label element associated with the toggle.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 5. Properties ─────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Attribute</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">checked</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">—</td>
+                <td>Sets the initial checked (on) state. Omit for off.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">disabled</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Prevents interaction. Track and icon render in the disabled colour.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">id</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Required when the label is a separate element using <code style="font-family:monospace;font-size:0.9em;">for</code> / <code style="font-family:monospace;font-size:0.9em;">aria-labelledby</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">name</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Form field name submitted with the form.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">value</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">"on"</td>
+                <td>Form field value submitted when the switch is on.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">role="switch"</td>
+                <td class="td-type">ARIA role</td>
+                <td class="td-subtle">—</td>
+                <td>Communicates binary on/off semantics. Apply to the <code style="font-family:monospace;font-size:0.9em;">input</code> element.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-label</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Accessible name. Required when there is no associated visible label.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 6. Code ────────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Code</h2>
+        <hr class="doc-rule">
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('pre').textContent)">Copy</button>
+          <pre>&lt;!-- Basic toggle switch --&gt;
+&lt;label class="toggle-switch"&gt;
+  &lt;input type="checkbox" role="switch" aria-label="Setting name"&gt;
+  &lt;span class="toggle-track"&gt;
+    &lt;span class="toggle-handle"&gt;
+      &lt;span class="toggle-icon"&gt;
+        &lt;svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
+          &lt;path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024...Z" fill="currentColor"/&gt;
+        &lt;/svg&gt;
+        &lt;svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
+          &lt;path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467...Z" fill="currentColor"/&gt;
+        &lt;/svg&gt;
+      &lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- With visible label (settings row pattern) --&gt;
+&lt;div style="display:flex; align-items:center; justify-content:space-between; gap:24px;"&gt;
+  &lt;div&gt;
+    &lt;label for="ts-setting" style="font-weight:600;"&gt;Push notifications&lt;/label&gt;
+    &lt;p style="font-size:14px; color:var(--color-content-subtle);"&gt;Receive alerts when something requires your attention.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;label class="toggle-switch"&gt;
+    &lt;input type="checkbox" role="switch" id="ts-setting" checked&gt;
+    &lt;span class="toggle-track"&gt;...&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+
+&lt;!-- Disabled --&gt;
+&lt;label class="toggle-switch"&gt;
+  &lt;input type="checkbox" role="switch" disabled aria-label="Locked setting"&gt;
+  &lt;span class="toggle-track"&gt;...&lt;/span&gt;
+&lt;/label&gt;</pre>
+        </div>
+      </div>
+
+      <!-- ── 7. Related ─────────────────────────── -->
+      <div class="doc-section" style="padding-bottom:var(--space-1000);">
+        <h2 class="doc-section-title">Related</h2>
+        <hr class="doc-rule">
+        <div class="related-grid">
+          <a href="#" class="related-card" onclick="event.preventDefault(); document.querySelector('.sidebar-link[data-page=checkbox]').click();">
+            <div class="related-card-name">Check Box</div>
+            <div class="related-card-desc">For multi-select within a form. Changes take effect on submit.</div>
+          </a>
+          <a href="#" class="related-card" onclick="event.preventDefault(); document.querySelector('.sidebar-link[data-page=radio]').click();">
+            <div class="related-card-name">Radio</div>
+            <div class="related-card-desc">Mutually exclusive selection from 2–5 visible options.</div>
+          </a>
+          <a href="#" class="related-card" onclick="event.preventDefault(); document.querySelector('.sidebar-link[data-page=segmented-control]').click();">
+            <div class="related-card-name">Segmented Control</div>
+            <div class="related-card-desc">Inline selection when all options should remain visible.</div>
+          </a>
+        </div>
+      </div>
+
+    </div>
     <div class="page-panel" id="page-segmented-control"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Segmented Control</h2><p class="section-description">Inline selection control for 2–5 mutually exclusive options.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-stepper"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Stepper</h2><p class="section-description">Numeric increment/decrement input.</p></div><span class="stub-pill">In progress</span></section></div>
 
