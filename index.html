@@ -28,80 +28,75 @@
       line-height: var(--font-leading-body-m);
       -webkit-font-smoothing: antialiased;
       transition: background 0.2s ease, color 0.2s ease;
-      scroll-behavior: smooth;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* ─────────────────────────────────────────
-       LAYOUT
-    ───────────────────────────────────────── */
-    .page {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 var(--space-700) var(--space-1000);
-    }
-
-    /* ─────────────────────────────────────────
-       HEADER — light, editorial, studio style
+       SITE HEADER
     ───────────────────────────────────────── */
     .site-header {
       background: var(--color-background-page);
-      padding: 48px 40px 24px;
+      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 1px 0 var(--color-border-default), 0 4px 16px rgba(0, 0, 0, 0.06);
       transition: background 0.2s ease;
     }
 
+    [data-theme="dark"] .site-header {
+      box-shadow: 0 1px 0 var(--color-border-default), 0 4px 16px rgba(0, 0, 0, 0.24);
+    }
+
     .header-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-600);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: stretch;
+      min-height: 72px;
     }
 
     .header-identity {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 16px;
+      flex-shrink: 0;
     }
 
-    /* Logo mark image */
     .header-logo-mark {
-      width: 60px;
-      height: 60px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
-      display: block;
     }
 
-    /* Wordmark: Inter Light */
     .header-wordmark {
       font-family: var(--font-family-sans);
       font-weight: 300;
-      font-size: 44px;
+      font-size: 36px;
       line-height: 1;
       letter-spacing: -0.01em;
       color: #03060D;
       white-space: nowrap;
     }
 
-    [data-theme="dark"] .header-wordmark {
-      color: var(--color-content-default);
+    [data-theme="dark"] .header-wordmark { color: var(--color-content-default); }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-300);
     }
 
-    .header-wordmark-dim {
-      color: rgba(3, 6, 13, 0.38);
-      font-weight: 300;
-    }
-
-    [data-theme="dark"] .header-wordmark-dim {
-      color: rgba(242, 239, 237, 0.35);
-    }
-
-    /* Theme toggle: pill-shaped, ink-100 bg */
     .theme-toggle {
-      width: 56px;
-      height: 56px;
+      width: 40px;
+      height: 40px;
       border-radius: 180px;
       background: var(--primitive-ink-100, #EAEBF0);
       display: flex;
@@ -112,61 +107,185 @@
       transition: background 0.15s ease;
     }
 
-    .theme-toggle:hover {
-      background: var(--primitive-ink-200, #D5D7E0);
+    .theme-toggle:hover { background: var(--primitive-ink-200, #D5D7E0); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+
+    /* Hamburger — mobile only */
+    .nav-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--corner-radius-m);
+      align-items: center;
+      justify-content: center;
+      color: var(--color-content-default);
+      transition: background 0.15s ease;
     }
 
-    .theme-toggle svg {
-      width: 20px;
-      height: 20px;
+    .nav-toggle:hover { background: var(--color-background-subtle); }
+    .nav-toggle svg { width: 20px; height: 20px; }
+
+    /* Mobile nav dropdown */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      padding: var(--space-300) 0 var(--space-400);
+      border-top: var(--border-width-default) solid var(--color-border-default);
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav .section-tab {
+      height: 48px;
+      padding: 0 var(--space-400);
+      text-align: left;
+      justify-content: flex-start;
+      border-bottom: none;
+      border-radius: var(--corner-radius-m);
+      margin: 0 var(--space-200);
+      width: auto;
+    }
+
+    .mobile-nav .section-tab.active {
+      background: var(--color-content-default);
+      color: var(--color-background-page);
+      border-bottom-color: transparent;
     }
 
     /* ─────────────────────────────────────────
-       JUMP NAV — full-bleed sticky
+       SECTION TABS (inline in header)
     ───────────────────────────────────────── */
-    .jump-nav-wrap {
+    .section-tabs {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .section-tab {
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-400);
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.01em;
+      color: var(--color-content-subtle);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .section-tab.active {
+      color: var(--color-content-default);
+      border-bottom-color: var(--color-content-default);
+    }
+
+    .section-tab:hover:not(.active) { color: var(--color-content-default); }
+
+    /* ─────────────────────────────────────────
+       SITE BODY
+    ───────────────────────────────────────── */
+    .site-body {
+      display: flex;
+      flex: 1;
+      align-items: flex-start;
+    }
+
+    /* ─────────────────────────────────────────
+       SIDEBAR
+    ───────────────────────────────────────── */
+    :root { --chrome-h: 180px; }
+
+    .sidebar {
+      width: 256px;
+      flex-shrink: 0;
       position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--color-background-page);
-      border-bottom: var(--border-width-default) solid var(--color-border-default);
+      top: var(--chrome-h);
+      height: calc(100vh - var(--chrome-h));
+      overflow-y: auto;
+      border-right: var(--border-width-default) solid var(--color-border-default);
+      padding: var(--space-400) 0 var(--space-1000);
+      scrollbar-width: none;
       transition: background 0.2s ease;
     }
 
-    .jump-nav-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 var(--space-700);
-    }
+    .sidebar::-webkit-scrollbar { display: none; }
 
-    .jump-nav {
-      display: flex;
-      align-items: center;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
+    .sidebar-panel { display: block; }
+    .sidebar-panel.hidden { display: none; }
 
-    .jump-nav::-webkit-scrollbar { display: none; }
+    .sidebar-group { margin-bottom: var(--space-100); }
 
-    .jump-nav a {
+    .sidebar-group-label {
       display: block;
-      padding: var(--space-300) var(--space-400);
-      font-size: var(--font-size-body-xs);
+      font-size: 11px;
       font-weight: var(--font-weight-semibold);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--color-content-subtle);
-      text-decoration: none;
-      white-space: nowrap;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: color 0.15s ease, border-color 0.15s ease;
+      padding: var(--space-500) var(--space-500) var(--space-200);
     }
 
-    .jump-nav a:hover,
-    .jump-nav a.active {
+    .sidebar-link {
+      display: block;
+      padding: 7px var(--space-400);
+      margin: 1px var(--space-300);
+      font-size: var(--font-size-body-s);
+      line-height: 1.5;
       color: var(--color-content-default);
-      border-bottom-color: var(--color-content-default);
+      text-decoration: none;
+      border-radius: var(--corner-radius-m);
+      transition: background 0.1s ease, color 0.1s ease;
+    }
+
+    .sidebar-link:hover:not(.active) { background: var(--color-background-subtle); }
+
+    .sidebar-link.active {
+      background: var(--color-content-default);
+      color: var(--color-background-page);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* ─────────────────────────────────────────
+       CONTENT AREA
+    ───────────────────────────────────────── */
+    .site-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .page-panel {
+      display: none;
+      padding: 0 var(--space-800) var(--space-1000);
+      max-width: 960px;
+    }
+
+    .page-panel.active { display: block; }
+
+    /* ─────────────────────────────────────────
+       STUB PAGES
+    ───────────────────────────────────────── */
+    .stub-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+      margin-bottom: var(--space-400);
+    }
+
+    .stub-pill {
+      display: inline-flex;
+      align-items: center;
+      margin-top: var(--space-800);
+      padding: var(--space-200) var(--space-400);
+      background: var(--color-background-container);
+      border-radius: var(--corner-radius-round);
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      letter-spacing: 0.02em;
     }
 
     /* ─────────────────────────────────────────
@@ -177,17 +296,15 @@
       margin-bottom: var(--space-400);
     }
 
-    .section-header {
-      margin-bottom: var(--space-700);
-    }
+    .section-header { margin-bottom: var(--space-700); }
 
     .section-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: var(--space-200);
-      font-size: var(--font-size-body-xs);
+      font-size: 11px;
       font-weight: var(--font-weight-semibold);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--color-content-subtle);
       margin-bottom: var(--space-300);
@@ -217,11 +334,9 @@
     }
 
     /* ─────────────────────────────────────────
-       COPY TOKEN — shared interactive style
+       COPY TOKEN
     ───────────────────────────────────────── */
-    [data-copy] {
-      cursor: pointer;
-    }
+    [data-copy] { cursor: pointer; }
 
     .token-name {
       display: inline-block;
@@ -263,9 +378,6 @@
       transition: opacity 0.15s ease, transform 0.15s ease;
       z-index: 9999;
       white-space: nowrap;
-      max-width: calc(100vw - 48px);
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .copy-toast.visible {
@@ -318,27 +430,18 @@
     }
 
     .brand-swatch:hover::after { opacity: 1; }
-
-    .brand-name {
-      font-size: var(--font-size-body-s);
-      font-weight: var(--font-weight-semibold);
-    }
+    .brand-name { font-size: var(--font-size-body-s); font-weight: var(--font-weight-semibold); }
 
     /* ─────────────────────────────────────────
        PRIMITIVE PALETTES
     ───────────────────────────────────────── */
-    .palette-grid {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-400);
-    }
+    .palette-grid { display: flex; flex-direction: column; gap: var(--space-400); }
 
     .palette-scroll {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
-
     .palette-scroll::-webkit-scrollbar { display: none; }
 
     .palette-row {
@@ -359,12 +462,7 @@
       white-space: nowrap;
     }
 
-    .swatch {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-100);
-      cursor: pointer;
-    }
+    .swatch { display: flex; flex-direction: column; gap: var(--space-100); cursor: pointer; }
 
     .swatch-color {
       aspect-ratio: 1;
@@ -397,21 +495,12 @@
     }
 
     .swatch:hover .swatch-color::after { opacity: 1; }
-
-    .swatch-label {
-      font-size: 9px;
-      color: var(--color-content-subtle);
-      text-align: center;
-      line-height: 1;
-    }
+    .swatch-label { font-size: 9px; color: var(--color-content-subtle); text-align: center; line-height: 1; }
 
     /* ─────────────────────────────────────────
        SEMANTIC COLORS
     ───────────────────────────────────────── */
-    /* ── Semantic: group layout ── */
-    .semantic-group {
-      margin-bottom: var(--space-700);
-    }
+    .semantic-group { margin-bottom: var(--space-700); }
 
     .semantic-group-title {
       font-size: var(--font-size-body-xs);
@@ -428,7 +517,6 @@
       gap: var(--space-200);
     }
 
-    /* ── Semantic: individual token card ── */
     .semantic-token {
       display: flex;
       flex-direction: column;
@@ -450,7 +538,6 @@
       position: relative;
     }
 
-    /* Hex overlay on hover */
     .semantic-swatch::after {
       content: attr(data-hex);
       position: absolute;
@@ -502,22 +589,10 @@
       border-bottom: var(--border-width-default) solid var(--color-border-subtle);
     }
 
-    .type-row:first-child {
-      border-top: var(--border-width-default) solid var(--color-border-subtle);
-    }
+    .type-row:first-child { border-top: var(--border-width-default) solid var(--color-border-subtle); }
 
-    .type-meta {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-100);
-      padding-top: 2px;
-    }
-
-    .type-details {
-      font-size: var(--font-size-body-xs);
-      color: var(--color-content-subtle);
-      line-height: var(--font-leading-body-l);
-    }
+    .type-meta { display: flex; flex-direction: column; gap: var(--space-100); padding-top: 2px; }
+    .type-details { font-size: var(--font-size-body-xs); color: var(--color-content-subtle); line-height: var(--font-leading-body-l); }
 
     /* ─────────────────────────────────────────
        SPACING SCALE
@@ -532,12 +607,7 @@
       padding: var(--space-100) 0;
     }
 
-    .space-value {
-      font-size: var(--font-size-body-xs);
-      color: var(--color-content-subtle);
-      font-family: monospace;
-    }
-
+    .space-value { font-size: var(--font-size-body-xs); color: var(--color-content-subtle); font-family: monospace; }
     .space-bar-track { height: 20px; display: flex; align-items: center; }
 
     .space-bar {
@@ -550,19 +620,9 @@
     /* ─────────────────────────────────────────
        SHAPE
     ───────────────────────────────────────── */
-    .shape-grid {
-      display: flex;
-      gap: var(--space-600);
-      flex-wrap: wrap;
-      align-items: flex-end;
-    }
+    .shape-grid { display: flex; gap: var(--space-600); flex-wrap: wrap; align-items: flex-end; }
 
-    .shape-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-300);
-    }
+    .shape-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-300); }
 
     .shape-box {
       width: 72px;
@@ -572,29 +632,14 @@
     }
 
     .shape-label { text-align: center; }
-    .shape-val {
-      display: block;
-      font-size: var(--font-size-body-xs);
-      color: var(--color-content-subtle);
-      margin-top: 2px;
-    }
+    .shape-val { display: block; font-size: var(--font-size-body-xs); color: var(--color-content-subtle); margin-top: 2px; }
 
     /* ─────────────────────────────────────────
        SIZE SCALE
     ───────────────────────────────────────── */
-    .size-grid {
-      display: flex;
-      gap: var(--space-500);
-      flex-wrap: wrap;
-      align-items: flex-end;
-    }
+    .size-grid { display: flex; gap: var(--space-500); flex-wrap: wrap; align-items: flex-end; }
 
-    .size-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-200);
-    }
+    .size-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-200); }
 
     .size-box {
       background: var(--color-brand-violet);
@@ -603,11 +648,7 @@
     }
 
     .size-label { text-align: center; }
-    .size-val {
-      display: block;
-      font-size: 10px;
-      color: var(--color-content-subtle);
-    }
+    .size-val { display: block; font-size: 10px; color: var(--color-content-subtle); }
 
     /* ─────────────────────────────────────────
        BORDER WIDTHS
@@ -628,42 +669,28 @@
     }
 
     /* ─────────────────────────────────────────
-       FOOTER — light, minimal, mirrors header
+       FOOTER
     ───────────────────────────────────────── */
     .site-footer {
       background: var(--color-background-page);
       border-top: var(--border-width-default) solid var(--color-border-default);
-      padding: 40px;
+      padding: 32px 40px;
       transition: background 0.2s ease;
     }
 
-    .footer-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: var(--space-400);
-    }
+    .footer-inner { display: flex; align-items: center; gap: var(--space-400); }
 
-    /* Small logo mark */
     .footer-logo-mark {
       width: 28px;
       height: 28px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
-      display: block;
     }
 
-    .footer-text {
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-xs);
-      color: var(--color-content-subtle);
-      letter-spacing: 0.01em;
-    }
+    .footer-text { font-size: var(--font-size-body-xs); color: var(--color-content-subtle); letter-spacing: 0.01em; }
 
     .footer-link {
-      font-family: var(--font-family-sans);
       font-size: var(--font-size-body-xs);
       font-weight: var(--font-weight-semibold);
       color: var(--color-content-subtle);
@@ -676,132 +703,183 @@
     .footer-link:hover { color: var(--color-content-default); }
 
     /* ─────────────────────────────────────────
-       RESPONSIVE — LARGE TABLET (≤1024px)
+       SEARCH
+    ───────────────────────────────────────── */
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-field {
+      display: flex;
+      align-items: center;
+      gap: var(--space-200);
+      padding: 0 var(--space-400);
+      height: 36px;
+      border: var(--border-width-default) solid var(--color-border-default);
+      border-radius: var(--corner-radius-round);
+      background: var(--color-background-page);
+      width: 192px;
+      transition: width 0.2s ease, border-color 0.15s ease;
+    }
+
+    .search-field:focus-within {
+      border-color: var(--color-content-default);
+      width: 256px;
+    }
+
+    .search-icon {
+      width: 14px;
+      height: 14px;
+      color: var(--color-content-subtle);
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      border: none;
+      background: none;
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-default);
+      width: 100%;
+      outline: none;
+    }
+
+    .search-input::placeholder { color: var(--color-content-subtle); }
+
+    .search-results {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 320px;
+      background: var(--color-background-page);
+      border: var(--border-width-default) solid var(--color-border-default);
+      border-radius: var(--corner-radius-l);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      display: none;
+      z-index: 500;
+    }
+
+    [data-theme="dark"] .search-results {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+    }
+
+    .search-results.visible { display: block; }
+
+    .search-result-item {
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-300) var(--space-500);
+      cursor: pointer;
+      border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+      transition: background 0.1s ease;
+    }
+
+    .search-result-item:last-child { border-bottom: none; }
+
+    .search-result-item:hover,
+    .search-result-item.focused {
+      background: var(--color-background-subtle);
+    }
+
+    .search-result-title {
+      font-size: var(--font-size-body-s);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-default);
+    }
+
+    .search-result-meta {
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .search-empty {
+      padding: var(--space-600) var(--space-500);
+      text-align: center;
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-subtle);
+    }
+
+    /* hide search on mobile — becomes a simple icon */
+    @media (max-width: 860px) {
+      .search-field { width: 36px; padding: 0; justify-content: center; }
+      .search-field:focus-within { width: 36px; }
+      .search-input { display: none; }
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE ≤1024px
     ───────────────────────────────────────── */
     @media (max-width: 1024px) {
-      .site-header { padding: 40px var(--space-600) 24px; }
-      .jump-nav-inner { padding: 0 var(--space-600); }
-      .page { padding: 0 var(--space-600) var(--space-800); }
-      .site-footer { padding: 32px var(--space-600); }
+      .site-header { padding: 0 var(--space-600); }
+      .page-panel { padding: 0 var(--space-600) var(--space-800); }
+      .site-footer { padding: 28px var(--space-600); }
     }
 
     /* ─────────────────────────────────────────
-       RESPONSIVE — TABLET (≤860px)
+       RESPONSIVE ≤860px — collapse sidebar + inline nav
     ───────────────────────────────────────── */
     @media (max-width: 860px) {
-      .brand-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
+      .sidebar { display: none; }
+      .section-tabs { display: none; }
+      .nav-toggle { display: flex; }
 
-      .semantic-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .type-row {
-        grid-template-columns: 130px 1fr;
-        gap: var(--space-400);
-      }
-
-      .space-row {
-        grid-template-columns: 130px 48px 1fr;
-      }
-
-      .border-row {
-        grid-template-columns: 160px 40px 1fr;
-      }
+      .brand-grid { grid-template-columns: repeat(4, 1fr); }
+      .type-row { grid-template-columns: 130px 1fr; gap: var(--space-400); }
+      .space-row { grid-template-columns: 130px 48px 1fr; }
+      .border-row { grid-template-columns: 160px 40px 1fr; }
     }
 
     /* ─────────────────────────────────────────
-       RESPONSIVE — MOBILE (≤640px)
+       RESPONSIVE ≤640px
     ───────────────────────────────────────── */
     @media (max-width: 640px) {
-      .site-header { padding: var(--space-600) var(--space-400) var(--space-400); }
-      .header-logo-mark { width: 48px; height: 48px; font-size: 24px; }
-      .header-identity { gap: var(--space-400); }
-      .header-wordmark { font-size: 32px; }
-      .theme-toggle { width: 48px; height: 48px; }
-      .jump-nav-inner { padding: 0 var(--space-400); }
-      .page { padding: 0 var(--space-400) var(--space-700); }
-      .site-footer { padding: var(--space-600) var(--space-400); }
-      .footer-inner { flex-wrap: wrap; gap: var(--space-300); }
+      .site-header { padding: 0 var(--space-400); }
+      .header-logo-mark { width: 36px; height: 36px; }
+      .header-identity { gap: var(--space-300); margin-right: var(--space-400); }
+      .header-wordmark { font-size: 26px; }
+      .header-inner { min-height: 60px; }
+      .page-panel { padding: 0 var(--space-400) var(--space-700); }
+      .site-footer { padding: var(--space-500) var(--space-400); }
 
       .section { padding-top: var(--space-700); }
-
       .section-title { font-size: var(--font-size-heading-l); }
-
       .section-description { max-width: 100%; }
 
-      /* Brand: 4 cols, 2 rows */
-      .brand-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: var(--space-300);
-      }
-
-      /* Semantic: single column */
-      .semantic-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-300);
-      }
-
-      /* Type: stack meta above specimen */
-      .type-row {
-        grid-template-columns: 1fr;
-        gap: var(--space-200);
-        padding: var(--space-500) 0;
-        align-items: flex-start;
-      }
-
-      /* Space: hide bar */
+      .brand-grid { grid-template-columns: repeat(4, 1fr); gap: var(--space-300); }
+      .semantic-tokens-grid { grid-template-columns: repeat(2, 1fr); }
+      .type-row { grid-template-columns: 1fr; gap: var(--space-200); padding: var(--space-500) 0; align-items: flex-start; }
       .space-row { grid-template-columns: 1fr auto; }
       .space-bar-track { display: none; }
-
-      /* Shape */
       .shape-grid { gap: var(--space-300); }
       .shape-box { width: 56px; height: 56px; }
-
-      /* Size */
       .size-grid { gap: var(--space-400); }
-
-      /* Border */
       .border-row { grid-template-columns: 1fr auto; }
       .border-demo { display: none; }
-
-      /* Footer */
-      .site-footer { padding: var(--space-600) var(--space-400); }
       .footer-inner { flex-wrap: wrap; gap: var(--space-300); }
     }
 
     /* ─────────────────────────────────────────
-       RESPONSIVE — SMALL MOBILE (≤480px)
+       RESPONSIVE ≤480px
     ───────────────────────────────────────── */
     @media (max-width: 480px) {
-      .site-header { padding: var(--space-500) var(--space-300) var(--space-400); }
-      .header-logo-mark { width: 40px; height: 40px; font-size: 20px; }
-      .header-identity { gap: var(--space-300); }
-      .header-wordmark { font-size: 26px; }
-      .header-wordmark-dim { display: none; }
-      .theme-toggle { width: 40px; height: 40px; }
-      .jump-nav-inner { padding: 0 var(--space-300); }
-      .page { padding: 0 var(--space-300) var(--space-600); }
-      .site-footer { padding: var(--space-500) var(--space-300); }
+      .site-header { padding: 0 var(--space-300); }
+      .header-logo-mark { width: 32px; height: 32px; }
+      .header-identity { gap: var(--space-200); margin-right: var(--space-300); }
+      .header-wordmark { font-size: 22px; }
+      .header-inner { min-height: 56px; }
+      .theme-toggle { width: 36px; height: 36px; }
+      .theme-toggle svg { width: 16px; height: 16px; }
+      .page-panel { padding: 0 var(--space-300) var(--space-600); }
+      .site-footer { padding: var(--space-400) var(--space-300); }
       .footer-link { margin-left: 0; }
 
-      /* Brand: 2 cols on tiny screens */
-      .brand-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-300);
-      }
-
+      .brand-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-300); }
       .section-title { font-size: var(--font-size-heading-m); }
-
-      .semantic-card { padding: var(--space-400); }
-
-      /* Shape + Size: tighter */
       .shape-box { width: 48px; height: 48px; }
-
-      /* Footer */
-      .site-footer { padding: var(--space-500) var(--space-300); }
-      .footer-link { margin-left: 0; }
     }
 
   </style>
@@ -815,515 +893,452 @@
       <img class="header-logo-mark" src="assets/unica-mark.png" alt="ůnica mark" />
       <h1 class="header-wordmark">ůnica Design System</h1>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle colour mode">
-      <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
-      <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-    </button>
+    <nav class="section-tabs" aria-label="Site sections">
+      <button class="section-tab active" data-section="foundations">Foundations</button>
+      <button class="section-tab" data-section="components">Components</button>
+    </nav>
+    <div class="header-actions">
+      <div class="search-wrap" id="search-wrap">
+        <div class="search-field">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" aria-label="Search design system" />
+        </div>
+        <div class="search-results" id="search-results" role="listbox"></div>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle colour mode">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile site sections">
+    <button class="section-tab active" data-section="foundations" data-mobile="true">Foundations</button>
+    <button class="section-tab" data-section="components" data-mobile="true">Components</button>
+  </nav>
 </header>
 
-<!-- ══ JUMP NAV ══ -->
-<div class="jump-nav-wrap">
-  <div class="jump-nav-inner">
-    <nav class="jump-nav" aria-label="Jump to section">
-      <a href="#brand">Brand</a>
-      <a href="#primitives">Primitives</a>
-      <a href="#semantic">Semantic</a>
-      <a href="#typography">Typography</a>
-      <a href="#spacing">Spacing</a>
-      <a href="#shape">Shape</a>
-      <a href="#size">Size</a>
-      <a href="#border">Border</a>
-    </nav>
-  </div>
-</div>
+<!-- ══ SITE BODY ══ -->
+<div class="site-body">
 
-<div class="page">
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
 
-
-  <!-- ══ BRAND PALETTE ══ -->
-  <section class="section" id="brand">
-    <div class="section-header">
-      <p class="section-eyebrow">Colors</p>
-      <h2 class="section-title">Brand palette</h2>
-      <p class="section-description">The expressive anchors of the system. Use for brand moments, accents, and highlights — not for functional UI states.</p>
-    </div>
-    <div class="brand-grid">
-      <div class="brand-item">
-        <div class="brand-swatch" style="background:var(--color-brand-ink)"></div>
-        <span class="brand-name">Ink</span>
-        <span class="token-name" data-copy="--color-brand-ink">brand-ink</span>
+    <!-- Foundations nav -->
+    <div class="sidebar-panel" id="sidebar-foundations">
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Tokens</span>
+        <a class="sidebar-link active" href="#" data-page="color">Color</a>
+        <a class="sidebar-link" href="#" data-page="typography">Typography</a>
+        <a class="sidebar-link" href="#" data-page="spacing">Spacing</a>
+        <a class="sidebar-link" href="#" data-page="shape">Shape</a>
+        <a class="sidebar-link" href="#" data-page="size">Size</a>
+        <a class="sidebar-link" href="#" data-page="style">Style</a>
+        <a class="sidebar-link" href="#" data-page="border">Border</a>
       </div>
-      <div class="brand-item">
-        <div class="brand-swatch" style="background:var(--color-brand-cream)"></div>
-        <span class="brand-name">Cream</span>
-        <span class="token-name" data-copy="--color-brand-cream">brand-cream</span>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Layout</span>
+        <a class="sidebar-link" href="#" data-page="breakpoints">Breakpoints</a>
+        <a class="sidebar-link" href="#" data-page="grid">Grid</a>
       </div>
-      <div class="brand-item">
-        <div class="brand-swatch" style="background:var(--color-brand-violet)"></div>
-        <span class="brand-name">Violet</span>
-        <span class="token-name" data-copy="--color-brand-violet">brand-violet</span>
-      </div>
-      <div class="brand-item">
-        <div class="brand-swatch" style="background:var(--color-brand-ultraviolet)"></div>
-        <span class="brand-name">Ultraviolet</span>
-        <span class="token-name" data-copy="--color-brand-ultraviolet">brand-ultraviolet</span>
-      </div>
-      <div class="brand-item">
-        <div class="brand-swatch" style="background:var(--color-brand-berry)"></div>
-        <span class="brand-name">Berry</span>
-        <span class="token-name" data-copy="--color-brand-berry">brand-berry</span>
-      </div>
-      <div class="brand-item">
-        <div class="brand-swatch" style="background:var(--color-brand-mint)"></div>
-        <span class="brand-name">Mint</span>
-        <span class="token-name" data-copy="--color-brand-mint">brand-mint</span>
-      </div>
-      <div class="brand-item">
-        <div class="brand-swatch" style="background:var(--color-brand-pool)"></div>
-        <span class="brand-name">Pool</span>
-        <span class="token-name" data-copy="--color-brand-pool">brand-pool</span>
-      </div>
-      <div class="brand-item">
-        <div class="brand-swatch" style="background:var(--color-brand-citron)"></div>
-        <span class="brand-name">Citron</span>
-        <span class="token-name" data-copy="--color-brand-citron">brand-citron</span>
-      </div>
-    </div>
-  </section>
-
-  <hr class="section-rule" />
-
-
-  <!-- ══ PRIMITIVE PALETTES ══ -->
-  <section class="section" id="primitives">
-    <div class="section-header">
-      <p class="section-eyebrow">Colors</p>
-      <h2 class="section-title">Primitive palettes</h2>
-      <p class="section-description">Raw color scales. The foundation semantic tokens are built from. Reference only — use semantic tokens in components.</p>
-    </div>
-    <div class="palette-grid">
-
-      <div class="palette-scroll">
-        <div class="palette-row steps-11">
-          <span class="palette-name">Café</span>
-          <div class="swatch" data-copy="--primitive-cafe-0"><div class="swatch-color" style="background:var(--primitive-cafe-0)"></div><span class="swatch-label">0</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-100"><div class="swatch-color" style="background:var(--primitive-cafe-100)"></div><span class="swatch-label">100</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-200"><div class="swatch-color" style="background:var(--primitive-cafe-200)"></div><span class="swatch-label">200</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-300"><div class="swatch-color" style="background:var(--primitive-cafe-300)"></div><span class="swatch-label">300</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-400"><div class="swatch-color" style="background:var(--primitive-cafe-400)"></div><span class="swatch-label">400</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-500"><div class="swatch-color" style="background:var(--primitive-cafe-500)"></div><span class="swatch-label">500</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-600"><div class="swatch-color" style="background:var(--primitive-cafe-600)"></div><span class="swatch-label">600</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-700"><div class="swatch-color" style="background:var(--primitive-cafe-700)"></div><span class="swatch-label">700</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-800"><div class="swatch-color" style="background:var(--primitive-cafe-800)"></div><span class="swatch-label">800</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-900"><div class="swatch-color" style="background:var(--primitive-cafe-900)"></div><span class="swatch-label">900</span></div>
-          <div class="swatch" data-copy="--primitive-cafe-1000"><div class="swatch-color" style="background:var(--primitive-cafe-1000)"></div><span class="swatch-label">1000</span></div>
-        </div>
-      </div>
-
-      <div class="palette-scroll">
-        <div class="palette-row steps-11">
-          <span class="palette-name">Ink</span>
-          <div class="swatch" data-copy="--primitive-ink-50"><div class="swatch-color" style="background:var(--primitive-ink-50)"></div><span class="swatch-label">50</span></div>
-          <div class="swatch" data-copy="--primitive-ink-100"><div class="swatch-color" style="background:var(--primitive-ink-100)"></div><span class="swatch-label">100</span></div>
-          <div class="swatch" data-copy="--primitive-ink-200"><div class="swatch-color" style="background:var(--primitive-ink-200)"></div><span class="swatch-label">200</span></div>
-          <div class="swatch" data-copy="--primitive-ink-300"><div class="swatch-color" style="background:var(--primitive-ink-300)"></div><span class="swatch-label">300</span></div>
-          <div class="swatch" data-copy="--primitive-ink-400"><div class="swatch-color" style="background:var(--primitive-ink-400)"></div><span class="swatch-label">400</span></div>
-          <div class="swatch" data-copy="--primitive-ink-500"><div class="swatch-color" style="background:var(--primitive-ink-500)"></div><span class="swatch-label">500</span></div>
-          <div class="swatch" data-copy="--primitive-ink-600"><div class="swatch-color" style="background:var(--primitive-ink-600)"></div><span class="swatch-label">600</span></div>
-          <div class="swatch" data-copy="--primitive-ink-700"><div class="swatch-color" style="background:var(--primitive-ink-700)"></div><span class="swatch-label">700</span></div>
-          <div class="swatch" data-copy="--primitive-ink-800"><div class="swatch-color" style="background:var(--primitive-ink-800)"></div><span class="swatch-label">800</span></div>
-          <div class="swatch" data-copy="--primitive-ink-900"><div class="swatch-color" style="background:var(--primitive-ink-900)"></div><span class="swatch-label">900</span></div>
-          <div class="swatch" data-copy="--primitive-ink-1000"><div class="swatch-color" style="background:var(--primitive-ink-1000)"></div><span class="swatch-label">1000</span></div>
-        </div>
-      </div>
-
-      <div class="palette-scroll">
-        <div class="palette-row steps-10">
-          <span class="palette-name">Violet</span>
-          <div class="swatch" data-copy="--primitive-violet-100"><div class="swatch-color" style="background:var(--primitive-violet-100)"></div><span class="swatch-label">100</span></div>
-          <div class="swatch" data-copy="--primitive-violet-200"><div class="swatch-color" style="background:var(--primitive-violet-200)"></div><span class="swatch-label">200</span></div>
-          <div class="swatch" data-copy="--primitive-violet-300"><div class="swatch-color" style="background:var(--primitive-violet-300)"></div><span class="swatch-label">300</span></div>
-          <div class="swatch" data-copy="--primitive-violet-400"><div class="swatch-color" style="background:var(--primitive-violet-400)"></div><span class="swatch-label">400</span></div>
-          <div class="swatch" data-copy="--primitive-violet-500"><div class="swatch-color" style="background:var(--primitive-violet-500)"></div><span class="swatch-label">500</span></div>
-          <div class="swatch" data-copy="--primitive-violet-600"><div class="swatch-color" style="background:var(--primitive-violet-600)"></div><span class="swatch-label">600</span></div>
-          <div class="swatch" data-copy="--primitive-violet-700"><div class="swatch-color" style="background:var(--primitive-violet-700)"></div><span class="swatch-label">700</span></div>
-          <div class="swatch" data-copy="--primitive-violet-800"><div class="swatch-color" style="background:var(--primitive-violet-800)"></div><span class="swatch-label">800</span></div>
-          <div class="swatch" data-copy="--primitive-violet-900"><div class="swatch-color" style="background:var(--primitive-violet-900)"></div><span class="swatch-label">900</span></div>
-          <div class="swatch" data-copy="--primitive-violet-1000"><div class="swatch-color" style="background:var(--primitive-violet-1000)"></div><span class="swatch-label">1000</span></div>
-        </div>
-      </div>
-
-      <div class="palette-scroll">
-        <div class="palette-row steps-10">
-          <span class="palette-name">Berry</span>
-          <div class="swatch" data-copy="--primitive-berry-100"><div class="swatch-color" style="background:var(--primitive-berry-100)"></div><span class="swatch-label">100</span></div>
-          <div class="swatch" data-copy="--primitive-berry-200"><div class="swatch-color" style="background:var(--primitive-berry-200)"></div><span class="swatch-label">200</span></div>
-          <div class="swatch" data-copy="--primitive-berry-300"><div class="swatch-color" style="background:var(--primitive-berry-300)"></div><span class="swatch-label">300</span></div>
-          <div class="swatch" data-copy="--primitive-berry-400"><div class="swatch-color" style="background:var(--primitive-berry-400)"></div><span class="swatch-label">400</span></div>
-          <div class="swatch" data-copy="--primitive-berry-500"><div class="swatch-color" style="background:var(--primitive-berry-500)"></div><span class="swatch-label">500</span></div>
-          <div class="swatch" data-copy="--primitive-berry-600"><div class="swatch-color" style="background:var(--primitive-berry-600)"></div><span class="swatch-label">600</span></div>
-          <div class="swatch" data-copy="--primitive-berry-700"><div class="swatch-color" style="background:var(--primitive-berry-700)"></div><span class="swatch-label">700</span></div>
-          <div class="swatch" data-copy="--primitive-berry-800"><div class="swatch-color" style="background:var(--primitive-berry-800)"></div><span class="swatch-label">800</span></div>
-          <div class="swatch" data-copy="--primitive-berry-900"><div class="swatch-color" style="background:var(--primitive-berry-900)"></div><span class="swatch-label">900</span></div>
-          <div class="swatch" data-copy="--primitive-berry-1000"><div class="swatch-color" style="background:var(--primitive-berry-1000)"></div><span class="swatch-label">1000</span></div>
-        </div>
-      </div>
-
-      <div class="palette-scroll">
-        <div class="palette-row steps-10">
-          <span class="palette-name">Apricot</span>
-          <div class="swatch" data-copy="--primitive-apricot-100"><div class="swatch-color" style="background:var(--primitive-apricot-100)"></div><span class="swatch-label">100</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-200"><div class="swatch-color" style="background:var(--primitive-apricot-200)"></div><span class="swatch-label">200</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-300"><div class="swatch-color" style="background:var(--primitive-apricot-300)"></div><span class="swatch-label">300</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-400"><div class="swatch-color" style="background:var(--primitive-apricot-400)"></div><span class="swatch-label">400</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-500"><div class="swatch-color" style="background:var(--primitive-apricot-500)"></div><span class="swatch-label">500</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-600"><div class="swatch-color" style="background:var(--primitive-apricot-600)"></div><span class="swatch-label">600</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-700"><div class="swatch-color" style="background:var(--primitive-apricot-700)"></div><span class="swatch-label">700</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-800"><div class="swatch-color" style="background:var(--primitive-apricot-800)"></div><span class="swatch-label">800</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-900"><div class="swatch-color" style="background:var(--primitive-apricot-900)"></div><span class="swatch-label">900</span></div>
-          <div class="swatch" data-copy="--primitive-apricot-1000"><div class="swatch-color" style="background:var(--primitive-apricot-1000)"></div><span class="swatch-label">1000</span></div>
-        </div>
-      </div>
-
-      <div class="palette-scroll">
-        <div class="palette-row steps-10">
-          <span class="palette-name">Mint</span>
-          <div class="swatch" data-copy="--primitive-mint-100"><div class="swatch-color" style="background:var(--primitive-mint-100)"></div><span class="swatch-label">100</span></div>
-          <div class="swatch" data-copy="--primitive-mint-200"><div class="swatch-color" style="background:var(--primitive-mint-200)"></div><span class="swatch-label">200</span></div>
-          <div class="swatch" data-copy="--primitive-mint-300"><div class="swatch-color" style="background:var(--primitive-mint-300)"></div><span class="swatch-label">300</span></div>
-          <div class="swatch" data-copy="--primitive-mint-400"><div class="swatch-color" style="background:var(--primitive-mint-400)"></div><span class="swatch-label">400</span></div>
-          <div class="swatch" data-copy="--primitive-mint-500"><div class="swatch-color" style="background:var(--primitive-mint-500)"></div><span class="swatch-label">500</span></div>
-          <div class="swatch" data-copy="--primitive-mint-600"><div class="swatch-color" style="background:var(--primitive-mint-600)"></div><span class="swatch-label">600</span></div>
-          <div class="swatch" data-copy="--primitive-mint-700"><div class="swatch-color" style="background:var(--primitive-mint-700)"></div><span class="swatch-label">700</span></div>
-          <div class="swatch" data-copy="--primitive-mint-800"><div class="swatch-color" style="background:var(--primitive-mint-800)"></div><span class="swatch-label">800</span></div>
-          <div class="swatch" data-copy="--primitive-mint-900"><div class="swatch-color" style="background:var(--primitive-mint-900)"></div><span class="swatch-label">900</span></div>
-          <div class="swatch" data-copy="--primitive-mint-1000"><div class="swatch-color" style="background:var(--primitive-mint-1000)"></div><span class="swatch-label">1000</span></div>
-        </div>
-      </div>
-
-      <div class="palette-scroll">
-        <div class="palette-row steps-10">
-          <span class="palette-name">Pool</span>
-          <div class="swatch" data-copy="--primitive-pool-100"><div class="swatch-color" style="background:var(--primitive-pool-100)"></div><span class="swatch-label">100</span></div>
-          <div class="swatch" data-copy="--primitive-pool-200"><div class="swatch-color" style="background:var(--primitive-pool-200)"></div><span class="swatch-label">200</span></div>
-          <div class="swatch" data-copy="--primitive-pool-300"><div class="swatch-color" style="background:var(--primitive-pool-300)"></div><span class="swatch-label">300</span></div>
-          <div class="swatch" data-copy="--primitive-pool-400"><div class="swatch-color" style="background:var(--primitive-pool-400)"></div><span class="swatch-label">400</span></div>
-          <div class="swatch" data-copy="--primitive-pool-500"><div class="swatch-color" style="background:var(--primitive-pool-500)"></div><span class="swatch-label">500</span></div>
-          <div class="swatch" data-copy="--primitive-pool-600"><div class="swatch-color" style="background:var(--primitive-pool-600)"></div><span class="swatch-label">600</span></div>
-          <div class="swatch" data-copy="--primitive-pool-700"><div class="swatch-color" style="background:var(--primitive-pool-700)"></div><span class="swatch-label">700</span></div>
-          <div class="swatch" data-copy="--primitive-pool-800"><div class="swatch-color" style="background:var(--primitive-pool-800)"></div><span class="swatch-label">800</span></div>
-          <div class="swatch" data-copy="--primitive-pool-900"><div class="swatch-color" style="background:var(--primitive-pool-900)"></div><span class="swatch-label">900</span></div>
-          <div class="swatch" data-copy="--primitive-pool-1000"><div class="swatch-color" style="background:var(--primitive-pool-1000)"></div><span class="swatch-label">1000</span></div>
-        </div>
-      </div>
-
-      <div class="palette-scroll">
-        <div class="palette-row steps-10">
-          <span class="palette-name">Citron</span>
-          <div class="swatch" data-copy="--primitive-citron-100"><div class="swatch-color" style="background:var(--primitive-citron-100)"></div><span class="swatch-label">100</span></div>
-          <div class="swatch" data-copy="--primitive-citron-200"><div class="swatch-color" style="background:var(--primitive-citron-200)"></div><span class="swatch-label">200</span></div>
-          <div class="swatch" data-copy="--primitive-citron-300"><div class="swatch-color" style="background:var(--primitive-citron-300)"></div><span class="swatch-label">300</span></div>
-          <div class="swatch" data-copy="--primitive-citron-400"><div class="swatch-color" style="background:var(--primitive-citron-400)"></div><span class="swatch-label">400</span></div>
-          <div class="swatch" data-copy="--primitive-citron-500"><div class="swatch-color" style="background:var(--primitive-citron-500)"></div><span class="swatch-label">500</span></div>
-          <div class="swatch" data-copy="--primitive-citron-600"><div class="swatch-color" style="background:var(--primitive-citron-600)"></div><span class="swatch-label">600</span></div>
-          <div class="swatch" data-copy="--primitive-citron-700"><div class="swatch-color" style="background:var(--primitive-citron-700)"></div><span class="swatch-label">700</span></div>
-          <div class="swatch" data-copy="--primitive-citron-800"><div class="swatch-color" style="background:var(--primitive-citron-800)"></div><span class="swatch-label">800</span></div>
-          <div class="swatch" data-copy="--primitive-citron-900"><div class="swatch-color" style="background:var(--primitive-citron-900)"></div><span class="swatch-label">900</span></div>
-          <div class="swatch" data-copy="--primitive-citron-1000"><div class="swatch-color" style="background:var(--primitive-citron-1000)"></div><span class="swatch-label">1000</span></div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-rule" />
-
-
-  <!-- ══ SEMANTIC COLORS ══ -->
-  <section class="section" id="semantic">
-    <div class="section-header">
-      <p class="section-eyebrow">Colors</p>
-      <h2 class="section-title">Semantic tokens</h2>
-      <p class="section-description">Mode-aware tokens that components reference directly. Toggle dark mode above to see them shift.</p>
-    </div>
-    <!-- Background -->
-    <div class="semantic-group">
-      <p class="semantic-group-title">Background</p>
-      <div class="semantic-tokens-grid">
-        <div class="semantic-token" data-copy="--color-background-page"><div class="semantic-swatch" style="background:var(--color-background-page)"></div><div class="semantic-info"><span class="semantic-label">page</span><span class="token-name">--color-background-page</span></div></div>
-        <div class="semantic-token" data-copy="--color-background-section"><div class="semantic-swatch" style="background:var(--color-background-section)"></div><div class="semantic-info"><span class="semantic-label">section</span><span class="token-name">--color-background-section</span></div></div>
-        <div class="semantic-token" data-copy="--color-background-container"><div class="semantic-swatch" style="background:var(--color-background-container)"></div><div class="semantic-info"><span class="semantic-label">container</span><span class="token-name">--color-background-container</span></div></div>
-        <div class="semantic-token" data-copy="--color-background-contrast"><div class="semantic-swatch" style="background:var(--color-background-contrast)"></div><div class="semantic-info"><span class="semantic-label">contrast</span><span class="token-name">--color-background-contrast</span></div></div>
-        <div class="semantic-token" data-copy="--color-background-ui"><div class="semantic-swatch" style="background:var(--color-background-ui)"></div><div class="semantic-info"><span class="semantic-label">ui</span><span class="token-name">--color-background-ui</span></div></div>
-        <div class="semantic-token" data-copy="--color-background-selection"><div class="semantic-swatch" style="background:var(--color-background-selection)"></div><div class="semantic-info"><span class="semantic-label">selection</span><span class="token-name">--color-background-selection</span></div></div>
-        <div class="semantic-token" data-copy="--color-background-disabled"><div class="semantic-swatch" style="background:var(--color-background-disabled)"></div><div class="semantic-info"><span class="semantic-label">disabled</span><span class="token-name">--color-background-disabled</span></div></div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Media</span>
+        <a class="sidebar-link" href="#" data-page="icons">Icons</a>
+        <a class="sidebar-link" href="#" data-page="logo">Logo</a>
+        <a class="sidebar-link" href="#" data-page="photography">Photography</a>
+        <a class="sidebar-link" href="#" data-page="illustration">Illustration</a>
       </div>
     </div>
 
-    <!-- Status -->
-    <div class="semantic-group">
-      <p class="semantic-group-title">Status</p>
-      <div class="semantic-tokens-grid">
-        <div class="semantic-token" data-copy="--color-background-success"><div class="semantic-swatch" style="background:var(--color-background-success)"></div><div class="semantic-info"><span class="semantic-label">bg-success</span><span class="token-name">--color-background-success</span></div></div>
-        <div class="semantic-token" data-copy="--color-background-warning"><div class="semantic-swatch" style="background:var(--color-background-warning)"></div><div class="semantic-info"><span class="semantic-label">bg-warning</span><span class="token-name">--color-background-warning</span></div></div>
-        <div class="semantic-token" data-copy="--color-background-danger"><div class="semantic-swatch" style="background:var(--color-background-danger)"></div><div class="semantic-info"><span class="semantic-label">bg-danger</span><span class="token-name">--color-background-danger</span></div></div>
-        <div class="semantic-token" data-copy="--color-success"><div class="semantic-swatch" style="background:var(--color-success)"></div><div class="semantic-info"><span class="semantic-label">success</span><span class="token-name">--color-success</span></div></div>
-        <div class="semantic-token" data-copy="--color-warning"><div class="semantic-swatch" style="background:var(--color-warning)"></div><div class="semantic-info"><span class="semantic-label">warning</span><span class="token-name">--color-warning</span></div></div>
-        <div class="semantic-token" data-copy="--color-danger"><div class="semantic-swatch" style="background:var(--color-danger)"></div><div class="semantic-info"><span class="semantic-label">danger</span><span class="token-name">--color-danger</span></div></div>
-        <div class="semantic-token" data-copy="--color-info"><div class="semantic-swatch" style="background:var(--color-info)"></div><div class="semantic-info"><span class="semantic-label">info</span><span class="token-name">--color-info</span></div></div>
+    <!-- Components nav -->
+    <div class="sidebar-panel hidden" id="sidebar-components">
+      <div class="sidebar-group">
+        <a class="sidebar-link" href="#" data-page="comp-overview" style="font-weight:var(--font-weight-semibold);padding-top:var(--space-300)">Overview</a>
+      </div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Actions</span>
+        <a class="sidebar-link" href="#" data-page="button">Button</a>
+        <a class="sidebar-link" href="#" data-page="choice-button">Choice Button</a>
+        <a class="sidebar-link" href="#" data-page="chips">Chips</a>
+        <a class="sidebar-link" href="#" data-page="tags">Tags</a>
+        <a class="sidebar-link" href="#" data-page="link">Link Standalone</a>
+      </div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Forms</span>
+        <a class="sidebar-link" href="#" data-page="text-fields">Text Fields &amp; Selects</a>
+        <a class="sidebar-link" href="#" data-page="search-field">Search Field</a>
+        <a class="sidebar-link" href="#" data-page="checkbox">Check Box</a>
+        <a class="sidebar-link" href="#" data-page="radio">Radio</a>
+        <a class="sidebar-link" href="#" data-page="toggle-switch">Toggle Switch</a>
+        <a class="sidebar-link" href="#" data-page="segmented-control">Segmented Control</a>
+        <a class="sidebar-link" href="#" data-page="stepper">Stepper</a>
+      </div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Navigation</span>
+        <a class="sidebar-link" href="#" data-page="top-nav-app">Top Navigation — App</a>
+        <a class="sidebar-link" href="#" data-page="top-nav-web">Top Navigation — Web</a>
+        <a class="sidebar-link" href="#" data-page="bottom-nav">Bottom Navigation</a>
+        <a class="sidebar-link" href="#" data-page="tabs">Tabs</a>
+        <a class="sidebar-link" href="#" data-page="date-tabs">Date Tabs</a>
+        <a class="sidebar-link" href="#" data-page="pagination">Pagination</a>
+      </div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Feedback</span>
+        <a class="sidebar-link" href="#" data-page="toast">Toast</a>
+        <a class="sidebar-link" href="#" data-page="important-message">Important Message</a>
+        <a class="sidebar-link" href="#" data-page="badge">Badge</a>
+        <a class="sidebar-link" href="#" data-page="progress">Progress Indicators</a>
+        <a class="sidebar-link" href="#" data-page="scrim">Scrim</a>
+      </div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Overlays</span>
+        <a class="sidebar-link" href="#" data-page="modal">Modal Dialog</a>
+        <a class="sidebar-link" href="#" data-page="bottom-sheet">Bottom Sheet</a>
+        <a class="sidebar-link" href="#" data-page="date-picker">Date Picker Calendar</a>
+      </div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Content</span>
+        <a class="sidebar-link" href="#" data-page="card">Card</a>
+        <a class="sidebar-link" href="#" data-page="list">List</a>
+        <a class="sidebar-link" href="#" data-page="list-accordion">List Accordion</a>
+        <a class="sidebar-link" href="#" data-page="avatar">Avatar</a>
+        <a class="sidebar-link" href="#" data-page="divider">Divider</a>
+        <a class="sidebar-link" href="#" data-page="icon-bullet">Icon Bullet</a>
       </div>
     </div>
+
+  </aside><!-- /sidebar -->
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="site-content">
+
+    <!-- ════════════════════════════════════════
+         FOUNDATIONS › COLOR
+    ════════════════════════════════════════ -->
+    <div class="page-panel active" id="page-color">
+
+      <section class="section" id="brand">
+        <div class="section-header">
+          <p class="section-eyebrow">Color</p>
+          <h2 class="section-title">Brand palette</h2>
+          <p class="section-description">The expressive anchors of the system. Use for brand moments, accents, and highlights — not for functional UI states.</p>
+        </div>
+        <div class="brand-grid">
+          <div class="brand-item"><div class="brand-swatch" style="background:var(--color-brand-ink)"></div><span class="brand-name">Ink</span><span class="token-name" data-copy="--color-brand-ink">brand-ink</span></div>
+          <div class="brand-item"><div class="brand-swatch" style="background:var(--color-brand-cream)"></div><span class="brand-name">Cream</span><span class="token-name" data-copy="--color-brand-cream">brand-cream</span></div>
+          <div class="brand-item"><div class="brand-swatch" style="background:var(--color-brand-violet)"></div><span class="brand-name">Violet</span><span class="token-name" data-copy="--color-brand-violet">brand-violet</span></div>
+          <div class="brand-item"><div class="brand-swatch" style="background:var(--color-brand-ultraviolet)"></div><span class="brand-name">Ultraviolet</span><span class="token-name" data-copy="--color-brand-ultraviolet">brand-ultraviolet</span></div>
+          <div class="brand-item"><div class="brand-swatch" style="background:var(--color-brand-berry)"></div><span class="brand-name">Berry</span><span class="token-name" data-copy="--color-brand-berry">brand-berry</span></div>
+          <div class="brand-item"><div class="brand-swatch" style="background:var(--color-brand-mint)"></div><span class="brand-name">Mint</span><span class="token-name" data-copy="--color-brand-mint">brand-mint</span></div>
+          <div class="brand-item"><div class="brand-swatch" style="background:var(--color-brand-pool)"></div><span class="brand-name">Pool</span><span class="token-name" data-copy="--color-brand-pool">brand-pool</span></div>
+          <div class="brand-item"><div class="brand-swatch" style="background:var(--color-brand-citron)"></div><span class="brand-name">Citron</span><span class="token-name" data-copy="--color-brand-citron">brand-citron</span></div>
+        </div>
+      </section>
+
+      <hr class="section-rule" />
+
+      <section class="section" id="primitives">
+        <div class="section-header">
+          <p class="section-eyebrow">Color</p>
+          <h2 class="section-title">Primitive palettes</h2>
+          <p class="section-description">Raw color scales. The foundation semantic tokens are built from. Reference only — use semantic tokens in components.</p>
+        </div>
+        <div class="palette-grid">
+          <div class="palette-scroll"><div class="palette-row steps-11"><span class="palette-name">Café</span><div class="swatch" data-copy="--primitive-cafe-0"><div class="swatch-color" style="background:var(--primitive-cafe-0)"></div><span class="swatch-label">0</span></div><div class="swatch" data-copy="--primitive-cafe-100"><div class="swatch-color" style="background:var(--primitive-cafe-100)"></div><span class="swatch-label">100</span></div><div class="swatch" data-copy="--primitive-cafe-200"><div class="swatch-color" style="background:var(--primitive-cafe-200)"></div><span class="swatch-label">200</span></div><div class="swatch" data-copy="--primitive-cafe-300"><div class="swatch-color" style="background:var(--primitive-cafe-300)"></div><span class="swatch-label">300</span></div><div class="swatch" data-copy="--primitive-cafe-400"><div class="swatch-color" style="background:var(--primitive-cafe-400)"></div><span class="swatch-label">400</span></div><div class="swatch" data-copy="--primitive-cafe-500"><div class="swatch-color" style="background:var(--primitive-cafe-500)"></div><span class="swatch-label">500</span></div><div class="swatch" data-copy="--primitive-cafe-600"><div class="swatch-color" style="background:var(--primitive-cafe-600)"></div><span class="swatch-label">600</span></div><div class="swatch" data-copy="--primitive-cafe-700"><div class="swatch-color" style="background:var(--primitive-cafe-700)"></div><span class="swatch-label">700</span></div><div class="swatch" data-copy="--primitive-cafe-800"><div class="swatch-color" style="background:var(--primitive-cafe-800)"></div><span class="swatch-label">800</span></div><div class="swatch" data-copy="--primitive-cafe-900"><div class="swatch-color" style="background:var(--primitive-cafe-900)"></div><span class="swatch-label">900</span></div><div class="swatch" data-copy="--primitive-cafe-1000"><div class="swatch-color" style="background:var(--primitive-cafe-1000)"></div><span class="swatch-label">1000</span></div></div></div>
+          <div class="palette-scroll"><div class="palette-row steps-11"><span class="palette-name">Ink</span><div class="swatch" data-copy="--primitive-ink-50"><div class="swatch-color" style="background:var(--primitive-ink-50)"></div><span class="swatch-label">50</span></div><div class="swatch" data-copy="--primitive-ink-100"><div class="swatch-color" style="background:var(--primitive-ink-100)"></div><span class="swatch-label">100</span></div><div class="swatch" data-copy="--primitive-ink-200"><div class="swatch-color" style="background:var(--primitive-ink-200)"></div><span class="swatch-label">200</span></div><div class="swatch" data-copy="--primitive-ink-300"><div class="swatch-color" style="background:var(--primitive-ink-300)"></div><span class="swatch-label">300</span></div><div class="swatch" data-copy="--primitive-ink-400"><div class="swatch-color" style="background:var(--primitive-ink-400)"></div><span class="swatch-label">400</span></div><div class="swatch" data-copy="--primitive-ink-500"><div class="swatch-color" style="background:var(--primitive-ink-500)"></div><span class="swatch-label">500</span></div><div class="swatch" data-copy="--primitive-ink-600"><div class="swatch-color" style="background:var(--primitive-ink-600)"></div><span class="swatch-label">600</span></div><div class="swatch" data-copy="--primitive-ink-700"><div class="swatch-color" style="background:var(--primitive-ink-700)"></div><span class="swatch-label">700</span></div><div class="swatch" data-copy="--primitive-ink-800"><div class="swatch-color" style="background:var(--primitive-ink-800)"></div><span class="swatch-label">800</span></div><div class="swatch" data-copy="--primitive-ink-900"><div class="swatch-color" style="background:var(--primitive-ink-900)"></div><span class="swatch-label">900</span></div><div class="swatch" data-copy="--primitive-ink-1000"><div class="swatch-color" style="background:var(--primitive-ink-1000)"></div><span class="swatch-label">1000</span></div></div></div>
+          <div class="palette-scroll"><div class="palette-row steps-10"><span class="palette-name">Violet</span><div class="swatch" data-copy="--primitive-violet-100"><div class="swatch-color" style="background:var(--primitive-violet-100)"></div><span class="swatch-label">100</span></div><div class="swatch" data-copy="--primitive-violet-200"><div class="swatch-color" style="background:var(--primitive-violet-200)"></div><span class="swatch-label">200</span></div><div class="swatch" data-copy="--primitive-violet-300"><div class="swatch-color" style="background:var(--primitive-violet-300)"></div><span class="swatch-label">300</span></div><div class="swatch" data-copy="--primitive-violet-400"><div class="swatch-color" style="background:var(--primitive-violet-400)"></div><span class="swatch-label">400</span></div><div class="swatch" data-copy="--primitive-violet-500"><div class="swatch-color" style="background:var(--primitive-violet-500)"></div><span class="swatch-label">500</span></div><div class="swatch" data-copy="--primitive-violet-600"><div class="swatch-color" style="background:var(--primitive-violet-600)"></div><span class="swatch-label">600</span></div><div class="swatch" data-copy="--primitive-violet-700"><div class="swatch-color" style="background:var(--primitive-violet-700)"></div><span class="swatch-label">700</span></div><div class="swatch" data-copy="--primitive-violet-800"><div class="swatch-color" style="background:var(--primitive-violet-800)"></div><span class="swatch-label">800</span></div><div class="swatch" data-copy="--primitive-violet-900"><div class="swatch-color" style="background:var(--primitive-violet-900)"></div><span class="swatch-label">900</span></div><div class="swatch" data-copy="--primitive-violet-1000"><div class="swatch-color" style="background:var(--primitive-violet-1000)"></div><span class="swatch-label">1000</span></div></div></div>
+          <div class="palette-scroll"><div class="palette-row steps-10"><span class="palette-name">Berry</span><div class="swatch" data-copy="--primitive-berry-100"><div class="swatch-color" style="background:var(--primitive-berry-100)"></div><span class="swatch-label">100</span></div><div class="swatch" data-copy="--primitive-berry-200"><div class="swatch-color" style="background:var(--primitive-berry-200)"></div><span class="swatch-label">200</span></div><div class="swatch" data-copy="--primitive-berry-300"><div class="swatch-color" style="background:var(--primitive-berry-300)"></div><span class="swatch-label">300</span></div><div class="swatch" data-copy="--primitive-berry-400"><div class="swatch-color" style="background:var(--primitive-berry-400)"></div><span class="swatch-label">400</span></div><div class="swatch" data-copy="--primitive-berry-500"><div class="swatch-color" style="background:var(--primitive-berry-500)"></div><span class="swatch-label">500</span></div><div class="swatch" data-copy="--primitive-berry-600"><div class="swatch-color" style="background:var(--primitive-berry-600)"></div><span class="swatch-label">600</span></div><div class="swatch" data-copy="--primitive-berry-700"><div class="swatch-color" style="background:var(--primitive-berry-700)"></div><span class="swatch-label">700</span></div><div class="swatch" data-copy="--primitive-berry-800"><div class="swatch-color" style="background:var(--primitive-berry-800)"></div><span class="swatch-label">800</span></div><div class="swatch" data-copy="--primitive-berry-900"><div class="swatch-color" style="background:var(--primitive-berry-900)"></div><span class="swatch-label">900</span></div><div class="swatch" data-copy="--primitive-berry-1000"><div class="swatch-color" style="background:var(--primitive-berry-1000)"></div><span class="swatch-label">1000</span></div></div></div>
+          <div class="palette-scroll"><div class="palette-row steps-10"><span class="palette-name">Apricot</span><div class="swatch" data-copy="--primitive-apricot-100"><div class="swatch-color" style="background:var(--primitive-apricot-100)"></div><span class="swatch-label">100</span></div><div class="swatch" data-copy="--primitive-apricot-200"><div class="swatch-color" style="background:var(--primitive-apricot-200)"></div><span class="swatch-label">200</span></div><div class="swatch" data-copy="--primitive-apricot-300"><div class="swatch-color" style="background:var(--primitive-apricot-300)"></div><span class="swatch-label">300</span></div><div class="swatch" data-copy="--primitive-apricot-400"><div class="swatch-color" style="background:var(--primitive-apricot-400)"></div><span class="swatch-label">400</span></div><div class="swatch" data-copy="--primitive-apricot-500"><div class="swatch-color" style="background:var(--primitive-apricot-500)"></div><span class="swatch-label">500</span></div><div class="swatch" data-copy="--primitive-apricot-600"><div class="swatch-color" style="background:var(--primitive-apricot-600)"></div><span class="swatch-label">600</span></div><div class="swatch" data-copy="--primitive-apricot-700"><div class="swatch-color" style="background:var(--primitive-apricot-700)"></div><span class="swatch-label">700</span></div><div class="swatch" data-copy="--primitive-apricot-800"><div class="swatch-color" style="background:var(--primitive-apricot-800)"></div><span class="swatch-label">800</span></div><div class="swatch" data-copy="--primitive-apricot-900"><div class="swatch-color" style="background:var(--primitive-apricot-900)"></div><span class="swatch-label">900</span></div><div class="swatch" data-copy="--primitive-apricot-1000"><div class="swatch-color" style="background:var(--primitive-apricot-1000)"></div><span class="swatch-label">1000</span></div></div></div>
+          <div class="palette-scroll"><div class="palette-row steps-10"><span class="palette-name">Mint</span><div class="swatch" data-copy="--primitive-mint-100"><div class="swatch-color" style="background:var(--primitive-mint-100)"></div><span class="swatch-label">100</span></div><div class="swatch" data-copy="--primitive-mint-200"><div class="swatch-color" style="background:var(--primitive-mint-200)"></div><span class="swatch-label">200</span></div><div class="swatch" data-copy="--primitive-mint-300"><div class="swatch-color" style="background:var(--primitive-mint-300)"></div><span class="swatch-label">300</span></div><div class="swatch" data-copy="--primitive-mint-400"><div class="swatch-color" style="background:var(--primitive-mint-400)"></div><span class="swatch-label">400</span></div><div class="swatch" data-copy="--primitive-mint-500"><div class="swatch-color" style="background:var(--primitive-mint-500)"></div><span class="swatch-label">500</span></div><div class="swatch" data-copy="--primitive-mint-600"><div class="swatch-color" style="background:var(--primitive-mint-600)"></div><span class="swatch-label">600</span></div><div class="swatch" data-copy="--primitive-mint-700"><div class="swatch-color" style="background:var(--primitive-mint-700)"></div><span class="swatch-label">700</span></div><div class="swatch" data-copy="--primitive-mint-800"><div class="swatch-color" style="background:var(--primitive-mint-800)"></div><span class="swatch-label">800</span></div><div class="swatch" data-copy="--primitive-mint-900"><div class="swatch-color" style="background:var(--primitive-mint-900)"></div><span class="swatch-label">900</span></div><div class="swatch" data-copy="--primitive-mint-1000"><div class="swatch-color" style="background:var(--primitive-mint-1000)"></div><span class="swatch-label">1000</span></div></div></div>
+          <div class="palette-scroll"><div class="palette-row steps-10"><span class="palette-name">Pool</span><div class="swatch" data-copy="--primitive-pool-100"><div class="swatch-color" style="background:var(--primitive-pool-100)"></div><span class="swatch-label">100</span></div><div class="swatch" data-copy="--primitive-pool-200"><div class="swatch-color" style="background:var(--primitive-pool-200)"></div><span class="swatch-label">200</span></div><div class="swatch" data-copy="--primitive-pool-300"><div class="swatch-color" style="background:var(--primitive-pool-300)"></div><span class="swatch-label">300</span></div><div class="swatch" data-copy="--primitive-pool-400"><div class="swatch-color" style="background:var(--primitive-pool-400)"></div><span class="swatch-label">400</span></div><div class="swatch" data-copy="--primitive-pool-500"><div class="swatch-color" style="background:var(--primitive-pool-500)"></div><span class="swatch-label">500</span></div><div class="swatch" data-copy="--primitive-pool-600"><div class="swatch-color" style="background:var(--primitive-pool-600)"></div><span class="swatch-label">600</span></div><div class="swatch" data-copy="--primitive-pool-700"><div class="swatch-color" style="background:var(--primitive-pool-700)"></div><span class="swatch-label">700</span></div><div class="swatch" data-copy="--primitive-pool-800"><div class="swatch-color" style="background:var(--primitive-pool-800)"></div><span class="swatch-label">800</span></div><div class="swatch" data-copy="--primitive-pool-900"><div class="swatch-color" style="background:var(--primitive-pool-900)"></div><span class="swatch-label">900</span></div><div class="swatch" data-copy="--primitive-pool-1000"><div class="swatch-color" style="background:var(--primitive-pool-1000)"></div><span class="swatch-label">1000</span></div></div></div>
+          <div class="palette-scroll"><div class="palette-row steps-10"><span class="palette-name">Citron</span><div class="swatch" data-copy="--primitive-citron-100"><div class="swatch-color" style="background:var(--primitive-citron-100)"></div><span class="swatch-label">100</span></div><div class="swatch" data-copy="--primitive-citron-200"><div class="swatch-color" style="background:var(--primitive-citron-200)"></div><span class="swatch-label">200</span></div><div class="swatch" data-copy="--primitive-citron-300"><div class="swatch-color" style="background:var(--primitive-citron-300)"></div><span class="swatch-label">300</span></div><div class="swatch" data-copy="--primitive-citron-400"><div class="swatch-color" style="background:var(--primitive-citron-400)"></div><span class="swatch-label">400</span></div><div class="swatch" data-copy="--primitive-citron-500"><div class="swatch-color" style="background:var(--primitive-citron-500)"></div><span class="swatch-label">500</span></div><div class="swatch" data-copy="--primitive-citron-600"><div class="swatch-color" style="background:var(--primitive-citron-600)"></div><span class="swatch-label">600</span></div><div class="swatch" data-copy="--primitive-citron-700"><div class="swatch-color" style="background:var(--primitive-citron-700)"></div><span class="swatch-label">700</span></div><div class="swatch" data-copy="--primitive-citron-800"><div class="swatch-color" style="background:var(--primitive-citron-800)"></div><span class="swatch-label">800</span></div><div class="swatch" data-copy="--primitive-citron-900"><div class="swatch-color" style="background:var(--primitive-citron-900)"></div><span class="swatch-label">900</span></div><div class="swatch" data-copy="--primitive-citron-1000"><div class="swatch-color" style="background:var(--primitive-citron-1000)"></div><span class="swatch-label">1000</span></div></div></div>
+        </div>
+      </section>
+
+      <hr class="section-rule" />
+
+      <section class="section" id="semantic">
+        <div class="section-header">
+          <p class="section-eyebrow">Color</p>
+          <h2 class="section-title">Semantic tokens</h2>
+          <p class="section-description">Mode-aware tokens that components reference directly. Toggle dark mode to see them shift.</p>
+        </div>
+        <div class="semantic-group">
+          <p class="semantic-group-title">Background</p>
+          <div class="semantic-tokens-grid">
+            <div class="semantic-token" data-copy="--color-background-page"><div class="semantic-swatch" style="background:var(--color-background-page)"></div><div class="semantic-info"><span class="semantic-label">page</span><span class="token-name">--color-background-page</span></div></div>
+            <div class="semantic-token" data-copy="--color-background-section"><div class="semantic-swatch" style="background:var(--color-background-section)"></div><div class="semantic-info"><span class="semantic-label">section</span><span class="token-name">--color-background-section</span></div></div>
+            <div class="semantic-token" data-copy="--color-background-container"><div class="semantic-swatch" style="background:var(--color-background-container)"></div><div class="semantic-info"><span class="semantic-label">container</span><span class="token-name">--color-background-container</span></div></div>
+            <div class="semantic-token" data-copy="--color-background-contrast"><div class="semantic-swatch" style="background:var(--color-background-contrast)"></div><div class="semantic-info"><span class="semantic-label">contrast</span><span class="token-name">--color-background-contrast</span></div></div>
+            <div class="semantic-token" data-copy="--color-background-ui"><div class="semantic-swatch" style="background:var(--color-background-ui)"></div><div class="semantic-info"><span class="semantic-label">ui</span><span class="token-name">--color-background-ui</span></div></div>
+            <div class="semantic-token" data-copy="--color-background-selection"><div class="semantic-swatch" style="background:var(--color-background-selection)"></div><div class="semantic-info"><span class="semantic-label">selection</span><span class="token-name">--color-background-selection</span></div></div>
+            <div class="semantic-token" data-copy="--color-background-disabled"><div class="semantic-swatch" style="background:var(--color-background-disabled)"></div><div class="semantic-info"><span class="semantic-label">disabled</span><span class="token-name">--color-background-disabled</span></div></div>
+          </div>
+        </div>
+        <div class="semantic-group">
+          <p class="semantic-group-title">Status</p>
+          <div class="semantic-tokens-grid">
+            <div class="semantic-token" data-copy="--color-background-success"><div class="semantic-swatch" style="background:var(--color-background-success)"></div><div class="semantic-info"><span class="semantic-label">bg-success</span><span class="token-name">--color-background-success</span></div></div>
+            <div class="semantic-token" data-copy="--color-background-warning"><div class="semantic-swatch" style="background:var(--color-background-warning)"></div><div class="semantic-info"><span class="semantic-label">bg-warning</span><span class="token-name">--color-background-warning</span></div></div>
+            <div class="semantic-token" data-copy="--color-background-danger"><div class="semantic-swatch" style="background:var(--color-background-danger)"></div><div class="semantic-info"><span class="semantic-label">bg-danger</span><span class="token-name">--color-background-danger</span></div></div>
+            <div class="semantic-token" data-copy="--color-success"><div class="semantic-swatch" style="background:var(--color-success)"></div><div class="semantic-info"><span class="semantic-label">success</span><span class="token-name">--color-success</span></div></div>
+            <div class="semantic-token" data-copy="--color-warning"><div class="semantic-swatch" style="background:var(--color-warning)"></div><div class="semantic-info"><span class="semantic-label">warning</span><span class="token-name">--color-warning</span></div></div>
+            <div class="semantic-token" data-copy="--color-danger"><div class="semantic-swatch" style="background:var(--color-danger)"></div><div class="semantic-info"><span class="semantic-label">danger</span><span class="token-name">--color-danger</span></div></div>
+            <div class="semantic-token" data-copy="--color-info"><div class="semantic-swatch" style="background:var(--color-info)"></div><div class="semantic-info"><span class="semantic-label">info</span><span class="token-name">--color-info</span></div></div>
+          </div>
+        </div>
+        <div class="semantic-group">
+          <p class="semantic-group-title">Content</p>
+          <div class="semantic-tokens-grid">
+            <div class="semantic-token" data-copy="--color-content-default"><div class="semantic-swatch" style="background:var(--color-content-default)"></div><div class="semantic-info"><span class="semantic-label">default</span><span class="token-name">--color-content-default</span></div></div>
+            <div class="semantic-token" data-copy="--color-content-subtle"><div class="semantic-swatch" style="background:var(--color-content-subtle)"></div><div class="semantic-info"><span class="semantic-label">subtle</span><span class="token-name">--color-content-subtle</span></div></div>
+            <div class="semantic-token" data-copy="--color-content-disabled"><div class="semantic-swatch" style="background:var(--color-content-disabled)"></div><div class="semantic-info"><span class="semantic-label">disabled</span><span class="token-name">--color-content-disabled</span></div></div>
+            <div class="semantic-token" data-copy="--color-contrast"><div class="semantic-swatch" style="background:var(--color-contrast)"></div><div class="semantic-info"><span class="semantic-label">contrast</span><span class="token-name">--color-contrast</span></div></div>
+            <div class="semantic-token" data-copy="--color-inverse"><div class="semantic-swatch" style="background:var(--color-inverse)"></div><div class="semantic-info"><span class="semantic-label">inverse</span><span class="token-name">--color-inverse</span></div></div>
+          </div>
+        </div>
+        <div class="semantic-group">
+          <p class="semantic-group-title">Border</p>
+          <div class="semantic-tokens-grid">
+            <div class="semantic-token" data-copy="--color-border-default"><div class="semantic-swatch" style="background:var(--color-border-default)"></div><div class="semantic-info"><span class="semantic-label">default</span><span class="token-name">--color-border-default</span></div></div>
+            <div class="semantic-token" data-copy="--color-border-subtle"><div class="semantic-swatch" style="background:var(--color-border-subtle)"></div><div class="semantic-info"><span class="semantic-label">subtle</span><span class="token-name">--color-border-subtle</span></div></div>
+            <div class="semantic-token" data-copy="--color-border-strong"><div class="semantic-swatch" style="background:var(--color-border-strong)"></div><div class="semantic-info"><span class="semantic-label">strong</span><span class="token-name">--color-border-strong</span></div></div>
+            <div class="semantic-token" data-copy="--color-border-interactive"><div class="semantic-swatch" style="background:var(--color-border-interactive)"></div><div class="semantic-info"><span class="semantic-label">interactive</span><span class="token-name">--color-border-interactive</span></div></div>
+            <div class="semantic-token" data-copy="--color-border-disabled"><div class="semantic-swatch" style="background:var(--color-border-disabled)"></div><div class="semantic-info"><span class="semantic-label">disabled</span><span class="token-name">--color-border-disabled</span></div></div>
+            <div class="semantic-token" data-copy="--color-border-inverse"><div class="semantic-swatch" style="background:var(--color-border-inverse)"></div><div class="semantic-info"><span class="semantic-label">inverse</span><span class="token-name">--color-border-inverse</span></div></div>
+          </div>
+        </div>
+        <div class="semantic-group">
+          <p class="semantic-group-title">Action</p>
+          <div class="semantic-tokens-grid">
+            <div class="semantic-token" data-copy="--color-action-default"><div class="semantic-swatch" style="background:var(--color-action-default)"></div><div class="semantic-info"><span class="semantic-label">default</span><span class="token-name">--color-action-default</span></div></div>
+            <div class="semantic-token" data-copy="--color-action-hover"><div class="semantic-swatch" style="background:var(--color-action-hover)"></div><div class="semantic-info"><span class="semantic-label">hover</span><span class="token-name">--color-action-hover</span></div></div>
+            <div class="semantic-token" data-copy="--color-action-hover-subtle"><div class="semantic-swatch" style="background:var(--color-action-hover-subtle)"></div><div class="semantic-info"><span class="semantic-label">hover-subtle</span><span class="token-name">--color-action-hover-subtle</span></div></div>
+            <div class="semantic-token" data-copy="--color-action-active-subtle"><div class="semantic-swatch" style="background:var(--color-action-active-subtle)"></div><div class="semantic-info"><span class="semantic-label">active-subtle</span><span class="token-name">--color-action-active-subtle</span></div></div>
+            <div class="semantic-token" data-copy="--color-action-visited"><div class="semantic-swatch" style="background:var(--color-action-visited)"></div><div class="semantic-info"><span class="semantic-label">visited</span><span class="token-name">--color-action-visited</span></div></div>
+            <div class="semantic-token" data-copy="--color-action-disabled"><div class="semantic-swatch" style="background:var(--color-action-disabled)"></div><div class="semantic-info"><span class="semantic-label">disabled</span><span class="token-name">--color-action-disabled</span></div></div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /page-color -->
+
+
+    <!-- ════════════════════════════════════════
+         FOUNDATIONS › TYPOGRAPHY
+    ════════════════════════════════════════ -->
+    <div class="page-panel" id="page-typography">
+      <section class="section">
+        <div class="section-header">
+          <p class="section-eyebrow">Foundations · Tokens</p>
+          <h2 class="section-title">Type scale</h2>
+          <p class="section-description">Noto Serif for display and editorial moments. Inter for UI and body. Twelve steps from 12px to 64px.</p>
+        </div>
+        <div class="type-scale">
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-display-xl">--font-size-display-xl</span><span class="type-details">64 / 64px · Noto Serif</span></div><div style="font-family:var(--font-family-serif);font-size:var(--font-size-display-xl);line-height:var(--font-leading-display-xl);letter-spacing:-0.03em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">Display XL</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-display-l">--font-size-display-l</span><span class="type-details">56 / 64px · Noto Serif</span></div><div style="font-family:var(--font-family-serif);font-size:var(--font-size-display-l);line-height:var(--font-leading-display-l);letter-spacing:-0.02em">Display L</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-display-m">--font-size-display-m</span><span class="type-details">48 / 56px · Noto Serif</span></div><div style="font-family:var(--font-family-serif);font-size:var(--font-size-display-m);line-height:var(--font-leading-display-m);letter-spacing:-0.02em">Display M</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-display-s">--font-size-display-s</span><span class="type-details">32 / 40px · Noto Serif</span></div><div style="font-family:var(--font-family-serif);font-size:var(--font-size-display-s);line-height:var(--font-leading-display-s);letter-spacing:-0.015em">Display S</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-heading-xl">--font-size-heading-xl</span><span class="type-details">40 / 48px · Inter Semibold</span></div><div style="font-family:var(--font-family-sans);font-size:var(--font-size-heading-xl);line-height:var(--font-leading-heading-xl);font-weight:var(--font-weight-semibold);letter-spacing:-0.02em">Heading XL</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-heading-l">--font-size-heading-l</span><span class="type-details">32 / 40px · Inter Semibold</span></div><div style="font-family:var(--font-family-sans);font-size:var(--font-size-heading-l);line-height:var(--font-leading-heading-l);font-weight:var(--font-weight-semibold);letter-spacing:-0.015em">Heading L</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-heading-m">--font-size-heading-m</span><span class="type-details">24 / 28px · Inter Semibold</span></div><div style="font-family:var(--font-family-sans);font-size:var(--font-size-heading-m);line-height:var(--font-leading-heading-m);font-weight:var(--font-weight-semibold)">Heading M</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-heading-s">--font-size-heading-s</span><span class="type-details">18 / 22px · Inter Semibold</span></div><div style="font-family:var(--font-family-sans);font-size:var(--font-size-heading-s);line-height:var(--font-leading-heading-s);font-weight:var(--font-weight-semibold)">Heading S</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-body-l">--font-size-body-l</span><span class="type-details">18 / 28px · Inter Regular</span></div><div style="font-family:var(--font-family-sans);font-size:var(--font-size-body-l);line-height:var(--font-leading-body-l)">Precision crafted design for enduring products.</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-body-m">--font-size-body-m</span><span class="type-details">16 / 22px · Inter Regular</span></div><div style="font-family:var(--font-family-sans);font-size:var(--font-size-body-m);line-height:var(--font-leading-body-m)">Precision crafted design for enduring products.</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-body-s">--font-size-body-s</span><span class="type-details">14 / 20px · Inter Regular</span></div><div style="font-family:var(--font-family-sans);font-size:var(--font-size-body-s);line-height:var(--font-leading-body-s)">Precision crafted design for enduring products.</div></div>
+          <div class="type-row"><div class="type-meta"><span class="token-name" data-copy="--font-size-body-xs">--font-size-body-xs</span><span class="type-details">12 / 18px · Inter Regular</span></div><div style="font-family:var(--font-family-sans);font-size:var(--font-size-body-xs);line-height:var(--font-leading-body-xs)">Precision crafted design for enduring products.</div></div>
+        </div>
+      </section>
+    </div><!-- /page-typography -->
+
+
+    <!-- ════════════════════════════════════════
+         FOUNDATIONS › SPACING
+    ════════════════════════════════════════ -->
+    <div class="page-panel" id="page-spacing">
+      <section class="section">
+        <div class="section-header">
+          <p class="section-eyebrow">Foundations · Tokens</p>
+          <h2 class="section-title">Spacing scale</h2>
+          <p class="section-description">Fourteen steps from 4px to 96px. Used for padding, gap, and margin.</p>
+        </div>
+        <div class="space-grid">
+          <div class="space-row"><span class="token-name" data-copy="--space-100">--space-100</span><span class="space-value">4px</span><div class="space-bar-track"><div class="space-bar" style="width:4px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-200">--space-200</span><span class="space-value">8px</span><div class="space-bar-track"><div class="space-bar" style="width:8px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-300">--space-300</span><span class="space-value">12px</span><div class="space-bar-track"><div class="space-bar" style="width:12px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-400">--space-400</span><span class="space-value">16px</span><div class="space-bar-track"><div class="space-bar" style="width:16px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-500">--space-500</span><span class="space-value">24px</span><div class="space-bar-track"><div class="space-bar" style="width:24px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-600">--space-600</span><span class="space-value">32px</span><div class="space-bar-track"><div class="space-bar" style="width:32px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-700">--space-700</span><span class="space-value">40px</span><div class="space-bar-track"><div class="space-bar" style="width:40px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-800">--space-800</span><span class="space-value">48px</span><div class="space-bar-track"><div class="space-bar" style="width:48px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-900">--space-900</span><span class="space-value">56px</span><div class="space-bar-track"><div class="space-bar" style="width:56px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-1000">--space-1000</span><span class="space-value">64px</span><div class="space-bar-track"><div class="space-bar" style="width:64px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-1100">--space-1100</span><span class="space-value">72px</span><div class="space-bar-track"><div class="space-bar" style="width:72px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-1200">--space-1200</span><span class="space-value">80px</span><div class="space-bar-track"><div class="space-bar" style="width:80px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-1300">--space-1300</span><span class="space-value">88px</span><div class="space-bar-track"><div class="space-bar" style="width:88px"></div></div></div>
+          <div class="space-row"><span class="token-name" data-copy="--space-1400">--space-1400</span><span class="space-value">96px</span><div class="space-bar-track"><div class="space-bar" style="width:96px"></div></div></div>
+        </div>
+      </section>
+    </div><!-- /page-spacing -->
+
+
+    <!-- ════════════════════════════════════════
+         FOUNDATIONS › SHAPE
+    ════════════════════════════════════════ -->
+    <div class="page-panel" id="page-shape">
+      <section class="section">
+        <div class="section-header">
+          <p class="section-eyebrow">Foundations · Tokens</p>
+          <h2 class="section-title">Border radius</h2>
+          <p class="section-description">Seven steps from sharp to pill.</p>
+        </div>
+        <div class="shape-grid">
+          <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-square)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-square">--corner-radius-square</span><span class="shape-val">0px</span></div></div>
+          <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-xs)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-xs">--corner-radius-xs</span><span class="shape-val">4px</span></div></div>
+          <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-s)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-s">--corner-radius-s</span><span class="shape-val">8px</span></div></div>
+          <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-m)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-m">--corner-radius-m</span><span class="shape-val">16px</span></div></div>
+          <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-l)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-l">--corner-radius-l</span><span class="shape-val">24px</span></div></div>
+          <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-xl)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-xl">--corner-radius-xl</span><span class="shape-val">32px</span></div></div>
+          <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-round)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-round">--corner-radius-round</span><span class="shape-val">pill</span></div></div>
+        </div>
+      </section>
+    </div><!-- /page-shape -->
+
+
+    <!-- ════════════════════════════════════════
+         FOUNDATIONS › SIZE
+    ════════════════════════════════════════ -->
+    <div class="page-panel" id="page-size">
+      <section class="section">
+        <div class="section-header">
+          <p class="section-eyebrow">Foundations · Tokens</p>
+          <h2 class="section-title">Size scale</h2>
+          <p class="section-description">Fixed dimensions for icons, avatars, and controls. Ten steps from 4px to 64px.</p>
+        </div>
+        <div class="size-grid">
+          <div class="size-item"><div class="size-box" style="width:4px;height:4px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxxs">--size-xxxs</span><span class="size-val">4px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:8px;height:8px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxs">--size-xxs</span><span class="size-val">8px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:12px;height:12px"></div><div class="size-label"><span class="token-name" data-copy="--size-xs">--size-xs</span><span class="size-val">12px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:16px;height:16px"></div><div class="size-label"><span class="token-name" data-copy="--size-s">--size-s</span><span class="size-val">16px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:24px;height:24px"></div><div class="size-label"><span class="token-name" data-copy="--size-m">--size-m</span><span class="size-val">24px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:32px;height:32px"></div><div class="size-label"><span class="token-name" data-copy="--size-l">--size-l</span><span class="size-val">32px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:40px;height:40px"></div><div class="size-label"><span class="token-name" data-copy="--size-xl">--size-xl</span><span class="size-val">40px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:48px;height:48px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxl">--size-xxl</span><span class="size-val">48px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:56px;height:56px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxxl">--size-xxxl</span><span class="size-val">56px</span></div></div>
+          <div class="size-item"><div class="size-box" style="width:64px;height:64px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxxxl">--size-xxxxl</span><span class="size-val">64px</span></div></div>
+        </div>
+      </section>
+    </div><!-- /page-size -->
+
+
+    <!-- ════════════════════════════════════════
+         FOUNDATIONS › BORDER
+    ════════════════════════════════════════ -->
+    <div class="page-panel" id="page-border">
+      <section class="section">
+        <div class="section-header">
+          <p class="section-eyebrow">Foundations · Tokens</p>
+          <h2 class="section-title">Stroke widths</h2>
+          <p class="section-description">Three steps — subtle, default, and strong.</p>
+        </div>
+        <div class="border-grid">
+          <div class="border-row"><span class="token-name" data-copy="--border-width-subtle">--border-width-subtle</span><span class="space-value">0.5px</span><div class="border-demo" style="border:0.5px solid var(--color-border-default)"></div></div>
+          <div class="border-row"><span class="token-name" data-copy="--border-width-default">--border-width-default</span><span class="space-value">1px</span><div class="border-demo" style="border:1px solid var(--color-border-default)"></div></div>
+          <div class="border-row"><span class="token-name" data-copy="--border-width-strong">--border-width-strong</span><span class="space-value">1.5px</span><div class="border-demo" style="border:1.5px solid var(--color-border-default)"></div></div>
+        </div>
+      </section>
+    </div><!-- /page-border -->
+
+
+    <!-- ════════════════════
+         STUB PAGES — inline macro
+         Usage: copy-paste, fill in eyebrow/title/description
+    ════════════════════ -->
+
+    <!-- style -->
+    <div class="page-panel" id="page-style"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Tokens</p><h2 class="section-title">Style</h2><p class="section-description">Shadows, overlays, and elevation tokens.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- breakpoints -->
+    <div class="page-panel" id="page-breakpoints"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Layout</p><h2 class="section-title">Breakpoints</h2><p class="section-description">Viewport widths and their corresponding layout adjustments.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- grid -->
+    <div class="page-panel" id="page-grid"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Layout</p><h2 class="section-title">Grid</h2><p class="section-description">Column grids, gutters, and responsive spacing.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- icons -->
+    <div class="page-panel" id="page-icons"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Media</p><h2 class="section-title">Icons</h2><p class="section-description">ůnicons — the ůnica icon library.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- logo -->
+    <div class="page-panel" id="page-logo"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Media</p><h2 class="section-title">Logo</h2><p class="section-description">The ůnica mark, wordmark, and usage guidelines.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- photography -->
+    <div class="page-panel" id="page-photography"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Media</p><h2 class="section-title">Photography</h2><p class="section-description">Editorial photography style, crop, and composition guidelines.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- illustration -->
+    <div class="page-panel" id="page-illustration"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Media</p><h2 class="section-title">Illustration</h2><p class="section-description">Graphic shapes and illustrative asset guidelines.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- comp-overview -->
+    <div class="page-panel" id="page-comp-overview"><section class="section"><div class="section-header"><p class="section-eyebrow">Components</p><h2 class="section-title">Overview</h2><p class="section-description">30 components across 6 categories — all available as copy-paste code.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- Actions -->
+    <div class="page-panel" id="page-button"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Button</h2><p class="section-description">Primary, secondary, ghost, and destructive variants across all sizes.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-choice-button"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Choice Button</h2><p class="section-description">Toggleable button for single or multi-select choices.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-chips"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Chips</h2><p class="section-description">Compact interactive elements for filtering and multi-select.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-tags"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Tags</h2><p class="section-description">Label-style elements for categorization and metadata.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-link"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Link Standalone</h2><p class="section-description">A standalone text link with optional icon, used outside of body copy.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- Forms -->
+    <div class="page-panel" id="page-text-fields"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Text Fields &amp; Selects</h2><p class="section-description">Input, textarea, and select — all states and sizes.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-search-field"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Search Field</h2><p class="section-description">Inline search input with icon and clear action.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-checkbox"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Check Box</h2><p class="section-description">Single and group checkbox, all states.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-radio"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Radio</h2><p class="section-description">Radio button group for mutually exclusive selection.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-toggle-switch"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Toggle Switch</h2><p class="section-description">Binary on/off control.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-segmented-control"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Segmented Control</h2><p class="section-description">Inline selection control for 2–5 mutually exclusive options.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-stepper"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Stepper</h2><p class="section-description">Numeric increment/decrement input.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- Navigation -->
+    <div class="page-panel" id="page-top-nav-app"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Top Navigation — App</h2><p class="section-description">Mobile app top bar with back, title, and action slots.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-top-nav-web"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Top Navigation — Web</h2><p class="section-description">Web header with logo, nav links, and action area.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-bottom-nav"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Bottom Navigation</h2><p class="section-description">Mobile persistent bottom tab bar, up to 5 destinations.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-tabs"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Tabs</h2><p class="section-description">Horizontal tabs for switching between related views.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-date-tabs"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Date Tabs</h2><p class="section-description">Horizontally scrollable date selector tabs.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-pagination"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Pagination</h2><p class="section-description">Page navigation for list and grid views.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- Feedback -->
+    <div class="page-panel" id="page-toast"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Toast</h2><p class="section-description">Transient notification appearing at the bottom of the screen.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-important-message"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Important Message</h2><p class="section-description">Inline alert for errors, warnings, info, and success states.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-badge"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Badge</h2><p class="section-description">Numeric and dot badges for status and count indicators.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-progress"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Progress Indicators</h2><p class="section-description">Linear and circular progress bars, determinate and indeterminate.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-scrim"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Scrim</h2><p class="section-description">Overlay layer used behind modals, sheets, and drawers.</p></div><span class="stub-pill">In progress</span></section></div>
+
+    <!-- Overlays -->
+    <div class="page-panel" id="page-modal"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Modal Dialog</h2><p class="section-description">Focused overlay requiring user acknowledgement or action.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-bottom-sheet"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Bottom Sheet</h2><p class="section-description">Slide-up panel for supplementary content on mobile.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-date-picker"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Date Picker Calendar</h2><p class="section-description">Calendar overlay for single and range date selection.</p></div><span class="stub-pill">In progress</span></section></div>
 
     <!-- Content -->
-    <div class="semantic-group">
-      <p class="semantic-group-title">Content</p>
-      <div class="semantic-tokens-grid">
-        <div class="semantic-token" data-copy="--color-content-default"><div class="semantic-swatch" style="background:var(--color-content-default)"></div><div class="semantic-info"><span class="semantic-label">default</span><span class="token-name">--color-content-default</span></div></div>
-        <div class="semantic-token" data-copy="--color-content-subtle"><div class="semantic-swatch" style="background:var(--color-content-subtle)"></div><div class="semantic-info"><span class="semantic-label">subtle</span><span class="token-name">--color-content-subtle</span></div></div>
-        <div class="semantic-token" data-copy="--color-content-disabled"><div class="semantic-swatch" style="background:var(--color-content-disabled)"></div><div class="semantic-info"><span class="semantic-label">disabled</span><span class="token-name">--color-content-disabled</span></div></div>
-        <div class="semantic-token" data-copy="--color-contrast"><div class="semantic-swatch" style="background:var(--color-contrast)"></div><div class="semantic-info"><span class="semantic-label">contrast</span><span class="token-name">--color-contrast</span></div></div>
-        <div class="semantic-token" data-copy="--color-inverse"><div class="semantic-swatch" style="background:var(--color-inverse)"></div><div class="semantic-info"><span class="semantic-label">inverse</span><span class="token-name">--color-inverse</span></div></div>
-      </div>
-    </div>
+    <div class="page-panel" id="page-card"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Card</h2><p class="section-description">Contained surface for grouping related content and actions.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-list"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List</h2><p class="section-description">Vertical list of items with optional icons, metadata, and actions.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-list-accordion"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List Accordion</h2><p class="section-description">Expandable list rows for progressive disclosure.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-avatar"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Avatar</h2><p class="section-description">User representation — image, initials, and icon variants.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-divider"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Divider</h2><p class="section-description">Horizontal rule for separating content regions.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-icon-bullet"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Icon Bullet</h2><p class="section-description">Icon paired with a label, used in lists and feature callouts.</p></div><span class="stub-pill">In progress</span></section></div>
 
-    <!-- Border -->
-    <div class="semantic-group">
-      <p class="semantic-group-title">Border</p>
-      <div class="semantic-tokens-grid">
-        <div class="semantic-token" data-copy="--color-border-default"><div class="semantic-swatch" style="background:var(--color-border-default)"></div><div class="semantic-info"><span class="semantic-label">default</span><span class="token-name">--color-border-default</span></div></div>
-        <div class="semantic-token" data-copy="--color-border-subtle"><div class="semantic-swatch" style="background:var(--color-border-subtle)"></div><div class="semantic-info"><span class="semantic-label">subtle</span><span class="token-name">--color-border-subtle</span></div></div>
-        <div class="semantic-token" data-copy="--color-border-strong"><div class="semantic-swatch" style="background:var(--color-border-strong)"></div><div class="semantic-info"><span class="semantic-label">strong</span><span class="token-name">--color-border-strong</span></div></div>
-        <div class="semantic-token" data-copy="--color-border-interactive"><div class="semantic-swatch" style="background:var(--color-border-interactive)"></div><div class="semantic-info"><span class="semantic-label">interactive</span><span class="token-name">--color-border-interactive</span></div></div>
-        <div class="semantic-token" data-copy="--color-border-disabled"><div class="semantic-swatch" style="background:var(--color-border-disabled)"></div><div class="semantic-info"><span class="semantic-label">disabled</span><span class="token-name">--color-border-disabled</span></div></div>
-        <div class="semantic-token" data-copy="--color-border-inverse"><div class="semantic-swatch" style="background:var(--color-border-inverse)"></div><div class="semantic-info"><span class="semantic-label">inverse</span><span class="token-name">--color-border-inverse</span></div></div>
-      </div>
-    </div>
+  </main><!-- /site-content -->
 
-    <!-- Action -->
-    <div class="semantic-group">
-      <p class="semantic-group-title">Action</p>
-      <div class="semantic-tokens-grid">
-        <div class="semantic-token" data-copy="--color-action-default"><div class="semantic-swatch" style="background:var(--color-action-default)"></div><div class="semantic-info"><span class="semantic-label">default</span><span class="token-name">--color-action-default</span></div></div>
-        <div class="semantic-token" data-copy="--color-action-hover"><div class="semantic-swatch" style="background:var(--color-action-hover)"></div><div class="semantic-info"><span class="semantic-label">hover</span><span class="token-name">--color-action-hover</span></div></div>
-        <div class="semantic-token" data-copy="--color-action-hover-subtle"><div class="semantic-swatch" style="background:var(--color-action-hover-subtle)"></div><div class="semantic-info"><span class="semantic-label">hover-subtle</span><span class="token-name">--color-action-hover-subtle</span></div></div>
-        <div class="semantic-token" data-copy="--color-action-active-subtle"><div class="semantic-swatch" style="background:var(--color-action-active-subtle)"></div><div class="semantic-info"><span class="semantic-label">active-subtle</span><span class="token-name">--color-action-active-subtle</span></div></div>
-        <div class="semantic-token" data-copy="--color-action-visited"><div class="semantic-swatch" style="background:var(--color-action-visited)"></div><div class="semantic-info"><span class="semantic-label">visited</span><span class="token-name">--color-action-visited</span></div></div>
-        <div class="semantic-token" data-copy="--color-action-disabled"><div class="semantic-swatch" style="background:var(--color-action-disabled)"></div><div class="semantic-info"><span class="semantic-label">disabled</span><span class="token-name">--color-action-disabled</span></div></div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="section-rule" />
-
-
-  <!-- ══ TYPOGRAPHY ══ -->
-  <section class="section" id="typography">
-    <div class="section-header">
-      <p class="section-eyebrow">Typography</p>
-      <h2 class="section-title">Type scale</h2>
-      <p class="section-description">Noto Serif for display and editorial moments. Inter for UI and body. Twelve steps from 12px to 64px.</p>
-    </div>
-    <div class="type-scale">
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-display-xl">--font-size-display-xl</span>
-          <span class="type-details">64 / 64px · Noto Serif</span>
-        </div>
-        <div style="font-family:var(--font-family-serif);font-size:var(--font-size-display-xl);line-height:var(--font-leading-display-xl);letter-spacing:-0.03em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">Display XL</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-display-l">--font-size-display-l</span>
-          <span class="type-details">56 / 64px · Noto Serif</span>
-        </div>
-        <div style="font-family:var(--font-family-serif);font-size:var(--font-size-display-l);line-height:var(--font-leading-display-l);letter-spacing:-0.02em">Display L</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-display-m">--font-size-display-m</span>
-          <span class="type-details">48 / 56px · Noto Serif</span>
-        </div>
-        <div style="font-family:var(--font-family-serif);font-size:var(--font-size-display-m);line-height:var(--font-leading-display-m);letter-spacing:-0.02em">Display M</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-display-s">--font-size-display-s</span>
-          <span class="type-details">32 / 40px · Noto Serif</span>
-        </div>
-        <div style="font-family:var(--font-family-serif);font-size:var(--font-size-display-s);line-height:var(--font-leading-display-s);letter-spacing:-0.015em">Display S</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-heading-xl">--font-size-heading-xl</span>
-          <span class="type-details">40 / 48px · Inter Semibold</span>
-        </div>
-        <div style="font-family:var(--font-family-sans);font-size:var(--font-size-heading-xl);line-height:var(--font-leading-heading-xl);font-weight:var(--font-weight-semibold);letter-spacing:-0.02em">Heading XL</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-heading-l">--font-size-heading-l</span>
-          <span class="type-details">32 / 40px · Inter Semibold</span>
-        </div>
-        <div style="font-family:var(--font-family-sans);font-size:var(--font-size-heading-l);line-height:var(--font-leading-heading-l);font-weight:var(--font-weight-semibold);letter-spacing:-0.015em">Heading L</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-heading-m">--font-size-heading-m</span>
-          <span class="type-details">24 / 28px · Inter Semibold</span>
-        </div>
-        <div style="font-family:var(--font-family-sans);font-size:var(--font-size-heading-m);line-height:var(--font-leading-heading-m);font-weight:var(--font-weight-semibold)">Heading M</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-heading-s">--font-size-heading-s</span>
-          <span class="type-details">18 / 22px · Inter Semibold</span>
-        </div>
-        <div style="font-family:var(--font-family-sans);font-size:var(--font-size-heading-s);line-height:var(--font-leading-heading-s);font-weight:var(--font-weight-semibold)">Heading S</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-body-l">--font-size-body-l</span>
-          <span class="type-details">18 / 28px · Inter Regular</span>
-        </div>
-        <div style="font-family:var(--font-family-sans);font-size:var(--font-size-body-l);line-height:var(--font-leading-body-l)">Precision crafted design for enduring products.</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-body-m">--font-size-body-m</span>
-          <span class="type-details">16 / 22px · Inter Regular</span>
-        </div>
-        <div style="font-family:var(--font-family-sans);font-size:var(--font-size-body-m);line-height:var(--font-leading-body-m)">Precision crafted design for enduring products.</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-body-s">--font-size-body-s</span>
-          <span class="type-details">14 / 20px · Inter Regular</span>
-        </div>
-        <div style="font-family:var(--font-family-sans);font-size:var(--font-size-body-s);line-height:var(--font-leading-body-s)">Precision crafted design for enduring products.</div>
-      </div>
-
-      <div class="type-row">
-        <div class="type-meta">
-          <span class="token-name" data-copy="--font-size-body-xs">--font-size-body-xs</span>
-          <span class="type-details">12 / 18px · Inter Regular</span>
-        </div>
-        <div style="font-family:var(--font-family-sans);font-size:var(--font-size-body-xs);line-height:var(--font-leading-body-xs)">Precision crafted design for enduring products.</div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-rule" />
-
-
-  <!-- ══ SPACING ══ -->
-  <section class="section" id="spacing">
-    <div class="section-header">
-      <p class="section-eyebrow">Layout</p>
-      <h2 class="section-title">Spacing scale</h2>
-      <p class="section-description">Fourteen steps from 4px to 96px. Used for padding, gap, and margin.</p>
-    </div>
-    <div class="space-grid">
-      <div class="space-row"><span class="token-name" data-copy="--space-100">--space-100</span><span class="space-value">4px</span><div class="space-bar-track"><div class="space-bar" style="width:4px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-200">--space-200</span><span class="space-value">8px</span><div class="space-bar-track"><div class="space-bar" style="width:8px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-300">--space-300</span><span class="space-value">12px</span><div class="space-bar-track"><div class="space-bar" style="width:12px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-400">--space-400</span><span class="space-value">16px</span><div class="space-bar-track"><div class="space-bar" style="width:16px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-500">--space-500</span><span class="space-value">24px</span><div class="space-bar-track"><div class="space-bar" style="width:24px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-600">--space-600</span><span class="space-value">32px</span><div class="space-bar-track"><div class="space-bar" style="width:32px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-700">--space-700</span><span class="space-value">40px</span><div class="space-bar-track"><div class="space-bar" style="width:40px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-800">--space-800</span><span class="space-value">48px</span><div class="space-bar-track"><div class="space-bar" style="width:48px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-900">--space-900</span><span class="space-value">56px</span><div class="space-bar-track"><div class="space-bar" style="width:56px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-1000">--space-1000</span><span class="space-value">64px</span><div class="space-bar-track"><div class="space-bar" style="width:64px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-1100">--space-1100</span><span class="space-value">72px</span><div class="space-bar-track"><div class="space-bar" style="width:72px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-1200">--space-1200</span><span class="space-value">80px</span><div class="space-bar-track"><div class="space-bar" style="width:80px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-1300">--space-1300</span><span class="space-value">88px</span><div class="space-bar-track"><div class="space-bar" style="width:88px"></div></div></div>
-      <div class="space-row"><span class="token-name" data-copy="--space-1400">--space-1400</span><span class="space-value">96px</span><div class="space-bar-track"><div class="space-bar" style="width:96px"></div></div></div>
-    </div>
-  </section>
-
-  <hr class="section-rule" />
-
-
-  <!-- ══ SHAPE ══ -->
-  <section class="section" id="shape">
-    <div class="section-header">
-      <p class="section-eyebrow">Shape</p>
-      <h2 class="section-title">Border radius</h2>
-      <p class="section-description">Seven steps from sharp to pill.</p>
-    </div>
-    <div class="shape-grid">
-      <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-square)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-square">--corner-radius-square</span><span class="shape-val">0px</span></div></div>
-      <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-xs)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-xs">--corner-radius-xs</span><span class="shape-val">4px</span></div></div>
-      <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-s)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-s">--corner-radius-s</span><span class="shape-val">8px</span></div></div>
-      <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-m)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-m">--corner-radius-m</span><span class="shape-val">16px</span></div></div>
-      <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-l)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-l">--corner-radius-l</span><span class="shape-val">24px</span></div></div>
-      <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-xl)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-xl">--corner-radius-xl</span><span class="shape-val">32px</span></div></div>
-      <div class="shape-item"><div class="shape-box" style="border-radius:var(--corner-radius-round)"></div><div class="shape-label"><span class="token-name" data-copy="--corner-radius-round">--corner-radius-round</span><span class="shape-val">pill</span></div></div>
-    </div>
-  </section>
-
-  <hr class="section-rule" />
-
-
-  <!-- ══ SIZE ══ -->
-  <section class="section" id="size">
-    <div class="section-header">
-      <p class="section-eyebrow">Size</p>
-      <h2 class="section-title">Size scale</h2>
-      <p class="section-description">Fixed dimensions for icons, avatars, and controls. Ten steps from 4px to 64px.</p>
-    </div>
-    <div class="size-grid">
-      <div class="size-item"><div class="size-box" style="width:4px;height:4px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxxs">--size-xxxs</span><span class="size-val">4px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:8px;height:8px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxs">--size-xxs</span><span class="size-val">8px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:12px;height:12px"></div><div class="size-label"><span class="token-name" data-copy="--size-xs">--size-xs</span><span class="size-val">12px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:16px;height:16px"></div><div class="size-label"><span class="token-name" data-copy="--size-s">--size-s</span><span class="size-val">16px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:24px;height:24px"></div><div class="size-label"><span class="token-name" data-copy="--size-m">--size-m</span><span class="size-val">24px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:32px;height:32px"></div><div class="size-label"><span class="token-name" data-copy="--size-l">--size-l</span><span class="size-val">32px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:40px;height:40px"></div><div class="size-label"><span class="token-name" data-copy="--size-xl">--size-xl</span><span class="size-val">40px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:48px;height:48px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxl">--size-xxl</span><span class="size-val">48px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:56px;height:56px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxxl">--size-xxxl</span><span class="size-val">56px</span></div></div>
-      <div class="size-item"><div class="size-box" style="width:64px;height:64px"></div><div class="size-label"><span class="token-name" data-copy="--size-xxxxl">--size-xxxxl</span><span class="size-val">64px</span></div></div>
-    </div>
-  </section>
-
-  <hr class="section-rule" />
-
-
-  <!-- ══ BORDER WIDTHS ══ -->
-  <section class="section" id="border">
-    <div class="section-header">
-      <p class="section-eyebrow">Border</p>
-      <h2 class="section-title">Stroke widths</h2>
-    </div>
-    <div class="border-grid">
-      <div class="border-row"><span class="token-name" data-copy="--border-width-subtle">--border-width-subtle</span><span class="space-value">0.5px</span><div class="border-demo" style="border:0.5px solid var(--color-border-default)"></div></div>
-      <div class="border-row"><span class="token-name" data-copy="--border-width-default">--border-width-default</span><span class="space-value">1px</span><div class="border-demo" style="border:1px solid var(--color-border-default)"></div></div>
-      <div class="border-row"><span class="token-name" data-copy="--border-width-strong">--border-width-strong</span><span class="space-value">1.5px</span><div class="border-demo" style="border:1.5px solid var(--color-border-default)"></div></div>
-    </div>
-    <!-- Bottom breathing room -->
-    <div style="height:var(--space-1000)"></div>
-  </section>
-
-</div><!-- /page -->
+</div><!-- /site-body -->
 
 <!-- ══ FOOTER ══ -->
 <footer class="site-footer">
@@ -1334,20 +1349,80 @@
   </div>
 </footer>
 
-
 <!-- ══ COPY TOAST ══ -->
 <div class="copy-toast" id="copy-toast" aria-live="polite"></div>
 
-
 <script>
+
+  /* ── Chrome height → CSS variable (for sticky sidebar) ── */
+  function updateChrome() {
+    const header = document.querySelector('.site-header');
+    const h = header.offsetHeight;
+    document.documentElement.style.setProperty('--chrome-h', h + 'px');
+  }
+
+  /* ── Mobile nav toggle ── */
+  function toggleMobileNav() {
+    const nav = document.getElementById('mobile-nav');
+    nav.classList.toggle('open');
+    updateChrome(); // recompute after height change
+  }
+
+  /* ── Section tab switching ── */
+  document.querySelectorAll('.section-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      const section = this.dataset.section;
+
+      // Sync all tabs (desktop + mobile) to new active state
+      document.querySelectorAll('.section-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.section === section);
+      });
+
+      // Close mobile nav after selection
+      const mobileNav = document.getElementById('mobile-nav');
+      if (mobileNav.classList.contains('open')) {
+        mobileNav.classList.remove('open');
+        updateChrome();
+      }
+
+      // Swap sidebar panels
+      document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById('sidebar-' + section).classList.remove('hidden');
+
+      // Activate first link in new sidebar
+      const firstLink = document.querySelector('#sidebar-' + section + ' .sidebar-link');
+      if (firstLink) firstLink.click();
+    });
+  });
+
+  /* ── Sidebar link navigation ── */
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const page = this.dataset.page;
+      if (!page) return;
+
+      // Update active link
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+
+      // Swap page panels
+      document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+      const panel = document.getElementById('page-' + page);
+      if (panel) panel.classList.add('active');
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  });
+
   /* ── Theme toggle ── */
   function toggleTheme() {
-    const html = document.documentElement;
+    const html  = document.documentElement;
     const isDark = html.getAttribute('data-theme') === 'dark';
     html.setAttribute('data-theme', isDark ? 'light' : 'dark');
     document.getElementById('icon-sun').style.display  = isDark ? 'none'  : 'block';
     document.getElementById('icon-moon').style.display = isDark ? 'block' : 'none';
-    // Re-compute hex values after theme switch
     setTimeout(computeHexValues, 50);
   }
 
@@ -1360,11 +1435,10 @@
       .join('');
   }
 
-  /* ── Compute and stamp hex values onto swatches ── */
+  /* ── Stamp hex values on swatches ── */
   function computeHexValues() {
     document.querySelectorAll('.swatch-color, .brand-swatch, .semantic-swatch').forEach(el => {
-      const bg = getComputedStyle(el).backgroundColor;
-      const hex = rgbToHex(bg);
+      const hex = rgbToHex(getComputedStyle(el).backgroundColor);
       if (hex) el.setAttribute('data-hex', hex);
     });
   }
@@ -1378,7 +1452,6 @@
     navigator.clipboard.writeText(text)
       .then(() => showToast(text))
       .catch(() => {
-        // Fallback for browsers that block clipboard
         const ta = document.createElement('textarea');
         ta.value = text;
         ta.style.cssText = 'position:fixed;opacity:0';
@@ -1400,25 +1473,139 @@
     toastTimer = setTimeout(() => toast.classList.remove('visible'), 2000);
   }
 
-  /* ── Active nav highlight on scroll ── */
-  const sections = document.querySelectorAll('.section[id]');
-  const navLinks = document.querySelectorAll('.jump-nav a');
+  /* ── Search ── */
+  let searchIndex = [];
+  let focusedResult = -1;
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => link.classList.remove('active'));
-        const active = document.querySelector(`.jump-nav a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
+  function buildSearchIndex() {
+    searchIndex = [];
+    document.querySelectorAll('.sidebar-link[data-page]').forEach(link => {
+      const pageId = link.dataset.page;
+      const panel  = document.getElementById('page-' + pageId);
+      if (!panel) return;
+
+      const title       = panel.querySelector('.section-title')?.textContent?.trim()       || link.textContent.trim();
+      const eyebrow     = panel.querySelector('.section-eyebrow')?.textContent?.trim()     || '';
+      const description = panel.querySelector('.section-description')?.textContent?.trim() || '';
+
+      // Collect token names from this page for deeper matching
+      const tokens = Array.from(panel.querySelectorAll('.token-name'))
+        .map(el => el.textContent.trim().toLowerCase());
+
+      // Determine which section tab owns this link
+      const sidebarPanel = link.closest('.sidebar-panel');
+      const section = sidebarPanel ? sidebarPanel.id.replace('sidebar-', '') : 'foundations';
+
+      searchIndex.push({ title, eyebrow, description, pageId, section, tokens, link });
+    });
+  }
+
+  function searchQuery(q) {
+    if (!q.trim()) return [];
+    const lower = q.toLowerCase();
+    return searchIndex.filter(item =>
+      item.title.toLowerCase().includes(lower)       ||
+      item.eyebrow.toLowerCase().includes(lower)     ||
+      item.description.toLowerCase().includes(lower) ||
+      item.tokens.some(t => t.includes(lower))
+    ).slice(0, 8);
+  }
+
+  function renderResults(results, query) {
+    const box = document.getElementById('search-results');
+    focusedResult = -1;
+
+    if (!query.trim()) { box.classList.remove('visible'); box.innerHTML = ''; return; }
+
+    if (results.length === 0) {
+      box.innerHTML = `<div class="search-empty">No results for "${query}"</div>`;
+    } else {
+      box.innerHTML = results.map((r, i) =>
+        `<div class="search-result-item" role="option" data-idx="${i}" onclick="navigateFromSearch('${r.pageId}', '${r.section}')">
+          <span class="search-result-title">${highlight(r.title, query)}</span>
+          <span class="search-result-meta">${r.eyebrow || r.section}</span>
+        </div>`
+      ).join('');
+    }
+    box.classList.add('visible');
+  }
+
+  function highlight(text, query) {
+    if (!query.trim()) return text;
+    const re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    return text.replace(re, '<mark style="background:rgba(137,85,242,0.18);border-radius:2px;padding:0 1px">$1</mark>');
+  }
+
+  function navigateFromSearch(pageId, section) {
+    // Switch section tab if needed
+    const activeSection = document.querySelector('.section-tab.active')?.dataset?.section;
+    if (activeSection !== section) {
+      document.querySelectorAll('.section-tab').forEach(t => t.classList.toggle('active', t.dataset.section === section));
+      document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById('sidebar-' + section).classList.remove('hidden');
+    }
+
+    // Click the sidebar link
+    const link = document.querySelector(`.sidebar-link[data-page="${pageId}"]`);
+    if (link) link.click();
+
+    // Close search
+    closeSearch();
+  }
+
+  function closeSearch() {
+    const box   = document.getElementById('search-results');
+    const input = document.getElementById('search-input');
+    box.classList.remove('visible');
+    box.innerHTML = '';
+    if (input) input.value = '';
+    focusedResult = -1;
+  }
+
+  function initSearch() {
+    const input = document.getElementById('search-input');
+    const box   = document.getElementById('search-results');
+    if (!input) return;
+
+    input.addEventListener('input', () => {
+      const results = searchQuery(input.value);
+      renderResults(results, input.value);
+    });
+
+    input.addEventListener('keydown', e => {
+      const items = box.querySelectorAll('.search-result-item');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        focusedResult = Math.min(focusedResult + 1, items.length - 1);
+        items.forEach((el, i) => el.classList.toggle('focused', i === focusedResult));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        focusedResult = Math.max(focusedResult - 1, 0);
+        items.forEach((el, i) => el.classList.toggle('focused', i === focusedResult));
+      } else if (e.key === 'Enter') {
+        if (focusedResult >= 0 && items[focusedResult]) items[focusedResult].click();
+        else if (items[0]) items[0].click();
+      } else if (e.key === 'Escape') {
+        closeSearch();
+        input.blur();
       }
     });
-  }, { rootMargin: '-20% 0px -70% 0px' });
 
-  sections.forEach(s => observer.observe(s));
+    // Close on outside click
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#search-wrap')) closeSearch();
+    });
+  }
 
   /* ── Init ── */
-  window.addEventListener('load', computeHexValues);
-</script>
+  window.addEventListener('DOMContentLoaded', () => {
+    updateChrome();
+    computeHexValues();
+    buildSearchIndex();
+    initSearch();
+  });
+  window.addEventListener('resize', updateChrome);
 
+</script>
 </body>
 </html>
