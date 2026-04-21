@@ -366,3 +366,28 @@
   --border-width-strong:  1.5px;
 
 }
+
+
+/* ==========================================================================
+   ELEVATION — Drop shadows using brand ink as shadow color
+   Shadow color: primitive-ink-950 at opacity (rgba 8 5 13)
+   Values sourced from Figma Effect Styles: Shadow/elevation-xs/s/l
+   ========================================================================== */
+
+:root {
+
+  --shadow-elevation-xs: 0 0 4px rgba(8, 5, 13, 0.25);
+  --shadow-elevation-s:  0 1px 8px rgba(8, 5, 13, 0.25);
+  --shadow-elevation-l:  0 2px 24px rgba(8, 5, 13, 0.25);
+
+  --color-scrim: rgba(8, 5, 13, 0.60);
+
+}
+
+[data-theme="dark"] {
+
+  --shadow-elevation-xs: 0 0 4px rgba(8, 5, 13, 0.60);
+  --shadow-elevation-s:  0 1px 8px rgba(8, 5, 13, 0.60);
+  --shadow-elevation-l:  0 2px 24px rgba(8, 5, 13, 0.70);
+
+}
