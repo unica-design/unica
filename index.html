@@ -2394,8 +2394,38 @@
 
       // Scroll to top
       window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // Update URL hash for deep linking (replaceState keeps history clean)
+      history.replaceState(null, '', '#' + page);
     });
   });
+
+  /* ── Hash routing — navigate to a page ID from the URL hash ── */
+  function navigateToHash(hash) {
+    const page = hash.replace(/^#/, '');
+    if (!page) return;
+    const link = document.querySelector(`.sidebar-link[data-page="${page}"]`);
+    if (!link) return;
+
+    // Determine which sidebar section contains this link and activate it
+    const sidebarPanel = link.closest('.sidebar-panel');
+    if (sidebarPanel) {
+      const sectionId = sidebarPanel.id.replace('sidebar-', '');
+      document.querySelectorAll('.section-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.section === sectionId);
+      });
+      document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.add('hidden'));
+      sidebarPanel.classList.remove('hidden');
+    }
+
+    link.click();
+  }
+
+  // Navigate on initial page load
+  if (window.location.hash) navigateToHash(window.location.hash);
+
+  // Handle browser back / forward
+  window.addEventListener('hashchange', () => navigateToHash(window.location.hash));
 
   /* ── Theme toggle ── */
   function toggleTheme() {
