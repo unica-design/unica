@@ -902,6 +902,18 @@
 
       --doc-label-size:         11px;
       --doc-label-tracking:     0.06em;
+
+      /* ── Syntax highlighting ──────────────────
+         Violet-dominant, monochromatic hierarchy.
+         Edit here to retheme all code blocks globally.
+         Pool slot is available if you want a 4th hue. */
+      --syntax-tag:         var(--primitive-violet-400); /* #C6ADF7 — element names   */
+      --syntax-attr-name:   var(--primitive-violet-300); /* #D9C8FA — attribute names  */
+      --syntax-attr-value:  var(--primitive-violet-200); /* #E9E1FA — strings / values */
+      --syntax-boolean:     var(--primitive-berry-200);  /* #FFD9E6 — false/null only  */
+      --syntax-punctuation: var(--primitive-ink-300);    /* #CED2D9 — recedes          */
+      --syntax-comment:     var(--primitive-ink-500);    /* #9DA4B2 — most muted       */
+      /* --syntax-pool:      var(--primitive-pool-200);     #ADF7F3 — available        */
     }
 
     [data-theme="dark"] {
@@ -1198,26 +1210,20 @@
 
     /* ─────────────────────────────────────────
        CODE SYNTAX — ůnica theme (Prism.js)
-       Dark surface: ink-900 background.
-       Convention: punctuation recedes (muted
-       neutral) so tag names and values pop.
-       Token color assignments (doc-site catalog):
-         tag names   → citron-200  #E7F29D  fresh yellow-green
-         attr names  → pool-200    #ADF7F3  cool neutral cyan
-         attr values → berry-200   #FFD9E6  light rose
-         punctuation → ink-300     #CED2D9  muted, structural — recedes
-         comments    → ink-500     #9DA4B2  italic, most de-emphasized
-         entities    → citron-300  #DBEB76
-       Base text (unformatted) → cafe-0 white
+       Token vars live in :root --syntax-* above.
+       Edit there to retheme globally.
     ───────────────────────────────────────── */
-    .token.tag            { color: var(--primitive-citron-200); }
-    .token.tag > .token.punctuation { color: var(--primitive-ink-300); }
-    .token.attr-name      { color: var(--primitive-pool-200); }
-    .token.attr-value     { color: var(--primitive-berry-200); }
-    .token.attr-value > .token.punctuation { color: var(--primitive-berry-200); }
-    .token.comment        { color: var(--primitive-ink-500); font-style: italic; }
-    .token.entity         { color: var(--primitive-citron-300); }
-    .token.doctype        { color: var(--primitive-ink-500); font-style: italic; }
+    .token.tag            { color: var(--syntax-tag); }
+    .token.tag > .token.punctuation { color: var(--syntax-punctuation); }
+    .token.attr-name      { color: var(--syntax-attr-name); }
+    .token.attr-value     { color: var(--syntax-attr-value); }
+    .token.attr-value > .token.punctuation { color: var(--syntax-attr-value); }
+    .token.boolean        { color: var(--syntax-boolean); }
+    .token.keyword        { color: var(--syntax-boolean); }
+    .token.null           { color: var(--syntax-boolean); }
+    .token.comment        { color: var(--syntax-comment); font-style: italic; }
+    .token.entity         { color: var(--syntax-attr-name); }
+    .token.doctype        { color: var(--syntax-comment); font-style: italic; }
 
     /* Code block */
     .code-block {
