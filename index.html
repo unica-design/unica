@@ -1196,6 +1196,27 @@
 
     .doc-table .td-subtle { color: var(--color-content-subtle); }
 
+    /* ─────────────────────────────────────────
+       CODE SYNTAX — ůnica theme (Prism.js)
+       Dark surface: ink-900 background.
+       Token color assignments (doc-site catalog):
+         tag names   → violet-400  #C6ADF7
+         attr names  → mint-300    #6FF7CC
+         attr values → apricot-300 #FCC4A4
+         punctuation → ink-400     #BCC1CC
+         comments    → ink-500     #9DA4B2  italic
+         entities    → citron-300  #DBEB76
+       Base text (unformatted) → cafe-0 white
+    ───────────────────────────────────────── */
+    .token.tag            { color: var(--primitive-violet-400); }
+    .token.tag > .token.punctuation { color: var(--primitive-ink-400); }
+    .token.attr-name      { color: var(--primitive-mint-300); }
+    .token.attr-value     { color: var(--primitive-apricot-300); }
+    .token.attr-value > .token.punctuation { color: var(--primitive-apricot-300); }
+    .token.comment        { color: var(--primitive-ink-500); font-style: italic; }
+    .token.entity         { color: var(--primitive-citron-300); }
+    .token.doctype        { color: var(--primitive-ink-500); font-style: italic; }
+
     /* Code block */
     .code-block {
       background: var(--color-background-contrast);
@@ -1212,6 +1233,14 @@
       color: var(--color-inverse);
       white-space: pre;
       margin: 0;
+    }
+
+    @media (max-width: 640px) {
+      /* On mobile: lines wrap and scroll vertically, not horizontally */
+      .code-block pre {
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
     }
 
     .code-copy-btn {
@@ -2171,8 +2200,8 @@
         <h2 class="doc-section-title">Code</h2>
         <hr class="doc-rule">
         <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('pre').textContent)">Copy</button>
-          <pre>&lt;!-- Basic toggle switch --&gt;
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+          <pre><code class="language-html">&lt;!-- Basic toggle switch --&gt;
 &lt;label class="toggle-switch"&gt;
   &lt;input type="checkbox" role="switch" aria-label="Setting name"&gt;
   &lt;span class="toggle-track"&gt;
@@ -2205,7 +2234,7 @@
 &lt;label class="toggle-switch"&gt;
   &lt;input type="checkbox" role="switch" disabled aria-label="Locked setting"&gt;
   &lt;span class="toggle-track"&gt;...&lt;/span&gt;
-&lt;/label&gt;</pre>
+&lt;/label&gt;</code></pre>
         </div>
       </div>
 
@@ -2562,5 +2591,9 @@
   window.addEventListener('resize', updateChrome);
 
 </script>
+
+<!-- Prism.js — syntax highlighting for code blocks -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
 </body>
 </html>
