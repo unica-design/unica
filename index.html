@@ -41,7 +41,7 @@
     ───────────────────────────────────────── */
     .site-header {
       background: var(--color-background-page);
-      padding: 0 40px;
+      padding: 0 var(--space-800);
       position: sticky;
       top: 0;
       z-index: 200;
@@ -237,7 +237,7 @@
       line-height: 1.5;
       color: var(--color-content-default);
       text-decoration: none;
-      border-radius: var(--corner-radius-m);
+      border-radius: 180px;
       transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
     }
 
@@ -809,29 +809,66 @@
       color: var(--color-content-subtle);
     }
 
-    /* hide search on mobile — becomes a simple icon */
+    /* Search cancel button — mobile only */
+    .search-cancel {
+      display: none;
+      align-items: center;
+      background: none;
+      border: none;
+      padding: 0 var(--space-300);
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-default);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Mobile search: collapsed to icon by default */
     @media (max-width: 860px) {
-      .search-field { width: 36px; padding: 0; justify-content: center; }
+      .search-field { width: 36px; padding: 0; justify-content: center; cursor: pointer; }
       .search-field:focus-within { width: 36px; }
       .search-input { display: none; }
+
+      /* Expanded: header becomes a search bar */
+      .site-header.search-open .header-identity { display: none; }
+      .site-header.search-open .theme-toggle    { display: none; }
+      .site-header.search-open .nav-toggle      { display: none; }
+      .site-header.search-open .header-actions  { flex: 1; gap: 0; }
+      .site-header.search-open .search-wrap     { flex: 1; position: static; }
+      .site-header.search-open .search-field    { width: 100%; padding: 0 var(--space-400); cursor: default; }
+      .site-header.search-open .search-input    { display: block; }
+      .site-header.search-open .search-cancel   { display: flex; }
+      /* Results span full viewport width via fixed positioning */
+      .site-header.search-open .search-results  {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        width: auto;
+      }
     }
 
     /* ─────────────────────────────────────────
-       RESPONSIVE ≤1024px
+       RESPONSIVE ≤1024px — small laptop / iPad landscape
     ───────────────────────────────────────── */
     @media (max-width: 1024px) {
-      .site-header { padding: 0 var(--space-600); }
-      .page-panel { padding: 0 var(--space-600) var(--space-800); }
-      .site-footer { padding: 28px var(--space-600); }
+      .site-header { padding: 0 var(--space-700); }
+      .page-panel { padding: 0 var(--space-700) var(--space-800); }
+      .site-footer { padding: 28px var(--space-700); }
     }
 
     /* ─────────────────────────────────────────
-       RESPONSIVE ≤860px — collapse sidebar + inline nav
+       RESPONSIVE ≤860px — collapse sidebar + inline nav / iPad portrait
     ───────────────────────────────────────── */
     @media (max-width: 860px) {
       .sidebar { display: none; }
       .section-tabs { display: none; }
       .nav-toggle { display: flex; }
+
+      .site-header { padding: 0 var(--space-500); }
+      .page-panel { padding: 0 var(--space-500) var(--space-800); }
+      .site-footer { padding: 28px var(--space-500); }
 
       .brand-grid { grid-template-columns: repeat(4, 1fr); }
       .type-row { grid-template-columns: 130px 1fr; gap: var(--space-400); }
@@ -840,16 +877,15 @@
     }
 
     /* ─────────────────────────────────────────
-       RESPONSIVE ≤640px
+       RESPONSIVE ≤640px — mobile
     ───────────────────────────────────────── */
     @media (max-width: 640px) {
-      .site-header { padding: 0 var(--space-400); }
       .header-logo-mark { width: 36px; height: 36px; }
       .header-identity { gap: var(--space-300); margin-right: var(--space-400); }
       .header-wordmark { font-size: 26px; }
       .header-inner { min-height: 60px; }
-      .page-panel { padding: 0 var(--space-400) var(--space-700); }
-      .site-footer { padding: var(--space-500) var(--space-400); }
+      /* padding stays at 24px — inherited from ≤860px */
+      .site-footer { padding: var(--space-500) var(--space-500); }
 
       .section { padding-top: var(--space-700); }
       .section-title { font-size: var(--font-size-heading-l); }
@@ -1465,15 +1501,13 @@
        RESPONSIVE ≤480px
     ───────────────────────────────────────── */
     @media (max-width: 480px) {
-      .site-header { padding: 0 var(--space-300); }
+      /* padding stays 24px — inherited from ≤860px */
       .header-logo-mark { width: 32px; height: 32px; }
       .header-identity { gap: var(--space-200); margin-right: var(--space-300); }
       .header-wordmark { font-size: 22px; }
       .header-inner { min-height: 56px; }
       .theme-toggle { width: 36px; height: 36px; }
       .theme-toggle svg { width: 16px; height: 16px; }
-      .page-panel { padding: 0 var(--space-300) var(--space-600); }
-      .site-footer { padding: var(--space-400) var(--space-300); }
       .footer-link { margin-left: 0; }
 
       .brand-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-300); }
@@ -1506,6 +1540,7 @@
         </div>
         <div class="search-results" id="search-results" role="listbox"></div>
       </div>
+      <button class="search-cancel" id="search-cancel" aria-label="Cancel search">Cancel</button>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle colour mode">
         <svg id="icon-sun" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M25.5 5.5C25.5 4.67157 24.8284 4 24 4C23.1716 4 22.5 4.67157 22.5 5.5V8.5C22.5 9.32843 23.1716 10 24 10C24.8284 10 25.5 9.32843 25.5 8.5V5.5ZM25.5 39.5C25.5 38.6716 24.8284 38 24 38C23.1716 38 22.5 38.6716 22.5 39.5V42.5C22.5 43.3284 23.1716 44 24 44C24.8284 44 25.5 43.3284 25.5 42.5V39.5ZM30.364 30.364C33.8787 26.8492 33.8787 21.1508 30.364 17.636C26.8492 14.1213 21.1508 14.1213 17.636 17.636C14.1213 21.1508 14.1213 26.8492 17.636 30.364C21.1508 33.8787 26.8492 33.8787 30.364 30.364ZM32.4853 32.4853C37.1716 27.799 37.1716 20.201 32.4853 15.5147C27.799 10.8284 20.201 10.8284 15.5147 15.5147C10.8284 20.201 10.8284 27.799 15.5147 32.4853C20.201 37.1716 27.799 37.1716 32.4853 32.4853ZM44 24C44 24.8284 43.3284 25.5 42.5 25.5H39.5C38.6716 25.5 38 24.8284 38 24C38 23.1716 38.6716 22.5 39.5 22.5H42.5C43.3284 22.5 44 23.1716 44 24ZM10 24C10 24.8284 9.32843 25.5 8.5 25.5H5.5C4.67157 25.5 4 24.8284 4 24C4 23.1716 4.67157 22.5 5.5 22.5H8.5C9.32843 22.5 10 23.1716 10 24ZM9.8578 36.0208C9.27201 36.6066 9.27201 37.5563 9.8578 38.1421C10.4436 38.7279 11.3933 38.7279 11.9791 38.1421L14.1004 36.0208C14.6862 35.435 14.6862 34.4852 14.1004 33.8995C13.5147 33.3137 12.5649 33.3137 11.9791 33.8995L9.8578 36.0208ZM33.8994 11.9791C33.3136 12.5649 33.3136 13.5147 33.8994 14.1005C34.4852 14.6863 35.435 14.6863 36.0207 14.1005L38.1421 11.9791C38.7279 11.3934 38.7279 10.4436 38.1421 9.85783C37.5563 9.27204 36.6065 9.27204 36.0207 9.85783L33.8994 11.9791ZM9.85778 9.85783C10.4436 9.27204 11.3933 9.27204 11.9791 9.85783L14.1004 11.9791C14.6862 12.5649 14.6862 13.5147 14.1004 14.1005C13.5146 14.6863 12.5649 14.6863 11.9791 14.1005L9.85778 11.9791C9.27199 11.3934 9.27199 10.4436 9.85778 9.85783ZM33.8994 33.8995C34.4852 33.3137 35.4349 33.3137 36.0207 33.8995L38.1421 36.0208C38.7278 36.6066 38.7278 37.5563 38.1421 38.1421C37.5563 38.7279 36.6065 38.7279 36.0207 38.1421L33.8994 36.0208C33.3136 35.435 33.3136 34.4852 33.8994 33.8995Z" fill="currentColor"/>
@@ -2546,11 +2581,13 @@
   }
 
   function closeSearch() {
-    const box   = document.getElementById('search-results');
-    const input = document.getElementById('search-input');
+    const box    = document.getElementById('search-results');
+    const input  = document.getElementById('search-input');
+    const header = document.querySelector('.site-header');
     box.classList.remove('visible');
     box.innerHTML = '';
     if (input) input.value = '';
+    if (header) header.classList.remove('search-open');
     focusedResult = -1;
   }
 
@@ -2583,9 +2620,23 @@
       }
     });
 
+    // Mobile: tap the collapsed search icon to open
+    const searchField = document.querySelector('.search-field');
+    searchField.addEventListener('click', () => {
+      if (window.innerWidth > 860) return;
+      const header = document.querySelector('.site-header');
+      if (header.classList.contains('search-open')) return;
+      header.classList.add('search-open');
+      setTimeout(() => input.focus(), 50);
+    });
+
+    // Cancel button
+    const cancelBtn = document.getElementById('search-cancel');
+    if (cancelBtn) cancelBtn.addEventListener('click', closeSearch);
+
     // Close on outside click
     document.addEventListener('click', e => {
-      if (!e.target.closest('#search-wrap')) closeSearch();
+      if (!e.target.closest('#search-wrap') && !e.target.closest('#search-cancel')) closeSearch();
     });
   }
 
