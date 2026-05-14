@@ -1200,22 +1200,22 @@
        CODE SYNTAX — ůnica theme (Prism.js)
        Dark surface: ink-900 background.
        Token color assignments (doc-site catalog):
-         tag names   → violet-400  #C6ADF7
-         attr names  → mint-300    #6FF7CC
-         attr values → apricot-300 #FCC4A4
-         punctuation → ink-400     #BCC1CC
-         comments    → ink-500     #9DA4B2  italic
+         tag names   → citron-200  #E7F29D  fresh yellow-green
+         attr names  → pool-200    #ADF7F3  cool neutral cyan
+         attr values → berry-200   #FFD9E6  light rose
+         punctuation → pool-300    #79F2EC  deeper neutral
+         comments    → ink-400     #BCC1CC  italic, muted
          entities    → citron-300  #DBEB76
        Base text (unformatted) → cafe-0 white
     ───────────────────────────────────────── */
-    .token.tag            { color: var(--primitive-violet-400); }
-    .token.tag > .token.punctuation { color: var(--primitive-ink-400); }
-    .token.attr-name      { color: var(--primitive-mint-300); }
-    .token.attr-value     { color: var(--primitive-apricot-300); }
-    .token.attr-value > .token.punctuation { color: var(--primitive-apricot-300); }
-    .token.comment        { color: var(--primitive-ink-500); font-style: italic; }
+    .token.tag            { color: var(--primitive-citron-200); }
+    .token.tag > .token.punctuation { color: var(--primitive-pool-300); }
+    .token.attr-name      { color: var(--primitive-pool-200); }
+    .token.attr-value     { color: var(--primitive-berry-200); }
+    .token.attr-value > .token.punctuation { color: var(--primitive-berry-200); }
+    .token.comment        { color: var(--primitive-ink-400); font-style: italic; }
     .token.entity         { color: var(--primitive-citron-300); }
-    .token.doctype        { color: var(--primitive-ink-500); font-style: italic; }
+    .token.doctype        { color: var(--primitive-ink-400); font-style: italic; }
 
     /* Code block */
     .code-block {
