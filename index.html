@@ -1322,9 +1322,11 @@
     .toggle-switch input:checked ~ .toggle-track .toggle-icon .icon-check { opacity: 1; }
     .toggle-switch input:checked ~ .toggle-track .toggle-icon .icon-x     { opacity: 0; }
 
-    /* Hover ring */
-    .toggle-switch:hover .toggle-handle {
-      box-shadow: var(--shadow-elevation-s), 0 0 0 6px var(--color-action-hover-subtle);
+    /* Hover ring — pointer devices only (not iOS touch) */
+    @media (hover: hover) and (pointer: fine) {
+      .toggle-switch:hover .toggle-handle {
+        box-shadow: var(--shadow-elevation-s), 0 0 0 6px var(--color-action-hover-subtle);
+      }
     }
 
     /* Keyboard focus ring */
@@ -1350,18 +1352,22 @@
       background: var(--color-action-disabled);
     }
 
+    /* Disabled icon — color only, no opacity override (opacity rules control check/x visibility) */
     .toggle-switch input:disabled ~ .toggle-track .toggle-icon svg {
       color: var(--color-action-disabled);
-      opacity: 0.4;
     }
 
-    .toggle-switch:has(input:disabled):hover .toggle-handle {
-      box-shadow: var(--shadow-elevation-s);
+    @media (hover: hover) and (pointer: fine) {
+      .toggle-switch:has(input:disabled):hover .toggle-handle {
+        box-shadow: var(--shadow-elevation-s);
+      }
     }
 
-    /* Forced variant demo states */
-    .toggle-switch--hover .toggle-handle {
-      box-shadow: var(--shadow-elevation-s), 0 0 0 6px var(--color-action-hover-subtle) !important;
+    /* Forced variant demo states (always shown on desktop, touch devices never reach these) */
+    @media (hover: hover) and (pointer: fine) {
+      .toggle-switch--hover .toggle-handle {
+        box-shadow: var(--shadow-elevation-s), 0 0 0 6px var(--color-action-hover-subtle) !important;
+      }
     }
 
     .toggle-switch--focused .toggle-track {
