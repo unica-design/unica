@@ -1578,7 +1578,7 @@
         <a class="sidebar-link" href="#" data-page="search-field">Search Field</a>
         <a class="sidebar-link" href="#" data-page="checkbox">Check Box</a>
         <a class="sidebar-link" href="#" data-page="radio">Radio</a>
-        <a class="sidebar-link" href="#" data-page="toggle-switch">Toggle Switch</a>
+        <a class="sidebar-link" href="#" data-page="switch">Switch</a>
         <a class="sidebar-link" href="#" data-page="segmented-control">Segmented Control</a>
         <a class="sidebar-link" href="#" data-page="stepper">Stepper</a>
       </div>
@@ -1900,13 +1900,13 @@
     <div class="page-panel" id="page-search-field"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Search Field</h2><p class="section-description">Inline search input with icon and clear action.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-checkbox"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Check Box</h2><p class="section-description">Single and group checkbox, all states.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-radio"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Radio</h2><p class="section-description">Radio button group for mutually exclusive selection.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-toggle-switch">
+    <div class="page-panel" id="page-switch">
 
       <!-- ── Component header ─────────────────── -->
       <div class="comp-header">
         <p class="comp-eyebrow">Components · Forms</p>
-        <h1 class="comp-title">Toggle Switch</h1>
-        <p class="comp-description">A binary control for settings that take immediate effect — no confirmation required. The toggle switch communicates state clearly through position, color, and icon.</p>
+        <h1 class="comp-title">Switch</h1>
+        <p class="comp-description">A binary control for settings that take immediate effect — no confirmation required. The switch communicates state clearly through position, color, and icon.</p>
         <div class="comp-badges">
           <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
           <span class="comp-badge">v1.0</span>
@@ -2117,7 +2117,7 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
-        <p class="doc-body">The toggle switch is built on a native <code style="font-family:monospace;font-size:0.9em;">input[type="checkbox"]</code> with <code style="font-family:monospace;font-size:0.9em;">role="switch"</code>. The browser automatically exposes the checked state to assistive technology. Every toggle must have an accessible name — either via a visible <code style="font-family:monospace;font-size:0.9em;">&lt;label&gt;</code>, <code style="font-family:monospace;font-size:0.9em;">aria-label</code>, or <code style="font-family:monospace;font-size:0.9em;">aria-labelledby</code>.</p>
+        <p class="doc-body">The switch is built on a native <code style="font-family:monospace;font-size:0.9em;">input[type="checkbox"]</code> with <code style="font-family:monospace;font-size:0.9em;">role="switch"</code>. The browser automatically exposes the checked state to assistive technology. Every toggle must have an accessible name — either via a visible <code style="font-family:monospace;font-size:0.9em;">&lt;label&gt;</code>, <code style="font-family:monospace;font-size:0.9em;">aria-label</code>, or <code style="font-family:monospace;font-size:0.9em;">aria-labelledby</code>.</p>
         <div class="table-wrap">
           <table class="doc-table">
             <thead>
@@ -2209,7 +2209,7 @@
         <hr class="doc-rule">
         <div class="code-block">
           <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
-          <pre><code class="language-html">&lt;!-- Basic toggle switch --&gt;
+          <pre><code class="language-html">&lt;!-- Basic switch --&gt;
 &lt;label class="toggle-switch"&gt;
   &lt;input type="checkbox" role="switch" aria-label="Setting name"&gt;
   &lt;span class="toggle-track"&gt;
