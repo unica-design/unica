@@ -870,18 +870,58 @@
       .preview-canvas { gap: var(--space-600); padding: var(--space-700) var(--space-500); }
     }
 
+    /* ═════════════════════════════════════════
+       DOC SITE — Design tokens
+       ─────────────────────────────────────────
+       These variables govern all documentation
+       page UI: dividers, surfaces, label type.
+       Structural elements use the Ink ramp only.
+       Warmth lives in content typography, not chrome.
+
+       Surfaces
+         --doc-surface-preview   component preview areas — open, no fill
+         --doc-surface-component UI demo pieces that need a white card (settings lists etc.)
+         --doc-surface-inset     code blocks, inset backgrounds
+
+       Dividers — Ink ramp only
+         --doc-rule-subtle       table row separators, light internal borders
+         --doc-rule-default      section rules, header separators, outer structure
+
+       Label type — shared by eyebrows, table th, tags
+         --doc-label-size        11px
+         --doc-label-tracking    0.06em
+    ═════════════════════════════════════════ */
+
+    :root {
+      --doc-surface-preview:    transparent;
+      --doc-surface-component:  var(--color-background-page);
+      --doc-surface-inset:      var(--primitive-ink-50);
+
+      --doc-rule-subtle:        var(--primitive-ink-200);
+      --doc-rule-default:       var(--primitive-ink-300);
+
+      --doc-label-size:         11px;
+      --doc-label-tracking:     0.06em;
+    }
+
+    [data-theme="dark"] {
+      --doc-surface-inset:      var(--primitive-ink-800);
+      --doc-rule-subtle:        var(--primitive-ink-700);
+      --doc-rule-default:       var(--primitive-ink-600);
+    }
+
     /* ─────────────────────────────────────────
        COMPONENT DOC PAGES
     ───────────────────────────────────────── */
 
     .comp-header {
       padding: var(--space-1000) 0 var(--space-700);
-      border-bottom: var(--border-width-default) solid var(--color-border-default);
+      border-bottom: var(--border-width-default) solid var(--doc-rule-default);
       margin-bottom: var(--space-700);
     }
 
     .comp-eyebrow {
-      font-size: 11px;
+      font-size: var(--doc-label-size);
       font-weight: var(--font-weight-semibold);
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -923,7 +963,7 @@
       font-size: var(--font-size-body-xs);
       font-weight: var(--font-weight-semibold);
       letter-spacing: 0.03em;
-      border: var(--border-width-default) solid var(--color-border-default);
+      border: var(--border-width-default) solid var(--doc-rule-default);
       color: var(--color-content-subtle);
     }
 
@@ -939,7 +979,7 @@
 
     .doc-rule {
       border: none;
-      border-top: var(--border-width-default) solid var(--color-border-default);
+      border-top: var(--border-width-default) solid var(--doc-rule-default);
       margin: 0 0 var(--space-700);
     }
 
@@ -961,11 +1001,9 @@
       margin-bottom: var(--space-500);
     }
 
-    /* Preview canvas */
+    /* Preview canvas — open, no fill, no border. The component is the content. */
     .preview-canvas {
-      background: var(--color-background-section);
-      border-radius: var(--corner-radius-l);
-      border: var(--border-width-default) solid var(--color-border-subtle);
+      background: var(--doc-surface-preview);
       padding: var(--space-1000) var(--space-800);
       display: flex;
       align-items: center;
@@ -988,11 +1026,11 @@
       letter-spacing: 0.02em;
     }
 
-    /* Settings list preview */
+    /* Settings list preview — white card, Ink borders */
     .preview-settings {
-      background: var(--color-background-section);
+      background: var(--doc-surface-component);
       border-radius: var(--corner-radius-l);
-      border: var(--border-width-default) solid var(--color-border-subtle);
+      border: var(--border-width-default) solid var(--doc-rule-subtle);
       overflow: hidden;
       margin-top: var(--space-500);
     }
@@ -1003,7 +1041,7 @@
       justify-content: space-between;
       gap: var(--space-600);
       padding: var(--space-500) var(--space-600);
-      border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+      border-bottom: var(--border-width-default) solid var(--doc-rule-subtle);
     }
 
     .preview-settings-row:last-child { border-bottom: none; }
@@ -1021,7 +1059,7 @@
       margin-top: 2px;
     }
 
-    /* Variants table */
+    /* Variants table — no header fill, Ink row dividers */
     .variants-table {
       width: 100%;
       border-collapse: collapse;
@@ -1030,20 +1068,20 @@
     .variants-table th {
       padding: var(--space-300) var(--space-500);
       text-align: left;
-      font-size: 11px;
+      font-size: var(--doc-label-size);
       font-weight: var(--font-weight-semibold);
-      letter-spacing: 0.06em;
+      letter-spacing: var(--doc-label-tracking);
       text-transform: uppercase;
       color: var(--color-content-subtle);
-      background: var(--color-background-section);
-      border-bottom: var(--border-width-default) solid var(--color-border-default);
+      background: transparent;
+      border-bottom: var(--border-width-default) solid var(--doc-rule-default);
     }
 
     .variants-table th:not(:first-child) { text-align: center; }
 
     .variants-table td {
       padding: var(--space-500) var(--space-500);
-      border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+      border-bottom: var(--border-width-default) solid var(--doc-rule-subtle);
       vertical-align: middle;
     }
 
@@ -1068,12 +1106,12 @@
     .usage-card {
       border-radius: var(--corner-radius-m);
       overflow: hidden;
-      border: var(--border-width-default) solid var(--color-border-subtle);
+      border: var(--border-width-default) solid var(--doc-rule-subtle);
     }
 
     .usage-card-demo {
       padding: var(--space-800) var(--space-600);
-      background: var(--color-background-section);
+      background: var(--doc-surface-inset);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1090,7 +1128,7 @@
     .usage-card.dont .usage-card-body { border-top-color: var(--color-danger); }
 
     .usage-card-tag {
-      font-size: 11px;
+      font-size: var(--doc-label-size);
       font-weight: var(--font-weight-semibold);
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -1106,7 +1144,13 @@
       color: var(--color-content-subtle);
     }
 
-    /* Doc tables */
+    /* Doc tables — no header fill, Ink row dividers, no outer box */
+    .table-wrap {
+      overflow-x: auto;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .doc-table {
       width: 100%;
       border-collapse: collapse;
@@ -1116,18 +1160,18 @@
     .doc-table th {
       text-align: left;
       padding: var(--space-200) var(--space-400);
-      font-size: 11px;
+      font-size: var(--doc-label-size);
       font-weight: var(--font-weight-semibold);
-      letter-spacing: 0.06em;
+      letter-spacing: var(--doc-label-tracking);
       text-transform: uppercase;
       color: var(--color-content-subtle);
-      background: var(--color-background-section);
-      border-bottom: var(--border-width-default) solid var(--color-border-default);
+      background: transparent;
+      border-bottom: var(--border-width-default) solid var(--doc-rule-default);
     }
 
     .doc-table td {
       padding: var(--space-300) var(--space-400);
-      border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+      border-bottom: var(--border-width-default) solid var(--doc-rule-subtle);
       vertical-align: top;
       line-height: var(--font-leading-body-s);
       color: var(--color-content-default);
@@ -1151,14 +1195,6 @@
     }
 
     .doc-table .td-subtle { color: var(--color-content-subtle); }
-
-    .table-wrap {
-      border: var(--border-width-default) solid var(--color-border-default);
-      border-radius: var(--corner-radius-m);
-      overflow-x: auto;   /* scroll horizontally on narrow screens */
-      overflow-y: hidden; /* keep border-radius clipping on top/bottom */
-      -webkit-overflow-scrolling: touch;
-    }
 
     /* Code block */
     .code-block {
@@ -1208,7 +1244,7 @@
 
     .related-card {
       padding: var(--space-400) var(--space-500);
-      border: var(--border-width-default) solid var(--color-border-default);
+      border: var(--border-width-default) solid var(--doc-rule-default);
       border-radius: var(--corner-radius-m);
       cursor: pointer;
       transition: background 0.15s ease, border-color 0.15s ease;
