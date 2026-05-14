@@ -1155,7 +1155,9 @@
     .table-wrap {
       border: var(--border-width-default) solid var(--color-border-default);
       border-radius: var(--corner-radius-m);
-      overflow: hidden;
+      overflow-x: auto;   /* scroll horizontally on narrow screens */
+      overflow-y: hidden; /* keep border-radius clipping on top/bottom */
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Code block */
@@ -1244,6 +1246,8 @@
       justify-content: center;
       width: 56px;
       height: 40px;
+      min-width: 56px;
+      min-height: 40px;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       flex-shrink: 0;
@@ -1263,6 +1267,8 @@
     .toggle-track {
       width: 48px;
       height: 32px;
+      min-width: 48px;
+      min-height: 32px;
       border-radius: var(--corner-radius-round);
       background: var(--color-action-disabled);
       position: relative;
@@ -1277,6 +1283,8 @@
       transform: translateY(-50%);
       width: 26px;
       height: 26px;
+      min-width: 26px;
+      min-height: 26px;
       border-radius: var(--corner-radius-round);
       background: var(--color-inverse);
       box-shadow: var(--shadow-elevation-s);
