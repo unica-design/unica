@@ -1555,7 +1555,10 @@
       opacity: 0;
       flex-shrink: 0;
       display: block;
-      transition: opacity 100ms ease;
+      transform: scale(0.6);
+      transform-origin: center;
+      transition: opacity 100ms ease,
+                  transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     /* Indeterminate dash */
@@ -1566,7 +1569,10 @@
       border-radius: 1px;
       opacity: 0;
       position: absolute;
-      transition: opacity 100ms ease;
+      transform: scaleX(0.3);
+      transform-origin: center;
+      transition: opacity 100ms ease,
+                  transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     /* ── Checked ── */
@@ -1574,14 +1580,20 @@
       background: var(--color-action-default);
       border-color: transparent;
     }
-    .checkbox input:checked ~ .checkbox-box .checkbox-check { opacity: 1; }
+    .checkbox input:checked ~ .checkbox-box .checkbox-check {
+      opacity: 1;
+      transform: scale(1);
+    }
 
     /* ── Indeterminate ── */
     .checkbox input:indeterminate ~ .checkbox-box {
       background: var(--color-action-default);
       border-color: transparent;
     }
-    .checkbox input:indeterminate ~ .checkbox-box .checkbox-dash { opacity: 1; }
+    .checkbox input:indeterminate ~ .checkbox-box .checkbox-dash {
+      opacity: 1;
+      transform: scaleX(1);
+    }
 
     /* ── Hover ── */
     @media (hover: hover) and (pointer: fine) {
@@ -2204,7 +2216,43 @@
         </div>
       </div>
 
-      <!-- ── 2. Variants ────────────────────────── -->
+      <!-- ── 2. With label ───────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">With label</h2>
+        <hr class="doc-rule">
+        <div class="preview-canvas" style="flex-direction:column; align-items:flex-start; gap:var(--space-100);">
+          <label class="checkbox-item">
+            <span class="checkbox">
+              <input type="checkbox" aria-label="Unchecked default">
+              <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+            </span>
+            <span class="checkbox-item-text">Receive product announcements</span>
+          </label>
+          <label class="checkbox-item">
+            <span class="checkbox">
+              <input type="checkbox" checked aria-label="Checked default">
+              <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+            </span>
+            <span class="checkbox-item-text">Subscribe to the weekly digest</span>
+          </label>
+          <label class="checkbox-item">
+            <span class="checkbox">
+              <input type="checkbox" data-indeterminate aria-label="Indeterminate default">
+              <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+            </span>
+            <span class="checkbox-item-text">All email preferences</span>
+          </label>
+          <label class="checkbox-item">
+            <span class="checkbox">
+              <input type="checkbox" disabled aria-label="Disabled">
+              <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+            </span>
+            <span class="checkbox-item-text">Managed by your organisation</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── 3. Variants ────────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
@@ -2308,7 +2356,7 @@
         </div>
       </div>
 
-      <!-- ── 3. Accessibility ───────────────────── -->
+      <!-- ── 4. Accessibility ───────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
@@ -2344,7 +2392,7 @@
         </div>
       </div>
 
-      <!-- ── 4. Properties ─────────────────────── -->
+      <!-- ── 5. Properties ─────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Properties</h2>
         <hr class="doc-rule">
@@ -2400,7 +2448,7 @@
         </div>
       </div>
 
-      <!-- ── 5. Code ────────────────────────────── -->
+      <!-- ── 6. Code ────────────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Code</h2>
         <hr class="doc-rule">
@@ -2549,7 +2597,54 @@
         </div>
       </div>
 
-      <!-- ── 2. Variants ────────────────────────── -->
+      <!-- ── 2. With label ───────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">With label</h2>
+        <hr class="doc-rule">
+        <div class="preview-settings">
+          <div class="preview-settings-row">
+            <div>
+              <div class="preview-settings-title">Push notifications</div>
+              <div class="preview-settings-sub">Receive alerts when something requires your attention.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" aria-label="Push notifications">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+          </div>
+          <div class="preview-settings-row">
+            <div>
+              <div class="preview-settings-title">Dark mode</div>
+              <div class="preview-settings-sub">Switch the interface to a dark colour scheme.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" checked aria-label="Dark mode">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+          </div>
+          <div class="preview-settings-row">
+            <div>
+              <div class="preview-settings-title" style="color:var(--color-content-disabled);">Location services</div>
+              <div class="preview-settings-sub">Managed by your organisation.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" role="switch" checked disabled aria-label="Location services">
+              <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
+                <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
+                <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
+              </span></span></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 3. Variants ────────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
