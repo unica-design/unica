@@ -1716,6 +1716,101 @@
     }
 
     /* ─────────────────────────────────────────
+       AVATAR
+    ───────────────────────────────────────── */
+
+    .avatar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* ── Sizes ── */
+    .avatar--xsmall  { width: 24px;  height: 24px; }
+    .avatar--small   { width: 32px;  height: 32px; }
+    .avatar--medium  { width: 40px;  height: 40px; }
+    .avatar--large   { width: 48px;  height: 48px; }
+    .avatar--xlarge  { width: 56px;  height: 56px; }
+    .avatar--xxlarge { width: 64px;  height: 64px; }
+
+    /* ── Shapes ── */
+    .avatar--circle   { clip-path: circle(50%); }
+    .avatar--squircle { clip-path: inset(0 round 33.33%); }
+    .avatar--diamond  { clip-path: url(#avatar-clip-diamond); }
+    .avatar--cushion  { clip-path: url(#avatar-clip-cushion); }
+
+    /* ── Photo ── */
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Initials ── */
+    .avatar-initials {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primitive-cafe-200);
+      font-family: var(--font-family-sans);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-default);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Scale initials text with avatar size */
+    .avatar--xsmall  .avatar-initials { font-size: 9px; }
+    .avatar--small   .avatar-initials { font-size: 11px; }
+    .avatar--medium  .avatar-initials { font-size: var(--font-size-body-xs); }
+    .avatar--large   .avatar-initials { font-size: 14px; }
+    .avatar--xlarge  .avatar-initials { font-size: 16px; }
+    .avatar--xxlarge .avatar-initials { font-size: 18px; }
+
+    /* ── Size preview row ── */
+    .avatar-size-row {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-500);
+      flex-wrap: wrap;
+    }
+
+    .avatar-size-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-300);
+    }
+
+    .avatar-size-pair {
+      display: flex;
+      align-items: center;
+      gap: var(--space-300);
+    }
+
+    /* ── Shape preview row ── */
+    .avatar-shape-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-700);
+      flex-wrap: wrap;
+    }
+
+    .avatar-shape-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-300);
+    }
+
+    /* ─────────────────────────────────────────
        RADIO
     ───────────────────────────────────────── */
 
@@ -1881,6 +1976,20 @@
   </style>
 </head>
 <body>
+
+<!-- ══ SVG CLIP PATHS (avatar shapes) ══ -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden;" aria-hidden="true">
+  <defs>
+    <!-- Diamond: rounded rotated square, normalized to 0–1 objectBoundingBox -->
+    <clipPath id="avatar-clip-diamond" clipPathUnits="objectBoundingBox">
+      <path d="M0.0566 0.6367 C-0.0189 0.5612 -0.0189 0.4388 0.0566 0.3633 L0.3633 0.0566 C0.4388 -0.0189 0.5612 -0.0189 0.6367 0.0566 L0.9434 0.3633 C1.0189 0.4388 1.0189 0.5612 0.9434 0.6367 L0.6367 0.9434 C0.5612 1.0189 0.4388 1.0189 0.3633 0.9434 Z"/>
+    </clipPath>
+    <!-- Cushion: concave organic shape, normalized to 0–1 objectBoundingBox -->
+    <clipPath id="avatar-clip-cushion" clipPathUnits="objectBoundingBox">
+      <path d="M0.9363 0.4335 C0.9157 0.4753 0.9157 0.5247 0.9363 0.5665 C1.0142 0.7249 1.0240 0.8703 0.9471 0.9471 C0.8703 1.0240 0.7249 1.0142 0.5665 0.9363 C0.5247 0.9157 0.4753 0.9157 0.4335 0.9363 C0.2751 1.0142 0.1297 1.0240 0.0529 0.9471 C-0.0240 0.8703 -0.0142 0.7249 0.0637 0.5665 C0.0843 0.5247 0.0843 0.4753 0.0637 0.4335 C-0.0142 0.2751 -0.0240 0.1297 0.0529 0.0529 C0.1297 -0.0240 0.2751 -0.0142 0.4335 0.0637 C0.4753 0.0843 0.5247 0.0843 0.5665 0.0637 C0.7249 -0.0142 0.8703 -0.0240 0.9471 0.0529 C1.0240 0.1297 1.0142 0.2751 0.9363 0.4335 Z"/>
+    </clipPath>
+  </defs>
+</svg>
 
 <!-- ══ HEADER ══ -->
 <header class="site-header">
@@ -3431,7 +3540,302 @@
     <div class="page-panel" id="page-card"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Card</h2><p class="section-description">Contained surface for grouping related content and actions.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-list"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List</h2><p class="section-description">Vertical list of items with optional icons, metadata, and actions.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-list-accordion"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List Accordion</h2><p class="section-description">Expandable list rows for progressive disclosure.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-avatar"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Avatar</h2><p class="section-description">User representation — image, initials, and icon variants.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-avatar">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Content</p>
+        <h1 class="comp-title">Avatar</h1>
+        <p class="comp-description">Represents a user through their photo or initials. Available in six sizes and four shapes — circle, squircle, diamond, and cushion.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=339-3407" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── 1. Preview ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <!-- Photo variants — all 4 shapes at large -->
+        <div class="preview-canvas" style="gap: var(--space-700);">
+          <div class="preview-item">
+            <div class="avatar avatar--large avatar--circle">
+              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
+            </div>
+            <span class="preview-label">Circle</span>
+          </div>
+          <div class="preview-item">
+            <div class="avatar avatar--large avatar--squircle">
+              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
+            </div>
+            <span class="preview-label">Squircle</span>
+          </div>
+          <div class="preview-item">
+            <div class="avatar avatar--large avatar--diamond">
+              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
+            </div>
+            <span class="preview-label">Diamond</span>
+          </div>
+          <div class="preview-item">
+            <div class="avatar avatar--large avatar--cushion">
+              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
+            </div>
+            <span class="preview-label">Cushion</span>
+          </div>
+
+          <!-- Divider -->
+          <div style="width:1px; height:48px; background:var(--color-border-default); align-self:center;"></div>
+
+          <!-- Initials variants — all 4 shapes at large -->
+          <div class="preview-item">
+            <div class="avatar avatar--large avatar--circle">
+              <span class="avatar-initials">A</span>
+            </div>
+            <span class="preview-label">Circle</span>
+          </div>
+          <div class="preview-item">
+            <div class="avatar avatar--large avatar--squircle">
+              <span class="avatar-initials">A</span>
+            </div>
+            <span class="preview-label">Squircle</span>
+          </div>
+          <div class="preview-item">
+            <div class="avatar avatar--large avatar--diamond">
+              <span class="avatar-initials">A</span>
+            </div>
+            <span class="preview-label">Diamond</span>
+          </div>
+          <div class="preview-item">
+            <div class="avatar avatar--large avatar--cushion">
+              <span class="avatar-initials">A</span>
+            </div>
+            <span class="preview-label">Cushion</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 2. Sizes ──────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Sizes</h2>
+        <hr class="doc-rule">
+        <div class="preview-canvas" style="flex-wrap:wrap; gap:var(--space-800);">
+
+          <div class="avatar-size-item">
+            <div class="avatar-size-pair">
+              <div class="avatar avatar--xsmall avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <div class="avatar avatar--xsmall avatar--circle">
+                <span class="avatar-initials">A</span>
+              </div>
+            </div>
+            <span class="preview-label">xsmall · 24</span>
+          </div>
+
+          <div class="avatar-size-item">
+            <div class="avatar-size-pair">
+              <div class="avatar avatar--small avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <div class="avatar avatar--small avatar--circle">
+                <span class="avatar-initials">A</span>
+              </div>
+            </div>
+            <span class="preview-label">small · 32</span>
+          </div>
+
+          <div class="avatar-size-item">
+            <div class="avatar-size-pair">
+              <div class="avatar avatar--medium avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <div class="avatar avatar--medium avatar--circle">
+                <span class="avatar-initials">A</span>
+              </div>
+            </div>
+            <span class="preview-label">medium · 40</span>
+          </div>
+
+          <div class="avatar-size-item">
+            <div class="avatar-size-pair">
+              <div class="avatar avatar--large avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <div class="avatar avatar--large avatar--circle">
+                <span class="avatar-initials">A</span>
+              </div>
+            </div>
+            <span class="preview-label">large · 48</span>
+          </div>
+
+          <div class="avatar-size-item">
+            <div class="avatar-size-pair">
+              <div class="avatar avatar--xlarge avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <div class="avatar avatar--xlarge avatar--circle">
+                <span class="avatar-initials">A</span>
+              </div>
+            </div>
+            <span class="preview-label">xlarge · 56</span>
+          </div>
+
+          <div class="avatar-size-item">
+            <div class="avatar-size-pair">
+              <div class="avatar avatar--xxlarge avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <div class="avatar avatar--xxlarge avatar--circle">
+                <span class="avatar-initials">A</span>
+              </div>
+            </div>
+            <span class="preview-label">xxlarge · 64</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── 3. Shapes ─────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Shapes</h2>
+        <hr class="doc-rule">
+        <div class="preview-canvas" style="gap:var(--space-1000);">
+          <div class="avatar-shape-item">
+            <div class="avatar avatar--xxlarge avatar--circle">
+              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+            </div>
+            <span class="preview-label">Circle</span>
+          </div>
+          <div class="avatar-shape-item">
+            <div class="avatar avatar--xxlarge avatar--squircle">
+              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+            </div>
+            <span class="preview-label">Squircle</span>
+          </div>
+          <div class="avatar-shape-item">
+            <div class="avatar avatar--xxlarge avatar--diamond">
+              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+            </div>
+            <span class="preview-label">Diamond</span>
+          </div>
+          <div class="avatar-shape-item">
+            <div class="avatar avatar--xxlarge avatar--cushion">
+              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+            </div>
+            <span class="preview-label">Cushion</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 4. Accessibility ───────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body">Avatars are purely presentational. The <code style="font-family:monospace;font-size:0.9em;">&lt;img&gt;</code> element should have a descriptive <code style="font-family:monospace;font-size:0.9em;">alt</code> attribute when the user's identity is meaningful in context (e.g. "Sofia Esposito's avatar"), or an empty <code style="font-family:monospace;font-size:0.9em;">alt=""</code> when the avatar is decorative and the user's name appears nearby. The initials variant is wrapped in a <code style="font-family:monospace;font-size:0.9em;">span</code> with <code style="font-family:monospace;font-size:0.9em;">aria-hidden="true"</code> — the surrounding element should carry the accessible name.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Case</th><th>Guidance</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Photo with nearby name</td>
+                <td>Use <code style="font-family:monospace;font-size:0.9em;">alt=""</code> — the name in the UI provides the accessible label.</td>
+              </tr>
+              <tr>
+                <td>Photo without nearby name</td>
+                <td>Use <code style="font-family:monospace;font-size:0.9em;">alt="[Name]'s avatar"</code> so screen readers can identify the person.</td>
+              </tr>
+              <tr>
+                <td>Initials fallback</td>
+                <td>Hide the initials with <code style="font-family:monospace;font-size:0.9em;">aria-hidden="true"</code> and provide the full name via <code style="font-family:monospace;font-size:0.9em;">aria-label</code> on the parent container.</td>
+              </tr>
+              <tr>
+                <td>Clickable avatar</td>
+                <td>Wrap in an <code style="font-family:monospace;font-size:0.9em;">&lt;a&gt;</code> or <code style="font-family:monospace;font-size:0.9em;">&lt;button&gt;</code> and provide a label that describes the action, e.g. "View Sofia's profile".</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 5. Properties ─────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Values</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">avatar--{size}</td>
+                <td class="td-type">xsmall · small · medium · large · xlarge · xxlarge</td>
+                <td>Sets the avatar dimensions: 24 / 32 / 40 / 48 / 56 / 64 px.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">avatar--{shape}</td>
+                <td class="td-type">circle · squircle · diamond · cushion</td>
+                <td>Applies the clip-path for each shape variant.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">avatar-img</td>
+                <td class="td-subtle">—</td>
+                <td>Photo variant. Uses <code style="font-family:monospace;font-size:0.9em;">object-fit: cover</code> — works with any aspect ratio.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">avatar-initials</td>
+                <td class="td-subtle">—</td>
+                <td>Initials fallback. Renders semibold text on a café-200 background, sized relative to the avatar.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 6. Code ────────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Code</h2>
+        <hr class="doc-rule">
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+          <pre><code class="language-html">&lt;!-- Photo avatar --&gt;
+&lt;div class="avatar avatar--large avatar--circle"&gt;
+  &lt;img class="avatar-img" src="photo.jpg" alt="Sofia Esposito's avatar"&gt;
+&lt;/div&gt;
+
+&lt;!-- Initials avatar --&gt;
+&lt;div class="avatar avatar--large avatar--circle" aria-label="Sofia Esposito"&gt;
+  &lt;span class="avatar-initials" aria-hidden="true"&gt;SE&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Size variants --&gt;
+&lt;div class="avatar avatar--xsmall  avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--small   avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--medium  avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--large   avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--xlarge  avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--xxlarge avatar--circle"&gt;...&lt;/div&gt;
+
+&lt;!-- Shape variants --&gt;
+&lt;div class="avatar avatar--large avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--large avatar--squircle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--large avatar--diamond"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--large avatar--cushion"&gt;...&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+
+    </div>
     <div class="page-panel" id="page-divider"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Divider</h2><p class="section-description">Horizontal rule for separating content regions.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-icon-bullet"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Icon Bullet</h2><p class="section-description">Icon paired with a label, used in lists and feature callouts.</p></div><span class="stub-pill">In progress</span></section></div>
 
