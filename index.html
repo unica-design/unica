@@ -1961,33 +1961,24 @@
 
     /* ── Phone mockup frame (Bottom Nav preview) ── */
     .phone-mock {
-      width: 380px;
-      min-width: 380px; /* prevent collapse — canvas scrolls on narrow viewports */
-      border-radius: 48px;
-      background: var(--color-background-page);
-      box-shadow: 0 0 0 1.5px var(--color-border-default),
-                  0 24px 64px rgba(0, 0, 0, 0.12);
-      overflow: hidden;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
     }
-    .phone-mock-screen {
-      flex: 1;
-      min-height: 380px;
-      padding: 44px 20px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    @media (min-width: 641px) {
+      .phone-mock {
+        width: 375px;
+        height: 812px;
+        border-radius: 24px;
+        background: var(--color-background-page);
+        box-shadow: 0 1px 8px 0 rgba(8, 5, 13, 0.25);
+        overflow: hidden;
+        padding: 32px 16px;
+      }
     }
-    .phone-mock-skel {
-      border-radius: 6px;
-      background: var(--color-border-subtle);
-      flex-shrink: 0;
-    }
-    .phone-mock-footer {
-      padding: 0 12px 28px;
-      display: flex;
-      justify-content: center;
+    @media (max-width: 640px) {
+      .phone-mock-screen { display: none; }
     }
 
     /* ─────────────────────────────────────────
@@ -3718,24 +3709,11 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
-        <div class="preview-canvas" style="padding:var(--space-900) var(--space-600);overflow-x:auto;">
+        <div class="preview-canvas" style="padding:var(--space-900) var(--space-600);">
           <div class="phone-mock">
-            <!-- Skeleton content area -->
-            <div class="phone-mock-screen">
-              <div class="phone-mock-skel" style="width:52%;height:13px;"></div>
-              <div class="phone-mock-skel" style="width:100%;height:140px;border-radius:16px;margin-top:4px;"></div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                <div class="phone-mock-skel" style="height:78px;border-radius:12px;"></div>
-                <div class="phone-mock-skel" style="height:78px;border-radius:12px;"></div>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;">
-                <div class="phone-mock-skel" style="width:72%;height:9px;"></div>
-                <div class="phone-mock-skel" style="width:55%;height:9px;"></div>
-                <div class="phone-mock-skel" style="width:64%;height:9px;"></div>
-              </div>
-            </div>
+            <div class="phone-mock-screen"></div>
             <!-- Interactive nav pinned to the bottom -->
-            <div class="phone-mock-footer">
+            <div class="phone-mock-footer" style="display:flex;justify-content:center;">
               <nav class="bnav" id="bnav-demo" aria-label="Demo navigation">
                 <div class="bnav-track">
                   <span class="bnav-pill bnav-pill--snap" aria-hidden="true"></span>
