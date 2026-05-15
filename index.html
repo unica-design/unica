@@ -1952,32 +1952,62 @@
       box-shadow: 0 0 0 2px var(--color-action-default);
     }
 
-    /* ── Preview variant toggles ── */
-    .pvc-wrap {
-      display: flex; gap: 8px; justify-content: center; margin-top: 20px;
-    }
-    .pvc-toggle {
-      position: relative; display: inline-flex; align-items: center;
-      background: var(--color-border-subtle);
-      border-radius: 20px; padding: 3px;
-    }
-    .pvc-pill {
-      position: absolute; top: 3px; height: calc(100% - 6px);
-      background: var(--color-background-contrast);
-      border-radius: 20px; pointer-events: none;
-      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
-                  width 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .pvc-btn {
-      position: relative; z-index: 1; border: none; background: transparent;
-      cursor: pointer; border-radius: 20px; padding: 5px 12px;
-      font-family: var(--font-family-sans); font-size: 11px; font-weight: 500;
-      line-height: 1; white-space: nowrap;
-      color: var(--color-content-subtle);
-      transition: color 200ms ease;
+    /* ── Dropdown (global) ──────────────────────── */
+    .dropdown { position: relative; display: inline-block; }
+
+    .dropdown-trigger {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 10px 5px 12px;
+      background: var(--color-background-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: 20px;
+      font-family: var(--font-family-sans); font-size: 12px; font-weight: 500; line-height: 1;
+      color: var(--color-content-default);
+      cursor: pointer; white-space: nowrap;
+      transition: background 150ms ease;
       -webkit-tap-highlight-color: transparent;
     }
-    .pvc-btn--active { color: var(--color-inverse); }
+    .dropdown-trigger:hover { background: var(--color-border-subtle); }
+
+    .dropdown-trigger-caret {
+      width: 10px; height: 10px; flex-shrink: 0; color: var(--color-content-subtle);
+      transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .dropdown[data-open] .dropdown-trigger-caret { transform: rotate(180deg); }
+
+    .dropdown-menu {
+      position: absolute; top: calc(100% + 6px); left: 0; z-index: 200;
+      min-width: 192px;
+      background: var(--color-background-page);
+      border-radius: 16px;
+      box-shadow: 0 1px 8px rgba(8, 5, 13, 0.25);
+      padding: 6px;
+      list-style: none; margin: 0;
+      opacity: 0; transform: translateY(-6px); pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+    .dropdown[data-open] .dropdown-menu {
+      opacity: 1; transform: translateY(0); pointer-events: all;
+    }
+
+    .dropdown-option {
+      display: flex; align-items: center;
+      padding: 8px 10px; border-radius: 10px;
+      font-family: var(--font-family-sans); font-size: 13px; line-height: 1.2;
+      color: var(--color-content-default);
+      cursor: pointer;
+      transition: background 100ms ease;
+      user-select: none;
+    }
+    .dropdown-option:hover { background: var(--color-border-subtle); }
+    .dropdown-option[aria-selected="true"] { font-weight: 600; }
+    .dropdown-option::before {
+      content: ''; flex-shrink: 0;
+      width: 6px; height: 6px; border-radius: 50%; margin-right: 10px;
+      background: var(--color-background-contrast);
+      opacity: 0; transition: opacity 150ms ease;
+    }
+    .dropdown-option[aria-selected="true"]::before { opacity: 1; }
     /* Reversed */
     .bnav--reversed .bnav-track { background: var(--color-background-contrast); box-shadow: none; }
     .bnav--reversed .bnav-pill { background: var(--color-background-page); }
@@ -3741,7 +3771,21 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
-        <div class="preview-canvas" style="padding:var(--space-900) var(--space-600);flex-direction:column;align-items:center;">
+        <div class="dropdown" id="bnav-variant-dropdown" style="margin-bottom:var(--space-600);">
+          <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Select variant">
+            <span>Labeled</span>
+            <svg class="dropdown-trigger-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu" role="listbox" aria-label="Select variant">
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="true"  data-value="labeled">Labeled</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="icons">Icon only</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="reversed">Reversed</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="reversed-icons">Reversed + icon only</li>
+          </ul>
+        </div>
+        <div class="preview-canvas" style="padding:var(--space-900) var(--space-600);">
           <div class="phone-mock">
             <div class="phone-mock-screen"></div>
             <!-- Interactive nav pinned to the bottom -->
@@ -3770,19 +3814,6 @@
                   <svg viewBox="0 0 24 24" fill="none"><path d="M11.2505 21.2564V12.7505H2.74368C2.32961 12.7505 1.99391 12.4145 1.99368 12.0005C1.99368 11.5863 2.32947 11.2505 2.74368 11.2505H11.2505V2.74369C11.2505 2.32948 11.5863 1.9937 12.0005 1.99369C12.3887 1.99369 12.708 2.28857 12.7466 2.66654L12.7505 2.74369V11.2505H21.2564L21.3326 11.2544C21.7109 11.2927 22.0064 11.6121 22.0064 12.0005C22.0062 12.3888 21.7108 12.7084 21.3326 12.7466L21.2564 12.7505H12.7505V21.2564C12.7505 21.6706 12.4147 22.0064 12.0005 22.0064C11.5863 22.0064 11.2506 21.6706 11.2505 21.2564Z" fill="currentColor"/></svg>
                 </button>
               </nav>
-            </div>
-          </div>
-          <!-- Variant toggles -->
-          <div class="pvc-wrap" role="group" aria-label="Preview variant">
-            <div class="pvc-toggle" id="pvc-labels">
-              <span class="pvc-pill" aria-hidden="true"></span>
-              <button class="pvc-btn pvc-btn--active" data-pvc-val="labels" aria-pressed="true">Labels</button>
-              <button class="pvc-btn" data-pvc-val="icons" aria-pressed="false">Icons</button>
-            </div>
-            <div class="pvc-toggle" id="pvc-style">
-              <span class="pvc-pill" aria-hidden="true"></span>
-              <button class="pvc-btn pvc-btn--active" data-pvc-val="default" aria-pressed="true">Default</button>
-              <button class="pvc-btn" data-pvc-val="reversed" aria-pressed="false">Reversed</button>
             </div>
           </div>
         </div>
@@ -4843,6 +4874,45 @@
 
   /* ── Init ── */
   /* ── Bottom Navigation ───────────────────────────────── */
+  /* ── Dropdown (global) ── */
+  function initDropdown(el, onChange) {
+    if (!el) return;
+    const trigger = el.querySelector('.dropdown-trigger');
+    const labelEl = trigger.querySelector('span');
+    const menu    = el.querySelector('.dropdown-menu');
+    const options = Array.from(el.querySelectorAll('.dropdown-option'));
+
+    const isOpen = () => el.hasAttribute('data-open');
+
+    function open()  { el.setAttribute('data-open', ''); trigger.setAttribute('aria-expanded', 'true'); }
+    function close() { el.removeAttribute('data-open');  trigger.setAttribute('aria-expanded', 'false'); }
+
+    function select(opt) {
+      options.forEach(o => o.setAttribute('aria-selected', String(o === opt)));
+      labelEl.textContent = opt.textContent.trim();
+      close();
+      onChange(opt.dataset.value);
+    }
+
+    trigger.addEventListener('click', e => { e.stopPropagation(); isOpen() ? close() : open(); });
+    options.forEach(opt => opt.addEventListener('click', () => select(opt)));
+    document.addEventListener('click', () => close());
+
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { close(); trigger.focus(); return; }
+      if (!isOpen()) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const cur = options.findIndex(o => o === document.activeElement);
+        const next = (cur + (e.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+        options[next].focus();
+      }
+      if ((e.key === 'Enter' || e.key === ' ') && options.includes(document.activeElement)) {
+        e.preventDefault(); select(document.activeElement);
+      }
+    });
+  }
+
   function initBnav(navEl) {
     if (!navEl) return;
     const pill = navEl.querySelector('.bnav-pill');
@@ -4902,44 +4972,14 @@
     /* Bottom nav demos */
     document.querySelectorAll('.bnav').forEach(initBnav);
 
-    /* ── Preview variant toggles ── */
-    (function () {
+    /* ── Bottom nav preview variant dropdown ── */
+    initDropdown(document.getElementById('bnav-variant-dropdown'), value => {
       const demo = document.getElementById('bnav-demo');
       if (!demo) return;
-
-      document.querySelectorAll('.pvc-toggle').forEach(toggle => {
-        const pill  = toggle.querySelector('.pvc-pill');
-        const btns  = Array.from(toggle.querySelectorAll('.pvc-btn'));
-
-        function snapPill(btn) {
-          pill.style.left  = btn.offsetLeft + 'px';
-          pill.style.width = btn.offsetWidth + 'px';
-        }
-
-        // Snap pill to initial active button without transition
-        const init = btns.find(b => b.classList.contains('pvc-btn--active')) || btns[0];
-        pill.style.transition = 'none';
-        snapPill(init);
-        requestAnimationFrame(() => { pill.style.transition = ''; });
-
-        btns.forEach(btn => btn.addEventListener('click', () => {
-          if (btn.classList.contains('pvc-btn--active')) return;
-          btns.forEach(b => {
-            b.classList.toggle('pvc-btn--active', b === btn);
-            b.setAttribute('aria-pressed', String(b === btn));
-          });
-          snapPill(btn);
-
-          // Apply variant to demo nav
-          demo.classList.toggle('bnav--icon-only',
-            document.querySelector('#pvc-labels .pvc-btn--active')?.dataset.pvcVal === 'icons');
-          demo.classList.toggle('bnav--reversed',
-            document.querySelector('#pvc-style .pvc-btn--active')?.dataset.pvcVal === 'reversed');
-
-          if (demo._bnavResync) demo._bnavResync();
-        }));
-      });
-    })();
+      demo.classList.toggle('bnav--icon-only', value === 'icons' || value === 'reversed-icons');
+      demo.classList.toggle('bnav--reversed',  value === 'reversed' || value === 'reversed-icons');
+      if (demo._bnavResync) demo._bnavResync();
+    });
   });
   window.addEventListener('resize', updateChrome);
 
