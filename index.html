@@ -1964,7 +1964,7 @@
       border-radius: var(--corner-radius-round);
       font-family: var(--font-family-sans);
       font-size: var(--font-size-body-xs); font-weight: var(--font-weight-semibold);
-      letter-spacing: 0.03em; line-height: 1;
+      letter-spacing: 0.03em;
       color: var(--color-content-subtle);
       cursor: pointer; white-space: nowrap;
       transition: background 150ms ease;
@@ -1981,11 +1981,11 @@
     /* Menu matches phone shell elevation */
     .dropdown-menu {
       position: absolute; top: calc(100% + 6px); left: 0; z-index: 200;
-      min-width: 200px;
+      width: max-content;
       background: var(--color-background-page);
       border-radius: 16px;
       box-shadow: 0 1px 8px rgba(8, 5, 13, 0.25);
-      padding: 4px;
+      padding: 8px 4px;
       list-style: none; margin: 0;
       opacity: 0; transform: translateY(-6px); pointer-events: none;
       transition: opacity 160ms ease, transform 160ms ease;
@@ -2002,7 +2002,7 @@
       border-radius: 180px;
       font-family: var(--font-family-sans); font-size: var(--font-size-body-s); line-height: 1.5;
       color: var(--color-content-default);
-      cursor: pointer;
+      cursor: pointer; white-space: nowrap;
       transition: background 150ms ease, color 150ms ease;
       user-select: none;
     }
@@ -2011,12 +2011,6 @@
       background: var(--color-content-default);
       color: var(--color-background-page);
       font-weight: var(--font-weight-semibold);
-    }
-    /* Class-name options render in monospace like the properties table */
-    .dropdown-option[data-value]:not([data-value="labeled"]) {
-      font-family: var(--font-family-mono);
-      font-size: var(--font-size-body-xs);
-      letter-spacing: 0;
     }
     /* Reversed */
     .bnav--reversed .bnav-track { background: var(--color-background-contrast); box-shadow: none; }
@@ -3783,16 +3777,16 @@
         <hr class="doc-rule">
         <div class="dropdown" id="bnav-variant-dropdown" style="margin-bottom:var(--space-600);">
           <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Select variant">
-            <span>Default</span>
+            <span>With labels</span>
             <svg class="dropdown-trigger-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true">
               <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <ul class="dropdown-menu" role="listbox" aria-label="Select variant">
-            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="true"  data-value="labeled">Default</li>
-            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="icons">bnav--icon-only</li>
-            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="reversed">bnav--reversed</li>
-            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="reversed-icons">bnav--reversed bnav--icon-only</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="true"  data-value="labeled">With labels</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="icons">Icon only</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="reversed">Reversed · labels</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="reversed-icons">Reversed · icon only</li>
           </ul>
         </div>
         <div class="preview-canvas" style="padding:var(--space-900) var(--space-600);">
