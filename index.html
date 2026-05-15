@@ -2184,7 +2184,7 @@
             <div class="checkbox-group-divider"></div>
             <label class="checkbox-item" style="padding: var(--space-300) var(--space-400);">
               <span class="checkbox">
-                <input type="checkbox" checked aria-label="New messages">
+                <input type="checkbox" checked data-cb-child="cb-all" aria-label="New messages">
                 <span class="checkbox-box">
                   <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
                   <span class="checkbox-dash"></span>
@@ -2194,7 +2194,7 @@
             </label>
             <label class="checkbox-item" style="padding: var(--space-300) var(--space-400);">
               <span class="checkbox">
-                <input type="checkbox" checked aria-label="Project updates">
+                <input type="checkbox" checked data-cb-child="cb-all" aria-label="Project updates">
                 <span class="checkbox-box">
                   <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
                   <span class="checkbox-dash"></span>
@@ -2204,7 +2204,7 @@
             </label>
             <label class="checkbox-item" style="padding: var(--space-300) var(--space-400);">
               <span class="checkbox">
-                <input type="checkbox" aria-label="Marketing emails">
+                <input type="checkbox" data-cb-child="cb-all" aria-label="Marketing emails">
                 <span class="checkbox-box">
                   <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
                   <span class="checkbox-dash"></span>
@@ -3108,6 +3108,38 @@
     searchIndex = [];
   // Set indeterminate state on demo checkboxes
   document.querySelectorAll('[data-indeterminate]').forEach(el => { el.indeterminate = true; });
+
+  // Select-all checkbox groups
+  function initSelectAll(parentId) {
+    const parent = document.getElementById(parentId);
+    if (!parent) return;
+    const children = () => document.querySelectorAll(`[data-cb-child="${parentId}"]`);
+
+    function syncParent() {
+      const all = Array.from(children());
+      const checked = all.filter(c => c.checked).length;
+      if (checked === 0) {
+        parent.checked = false;
+        parent.indeterminate = false;
+      } else if (checked === all.length) {
+        parent.checked = true;
+        parent.indeterminate = false;
+      } else {
+        parent.checked = false;
+        parent.indeterminate = true;
+      }
+    }
+
+    parent.addEventListener('change', () => {
+      children().forEach(c => { c.checked = parent.checked; });
+    });
+
+    children().forEach(child => {
+      child.addEventListener('change', syncParent);
+    });
+  }
+
+  initSelectAll('cb-all');
 
     document.querySelectorAll('.sidebar-link[data-page]').forEach(link => {
       const pageId = link.dataset.page;
