@@ -3894,23 +3894,67 @@
         </div><!-- /2×2 grid -->
       </div>
 
-      <!-- ── 3. Properties ─────────────────────────── -->
+      <!-- ── 3. Accessibility ───────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body">Built on the ARIA <code style="font-family:monospace;font-size:0.9em;">tablist</code> / <code style="font-family:monospace;font-size:0.9em;">tab</code> pattern. The <code style="font-family:monospace;font-size:0.9em;">&lt;nav&gt;</code> element provides a landmark so screen reader users can jump directly to the navigation. Only the active tab is in the tab order at any time (roving tabindex) — arrow keys move between tabs without leaving the component.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Interaction</th><th>Behaviour</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">Tab / Shift+Tab</td>
+                <td>Moves focus into and out of the tab bar. Only the currently active tab receives tab focus — inactive tabs have <code style="font-family:monospace;font-size:0.9em;">tabindex="-1"</code> and are skipped.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">← → Arrow keys</td>
+                <td>Cycle focus and selection left or right through the tabs with wrapping. This is the standard tablist navigation pattern — users do not need to Tab through every option.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">role="tablist"</td>
+                <td>Applied to <code style="font-family:monospace;font-size:0.9em;">.bnav-track</code>. Groups the tab buttons into a single navigable set and tells screen readers this is a tab bar, not a list of unrelated buttons.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">role="tab"</td>
+                <td>Applied to each <code style="font-family:monospace;font-size:0.9em;">.bnav-tab</code> button. Screen readers announce the tab's accessible name (from <code style="font-family:monospace;font-size:0.9em;">aria-label</code>) together with its selected state and position — e.g. <em>"Home, tab, selected, 1 of 4"</em>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-selected</td>
+                <td>Set to <code style="font-family:monospace;font-size:0.9em;">"true"</code> on the active tab and <code style="font-family:monospace;font-size:0.9em;">"false"</code> on all others. Updated by <code style="font-family:monospace;font-size:0.9em;">initBnav</code> on every selection change so the state is always in sync with the visual indicator.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-label on &lt;nav&gt;</td>
+                <td>Names the navigation landmark. Without it VoiceOver announces <em>"navigation"</em> generically; with it, it announces the specific name (e.g. <em>"Main navigation"</em>). Required when a page has more than one <code style="font-family:monospace;font-size:0.9em;">&lt;nav&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-label on FAB</td>
+                <td>The FAB has no visible text label, so <code style="font-family:monospace;font-size:0.9em;">aria-label</code> is required to describe its action. Describe what it does, not what it looks like — e.g. <code style="font-family:monospace;font-size:0.9em;">aria-label="New post"</code> not <code style="font-family:monospace;font-size:0.9em;">"Plus button"</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 4. Properties ─────────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Properties</h2>
         <hr class="doc-rule">
         <div class="table-wrap">
           <table class="doc-table">
-            <thead><tr><th>Class</th><th>Applies to</th><th>Description</th></tr></thead>
+            <thead><tr><th>Class</th><th>Values</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td class="td-mono">bnav</td><td><code style="font-family:monospace;font-size:.9em;">&lt;nav&gt;</code></td><td>Root navigation wrapper. Flex row containing the track and FAB.</td></tr>
-              <tr><td class="td-mono">bnav-track</td><td><code style="font-family:monospace;font-size:.9em;">div</code></td><td>Pill-shaped tab container. Use <code style="font-family:monospace;font-size:.9em;">position:relative</code> — the animated pill is absolutely positioned inside.</td></tr>
-              <tr><td class="td-mono">bnav-pill</td><td><code style="font-family:monospace;font-size:.9em;">span</code></td><td>The sliding selection indicator. Position and width are set via JS on every tab change.</td></tr>
-              <tr><td class="td-mono">bnav-tab</td><td><code style="font-family:monospace;font-size:.9em;">button</code></td><td>Individual tab. Always 40 × 40 px when unselected; expands to 96 px wide when <code style="font-family:monospace;font-size:.9em;">bnav-tab--active</code> is present.</td></tr>
-              <tr><td class="td-mono">bnav-tab--active</td><td><code style="font-family:monospace;font-size:.9em;">bnav-tab</code></td><td>Marks the selected tab. Expands width, shows label, turns icon white.</td></tr>
-              <tr><td class="td-mono">bnav-label</td><td><code style="font-family:monospace;font-size:.9em;">span</code></td><td>Tab label text. Hidden (opacity 0) when the parent is not active; fades in with a 60 ms delay on selection.</td></tr>
-              <tr><td class="td-mono">bnav-fab</td><td><code style="font-family:monospace;font-size:.9em;">button</code></td><td>Floating action button — 56 × 56 px circle, always present alongside the track.</td></tr>
-              <tr><td class="td-mono">bnav--icon-only</td><td><code style="font-family:monospace;font-size:.9em;">bnav</code></td><td>Modifier. Hides all labels; selected tab stays 40 × 40 px; pill slides without expanding.</td></tr>
-              <tr><td class="td-mono">bnav--reversed</td><td><code style="font-family:monospace;font-size:.9em;">bnav</code></td><td>Modifier for use on dark surfaces. Inverts track and pill colours.</td></tr>
+              <tr><td class="td-mono">bnav</td><td class="td-subtle">—</td><td>Root <code style="font-family:monospace;font-size:.9em;">&lt;nav&gt;</code> element. Flex row containing the track and optional FAB.</td></tr>
+              <tr><td class="td-mono">bnav-track</td><td class="td-subtle">—</td><td>Pill-shaped tab container on a <code style="font-family:monospace;font-size:.9em;">div</code>. Use <code style="font-family:monospace;font-size:.9em;">position:relative</code> — the animated pill is absolutely positioned inside.</td></tr>
+              <tr><td class="td-mono">bnav-pill</td><td class="td-subtle">—</td><td>Sliding selection indicator on a <code style="font-family:monospace;font-size:.9em;">span</code>. Position and width are driven by <code style="font-family:monospace;font-size:.9em;">initBnav</code> on every tab change.</td></tr>
+              <tr><td class="td-mono">bnav-tab</td><td class="td-subtle">—</td><td>Individual tab <code style="font-family:monospace;font-size:.9em;">button</code>. Always 40 × 40 px when unselected; expands to 96 px wide when <code style="font-family:monospace;font-size:.9em;">bnav-tab--active</code> is present.</td></tr>
+              <tr><td class="td-mono">bnav-tab--active</td><td class="td-subtle">—</td><td>Modifier on <code style="font-family:monospace;font-size:.9em;">bnav-tab</code>. Expands the tab, fades in the label, and turns the icon to the inverse colour.</td></tr>
+              <tr><td class="td-mono">bnav-label</td><td class="td-subtle">—</td><td>Tab label text in a <code style="font-family:monospace;font-size:.9em;">span</code>. Invisible (opacity 0) when unselected; fades in with a 60 ms delay when the tab becomes active.</td></tr>
+              <tr><td class="td-mono">bnav-fab</td><td class="td-subtle">—</td><td>Floating action <code style="font-family:monospace;font-size:.9em;">button</code> — 56 × 56 px circle. Sits alongside the track. Requires an <code style="font-family:monospace;font-size:.9em;">aria-label</code>.</td></tr>
+              <tr><td class="td-mono">bnav--icon-only</td><td class="td-subtle">—</td><td>Modifier on <code style="font-family:monospace;font-size:.9em;">bnav</code>. Hides all labels; the selected tab stays 40 × 40 px and the pill slides without expanding.</td></tr>
+              <tr><td class="td-mono">bnav--reversed</td><td class="td-subtle">—</td><td>Modifier on <code style="font-family:monospace;font-size:.9em;">bnav</code>. For use on dark surfaces — inverts track and pill colours.</td></tr>
             </tbody>
           </table>
         </div>
