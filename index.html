@@ -11,6 +11,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens/tokens.css" />
+  <script>
+    /* Restore saved theme before first paint — prevents flash of wrong theme on reload */
+    (function() {
+      var t = localStorage.getItem('unica-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <style>
 
     /* ─────────────────────────────────────────
@@ -1298,10 +1305,10 @@
 
     /* Code block: always dark background, never inverts in dark mode */
     [data-theme="dark"] .code-block {
-      background: #000000;
+      background: #000000 !important;
     }
     [data-theme="dark"] .code-block pre {
-      color: var(--primitive-cafe-0);
+      color: var(--primitive-cafe-0) !important;
     }
 
     /* Related cards */
@@ -3075,7 +3082,9 @@
   function toggleTheme() {
     const html  = document.documentElement;
     const isDark = html.getAttribute('data-theme') === 'dark';
-    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    const next = isDark ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('unica-theme', next);
     document.getElementById('icon-sun').style.display  = isDark ? 'none'  : 'block';
     document.getElementById('icon-moon').style.display = isDark ? 'block' : 'none';
     syncDarkSwitch();
@@ -3295,6 +3304,11 @@
     computeHexValues();
     buildSearchIndex();
     initSearch();
+    /* Sync icon + switch to match restored theme */
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.getElementById('icon-sun').style.display  = isDark ? 'none'  : 'block';
+    document.getElementById('icon-moon').style.display = isDark ? 'block' : 'none';
+    syncDarkSwitch();
   });
   window.addEventListener('resize', updateChrome);
 
