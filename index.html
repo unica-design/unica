@@ -1873,11 +1873,16 @@
     .badge-host-badge {
       position: absolute;
       /* 14.6% = R·(1−1/√2)/D — places badge centre on the circle edge at 45°.
-         translate(50%,−50%) then centres the badge on that point so exactly
-         half overlaps the element and half sits outside. */
+         translate(50%,−50%) centres the badge on that point so exactly half
+         overlaps the element and half sits outside. */
       top: 14.6%;
       right: 14.6%;
       transform: translate(50%, -50%);
+    }
+    /* Rectangular / rounded-square hosts: bisect the bounding-box corner */
+    .badge-host--rect .badge-host-badge {
+      top: 0;
+      right: 0;
     }
 
     /* ── Icon placeholder (for "in context" demo) ── */
@@ -3712,7 +3717,7 @@
 
           <!-- Dot on icon -->
           <div class="preview-item">
-            <div class="badge-host">
+            <div class="badge-host badge-host--rect">
               <div class="badge-icon-box">
                 <!-- Bell icon -->
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3724,7 +3729,7 @@
 
           <!-- Number on icon -->
           <div class="preview-item">
-            <div class="badge-host">
+            <div class="badge-host badge-host--rect">
               <div class="badge-icon-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
