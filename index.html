@@ -1486,6 +1486,185 @@
     }
 
     /* ─────────────────────────────────────────
+       CHECKBOX
+    ───────────────────────────────────────── */
+
+    /* Touch target */
+    .checkbox {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+      flex-shrink: 0;
+      border-radius: var(--corner-radius-round);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Native input — invisible, full hit area */
+    .checkbox input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    /* State layer (hover ring) */
+    .checkbox::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--corner-radius-round);
+      background: transparent;
+      transition: background 150ms ease;
+      pointer-events: none;
+    }
+
+    /* Visual box */
+    .checkbox-box {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      min-height: 24px;
+      border-radius: var(--corner-radius-xs);
+      background: transparent;
+      border: 1.5px solid var(--color-border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      pointer-events: none;
+      transition: background 150ms ease,
+                  border-color 150ms ease,
+                  outline-color 150ms ease;
+      color: var(--color-inverse);
+    }
+
+    /* Check icon */
+    .checkbox-check {
+      width: 11px;
+      height: 9px;
+      opacity: 0;
+      flex-shrink: 0;
+      display: block;
+      transition: opacity 100ms ease;
+    }
+
+    /* Indeterminate dash */
+    .checkbox-dash {
+      width: 10px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 1px;
+      opacity: 0;
+      position: absolute;
+      transition: opacity 100ms ease;
+    }
+
+    /* ── Checked ── */
+    .checkbox input:checked ~ .checkbox-box {
+      background: var(--color-action-default);
+      border-color: transparent;
+    }
+    .checkbox input:checked ~ .checkbox-box .checkbox-check { opacity: 1; }
+
+    /* ── Indeterminate ── */
+    .checkbox input:indeterminate ~ .checkbox-box {
+      background: var(--color-action-default);
+      border-color: transparent;
+    }
+    .checkbox input:indeterminate ~ .checkbox-box .checkbox-dash { opacity: 1; }
+
+    /* ── Hover ── */
+    @media (hover: hover) and (pointer: fine) {
+      .checkbox:hover::before {
+        background: var(--color-action-hover-subtle);
+      }
+    }
+
+    /* ── Focus ── */
+    .checkbox input:focus-visible ~ .checkbox-box {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
+    }
+
+    /* ── Disabled ── */
+    .checkbox:has(input:disabled) { cursor: not-allowed; }
+    .checkbox input:disabled      { cursor: not-allowed; }
+
+    .checkbox input:disabled ~ .checkbox-box {
+      border-color: var(--color-action-disabled);
+    }
+    .checkbox input:checked:disabled ~ .checkbox-box,
+    .checkbox input:indeterminate:disabled ~ .checkbox-box {
+      background: var(--color-action-disabled);
+      border-color: transparent;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .checkbox:has(input:disabled):hover::before {
+        background: transparent;
+      }
+    }
+
+    /* ── Forced variant demo states ── */
+    @media (hover: hover) and (pointer: fine) {
+      .checkbox--hover::before {
+        background: var(--color-action-hover-subtle) !important;
+      }
+    }
+
+    .checkbox--focused .checkbox-box {
+      outline: 2px solid var(--color-border-strong) !important;
+      outline-offset: 2px;
+    }
+
+    /* ── Checkbox with label ── */
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-200);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .checkbox-item:has(input:disabled) { cursor: not-allowed; }
+
+    .checkbox-item-text {
+      padding-top: 14px;
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+      font-family: var(--font-family-sans);
+      font-weight: var(--font-weight-default);
+      color: var(--color-content-default);
+    }
+
+    .checkbox-item:has(input:disabled) .checkbox-item-text {
+      color: var(--color-content-disabled);
+    }
+
+    /* Group divider */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .checkbox-group-divider {
+      height: 1px;
+      background: var(--color-border-subtle);
+      margin: var(--space-100) 0 var(--space-100) 48px;
+    }
+
+    /* ─────────────────────────────────────────
        RESPONSIVE ≤480px
     ───────────────────────────────────────── */
     @media (max-width: 480px) {
@@ -1902,7 +2081,364 @@
     <!-- Forms -->
     <div class="page-panel" id="page-text-fields"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Text Fields &amp; Selects</h2><p class="section-description">Input, textarea, and select — all states and sizes.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-search-field"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Search Field</h2><p class="section-description">Inline search input with icon and clear action.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-checkbox"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Check Box</h2><p class="section-description">Single and group checkbox, all states.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-checkbox">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Forms</p>
+        <h1 class="comp-title">Check Box</h1>
+        <p class="comp-description">Allows selection of one or more items from a list. Use checkboxes when multiple selections are valid simultaneously — unlike radio buttons, they are independent of each other.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=343-1387" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── 1. Preview ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <!-- Standalone states -->
+        <div class="preview-canvas">
+          <div class="preview-item">
+            <span class="checkbox">
+              <input type="checkbox" aria-label="Unchecked">
+              <span class="checkbox-box">
+                <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                <span class="checkbox-dash"></span>
+              </span>
+            </span>
+            <span class="preview-label">Unchecked</span>
+          </div>
+          <div class="preview-item">
+            <span class="checkbox">
+              <input type="checkbox" checked aria-label="Checked">
+              <span class="checkbox-box">
+                <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                <span class="checkbox-dash"></span>
+              </span>
+            </span>
+            <span class="preview-label">Checked</span>
+          </div>
+          <div class="preview-item">
+            <span class="checkbox">
+              <input type="checkbox" data-indeterminate aria-label="Indeterminate">
+              <span class="checkbox-box">
+                <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                <span class="checkbox-dash"></span>
+              </span>
+            </span>
+            <span class="preview-label">Indeterminate</span>
+          </div>
+          <div class="preview-item">
+            <span class="checkbox">
+              <input type="checkbox" disabled aria-label="Disabled unchecked">
+              <span class="checkbox-box">
+                <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                <span class="checkbox-dash"></span>
+              </span>
+            </span>
+            <span class="preview-label">Disabled</span>
+          </div>
+          <div class="preview-item">
+            <span class="checkbox">
+              <input type="checkbox" checked disabled aria-label="Disabled checked">
+              <span class="checkbox-box">
+                <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                <span class="checkbox-dash"></span>
+              </span>
+            </span>
+            <span class="preview-label">Disabled on</span>
+          </div>
+        </div>
+
+        <!-- Group with select-all pattern -->
+        <div class="preview-settings">
+          <div class="checkbox-group">
+            <label class="checkbox-item" style="padding: var(--space-300) var(--space-400);">
+              <span class="checkbox">
+                <input type="checkbox" id="cb-all" data-indeterminate aria-label="Select all notifications">
+                <span class="checkbox-box">
+                  <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                  <span class="checkbox-dash"></span>
+                </span>
+              </span>
+              <span class="checkbox-item-text" style="font-weight:var(--font-weight-semibold);">All notifications</span>
+            </label>
+            <div class="checkbox-group-divider"></div>
+            <label class="checkbox-item" style="padding: var(--space-300) var(--space-400);">
+              <span class="checkbox">
+                <input type="checkbox" checked aria-label="New messages">
+                <span class="checkbox-box">
+                  <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                  <span class="checkbox-dash"></span>
+                </span>
+              </span>
+              <span class="checkbox-item-text">New messages</span>
+            </label>
+            <label class="checkbox-item" style="padding: var(--space-300) var(--space-400);">
+              <span class="checkbox">
+                <input type="checkbox" checked aria-label="Project updates">
+                <span class="checkbox-box">
+                  <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                  <span class="checkbox-dash"></span>
+                </span>
+              </span>
+              <span class="checkbox-item-text">Project updates</span>
+            </label>
+            <label class="checkbox-item" style="padding: var(--space-300) var(--space-400);">
+              <span class="checkbox">
+                <input type="checkbox" aria-label="Marketing emails">
+                <span class="checkbox-box">
+                  <svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg>
+                  <span class="checkbox-dash"></span>
+                </span>
+              </span>
+              <span class="checkbox-item-text">Marketing emails</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 2. Variants ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="variants-table">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Unchecked</th>
+                <th>Checked</th>
+                <th>Indeterminate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Default</td>
+                <td>
+                  <span class="checkbox" style="pointer-events:none;">
+                    <input type="checkbox" tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+                <td>
+                  <span class="checkbox" style="pointer-events:none;">
+                    <input type="checkbox" checked tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+                <td>
+                  <span class="checkbox" style="pointer-events:none;">
+                    <input type="checkbox" data-indeterminate tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>Hover</td>
+                <td>
+                  <span class="checkbox checkbox--hover" style="pointer-events:none;">
+                    <input type="checkbox" tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+                <td>
+                  <span class="checkbox checkbox--hover" style="pointer-events:none;">
+                    <input type="checkbox" checked tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+                <td>
+                  <span class="checkbox checkbox--hover" style="pointer-events:none;">
+                    <input type="checkbox" data-indeterminate tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>Focused</td>
+                <td>
+                  <span class="checkbox checkbox--focused" style="pointer-events:none;">
+                    <input type="checkbox" tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+                <td>
+                  <span class="checkbox checkbox--focused" style="pointer-events:none;">
+                    <input type="checkbox" checked tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+                <td>
+                  <span class="checkbox checkbox--focused" style="pointer-events:none;">
+                    <input type="checkbox" data-indeterminate tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>Disabled</td>
+                <td>
+                  <span class="checkbox" style="pointer-events:none;">
+                    <input type="checkbox" disabled tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+                <td>
+                  <span class="checkbox" style="pointer-events:none;">
+                    <input type="checkbox" checked disabled tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+                <td>
+                  <span class="checkbox" style="pointer-events:none;">
+                    <input type="checkbox" data-indeterminate disabled tabindex="-1" aria-hidden="true">
+                    <span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 3. Accessibility ───────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body">Built on a native <code style="font-family:monospace;font-size:0.9em;">input[type="checkbox"]</code>. The browser handles checked/unchecked state announcements automatically. The indeterminate state must be set via JavaScript — it has no HTML attribute equivalent. Every checkbox must have an accessible name via a visible <code style="font-family:monospace;font-size:0.9em;">&lt;label&gt;</code>, <code style="font-family:monospace;font-size:0.9em;">aria-label</code>, or <code style="font-family:monospace;font-size:0.9em;">aria-labelledby</code>.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Interaction</th><th>Behaviour</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">Tab / Shift+Tab</td>
+                <td>Moves focus to and from the checkbox. Native <code style="font-family:monospace;font-size:0.9em;">&lt;input&gt;</code> participates in the tab order automatically.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Space</td>
+                <td>Toggles checked state when focused. Handled natively — no JavaScript needed.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-checked</td>
+                <td>Set automatically by the browser from the <code style="font-family:monospace;font-size:0.9em;">checked</code> and <code style="font-family:monospace;font-size:0.9em;">indeterminate</code> properties. Indeterminate maps to <code style="font-family:monospace;font-size:0.9em;">aria-checked="mixed"</code> — screen readers announce it as "mixed" or "partially checked".</td>
+              </tr>
+              <tr>
+                <td class="td-mono">indeterminate</td>
+                <td>A JavaScript-only property (<code style="font-family:monospace;font-size:0.9em;">el.indeterminate = true</code>). Visually shows a dash and is announced as "mixed" by screen readers. Commonly used for "select all" controls where only some children are checked.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-disabled</td>
+                <td>Set automatically from the HTML <code style="font-family:monospace;font-size:0.9em;">disabled</code> attribute. Disabled checkboxes remain in the reading order so screen reader users know the option exists.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 4. Properties ─────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Attribute</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">checked</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Sets the initial checked state.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">indeterminate</td>
+                <td class="td-type">boolean (JS)</td>
+                <td class="td-subtle">false</td>
+                <td>Shows a dash indicating partial selection. Set via <code style="font-family:monospace;font-size:0.9em;">el.indeterminate = true</code> — no HTML attribute equivalent.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">disabled</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Prevents interaction. Box renders in the disabled colour.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">id</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Required when using a separate <code style="font-family:monospace;font-size:0.9em;">&lt;label for="..."&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">name</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Form field name submitted with the form.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">value</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">"on"</td>
+                <td>Value submitted when the checkbox is checked.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 5. Code ────────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Code</h2>
+        <hr class="doc-rule">
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+          <pre><code class="language-html">&lt;!-- Standalone checkbox --&gt;
+&lt;span class="checkbox"&gt;
+  &lt;input type="checkbox" aria-label="Option name"&gt;
+  &lt;span class="checkbox-box"&gt;
+    &lt;svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
+      &lt;path d="M9.44038 0.240068...Z" fill="currentColor"/&gt;
+    &lt;/svg&gt;
+    &lt;span class="checkbox-dash"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/span&gt;
+
+&lt;!-- Checkbox with label --&gt;
+&lt;label class="checkbox-item"&gt;
+  &lt;span class="checkbox"&gt;
+    &lt;input type="checkbox"&gt;
+    &lt;span class="checkbox-box"&gt;
+      &lt;svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
+        &lt;path d="M9.44038 0.240068...Z" fill="currentColor"/&gt;
+      &lt;/svg&gt;
+      &lt;span class="checkbox-dash"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span class="checkbox-item-text"&gt;Option label&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- Indeterminate (JS required) --&gt;
+&lt;script&gt;
+  document.querySelector('#my-checkbox').indeterminate = true;
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+
+    </div>
     <div class="page-panel" id="page-radio"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Radio</h2><p class="section-description">Radio button group for mutually exclusive selection.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-switch">
 
@@ -2475,6 +3011,9 @@
 
   function buildSearchIndex() {
     searchIndex = [];
+  // Set indeterminate state on demo checkboxes
+  document.querySelectorAll('[data-indeterminate]').forEach(el => { el.indeterminate = true; });
+
     document.querySelectorAll('.sidebar-link[data-page]').forEach(link => {
       const pageId = link.dataset.page;
       const panel  = document.getElementById('page-' + pageId);
