@@ -1818,6 +1818,78 @@
     }
 
     /* ─────────────────────────────────────────
+       BADGE
+    ───────────────────────────────────────── */
+
+    /* ── Dot badge ── */
+    .badge-dot {
+      display: inline-block;
+      border-radius: 50%;
+      background: var(--color-info);
+      /* White ring separates dot from any background */
+      box-shadow: 0 0 0 1.5px var(--color-background-page);
+      flex-shrink: 0;
+    }
+    .badge-dot--small { width: 8px;  height: 8px; }
+    .badge-dot--large { width: 12px; height: 12px; }
+    .badge-dot--alert { background: var(--color-danger); }
+
+    /* ── Number badge ── */
+    .badge-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-info);
+      color: var(--color-inverse);
+      border-radius: var(--corner-radius-round);
+      font-family: var(--font-family-sans);
+      font-weight: var(--font-weight-semibold);
+      white-space: nowrap;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .badge-number--small {
+      height: 18px;
+      min-width: 18px;
+      padding: 0 4px;
+      font-size: 11px;
+    }
+    .badge-number--large {
+      height: 24px;
+      min-width: 24px;
+      padding: 0 var(--space-200);
+      font-size: var(--font-size-body-xs);
+    }
+    .badge-number--alert { background: var(--color-danger); }
+
+    /* ── Positioned badge host ── */
+    .badge-host {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .badge-host-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(30%, -30%);
+    }
+
+    /* ── Icon placeholder (for "in context" demo) ── */
+    .badge-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--corner-radius-m);
+      background: var(--color-background-subtle);
+      border: var(--border-width-default) solid var(--color-border-default);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-content-subtle);
+    }
+
+    /* ─────────────────────────────────────────
        RADIO
     ───────────────────────────────────────── */
 
@@ -3534,7 +3606,282 @@
     <!-- Feedback -->
     <div class="page-panel" id="page-toast"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Toast</h2><p class="section-description">Transient notification appearing at the bottom of the screen.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-important-message"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Important Message</h2><p class="section-description">Inline alert for errors, warnings, info, and success states.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-badge"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Badge</h2><p class="section-description">Numeric and dot badges for status and count indicators.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-badge">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Feedback</p>
+        <h1 class="comp-title">Badge</h1>
+        <p class="comp-description">A small visual indicator that communicates status or count. Dot badges signal unread activity without specifics; number badges display a quantity. Both come in info and alert types.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=339-3392" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── 1. Preview ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <!-- Dot badges -->
+        <p class="avatar-group-label">Dot</p>
+        <div class="preview-canvas" style="margin-bottom:var(--space-700);">
+          <div class="preview-item">
+            <span class="badge-dot badge-dot--small"></span>
+            <span class="preview-label">Small · Info</span>
+          </div>
+          <div class="preview-item">
+            <span class="badge-dot badge-dot--large"></span>
+            <span class="preview-label">Large · Info</span>
+          </div>
+          <div class="preview-item">
+            <span class="badge-dot badge-dot--small badge-dot--alert"></span>
+            <span class="preview-label">Small · Alert</span>
+          </div>
+          <div class="preview-item">
+            <span class="badge-dot badge-dot--large badge-dot--alert"></span>
+            <span class="preview-label">Large · Alert</span>
+          </div>
+        </div>
+
+        <!-- Number badges -->
+        <p class="avatar-group-label">Number</p>
+        <div class="preview-canvas">
+          <div class="preview-item">
+            <span class="badge-number badge-number--small">9</span>
+            <span class="preview-label">Small · Info</span>
+          </div>
+          <div class="preview-item">
+            <span class="badge-number badge-number--large">9</span>
+            <span class="preview-label">Large · Info</span>
+          </div>
+          <div class="preview-item">
+            <span class="badge-number badge-number--small badge-number--alert">9</span>
+            <span class="preview-label">Small · Alert</span>
+          </div>
+          <div class="preview-item">
+            <span class="badge-number badge-number--large badge-number--alert">9</span>
+            <span class="preview-label">Large · Alert</span>
+          </div>
+          <div class="preview-item">
+            <span class="badge-number badge-number--large">99</span>
+            <span class="preview-label">Double digit</span>
+          </div>
+          <div class="preview-item">
+            <span class="badge-number badge-number--large badge-number--alert">99+</span>
+            <span class="preview-label">Overflow</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 2. In context ──────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">In context</h2>
+        <hr class="doc-rule">
+        <div class="preview-canvas" style="gap: var(--space-900);">
+
+          <!-- Dot on avatar -->
+          <div class="preview-item">
+            <div class="badge-host">
+              <div class="avatar avatar--large avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <span class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"></span>
+            </div>
+            <span class="preview-label">Avatar · dot</span>
+          </div>
+
+          <!-- Number on avatar -->
+          <div class="preview-item">
+            <div class="badge-host">
+              <div class="avatar avatar--large avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <span class="badge-number badge-number--small badge-number--alert badge-host-badge">3</span>
+            </div>
+            <span class="preview-label">Avatar · number</span>
+          </div>
+
+          <!-- Dot on icon -->
+          <div class="preview-item">
+            <div class="badge-host">
+              <div class="badge-icon-box">
+                <!-- Bell icon -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <span class="badge-dot badge-dot--small badge-dot--info badge-host-badge"></span>
+            </div>
+            <span class="preview-label">Icon · dot</span>
+          </div>
+
+          <!-- Number on icon -->
+          <div class="preview-item">
+            <div class="badge-host">
+              <div class="badge-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <span class="badge-number badge-number--small badge-number--alert badge-host-badge">5</span>
+            </div>
+            <span class="preview-label">Icon · number</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── 3. Variants ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="variants-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Dot · Info</th>
+                <th>Dot · Alert</th>
+                <th>Number · Info</th>
+                <th>Number · Alert</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Small</td>
+                <td><span class="badge-dot badge-dot--small"></span></td>
+                <td><span class="badge-dot badge-dot--small badge-dot--alert"></span></td>
+                <td><span class="badge-number badge-number--small">9</span></td>
+                <td><span class="badge-number badge-number--small badge-number--alert">9</span></td>
+              </tr>
+              <tr>
+                <td>Large</td>
+                <td><span class="badge-dot badge-dot--large"></span></td>
+                <td><span class="badge-dot badge-dot--large badge-dot--alert"></span></td>
+                <td><span class="badge-number badge-number--large">9</span></td>
+                <td><span class="badge-number badge-number--large badge-number--alert">9</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 4. Accessibility ───────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body">Badges are purely visual — they carry no semantic meaning on their own. The surrounding interactive element (button, link, icon) must communicate the badge's meaning to screen readers via <code style="font-family:monospace;font-size:0.9em;">aria-label</code>. Never rely on the badge alone to convey critical state.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Pattern</th><th>Guidance</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Badge on a button</td>
+                <td>Include the count in the button's <code style="font-family:monospace;font-size:0.9em;">aria-label</code>: <code style="font-family:monospace;font-size:0.9em;">&lt;button aria-label="Notifications, 5 unread"&gt;</code>. The badge span should have <code style="font-family:monospace;font-size:0.9em;">aria-hidden="true"</code>.</td>
+              </tr>
+              <tr>
+                <td>Dot badge</td>
+                <td>Always pair with a meaningful label on the parent: e.g. <code style="font-family:monospace;font-size:0.9em;">aria-label="Messages (new)"</code>. A dot alone gives no information.</td>
+              </tr>
+              <tr>
+                <td>Live updates</td>
+                <td>If the count updates dynamically, wrap the badge in a <code style="font-family:monospace;font-size:0.9em;">role="status"</code> or <code style="font-family:monospace;font-size:0.9em;">aria-live="polite"</code> region so changes are announced.</td>
+              </tr>
+              <tr>
+                <td>Colour contrast</td>
+                <td>Both info and alert backgrounds meet WCAG AA against white text at all supported sizes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 5. Properties ─────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Class</th><th>Values</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">badge-dot</td>
+                <td class="td-subtle">—</td>
+                <td>Base dot badge. A solid circle with a white separation ring.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge-dot--{size}</td>
+                <td class="td-type">small · large</td>
+                <td>8px (small) or 12px (large) diameter.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge-dot--alert</td>
+                <td class="td-subtle">—</td>
+                <td>Switches fill to <code style="font-family:monospace;font-size:0.9em;">--color-danger</code>. Default (info) uses <code style="font-family:monospace;font-size:0.9em;">--color-info</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge-number</td>
+                <td class="td-subtle">—</td>
+                <td>Base number badge. Pill-shaped container with semibold text.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge-number--{size}</td>
+                <td class="td-type">small · large</td>
+                <td>18px height (small) or 24px height (large). Expands horizontally for multi-digit counts.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge-number--alert</td>
+                <td class="td-subtle">—</td>
+                <td>Switches fill to <code style="font-family:monospace;font-size:0.9em;">--color-danger</code>. Default (info) uses <code style="font-family:monospace;font-size:0.9em;">--color-info</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge-host</td>
+                <td class="td-subtle">—</td>
+                <td>Wrapper for positioning a badge over another element. Set <code style="font-family:monospace;font-size:0.9em;">badge-host-badge</code> on the badge itself.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 6. Code ────────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Code</h2>
+        <hr class="doc-rule">
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+          <pre><code class="language-html">&lt;!-- Dot badge --&gt;
+&lt;span class="badge-dot badge-dot--large"&gt;&lt;/span&gt;
+&lt;span class="badge-dot badge-dot--large badge-dot--alert"&gt;&lt;/span&gt;
+
+&lt;!-- Number badge --&gt;
+&lt;span class="badge-number badge-number--large"&gt;9&lt;/span&gt;
+&lt;span class="badge-number badge-number--large badge-number--alert"&gt;99+&lt;/span&gt;
+
+&lt;!-- Positioned over another element --&gt;
+&lt;div class="badge-host"&gt;
+  &lt;div class="avatar avatar--large avatar--circle"&gt;
+    &lt;img class="avatar-img" src="photo.jpg" alt=""&gt;
+  &lt;/div&gt;
+  &lt;span class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"
+        aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Accessible button with badge --&gt;
+&lt;button aria-label="Notifications, 5 unread"&gt;
+  &lt;svg&gt;...bell icon...&lt;/svg&gt;
+  &lt;span class="badge-number badge-number--small badge-number--alert badge-host-badge"
+        aria-hidden="true"&gt;5&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+        </div>
+      </div>
+
+    </div>
     <div class="page-panel" id="page-progress"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Progress Indicators</h2><p class="section-description">Linear and circular progress bars, determinate and indeterminate.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-scrim"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Scrim</h2><p class="section-description">Overlay layer used behind modals, sheets, and drawers.</p></div><span class="stub-pill">In progress</span></section></div>
 
