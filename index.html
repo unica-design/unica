@@ -1296,6 +1296,14 @@
       color: rgba(255,255,255,0.9);
     }
 
+    /* Code block: always dark background, never inverts in dark mode */
+    [data-theme="dark"] .code-block {
+      background: #000000;
+    }
+    [data-theme="dark"] .code-block pre {
+      color: var(--primitive-cafe-0);
+    }
+
     /* Related cards */
     .related-grid {
       display: grid;
