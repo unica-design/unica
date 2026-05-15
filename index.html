@@ -1907,6 +1907,7 @@
       background: var(--color-background-page);
       border-radius: 28px;
       box-shadow: 0 0 0 1px var(--color-border-default);
+      overflow: hidden; /* contain pill spring overshoot */
     }
     .bnav-pill {
       position: absolute; top: 8px; left: 8px; height: 40px; width: 96px;
@@ -1950,7 +1951,7 @@
     /* Reversed */
     .bnav--reversed .bnav-track { background: var(--color-background-contrast); box-shadow: none; }
     .bnav--reversed .bnav-pill { background: var(--color-background-page); }
-    .bnav--reversed .bnav-tab svg { color: var(--color-inverse); opacity: 0.4; transition: color 220ms ease, opacity 220ms ease; }
+    .bnav--reversed .bnav-tab svg { color: var(--color-inverse); opacity: 0.6; transition: color 220ms ease, opacity 220ms ease; }
     .bnav--reversed .bnav-tab--active svg { color: var(--color-background-contrast); opacity: 1; }
     .bnav--reversed .bnav-label { color: var(--color-background-contrast); }
     /* FAB keeps default action colour in reversed mode */
@@ -1969,7 +1970,7 @@
     @media (min-width: 641px) {
       .phone-mock {
         width: 375px;
-        height: 812px;
+        height: 375px;
         border-radius: 24px;
         background: var(--color-background-page);
         box-shadow: 0 1px 8px 0 rgba(8, 5, 13, 0.25);
@@ -1979,6 +1980,7 @@
     }
     @media (max-width: 640px) {
       .phone-mock-screen { display: none; }
+      .bnav-variants-grid { grid-template-columns: max-content !important; }
     }
 
     /* ─────────────────────────────────────────
@@ -3749,7 +3751,7 @@
         <hr class="doc-rule">
 
         <!-- 2×2 grid: labeled | icon-only  ×  default | reversed -->
-        <div style="display:grid;grid-template-columns:repeat(2,max-content);gap:var(--space-700) var(--space-600);overflow-x:auto;">
+        <div class="bnav-variants-grid" style="display:grid;grid-template-columns:repeat(2,max-content);gap:var(--space-700) var(--space-600);overflow-x:auto;padding:4px 4px 4px 2px;">
 
           <!-- [1,1] Default · Labeled -->
           <div style="display:flex;flex-direction:column;gap:var(--space-300);">
