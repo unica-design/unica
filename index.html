@@ -1907,7 +1907,6 @@
       background: var(--color-background-page);
       border-radius: 28px;
       box-shadow: 0 0 0 1px var(--color-border-default);
-      overflow: hidden; /* contain pill spring overshoot */
     }
     .bnav-pill {
       position: absolute; top: 8px; left: 8px; height: 40px; width: 96px;
@@ -1951,8 +1950,8 @@
     /* Reversed */
     .bnav--reversed .bnav-track { background: var(--color-background-contrast); box-shadow: none; }
     .bnav--reversed .bnav-pill { background: var(--color-background-page); }
-    .bnav--reversed .bnav-tab svg { color: var(--color-inverse); opacity: 0.6; transition: color 220ms ease, opacity 220ms ease; }
-    .bnav--reversed .bnav-tab--active svg { color: var(--color-background-contrast); opacity: 1; }
+    .bnav--reversed .bnav-tab svg { color: var(--color-inverse); transition: color 220ms ease; }
+    .bnav--reversed .bnav-tab--active svg { color: var(--color-background-contrast); }
     .bnav--reversed .bnav-label { color: var(--color-background-contrast); }
     /* FAB keeps default action colour in reversed mode */
     /* Icon-only */
