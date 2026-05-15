@@ -2198,6 +2198,107 @@
     }
 
     /* ─────────────────────────────────────────
+       ICON BULLET
+    ───────────────────────────────────────── */
+
+    .icon-bullet {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--corner-radius-round);
+      flex-shrink: 0;
+    }
+    .icon-bullet svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Sizes */
+    .icon-bullet--xlarge { width: 56px; height: 56px; padding: 12px; }
+    .icon-bullet--large  { width: 48px; height: 48px; padding: 12px; }
+    .icon-bullet--medium { width: 40px; height: 40px; padding: 10px; }
+    .icon-bullet--small  { width: 32px; height: 32px; padding: 8px;  }
+
+    /* ── Colors */
+    .icon-bullet--white     { background: var(--color-inverse);             color: var(--color-content-default); }
+    .icon-bullet--ink       { background: var(--color-background-contrast); color: var(--color-inverse); }
+    .icon-bullet--violet    { background: var(--primitive-violet-300);       color: var(--color-content-default); }
+    .icon-bullet--berry     { background: var(--primitive-berry-300);        color: var(--color-content-default); }
+    .icon-bullet--apricot   { background: var(--primitive-apricot-300);      color: var(--color-content-default); }
+    .icon-bullet--mint      { background: var(--primitive-mint-300);         color: var(--color-content-default); }
+    .icon-bullet--pool      { background: var(--primitive-pool-300);         color: var(--color-content-default); }
+    .icon-bullet--citron    { background: var(--primitive-citron-300);       color: var(--color-content-default); }
+    /* dark-pool bg is a fixed primitive — keep icon always light */
+    .icon-bullet--dark-pool { background: var(--color-brand-pool); color: var(--primitive-cafe-0); }
+
+    /* ── Preview matrix */
+    .ibullet-matrix {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-200);
+      width: 100%;
+    }
+    .ibullet-header {
+      display: grid;
+      grid-template-columns: 80px repeat(4, 1fr);
+      align-items: center;
+      padding: 0 var(--space-500) var(--space-100);
+      gap: var(--space-200);
+    }
+    .ibullet-size-label {
+      font-size: var(--doc-label-size);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--doc-label-tracking);
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+      text-align: center;
+    }
+    .ibullet-row {
+      display: grid;
+      grid-template-columns: 80px repeat(4, 1fr);
+      align-items: center;
+      gap: var(--space-200);
+      border-radius: var(--corner-radius-l);
+      padding: var(--space-500);
+    }
+    .ibullet-row-label {
+      font-size: var(--doc-label-size);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--doc-label-tracking);
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+    }
+    .ibullet-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-200) 0;
+    }
+
+    /* Swatch backgrounds — white/ink use semantic opposites so they always contrast.
+       Colored variants use fixed 100-level primitives (always light). */
+    .ibullet-row--white  { background: var(--color-background-contrast); }
+    .ibullet-row--white .ibullet-row-label { color: var(--color-inverse); }
+    .ibullet-row--ink    { background: var(--primitive-ink-100); }
+    [data-theme="dark"] .ibullet-row--ink { background: var(--primitive-ink-700); }
+    .ibullet-row--violet    { background: var(--primitive-violet-100); }
+    .ibullet-row--berry     { background: var(--primitive-berry-100); }
+    .ibullet-row--apricot   { background: var(--primitive-apricot-100); }
+    .ibullet-row--mint      { background: var(--primitive-mint-100); }
+    .ibullet-row--pool      { background: var(--primitive-pool-100); }
+    .ibullet-row--citron    { background: var(--primitive-citron-100); }
+    .ibullet-row--dark-pool { background: var(--primitive-pool-200); }
+
+    /* Hide medium + small columns on narrow screens */
+    @media (max-width: 560px) {
+      .ibullet-header,
+      .ibullet-row { grid-template-columns: 72px repeat(2, 1fr); }
+      .ibullet-header > :nth-child(n+4),
+      .ibullet-row > :nth-child(n+4) { display: none; }
+    }
+
+    /* ─────────────────────────────────────────
        RESPONSIVE ≤480px
     ───────────────────────────────────────── */
     @media (max-width: 480px) {
@@ -2226,6 +2327,11 @@
     <clipPath id="avatar-clip-diamond" clipPathUnits="objectBoundingBox">
       <path d="M0.0566 0.6367 C-0.0189 0.5612 -0.0189 0.4388 0.0566 0.3633 L0.3633 0.0566 C0.4388 -0.0189 0.5612 -0.0189 0.6367 0.0566 L0.9434 0.3633 C1.0189 0.4388 1.0189 0.5612 0.9434 0.6367 L0.6367 0.9434 C0.5612 1.0189 0.4388 1.0189 0.3633 0.9434 Z"/>
     </clipPath>
+    <!-- Icon Bullet placeholder — any ůnicon can replace this path -->
+    <symbol id="ico-placeholder" viewBox="0 0 24 24" fill="none">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2L14.61 8.82H22L16.19 13.27L18.78 20.09L12 15.64L5.22 20.09L7.81 13.27L2 8.82H9.39L12 2ZM12 5.94L10.11 11.18H5.3L9.19 13.86L7.75 19.06L12 16.07L16.25 19.06L14.81 13.86L18.7 11.18H13.89L12 5.94Z" fill="currentColor"/>
+    </symbol>
+
     <!-- Cushion: concave organic shape, normalized to 0–1 objectBoundingBox -->
     <clipPath id="avatar-clip-cushion" clipPathUnits="objectBoundingBox">
       <path d="M0.9363 0.4335 C0.9157 0.4753 0.9157 0.5247 0.9363 0.5665 C1.0142 0.7249 1.0240 0.8703 0.9471 0.9471 C0.8703 1.0240 0.7249 1.0142 0.5665 0.9363 C0.5247 0.9157 0.4753 0.9157 0.4335 0.9363 C0.2751 1.0142 0.1297 1.0240 0.0529 0.9471 C-0.0240 0.8703 -0.0142 0.7249 0.0637 0.5665 C0.0843 0.5247 0.0843 0.4753 0.0637 0.4335 C-0.0142 0.2751 -0.0240 0.1297 0.0529 0.0529 C0.1297 -0.0240 0.2751 -0.0142 0.4335 0.0637 C0.4753 0.0843 0.5247 0.0843 0.5665 0.0637 C0.7249 -0.0142 0.8703 -0.0240 0.9471 0.0529 C1.0240 0.1297 1.0142 0.2751 0.9363 0.4335 Z"/>
@@ -4588,7 +4694,263 @@
 
     </div>
     <div class="page-panel" id="page-divider"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Divider</h2><p class="section-description">Horizontal rule for separating content regions.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-icon-bullet"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Icon Bullet</h2><p class="section-description">Icon paired with a label, used in lists and feature callouts.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-icon-bullet">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Content</p>
+        <h1 class="comp-title">Icon Bullet</h1>
+        <p class="comp-description">A circular accent element that pairs a brand color with any ůnicon. Non-interactive and purely decorative — used in feature lists, bottom sheets, and cards to add visual hierarchy and color.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=887-15601" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── 1. Preview ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="preview-canvas" style="display:block;padding:var(--space-800);">
+          <div class="ibullet-matrix">
+
+            <!-- Header row -->
+            <div class="ibullet-header">
+              <span></span>
+              <span class="ibullet-size-label">XLarge</span>
+              <span class="ibullet-size-label">Large</span>
+              <span class="ibullet-size-label">Medium</span>
+              <span class="ibullet-size-label">Small</span>
+            </div>
+
+            <!-- White -->
+            <div class="ibullet-row ibullet-row--white">
+              <span class="ibullet-row-label">White</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+            <!-- Ink -->
+            <div class="ibullet-row ibullet-row--ink">
+              <span class="ibullet-row-label">Ink</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+            <!-- Violet -->
+            <div class="ibullet-row ibullet-row--violet">
+              <span class="ibullet-row-label">Violet</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+            <!-- Berry -->
+            <div class="ibullet-row ibullet-row--berry">
+              <span class="ibullet-row-label">Berry</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--berry" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--berry" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--berry" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--berry" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+            <!-- Apricot -->
+            <div class="ibullet-row ibullet-row--apricot">
+              <span class="ibullet-row-label">Apricot</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--apricot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--apricot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--apricot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--apricot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+            <!-- Mint -->
+            <div class="ibullet-row ibullet-row--mint">
+              <span class="ibullet-row-label">Mint</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--mint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--mint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--mint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--mint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+            <!-- Pool -->
+            <div class="ibullet-row ibullet-row--pool">
+              <span class="ibullet-row-label">Pool</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--pool" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--pool" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--pool" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--pool" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+            <!-- Citron -->
+            <div class="ibullet-row ibullet-row--citron">
+              <span class="ibullet-row-label">Citron</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--citron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--citron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--citron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--citron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+            <!-- Dark Pool -->
+            <div class="ibullet-row ibullet-row--dark-pool">
+              <span class="ibullet-row-label">Dark Pool</span>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--xlarge icon-bullet--dark-pool" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--large  icon-bullet--dark-pool" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--medium icon-bullet--dark-pool" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+              <div class="ibullet-cell"><span class="icon-bullet icon-bullet--small  icon-bullet--dark-pool" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-placeholder"/></svg></span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 2. Accessibility ───────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body">Icon Bullet is a purely decorative element and carries no interactive meaning. It should always be hidden from assistive technology so screen readers skip it entirely. If the icon communicates meaning that is not expressed in adjacent text, add a visually-hidden label using <code>aria-label</code> on a wrapping element instead.</p>
+        <table class="doc-table">
+          <thead><tr><th>Interaction</th><th>Behaviour</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="td-mono">aria-hidden="true"</td>
+              <td>Always applied to <code>.icon-bullet</code>. Removes the element from the accessibility tree so screen readers skip it.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">focusable</td>
+              <td>Never. Icon Bullet is non-interactive and should not receive keyboard focus. Do not place it inside a <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code> unless the entire interactive element has its own accessible label.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">role</td>
+              <td>None required. The element is presentational. Screen readers receive no role, name, or state for this element when <code>aria-hidden</code> is set.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">Contextual meaning</td>
+              <td>If color alone conveys meaning (e.g. red = danger), ensure the surrounding text or an <code>aria-label</code> on a parent communicates the same information.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── 3. Properties ─────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <table class="doc-table">
+          <thead><tr><th>Class</th><th>Values</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="td-mono">icon-bullet</td>
+              <td class="td-subtle">—</td>
+              <td>Base class. Apply to a <code>&lt;span&gt;</code>. Always combine with one size and one color modifier.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--xlarge</td>
+              <td class="td-subtle">56px</td>
+              <td>Largest size. 12px padding, 32px icon area. Default for Bottom Sheet and feature-callout layouts.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--large</td>
+              <td class="td-subtle">48px</td>
+              <td>Standard large size. 12px padding, 24px icon area.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--medium</td>
+              <td class="td-subtle">40px</td>
+              <td>Medium size. 10px padding, 20px icon area. Suited to dense lists.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--small</td>
+              <td class="td-subtle">32px</td>
+              <td>Smallest size. 8px padding, 16px icon area. Use in compact contexts.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--white</td>
+              <td class="td-subtle">color-inverse</td>
+              <td>White circle with dark icon. Designed for placement on dark or colored surfaces.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--ink</td>
+              <td class="td-subtle">color-background-contrast</td>
+              <td>Ink-dark circle with white icon. Highest contrast; adapts to dark mode.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--violet</td>
+              <td class="td-subtle">violet-300</td>
+              <td>Lavender circle — the ůnica brand accent color.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--berry</td>
+              <td class="td-subtle">berry-300</td>
+              <td>Pink-rose circle.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--apricot</td>
+              <td class="td-subtle">apricot-300</td>
+              <td>Warm peach circle.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--mint</td>
+              <td class="td-subtle">mint-300</td>
+              <td>Cool green circle.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--pool</td>
+              <td class="td-subtle">pool-300</td>
+              <td>Bright teal circle.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--citron</td>
+              <td class="td-subtle">citron-300</td>
+              <td>Yellow-green circle.</td>
+            </tr>
+            <tr>
+              <td class="td-mono">icon-bullet--dark-pool</td>
+              <td class="td-subtle">color-brand-pool</td>
+              <td>Deep forest-teal circle with white icon. Does not invert in dark mode.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── 4. Code ────────────────────────────── -->
+      <div class="doc-section" style="padding-bottom:var(--space-1000);">
+        <h2 class="doc-section-title">Code</h2>
+        <hr class="doc-rule">
+        <p class="doc-body">Replace the <code>&lt;path&gt;</code> with any ůnicon. Always add <code>aria-hidden="true"</code> to the outer element.</p>
+        <div class="code-block">
+          <pre><code class="language-markup">&lt;!-- xlarge violet --&gt;
+&lt;span class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true"&gt;
+  &lt;svg viewBox="0 0 24 24" fill="none"&gt;
+    &lt;path fill-rule="evenodd" clip-rule="evenodd" d="…" fill="currentColor"/&gt;
+  &lt;/svg&gt;
+&lt;/span&gt;
+
+&lt;!-- large berry --&gt;
+&lt;span class="icon-bullet icon-bullet--large icon-bullet--berry" aria-hidden="true"&gt;
+  &lt;svg viewBox="0 0 24 24" fill="none"&gt;
+    &lt;path fill-rule="evenodd" clip-rule="evenodd" d="…" fill="currentColor"/&gt;
+  &lt;/svg&gt;
+&lt;/span&gt;
+
+&lt;!-- small ink --&gt;
+&lt;span class="icon-bullet icon-bullet--small icon-bullet--ink" aria-hidden="true"&gt;
+  &lt;svg viewBox="0 0 24 24" fill="none"&gt;
+    &lt;path fill-rule="evenodd" clip-rule="evenodd" d="…" fill="currentColor"/&gt;
+  &lt;/svg&gt;
+&lt;/span&gt;</code></pre>
+        </div>
+      </div>
+
+    </div>
 
   </main><!-- /site-content -->
 
