@@ -2638,7 +2638,7 @@
           </div>
           <div class="switch-item">
             <label class="toggle-switch">
-              <input type="checkbox" role="switch" checked id="swl-2">
+              <input type="checkbox" role="switch" id="swl-2" onchange="toggleTheme(); syncDarkSwitch();">
               <span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon">
                 <svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg>
                 <svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg>
@@ -3059,12 +3059,18 @@
   window.addEventListener('hashchange', () => navigateToHash(window.location.hash));
 
   /* ── Theme toggle ── */
+  function syncDarkSwitch() {
+    const sw = document.getElementById('swl-2');
+    if (sw) sw.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+
   function toggleTheme() {
     const html  = document.documentElement;
     const isDark = html.getAttribute('data-theme') === 'dark';
     html.setAttribute('data-theme', isDark ? 'light' : 'dark');
     document.getElementById('icon-sun').style.display  = isDark ? 'none'  : 'block';
     document.getElementById('icon-moon').style.display = isDark ? 'block' : 'none';
+    syncDarkSwitch();
     setTimeout(computeHexValues, 50);
   }
 
@@ -3123,6 +3129,7 @@
     searchIndex = [];
   // Set indeterminate state on demo checkboxes
   document.querySelectorAll('[data-indeterminate]').forEach(el => { el.indeterminate = true; });
+  syncDarkSwitch();
 
   // Select-all checkbox groups
   function initSelectAll(parentId) {
