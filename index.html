@@ -934,6 +934,11 @@
       --doc-label-size:         11px;
       --doc-label-tracking:     0.06em;
 
+      /* ── Table token color ────────────────────
+         Monospace cells in Properties / Accessibility tables.
+         Pool: dark on light bg, light on dark bg. */
+      --doc-token-color:        var(--primitive-pool-700);  /* #068079 — dark teal on light */
+
       /* ── Syntax highlighting ──────────────────
          Violet-dominant, monochromatic hierarchy.
          Edit here to retheme all code blocks globally.
@@ -951,6 +956,7 @@
       --doc-surface-inset:      var(--primitive-ink-800);
       --doc-rule-subtle:        var(--primitive-ink-700);
       --doc-rule-default:       var(--primitive-ink-600);
+      --doc-token-color:        var(--primitive-pool-300);  /* #79F2EC — light teal on dark */
     }
 
     /* ─────────────────────────────────────────
@@ -959,7 +965,6 @@
 
     .comp-header {
       padding: var(--space-1000) 0 var(--space-700);
-      border-bottom: var(--border-width-default) solid var(--doc-rule-default);
       margin-bottom: var(--space-700);
     }
 
@@ -974,9 +979,9 @@
 
     .comp-title {
       font-family: var(--font-family-serif);
-      font-size: var(--font-size-display-s);
+      font-size: var(--font-size-display-m);
       font-weight: var(--font-weight-default);
-      line-height: var(--font-leading-display-s);
+      line-height: var(--font-leading-display-m);
       letter-spacing: -0.02em;
       color: var(--color-content-default);
       margin-bottom: var(--space-400);
@@ -1028,9 +1033,9 @@
 
     .doc-section-title {
       font-family: var(--font-family-serif);
-      font-size: var(--font-size-heading-m);
+      font-size: var(--font-size-heading-l);
       font-weight: var(--font-weight-default);
-      line-height: var(--font-leading-heading-m);
+      line-height: var(--font-leading-heading-l);
       letter-spacing: -0.01em;
       color: var(--color-content-default);
       margin-bottom: var(--space-400);
@@ -1225,7 +1230,7 @@
     .doc-table .td-mono {
       font-family: monospace;
       font-size: var(--font-size-body-xs);
-      color: var(--color-brand-ultraviolet);
+      color: var(--doc-token-color);
       white-space: nowrap;
       padding-right: var(--space-600);
     }
