@@ -1872,8 +1872,11 @@
     }
     .badge-host-badge {
       position: absolute;
-      top: 0;
-      right: 0;
+      /* 14.6% = R·(1−1/√2)/D — places badge centre on the circle edge at 45°.
+         translate(50%,−50%) then centres the badge on that point so exactly
+         half overlaps the element and half sits outside. */
+      top: 14.6%;
+      right: 14.6%;
       transform: translate(50%, -50%);
     }
 
