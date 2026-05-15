@@ -1774,12 +1774,26 @@
     .avatar--xlarge  .avatar-initials { font-size: 16px; }
     .avatar--xxlarge .avatar-initials { font-size: 18px; }
 
-    /* ── Size preview row ── */
-    .avatar-size-row {
-      display: flex;
-      align-items: flex-end;
+    /* ── Photo / Initials group label ── */
+    .avatar-group-label {
+      font-size: var(--doc-label-size);
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--doc-label-tracking);
+      color: var(--color-content-subtle);
+      margin-bottom: var(--space-400);
+    }
+
+    /* ── Sizes grid — 6 equal columns, bottom-aligned ── */
+    .avatar-sizes-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
       gap: var(--space-500);
-      flex-wrap: wrap;
+      align-items: end;
+    }
+
+    @media (max-width: 640px) {
+      .avatar-sizes-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
     .avatar-size-item {
@@ -1796,13 +1810,6 @@
     }
 
     /* ── Shape preview row ── */
-    .avatar-shape-row {
-      display: flex;
-      align-items: center;
-      gap: var(--space-700);
-      flex-wrap: wrap;
-    }
-
     .avatar-shape-item {
       display: flex;
       flex-direction: column;
@@ -3561,8 +3568,9 @@
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
 
-        <!-- Photo variants — all 4 shapes at large -->
-        <div class="preview-canvas" style="gap: var(--space-700);">
+        <!-- Photo row -->
+        <p class="avatar-group-label">Photo</p>
+        <div class="preview-canvas" style="gap: var(--space-700); margin-bottom: var(--space-700);">
           <div class="preview-item">
             <div class="avatar avatar--large avatar--circle">
               <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
@@ -3587,32 +3595,32 @@
             </div>
             <span class="preview-label">Cushion</span>
           </div>
+        </div>
 
-          <!-- Divider -->
-          <div style="width:1px; height:48px; background:var(--color-border-default); align-self:center;"></div>
-
-          <!-- Initials variants — all 4 shapes at large -->
+        <!-- Initials row -->
+        <p class="avatar-group-label">Initials</p>
+        <div class="preview-canvas" style="gap: var(--space-700);">
           <div class="preview-item">
             <div class="avatar avatar--large avatar--circle">
-              <span class="avatar-initials">A</span>
+              <span class="avatar-initials">SE</span>
             </div>
             <span class="preview-label">Circle</span>
           </div>
           <div class="preview-item">
             <div class="avatar avatar--large avatar--squircle">
-              <span class="avatar-initials">A</span>
+              <span class="avatar-initials">SE</span>
             </div>
             <span class="preview-label">Squircle</span>
           </div>
           <div class="preview-item">
             <div class="avatar avatar--large avatar--diamond">
-              <span class="avatar-initials">A</span>
+              <span class="avatar-initials">SE</span>
             </div>
             <span class="preview-label">Diamond</span>
           </div>
           <div class="preview-item">
             <div class="avatar avatar--large avatar--cushion">
-              <span class="avatar-initials">A</span>
+              <span class="avatar-initials">SE</span>
             </div>
             <span class="preview-label">Cushion</span>
           </div>
@@ -3623,7 +3631,7 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Sizes</h2>
         <hr class="doc-rule">
-        <div class="preview-canvas" style="flex-wrap:wrap; gap:var(--space-800);">
+        <div class="avatar-sizes-grid">
 
           <div class="avatar-size-item">
             <div class="avatar-size-pair">
@@ -3631,7 +3639,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--xsmall avatar--circle">
-                <span class="avatar-initials">A</span>
+                <span class="avatar-initials">SE</span>
               </div>
             </div>
             <span class="preview-label">xsmall · 24</span>
@@ -3643,7 +3651,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--small avatar--circle">
-                <span class="avatar-initials">A</span>
+                <span class="avatar-initials">SE</span>
               </div>
             </div>
             <span class="preview-label">small · 32</span>
@@ -3655,7 +3663,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--medium avatar--circle">
-                <span class="avatar-initials">A</span>
+                <span class="avatar-initials">SE</span>
               </div>
             </div>
             <span class="preview-label">medium · 40</span>
@@ -3667,7 +3675,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--large avatar--circle">
-                <span class="avatar-initials">A</span>
+                <span class="avatar-initials">SE</span>
               </div>
             </div>
             <span class="preview-label">large · 48</span>
@@ -3679,7 +3687,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--xlarge avatar--circle">
-                <span class="avatar-initials">A</span>
+                <span class="avatar-initials">SE</span>
               </div>
             </div>
             <span class="preview-label">xlarge · 56</span>
@@ -3691,7 +3699,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--xxlarge avatar--circle">
-                <span class="avatar-initials">A</span>
+                <span class="avatar-initials">SE</span>
               </div>
             </div>
             <span class="preview-label">xxlarge · 64</span>
