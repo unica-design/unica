@@ -2579,69 +2579,64 @@
     /* ── Super CTA — shared base ───────────────────────────────── */
     .btn-super-cta {
       border: none;
-      gap: var(--space-300);
+      gap: var(--space-400);
     }
-    .btn-super-cta .btn-scta-bullet {
+    .btn-super-cta .btn-scta-label {
+      font-weight: 400;
+      flex: 1;
+    }
+    /* Trailing white badge (circle) */
+    .btn-super-cta .btn-scta-badge {
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      background: var(--primitive-cafe-0);
+      color: var(--primitive-ink-900);
+      transition: border-radius 150ms ease-out;
     }
-    .btn-super-cta .btn-scta-label {
-      font-weight: 400;
-    }
-    .btn-super-cta .btn-scta-arrow {
-      flex-shrink: 0;
+    .btn-super-cta .btn-scta-badge svg {
+      width: 55%;
+      height: 55%;
     }
 
-    /* Super CTA sizes */
+    /* Super CTA sizes — paddingLeft generous (label side), paddingRight tight (hugs badge) */
     .btn-super-cta.btn--large {
       height: 64px;
-      padding: 0 var(--space-400) 0 var(--space-200);
+      padding: 0 4px 0 24px;
+      font-size: var(--font-size-body-m);
     }
     .btn-super-cta.btn--medium {
       height: 56px;
-      padding: 0 var(--space-300) 0 var(--space-200);
+      padding: 0 4px 0 24px;
+      font-size: var(--font-size-body-m);
     }
     .btn-super-cta.btn--small {
       height: 48px;
-      padding: 0 var(--space-300) 0 var(--space-200);
-      font-size: var(--font-size-body-m);
+      padding: 0 4px 0 16px;
+      font-size: var(--font-size-body-s);
     }
 
-    /* Bullet sizes inside Super CTA */
-    .btn-super-cta.btn--large  .btn-scta-bullet { width: 48px; height: 48px; }
-    .btn-super-cta.btn--medium .btn-scta-bullet { width: 40px; height: 40px; }
-    .btn-super-cta.btn--small  .btn-scta-bullet { width: 32px; height: 32px; }
-
-    /* Arrow icon size */
-    .btn-super-cta.btn--large  .btn-scta-arrow { width: 24px; height: 24px; }
-    .btn-super-cta.btn--medium .btn-scta-arrow { width: 20px; height: 20px; }
-    .btn-super-cta.btn--small  .btn-scta-arrow { width: 16px; height: 16px; }
+    /* Badge sizes inside Super CTA */
+    .btn-super-cta.btn--large  .btn-scta-badge { width: 48px; height: 48px; }
+    .btn-super-cta.btn--medium .btn-scta-badge { width: 40px; height: 40px; }
+    .btn-super-cta.btn--small  .btn-scta-badge { width: 32px; height: 32px; }
 
     /* ── Super CTA Fill ────────────────────────────────────────── */
     .btn-scta-fill {
       background: var(--color-action-default);
       color: var(--color-inverse);
     }
-    .btn-scta-fill .btn-scta-bullet {
-      background: var(--primitive-citron-300);
-      color: var(--primitive-ink-900);
-    }
     .btn-scta-fill:hover:not(:disabled) {
       background: var(--color-action-hover);
-      border-radius: 12px;
-    }
-    .btn-scta-fill:hover:not(:disabled) .btn-scta-bullet {
       border-radius: 12px;
     }
     .btn-scta-fill:active:not(:disabled) {
       background: var(--color-action-pressed);
       border-radius: var(--corner-radius-round);
-    }
-    .btn-scta-fill:active:not(:disabled) .btn-scta-bullet {
-      border-radius: 50%;
+      transform: scale(0.96);
+      transition: transform 80ms ease-in, border-radius 80ms ease-in, background 80ms ease-in;
     }
     .btn-scta-fill:focus-visible {
       outline: 2px solid var(--color-action-default);
@@ -2651,8 +2646,9 @@
       background: var(--color-background-disabled);
       color: var(--color-action-disabled);
     }
-    .btn-scta-fill:disabled .btn-scta-bullet {
+    .btn-scta-fill:disabled .btn-scta-badge {
       background: var(--color-background-container);
+      color: var(--color-action-disabled);
     }
 
     /* ── Super CTA Overlay ─────────────────────────────────────── */
@@ -2662,23 +2658,15 @@
       -webkit-backdrop-filter: blur(16px);
       color: var(--primitive-cafe-0);
     }
-    .btn-scta-overlay .btn-scta-bullet {
-      background: var(--primitive-citron-300);
-      color: var(--primitive-ink-900);
-    }
     .btn-scta-overlay:hover:not(:disabled) {
       background: rgba(15, 22, 38, 0.60);
-      border-radius: 12px;
-    }
-    .btn-scta-overlay:hover:not(:disabled) .btn-scta-bullet {
       border-radius: 12px;
     }
     .btn-scta-overlay:active:not(:disabled) {
       background: rgba(15, 22, 38, 0.75);
       border-radius: var(--corner-radius-round);
-    }
-    .btn-scta-overlay:active:not(:disabled) .btn-scta-bullet {
-      border-radius: 50%;
+      transform: scale(0.96);
+      transition: transform 80ms ease-in, border-radius 80ms ease-in, background 80ms ease-in;
     }
     .btn-scta-overlay:focus-visible {
       outline: 2px solid var(--primitive-cafe-0);
@@ -2688,8 +2676,9 @@
       background: rgba(15, 22, 38, 0.20);
       color: rgba(255, 255, 255, 0.35);
     }
-    .btn-scta-overlay:disabled .btn-scta-bullet {
+    .btn-scta-overlay:disabled .btn-scta-badge {
       background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.35);
     }
 
     /* ============================================================
@@ -2718,10 +2707,54 @@
       background: var(--primitive-ink-900);
       border-color: var(--primitive-ink-800);
     }
+
+    /* 3-column live preview */
+    .btn-preview-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--color-background-container);
+      border: 1px solid var(--color-background-container);
+      border-radius: var(--corner-radius-m);
+      overflow: hidden;
+      min-height: 200px;
+    }
+    .btn-preview-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-400);
+      padding: var(--space-700) var(--space-600);
+      background: var(--color-background-page);
+    }
+    .btn-preview-col--dark {
+      background: var(--primitive-ink-900);
+    }
+    .btn-preview-col--photo {
+      background:
+        linear-gradient(135deg, rgba(15,22,38,0.45) 0%, rgba(15,22,38,0.20) 100%),
+        url('assets/bg-overlay-demo.png') center/cover no-repeat;
+    }
+    .btn-preview-col-label {
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      align-self: flex-start;
+      margin-bottom: var(--space-100);
+    }
+    .btn-preview-col--dark .btn-preview-col-label {
+      color: var(--primitive-ink-500);
+    }
+    .btn-preview-col--photo .btn-preview-col-label {
+      color: rgba(255,255,255,0.55);
+    }
     .btn-live-canvas.photo-swatch {
       background:
-        linear-gradient(135deg, rgba(15,22,38,0.55) 0%, rgba(15,22,38,0.25) 100%),
-        linear-gradient(135deg, #3b4c6b 0%, #1a2a3a 50%, #0d1824 100%);
+        linear-gradient(135deg, rgba(15,22,38,0.45) 0%, rgba(15,22,38,0.20) 100%),
+        url('assets/bg-overlay-demo.png') center/cover no-repeat;
       border-color: transparent;
     }
 
@@ -2833,18 +2866,6 @@
       min-width: 60px;
     }
 
-    /* Icon SVG arrow for super CTA */
-    .btn-scta-arrow svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Bullet icon inside super CTA */
-    .btn-scta-bullet svg {
-      width: 55%;
-      height: 55%;
-    }
-
     /* doc-subsection-title */
     .doc-subsection-title {
       font-family: var(--font-family-sans);
@@ -2853,6 +2874,18 @@
       color: var(--color-content-default);
       margin-bottom: var(--space-300);
       margin-top: var(--space-500);
+    }
+    .doc-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-200);
+      padding-left: var(--space-500);
+      margin-top: var(--space-300);
+    }
+    .doc-list li {
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-subtle);
+      line-height: var(--font-leading-body-s);
     }
   </style>
 </head>
@@ -3340,28 +3373,10 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Live Preview</h2>
         <hr class="doc-rule">
-        <p class="doc-section-description">Interact with any button variant. Hover and press to feel the states.</p>
+        <p class="doc-section-description">All styles at a glance. Hover and press each button to feel the states.</p>
 
         <!-- Controls -->
         <div class="btn-controls">
-
-          <!-- Type picker -->
-          <div class="dropdown" id="btn-type-picker">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="btn-type-label">Filled</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Button type">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="filled"            tabindex="0">Filled</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="outlined"          tabindex="0">Outlined</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="clear"             tabindex="0">Clear</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="filled-reversed"   tabindex="0">Filled — Reversed</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="outlined-reversed" tabindex="0">Outlined — Reversed</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="clear-reversed"    tabindex="0">Clear — Reversed</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="super-cta-fill"    tabindex="0">Super CTA — Fill</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="super-cta-overlay" tabindex="0">Super CTA — Overlay</li>
-            </ul>
-          </div>
 
           <!-- Size picker -->
           <div class="dropdown" id="btn-size-picker">
@@ -3376,7 +3391,7 @@
             </ul>
           </div>
 
-          <!-- Icon variant picker (hidden for super-cta) -->
+          <!-- Icon variant picker -->
           <div class="dropdown" id="btn-icon-picker">
             <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
               <span id="btn-icon-label">Label only</span>
@@ -3392,9 +3407,20 @@
 
         </div>
 
-        <!-- Live canvas — JS renders the button here -->
-        <div class="btn-live-canvas" id="btn-live-canvas">
-          <!-- populated by initButtonPreview() -->
+        <!-- 3-column live preview — populated by initButtonPreview() -->
+        <div class="btn-preview-cols">
+          <!-- Standard column -->
+          <div class="btn-preview-col" id="btn-col-standard">
+            <!-- JS renders buttons here -->
+          </div>
+          <!-- Reversed column -->
+          <div class="btn-preview-col btn-preview-col--dark" id="btn-col-reversed">
+            <!-- JS renders buttons here -->
+          </div>
+          <!-- Super CTA column -->
+          <div class="btn-preview-col btn-preview-col--photo" id="btn-col-scta">
+            <!-- JS renders buttons here -->
+          </div>
         </div>
       </div>
 
@@ -3420,6 +3446,18 @@
             <div class="btn-state-cell"><button class="btn btn-filled btn--large">Label</button></div>
             <div class="btn-state-cell"><button class="btn btn-filled btn--medium">Label</button></div>
             <div class="btn-state-cell"><button class="btn btn-filled btn--small">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Hover</div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--large" style="background:var(--color-action-hover);border-radius:12px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--medium" style="background:var(--color-action-hover);border-radius:12px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--small" style="background:var(--color-action-hover);border-radius:12px;">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Pressed</div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--large" style="background:var(--color-action-pressed);transform:scale(0.96);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--medium" style="background:var(--color-action-pressed);transform:scale(0.96);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--small" style="background:var(--color-action-pressed);transform:scale(0.96);">Label</button></div>
           </div>
           <div class="btn-state-row">
             <div class="btn-state-label">Focused</div>
@@ -3451,6 +3489,18 @@
             <div class="btn-state-cell"><button class="btn btn-outlined btn--small">Label</button></div>
           </div>
           <div class="btn-state-row">
+            <div class="btn-state-label">Hover</div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--large" style="background:var(--color-action-hover-subtle);border-radius:12px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--medium" style="background:var(--color-action-hover-subtle);border-radius:12px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--small" style="background:var(--color-action-hover-subtle);border-radius:12px;">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Pressed</div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--large" style="background:var(--color-action-active-subtle);transform:scale(0.96);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--medium" style="background:var(--color-action-active-subtle);transform:scale(0.96);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--small" style="background:var(--color-action-active-subtle);transform:scale(0.96);">Label</button></div>
+          </div>
+          <div class="btn-state-row">
             <div class="btn-state-label">Focused</div>
             <div class="btn-state-cell"><button class="btn btn-outlined btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
             <div class="btn-state-cell"><button class="btn btn-outlined btn--medium" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
@@ -3478,6 +3528,18 @@
             <div class="btn-state-cell"><button class="btn btn-clear btn--large">Label</button></div>
             <div class="btn-state-cell"><button class="btn btn-clear btn--medium">Label</button></div>
             <div class="btn-state-cell"><button class="btn btn-clear btn--small">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Hover</div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--large" style="background:var(--color-action-hover-subtle);border-radius:12px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--medium" style="background:var(--color-action-hover-subtle);border-radius:12px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--small" style="background:var(--color-action-hover-subtle);border-radius:12px;">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Pressed</div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--large" style="background:var(--color-action-active-subtle);transform:scale(0.96);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--medium" style="background:var(--color-action-active-subtle);transform:scale(0.96);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--small" style="background:var(--color-action-active-subtle);transform:scale(0.96);">Label</button></div>
           </div>
           <div class="btn-state-row">
             <div class="btn-state-label">Focused</div>
@@ -3585,58 +3647,171 @@
         <!-- Fill style sizes -->
         <h3 class="doc-subsection-title" style="margin-bottom:var(--space-300);">Fill</h3>
         <div class="preview-canvas" style="padding:var(--space-700);display:flex;flex-wrap:wrap;gap:var(--space-500);align-items:center;margin-bottom:var(--space-600);">
-          <!-- Large -->
           <button class="btn btn-super-cta btn-scta-fill btn--large">
-            <span class="btn-scta-bullet">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
-            </span>
             <span class="btn-scta-label">Get started</span>
-            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="btn-scta-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
           </button>
-          <!-- Medium -->
           <button class="btn btn-super-cta btn-scta-fill btn--medium">
-            <span class="btn-scta-bullet">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
-            </span>
             <span class="btn-scta-label">Get started</span>
-            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="btn-scta-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
           </button>
-          <!-- Small -->
           <button class="btn btn-super-cta btn-scta-fill btn--small">
-            <span class="btn-scta-bullet">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
-            </span>
             <span class="btn-scta-label">Get started</span>
-            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="btn-scta-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
           </button>
         </div>
 
         <!-- Overlay style sizes -->
         <h3 class="doc-subsection-title" style="margin-bottom:var(--space-300);">Overlay</h3>
-        <div class="btn-live-canvas photo-swatch" style="padding:var(--space-700);display:flex;flex-wrap:wrap;gap:var(--space-500);align-items:center;justify-content:flex-start;margin-bottom:var(--space-600);">
+        <div class="preview-canvas" style="padding:var(--space-700);display:flex;flex-wrap:wrap;gap:var(--space-500);align-items:center;justify-content:flex-start;margin-bottom:var(--space-600);background:linear-gradient(135deg,rgba(15,22,38,0.45) 0%,rgba(15,22,38,0.20) 100%),url('assets/bg-overlay-demo.png') center/cover no-repeat;border-radius:var(--corner-radius-m);border:none;">
           <button class="btn btn-super-cta btn-scta-overlay btn--large">
-            <span class="btn-scta-bullet">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
-            </span>
             <span class="btn-scta-label">Get started</span>
-            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="btn-scta-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
           </button>
           <button class="btn btn-super-cta btn-scta-overlay btn--medium">
-            <span class="btn-scta-bullet">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
-            </span>
             <span class="btn-scta-label">Get started</span>
-            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="btn-scta-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
           </button>
           <button class="btn btn-super-cta btn-scta-overlay btn--small">
-            <span class="btn-scta-bullet">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
-            </span>
             <span class="btn-scta-label">Get started</span>
-            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="btn-scta-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
           </button>
         </div>
 
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           5. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">All configurable properties exposed on the Button component.</p>
+
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Values</th>
+              <th>Default</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>style</code></td>
+              <td>enum</td>
+              <td><code>filled</code> · <code>outlined</code> · <code>clear</code> · <code>filled-reversed</code> · <code>outlined-reversed</code> · <code>clear-reversed</code> · <code>super-cta-fill</code> · <code>super-cta-overlay</code></td>
+              <td><code>filled</code></td>
+              <td>Reversed variants are pinned to light-mode primitives — they don't re-theme in dark mode.</td>
+            </tr>
+            <tr>
+              <td><code>size</code></td>
+              <td>enum</td>
+              <td><code>large</code> · <code>medium</code> · <code>small</code></td>
+              <td><code>large</code></td>
+              <td>Small uses 16px icons; medium and large use 24px icons.</td>
+            </tr>
+            <tr>
+              <td><code>icon</code></td>
+              <td>enum</td>
+              <td><code>none</code> · <code>leading</code> · <code>trailing</code> · <code>icon-only</code></td>
+              <td><code>none</code></td>
+              <td>Super CTA always uses the trailing white badge — the icon property does not apply to that style.</td>
+            </tr>
+            <tr>
+              <td><code>label</code></td>
+              <td>string</td>
+              <td>Any text</td>
+              <td>—</td>
+              <td>Required unless <code>icon=icon-only</code>. Icon-only buttons must have an <code>aria-label</code>.</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td>boolean</td>
+              <td><code>true</code> · <code>false</code></td>
+              <td><code>false</code></td>
+              <td>Use the native <code>disabled</code> attribute — not <code>aria-disabled</code> — so the button is removed from tab order automatically.</td>
+            </tr>
+            <tr>
+              <td><code>fixed-width</code></td>
+              <td>boolean</td>
+              <td><code>true</code> · <code>false</code></td>
+              <td><code>false</code></td>
+              <td>When true, the button fills its container width. Useful in form layouts and mobile contexts.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           6. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Built on the native <code>&lt;button&gt;</code> element — ARIA roles and keyboard behaviour are handled by the browser.</p>
+
+        <h3 class="doc-subsection-title">Keyboard interaction</h3>
+        <table class="doc-table" style="margin-bottom:var(--space-600);">
+          <thead>
+            <tr><th>Key</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Tab</code></td><td>Move focus to the next focusable button.</td></tr>
+            <tr><td><code>Shift + Tab</code></td><td>Move focus to the previous focusable button.</td></tr>
+            <tr><td><code>Enter</code> / <code>Space</code></td><td>Activate the focused button.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="doc-subsection-title">ARIA &amp; roles</h3>
+        <table class="doc-table" style="margin-bottom:var(--space-600);">
+          <thead>
+            <tr><th>Attribute</th><th>Guidance</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>role="button"</code></td>
+              <td>Implicit on native <code>&lt;button&gt;</code>. Don't apply it manually unless rendering a non-button element.</td>
+            </tr>
+            <tr>
+              <td><code>aria-label</code></td>
+              <td>Required on icon-only buttons. Describes the action, not the icon (e.g. "Close dialog", not "X icon").</td>
+            </tr>
+            <tr>
+              <td><code>aria-disabled="true"</code></td>
+              <td>Avoid. Prefer the native <code>disabled</code> attribute — it removes the element from the tab order and suppresses events automatically.</td>
+            </tr>
+            <tr>
+              <td><code>aria-pressed</code></td>
+              <td>Use only for toggle buttons (on/off state). Not applicable to standard action buttons.</td>
+            </tr>
+            <tr>
+              <td><code>aria-busy</code></td>
+              <td>Set to <code>true</code> while the button is loading. Pair with a visible spinner and keep the label descriptive (e.g. "Saving…").</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="doc-subsection-title">Contrast &amp; motion</h3>
+        <ul class="doc-list">
+          <li>All button text meets WCAG AA minimum contrast (4.5:1) against their respective backgrounds in both light and dark mode.</li>
+          <li>The Super CTA overlay style meets AA contrast only when placed over sufficiently dark photography. Test each usage in context.</li>
+          <li>Hover and pressed transitions respect <code>prefers-reduced-motion</code> — wrap animation properties in a media query if motion sensitivity is a concern for your audience.</li>
+        </ul>
       </div>
 
     </div><!-- /#page-button -->
@@ -6422,101 +6597,79 @@
 
     /* ── Button Live Preview ──────────────────── */
     function initButtonPreview() {
-      const canvas   = document.getElementById('btn-live-canvas');
-      const typePicker = document.getElementById('btn-type-picker');
+      const colStd   = document.getElementById('btn-col-standard');
+      const colRev   = document.getElementById('btn-col-reversed');
+      const colScta  = document.getElementById('btn-col-scta');
       const sizePicker = document.getElementById('btn-size-picker');
       const iconPicker = document.getElementById('btn-icon-picker');
-      if (!canvas) return;
+      if (!colStd) return;
 
-      let currentType = 'filled';
       let currentSize = 'large';
       let currentIcon = 'label-only';
 
-      // Icon SVG snippets
-      const leadingIconSvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>`;
-      const trailingIconSvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-      const iconOnlySvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>`;
+      const sizeClass = () => ({ large:'btn--large', medium:'btn--medium', small:'btn--small' }[currentSize] || 'btn--large');
 
-      const typeClassMap = {
-        'filled':            'btn-filled',
-        'outlined':          'btn-outlined',
-        'clear':             'btn-clear',
-        'filled-reversed':   'btn-filled-reversed',
-        'outlined-reversed': 'btn-outlined-reversed',
-        'clear-reversed':    'btn-clear-reversed',
-        'super-cta-fill':    'btn-super-cta btn-scta-fill',
-        'super-cta-overlay': 'btn-super-cta btn-scta-overlay',
-      };
+      const arrowSvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      const uniSvg   = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>`;
 
-      const sizeClassMap = {
-        'large':  'btn--large',
-        'medium': 'btn--medium',
-        'small':  'btn--small',
-      };
-
-      const reversedTypes = ['filled-reversed','outlined-reversed','clear-reversed'];
-      const superCtaTypes = ['super-cta-fill','super-cta-overlay'];
-
-      function isReversed(t) { return reversedTypes.includes(t); }
-      function isSuperCta(t) { return superCtaTypes.includes(t); }
-
-      function renderButton() {
-        const typeClass = typeClassMap[currentType] || 'btn-filled';
-        const sizeClass = sizeClassMap[currentSize] || 'btn--large';
-        const isIconOnly = currentIcon === 'icon-only' && !isSuperCta(currentType);
-
-        let inner = '';
-        if (isSuperCta(currentType)) {
-          inner = `
-            <span class="btn-scta-bullet">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
-            </span>
-            <span class="btn-scta-label">Get started</span>
-            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>`;
-        } else if (currentIcon === 'leading-icon') {
-          inner = leadingIconSvg + `<span>Label</span>`;
-        } else if (currentIcon === 'trailing-icon') {
-          inner = `<span>Label</span>` + trailingIconSvg;
-        } else if (currentIcon === 'icon-only') {
-          inner = iconOnlySvg;
-        } else {
-          inner = `<span>Label</span>`;
-        }
-
-        const iconOnlyClass = isIconOnly ? ' btn--icon-only' : '';
-        canvas.className = `btn-live-canvas${isReversed(currentType) || currentType === 'super-cta-overlay' ? ' dark-swatch' : ''}${currentType === 'super-cta-overlay' ? ' photo-swatch' : ''}`;
-        canvas.innerHTML = `<button class="btn ${typeClass} ${sizeClass}${iconOnlyClass}" aria-label="Button preview">${inner}</button>`;
+      function stdInner() {
+        if (currentIcon === 'leading-icon')  return uniSvg + `<span>Label</span>`;
+        if (currentIcon === 'trailing-icon') return `<span>Label</span>` + arrowSvg;
+        if (currentIcon === 'icon-only')     return uniSvg;
+        return `<span>Label</span>`;
       }
 
-      // Wire up type dropdown
-      initDropdown(typePicker, value => {
-        currentType = value;
-        document.getElementById('btn-type-label').textContent =
-          typePicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
-        // hide icon picker for super-cta
-        iconPicker.style.display = isSuperCta(value) ? 'none' : '';
-        renderButton();
-      });
+      function sctaBadge() {
+        return `<span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+      }
 
-      // Wire up size dropdown
+      function mkBtn(typeClass, inner, extra = '') {
+        const iconOnlyClass = currentIcon === 'icon-only' && !typeClass.includes('super-cta') ? ' btn--icon-only' : '';
+        const lbl = currentIcon === 'icon-only' ? ' aria-label="Icon only"' : '';
+        return `<button class="btn ${typeClass} ${sizeClass()}${iconOnlyClass}"${lbl}>${inner}</button>`;
+      }
+
+      function renderAll() {
+        const sc = sizeClass();
+        const si = stdInner();
+        const sb = sctaBadge();
+
+        // Column 1 — standard
+        colStd.innerHTML =
+          `<span class="btn-preview-col-label">Standard</span>` +
+          mkBtn('btn-filled',   si) +
+          mkBtn('btn-outlined', si) +
+          mkBtn('btn-clear',    si);
+
+        // Column 2 — reversed (dark swatch)
+        colRev.innerHTML =
+          `<span class="btn-preview-col-label">Reversed</span>` +
+          mkBtn('btn-filled-reversed',   si) +
+          mkBtn('btn-outlined-reversed', si) +
+          mkBtn('btn-clear-reversed',    si);
+
+        // Column 3 — Super CTA (photo swatch)
+        colScta.innerHTML =
+          `<span class="btn-preview-col-label">Super CTA</span>` +
+          mkBtn('btn-super-cta btn-scta-fill',    sb) +
+          mkBtn('btn-super-cta btn-scta-overlay', sb);
+      }
+
       initDropdown(sizePicker, value => {
         currentSize = value;
         document.getElementById('btn-size-label').textContent =
           sizePicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
-        renderButton();
+        renderAll();
       });
 
-      // Wire up icon dropdown
       initDropdown(iconPicker, value => {
         currentIcon = value;
         document.getElementById('btn-icon-label').textContent =
           iconPicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
-        renderButton();
+        renderAll();
       });
 
-      renderButton();
+      renderAll();
     }
 
 </script>
