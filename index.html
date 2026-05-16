@@ -2455,7 +2455,8 @@
       border-radius: var(--corner-radius-round);
     }
     .btn-filled:focus-visible {
-      box-shadow: 0 0 0 3px var(--color-border-interactive);
+      outline: 2px solid var(--color-action-default);
+      outline-offset: 2px;
     }
     .btn-filled:disabled {
       background: var(--color-background-disabled);
@@ -2477,7 +2478,8 @@
       border-radius: var(--corner-radius-round);
     }
     .btn-filled-reversed:focus-visible {
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+      outline: 2px solid var(--primitive-cafe-0);
+      outline-offset: 2px;
     }
     .btn-filled-reversed:disabled {
       background: rgba(255, 255, 255, 0.15);
@@ -2499,7 +2501,8 @@
       border-radius: var(--corner-radius-round);
     }
     .btn-outlined:focus-visible {
-      box-shadow: 0 0 0 3px var(--color-border-interactive);
+      outline: 2px solid var(--color-action-default);
+      outline-offset: 2px;
     }
     .btn-outlined:disabled {
       border-color: var(--color-action-disabled);
@@ -2521,7 +2524,8 @@
       border-radius: var(--corner-radius-round);
     }
     .btn-outlined-reversed:focus-visible {
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+      outline: 2px solid var(--primitive-cafe-0);
+      outline-offset: 2px;
     }
     .btn-outlined-reversed:disabled {
       border-color: rgba(255, 255, 255, 0.25);
@@ -2543,7 +2547,8 @@
       border-radius: var(--corner-radius-round);
     }
     .btn-clear:focus-visible {
-      box-shadow: 0 0 0 3px var(--color-border-interactive);
+      outline: 2px solid var(--color-action-default);
+      outline-offset: 2px;
     }
     .btn-clear:disabled {
       color: var(--color-action-disabled);
@@ -2564,7 +2569,8 @@
       border-radius: var(--corner-radius-round);
     }
     .btn-clear-reversed:focus-visible {
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+      outline: 2px solid var(--primitive-cafe-0);
+      outline-offset: 2px;
     }
     .btn-clear-reversed:disabled {
       color: rgba(255, 255, 255, 0.25);
@@ -2638,7 +2644,8 @@
       border-radius: 50%;
     }
     .btn-scta-fill:focus-visible {
-      box-shadow: 0 0 0 3px var(--color-border-interactive);
+      outline: 2px solid var(--color-action-default);
+      outline-offset: 2px;
     }
     .btn-scta-fill:disabled {
       background: var(--color-background-disabled);
@@ -2674,7 +2681,8 @@
       border-radius: 50%;
     }
     .btn-scta-overlay:focus-visible {
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+      outline: 2px solid var(--primitive-cafe-0);
+      outline-offset: 2px;
     }
     .btn-scta-overlay:disabled {
       background: rgba(15, 22, 38, 0.20);
@@ -3344,14 +3352,14 @@
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Button type">
-              <li class="dropdown-item" role="option" aria-selected="true"  data-value="filled"            tabindex="0">Filled</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="outlined"          tabindex="0">Outlined</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="clear"             tabindex="0">Clear</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="filled-reversed"   tabindex="0">Filled — Reversed</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="outlined-reversed" tabindex="0">Outlined — Reversed</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="clear-reversed"    tabindex="0">Clear — Reversed</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="super-cta-fill"    tabindex="0">Super CTA — Fill</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="super-cta-overlay" tabindex="0">Super CTA — Overlay</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="filled"            tabindex="0">Filled</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="outlined"          tabindex="0">Outlined</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="clear"             tabindex="0">Clear</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="filled-reversed"   tabindex="0">Filled — Reversed</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="outlined-reversed" tabindex="0">Outlined — Reversed</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="clear-reversed"    tabindex="0">Clear — Reversed</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="super-cta-fill"    tabindex="0">Super CTA — Fill</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="super-cta-overlay" tabindex="0">Super CTA — Overlay</li>
             </ul>
           </div>
 
@@ -3362,9 +3370,9 @@
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Button size">
-              <li class="dropdown-item" role="option" aria-selected="true"  data-value="large"  tabindex="0">Large</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="medium" tabindex="0">Medium</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="small"  tabindex="0">Small</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="large"  tabindex="0">Large</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="medium" tabindex="0">Medium</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="small"  tabindex="0">Small</li>
             </ul>
           </div>
 
@@ -3375,10 +3383,10 @@
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Icon variant">
-              <li class="dropdown-item" role="option" aria-selected="true"  data-value="label-only"    tabindex="0">Label only</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="leading-icon"  tabindex="0">Leading icon</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="trailing-icon" tabindex="0">Trailing icon</li>
-              <li class="dropdown-item" role="option" aria-selected="false" data-value="icon-only"     tabindex="0">Icon only</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="label-only"    tabindex="0">Label only</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="leading-icon"  tabindex="0">Leading icon</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="trailing-icon" tabindex="0">Trailing icon</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="icon-only"     tabindex="0">Icon only</li>
             </ul>
           </div>
 
@@ -3415,9 +3423,9 @@
           </div>
           <div class="btn-state-row">
             <div class="btn-state-label">Focused</div>
-            <div class="btn-state-cell"><button class="btn btn-filled btn--large" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
-            <div class="btn-state-cell"><button class="btn btn-filled btn--medium" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
-            <div class="btn-state-cell"><button class="btn btn-filled btn--small" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--medium" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--small" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
           </div>
           <div class="btn-state-row">
             <div class="btn-state-label">Disabled</div>
@@ -3444,9 +3452,9 @@
           </div>
           <div class="btn-state-row">
             <div class="btn-state-label">Focused</div>
-            <div class="btn-state-cell"><button class="btn btn-outlined btn--large" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
-            <div class="btn-state-cell"><button class="btn btn-outlined btn--medium" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
-            <div class="btn-state-cell"><button class="btn btn-outlined btn--small" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--medium" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--small" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
           </div>
           <div class="btn-state-row">
             <div class="btn-state-label">Disabled</div>
@@ -3473,9 +3481,9 @@
           </div>
           <div class="btn-state-row">
             <div class="btn-state-label">Focused</div>
-            <div class="btn-state-cell"><button class="btn btn-clear btn--large" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
-            <div class="btn-state-cell"><button class="btn btn-clear btn--medium" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
-            <div class="btn-state-cell"><button class="btn btn-clear btn--small" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--medium" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--small" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button></div>
           </div>
           <div class="btn-state-row">
             <div class="btn-state-label">Disabled</div>
