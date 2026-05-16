@@ -2275,16 +2275,16 @@
     .icon-bullet--small  svg { width: 24px; height: 24px; }
 
     /* ── Colors */
-    .icon-bullet--white     { background: var(--color-inverse);             color: var(--color-content-default); }
-    .icon-bullet--ink       { background: var(--color-background-contrast); color: var(--color-inverse); }
-    .icon-bullet--violet    { background: var(--primitive-violet-300);       color: var(--color-content-default); }
-    .icon-bullet--berry     { background: var(--primitive-berry-300);        color: var(--color-content-default); }
-    .icon-bullet--apricot   { background: var(--primitive-apricot-300);      color: var(--color-content-default); }
-    .icon-bullet--mint      { background: var(--primitive-mint-300);         color: var(--color-content-default); }
-    .icon-bullet--pool      { background: var(--primitive-pool-300);         color: var(--color-content-default); }
-    .icon-bullet--citron    { background: var(--primitive-citron-300);       color: var(--color-content-default); }
-    /* dark-pool bg is a fixed primitive — keep icon always light */
-    .icon-bullet--dark-pool { background: var(--color-brand-pool); color: var(--primitive-citron-300); }
+    /* All bullets use fixed light-mode primitives — no dark mode theming */
+    .icon-bullet--white     { background: var(--primitive-cafe-0);     color: var(--primitive-ink-900); }
+    .icon-bullet--ink       { background: var(--primitive-ink-900);    color: var(--primitive-cafe-0); }
+    .icon-bullet--violet    { background: var(--primitive-violet-300); color: var(--primitive-ink-900); }
+    .icon-bullet--berry     { background: var(--primitive-berry-300);  color: var(--primitive-ink-900); }
+    .icon-bullet--apricot   { background: var(--primitive-apricot-300); color: var(--primitive-ink-900); }
+    .icon-bullet--mint      { background: var(--primitive-mint-300);   color: var(--primitive-ink-900); }
+    .icon-bullet--pool      { background: var(--primitive-pool-300);   color: var(--primitive-ink-900); }
+    .icon-bullet--citron    { background: var(--primitive-citron-300); color: var(--primitive-ink-900); }
+    .icon-bullet--dark-pool { background: var(--primitive-pool-1000);  color: var(--primitive-citron-300); }
 
     /* ── Preview matrix */
     .ibullet-matrix {
@@ -2305,7 +2305,7 @@
       font-weight: var(--font-weight-semibold);
       letter-spacing: var(--doc-label-tracking);
       text-transform: uppercase;
-      color: var(--color-content-subtle);
+      color: var(--primitive-ink-700);
       text-align: center;
     }
     .ibullet-row {
@@ -2321,7 +2321,7 @@
       font-weight: var(--font-weight-semibold);
       letter-spacing: var(--doc-label-tracking);
       text-transform: uppercase;
-      color: var(--color-content-subtle);
+      color: var(--primitive-ink-700);
     }
     .ibullet-cell {
       display: flex;
@@ -2330,12 +2330,10 @@
       padding: var(--space-200) 0;
     }
 
-    /* Swatch backgrounds — white/ink use semantic opposites so they always contrast.
-       Colored variants use fixed 100-level primitives (always light). */
-    .ibullet-row--white  { background: var(--color-background-contrast); }
-    .ibullet-row--white .ibullet-row-label { color: var(--color-inverse); }
+    /* Swatch backgrounds — all fixed light-mode primitives, no dark mode theming */
+    .ibullet-row--white  { background: var(--primitive-ink-900); }
+    .ibullet-row--white .ibullet-row-label { color: var(--primitive-cafe-0); }
     .ibullet-row--ink    { background: var(--primitive-ink-100); }
-    [data-theme="dark"] .ibullet-row--ink { background: var(--primitive-ink-700); }
     .ibullet-row--violet    { background: var(--primitive-violet-100); }
     .ibullet-row--berry     { background: var(--primitive-berry-100); }
     .ibullet-row--apricot   { background: var(--primitive-apricot-100); }
