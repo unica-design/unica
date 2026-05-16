@@ -128,7 +128,8 @@
   --color-action-hover:         var(--primitive-ink-1000);
   --color-action-hover-subtle:  rgba(31, 24, 46, 0.08);
   --color-action-active:        var(--primitive-ink-900);
-  --color-action-active-subtle: rgba(31, 24, 46, 0.5);
+  --color-action-pressed:       var(--primitive-ink-900);
+  --color-action-active-subtle: rgba(31, 24, 46, 0.20);
   --color-action-visited:       var(--primitive-ink-600);
   --color-action-disabled:      var(--primitive-ink-300);
 
@@ -194,7 +195,8 @@
   --color-action-hover:         var(--primitive-ink-100);
   --color-action-hover-subtle:  rgba(255, 255, 255, 0.08);
   --color-action-active:        var(--primitive-cafe-0);
-  --color-action-active-subtle: rgba(255, 255, 255, 0.5);
+  --color-action-pressed:       var(--primitive-cafe-0);
+  --color-action-active-subtle: rgba(255, 255, 255, 0.20);
   --color-action-visited:       var(--primitive-ink-200);
   --color-action-disabled:      var(--primitive-ink-700);
 

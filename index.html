@@ -2368,6 +2368,484 @@
       .shape-box { width: 48px; height: 48px; }
     }
 
+
+    /* ============================================================
+       BUTTON COMPONENT
+       ============================================================ */
+
+    /* ── Base ─────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-200);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      outline: none;
+      font-family: var(--font-family-sans);
+      font-weight: 400;
+      border-radius: var(--corner-radius-round);
+      transition:
+        border-radius 150ms ease-out,
+        background    150ms ease-out,
+        color         150ms ease-out,
+        border-color  150ms ease-out,
+        box-shadow    150ms ease-out,
+        opacity       150ms ease-out;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active:not(:disabled) {
+      transform: scale(0.96);
+      transition:
+        transform      80ms ease-in,
+        border-radius  80ms ease-in,
+        background     80ms ease-in;
+    }
+    .btn:disabled,
+    .btn[aria-disabled="true"] {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ── Sizes ─────────────────────────────────────────────────── */
+    .btn--large {
+      height: 48px;
+      padding: 0 var(--space-400);
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+    }
+    .btn--medium {
+      height: 40px;
+      padding: 0 var(--space-400);
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+    }
+    .btn--small {
+      height: 32px;
+      padding: 0 var(--space-300);
+      font-size: var(--font-size-body-s);
+      line-height: var(--font-leading-body-s);
+    }
+
+    /* ── Icon sizing ───────────────────────────────────────────── */
+    .btn svg { flex-shrink: 0; }
+    .btn--large  svg,
+    .btn--medium svg { width: 24px; height: 24px; }
+    .btn--small  svg { width: 16px; height: 16px; }
+
+    /* Icon-only: make square */
+    .btn--icon-only.btn--large  { width: 48px; padding: 0; }
+    .btn--icon-only.btn--medium { width: 40px; padding: 0; }
+    .btn--icon-only.btn--small  { width: 32px; padding: 0; }
+
+    /* ── Filled ────────────────────────────────────────────────── */
+    .btn-filled {
+      background: var(--color-action-default);
+      color: var(--color-inverse);
+      border: none;
+    }
+    .btn-filled:hover:not(:disabled) {
+      background: var(--color-action-hover);
+      border-radius: 12px;
+    }
+    .btn-filled:active:not(:disabled) {
+      background: var(--color-action-pressed);
+      border-radius: var(--corner-radius-round);
+    }
+    .btn-filled:focus-visible {
+      box-shadow: 0 0 0 3px var(--color-border-interactive);
+    }
+    .btn-filled:disabled {
+      background: var(--color-background-disabled);
+      color: var(--color-action-disabled);
+    }
+
+    /* ── Filled Reversed ───────────────────────────────────────── */
+    .btn-filled-reversed {
+      background: var(--primitive-cafe-0);
+      color: var(--primitive-ink-900);
+      border: none;
+    }
+    .btn-filled-reversed:hover:not(:disabled) {
+      background: var(--primitive-ink-100);
+      border-radius: 12px;
+    }
+    .btn-filled-reversed:active:not(:disabled) {
+      background: var(--primitive-cafe-0);
+      border-radius: var(--corner-radius-round);
+    }
+    .btn-filled-reversed:focus-visible {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+    .btn-filled-reversed:disabled {
+      background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* ── Outlined ──────────────────────────────────────────────── */
+    .btn-outlined {
+      background: transparent;
+      color: var(--color-action-default);
+      border: 1.5px solid var(--color-action-default);
+    }
+    .btn-outlined:hover:not(:disabled) {
+      background: var(--color-action-hover-subtle);
+      border-radius: 12px;
+    }
+    .btn-outlined:active:not(:disabled) {
+      background: var(--color-action-active-subtle);
+      border-radius: var(--corner-radius-round);
+    }
+    .btn-outlined:focus-visible {
+      box-shadow: 0 0 0 3px var(--color-border-interactive);
+    }
+    .btn-outlined:disabled {
+      border-color: var(--color-action-disabled);
+      color: var(--color-action-disabled);
+    }
+
+    /* ── Outlined Reversed ─────────────────────────────────────── */
+    .btn-outlined-reversed {
+      background: transparent;
+      color: var(--primitive-cafe-0);
+      border: 1.5px solid var(--primitive-cafe-0);
+    }
+    .btn-outlined-reversed:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+    }
+    .btn-outlined-reversed:active:not(:disabled) {
+      background: rgba(255, 255, 255, 0.20);
+      border-radius: var(--corner-radius-round);
+    }
+    .btn-outlined-reversed:focus-visible {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+    .btn-outlined-reversed:disabled {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ── Clear ─────────────────────────────────────────────────── */
+    .btn-clear {
+      background: transparent;
+      color: var(--color-action-default);
+      border: none;
+    }
+    .btn-clear:hover:not(:disabled) {
+      background: var(--color-action-hover-subtle);
+      border-radius: 12px;
+    }
+    .btn-clear:active:not(:disabled) {
+      background: var(--color-action-active-subtle);
+      border-radius: var(--corner-radius-round);
+    }
+    .btn-clear:focus-visible {
+      box-shadow: 0 0 0 3px var(--color-border-interactive);
+    }
+    .btn-clear:disabled {
+      color: var(--color-action-disabled);
+    }
+
+    /* ── Clear Reversed ────────────────────────────────────────── */
+    .btn-clear-reversed {
+      background: transparent;
+      color: var(--primitive-cafe-0);
+      border: none;
+    }
+    .btn-clear-reversed:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+    }
+    .btn-clear-reversed:active:not(:disabled) {
+      background: rgba(255, 255, 255, 0.20);
+      border-radius: var(--corner-radius-round);
+    }
+    .btn-clear-reversed:focus-visible {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+    .btn-clear-reversed:disabled {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ── Super CTA — shared base ───────────────────────────────── */
+    .btn-super-cta {
+      border: none;
+      gap: var(--space-300);
+    }
+    .btn-super-cta .btn-scta-bullet {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .btn-super-cta .btn-scta-label {
+      font-weight: 400;
+    }
+    .btn-super-cta .btn-scta-arrow {
+      flex-shrink: 0;
+    }
+
+    /* Super CTA sizes */
+    .btn-super-cta.btn--large {
+      height: 64px;
+      padding: 0 var(--space-400) 0 var(--space-200);
+    }
+    .btn-super-cta.btn--medium {
+      height: 56px;
+      padding: 0 var(--space-300) 0 var(--space-200);
+    }
+    .btn-super-cta.btn--small {
+      height: 48px;
+      padding: 0 var(--space-300) 0 var(--space-200);
+      font-size: var(--font-size-body-m);
+    }
+
+    /* Bullet sizes inside Super CTA */
+    .btn-super-cta.btn--large  .btn-scta-bullet { width: 48px; height: 48px; }
+    .btn-super-cta.btn--medium .btn-scta-bullet { width: 40px; height: 40px; }
+    .btn-super-cta.btn--small  .btn-scta-bullet { width: 32px; height: 32px; }
+
+    /* Arrow icon size */
+    .btn-super-cta.btn--large  .btn-scta-arrow { width: 24px; height: 24px; }
+    .btn-super-cta.btn--medium .btn-scta-arrow { width: 20px; height: 20px; }
+    .btn-super-cta.btn--small  .btn-scta-arrow { width: 16px; height: 16px; }
+
+    /* ── Super CTA Fill ────────────────────────────────────────── */
+    .btn-scta-fill {
+      background: var(--color-action-default);
+      color: var(--color-inverse);
+    }
+    .btn-scta-fill .btn-scta-bullet {
+      background: var(--primitive-citron-300);
+      color: var(--primitive-ink-900);
+    }
+    .btn-scta-fill:hover:not(:disabled) {
+      background: var(--color-action-hover);
+      border-radius: 12px;
+    }
+    .btn-scta-fill:hover:not(:disabled) .btn-scta-bullet {
+      border-radius: 12px;
+    }
+    .btn-scta-fill:active:not(:disabled) {
+      background: var(--color-action-pressed);
+      border-radius: var(--corner-radius-round);
+    }
+    .btn-scta-fill:active:not(:disabled) .btn-scta-bullet {
+      border-radius: 50%;
+    }
+    .btn-scta-fill:focus-visible {
+      box-shadow: 0 0 0 3px var(--color-border-interactive);
+    }
+    .btn-scta-fill:disabled {
+      background: var(--color-background-disabled);
+      color: var(--color-action-disabled);
+    }
+    .btn-scta-fill:disabled .btn-scta-bullet {
+      background: var(--color-background-container);
+    }
+
+    /* ── Super CTA Overlay ─────────────────────────────────────── */
+    .btn-scta-overlay {
+      background: rgba(15, 22, 38, 0.40);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--primitive-cafe-0);
+    }
+    .btn-scta-overlay .btn-scta-bullet {
+      background: var(--primitive-citron-300);
+      color: var(--primitive-ink-900);
+    }
+    .btn-scta-overlay:hover:not(:disabled) {
+      background: rgba(15, 22, 38, 0.60);
+      border-radius: 12px;
+    }
+    .btn-scta-overlay:hover:not(:disabled) .btn-scta-bullet {
+      border-radius: 12px;
+    }
+    .btn-scta-overlay:active:not(:disabled) {
+      background: rgba(15, 22, 38, 0.75);
+      border-radius: var(--corner-radius-round);
+    }
+    .btn-scta-overlay:active:not(:disabled) .btn-scta-bullet {
+      border-radius: 50%;
+    }
+    .btn-scta-overlay:focus-visible {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+    .btn-scta-overlay:disabled {
+      background: rgba(15, 22, 38, 0.20);
+      color: rgba(255, 255, 255, 0.35);
+    }
+    .btn-scta-overlay:disabled .btn-scta-bullet {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ============================================================
+       BUTTON DOC PAGE
+       ============================================================ */
+
+    /* Live preview / controls row */
+    .btn-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-200);
+      margin-bottom: var(--space-500);
+    }
+
+    .btn-live-canvas {
+      background: var(--color-background-page);
+      border: 1px solid var(--color-background-container);
+      border-radius: var(--corner-radius-m);
+      padding: var(--space-800) var(--space-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+    }
+    .btn-live-canvas.dark-swatch {
+      background: var(--primitive-ink-900);
+      border-color: var(--primitive-ink-800);
+    }
+    .btn-live-canvas.photo-swatch {
+      background:
+        linear-gradient(135deg, rgba(15,22,38,0.55) 0%, rgba(15,22,38,0.25) 100%),
+        linear-gradient(135deg, #3b4c6b 0%, #1a2a3a 50%, #0d1824 100%);
+      border-color: transparent;
+    }
+
+    /* State grid */
+    .btn-state-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--color-background-container);
+      border-radius: var(--corner-radius-m);
+      overflow: hidden;
+    }
+    .btn-state-row {
+      display: grid;
+      grid-template-columns: 100px 1fr 1fr 1fr;
+      align-items: center;
+      gap: 0;
+      border-bottom: 1px solid var(--color-background-container);
+      min-height: 64px;
+    }
+    .btn-state-row:last-child { border-bottom: none; }
+    .btn-state-row.dark-row {
+      background: var(--primitive-ink-900);
+    }
+    .btn-state-label {
+      padding: var(--space-300) var(--space-400);
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      font-family: var(--font-family-sans);
+      border-right: 1px solid var(--color-background-container);
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+    }
+    .btn-state-row.dark-row .btn-state-label {
+      color: var(--primitive-ink-500, #8a96aa);
+      border-right-color: var(--primitive-ink-800);
+    }
+    .btn-state-cell {
+      padding: var(--space-400) var(--space-500);
+      display: flex;
+      align-items: center;
+      gap: var(--space-300);
+      border-right: 1px solid var(--color-background-container);
+    }
+    .btn-state-cell:last-child { border-right: none; }
+    .btn-state-row.dark-row .btn-state-cell {
+      border-right-color: var(--primitive-ink-800);
+    }
+    .btn-state-header-row {
+      display: grid;
+      grid-template-columns: 100px 1fr 1fr 1fr;
+      background: var(--color-background-section);
+      border-bottom: 1px solid var(--color-background-container);
+    }
+    .btn-state-header-cell {
+      padding: var(--space-200) var(--space-400);
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      font-family: var(--font-family-sans);
+      border-right: 1px solid var(--color-background-container);
+      font-weight: 500;
+    }
+    .btn-state-header-cell:first-child { /* empty corner */ }
+    .btn-state-header-cell:last-child { border-right: none; }
+
+    /* State indicator chips (for static state showcase) */
+    .btn-state-chip {
+      font-size: 10px;
+      color: var(--color-content-subtle);
+      font-family: var(--font-family-sans);
+      margin-top: var(--space-100);
+    }
+    .btn-demo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-100);
+    }
+
+    /* Reversed swatch */
+    .btn-reversed-swatch {
+      background: var(--primitive-ink-900);
+      border-radius: var(--corner-radius-m);
+      overflow: hidden;
+    }
+    .btn-reversed-swatch .btn-state-header-row {
+      background: var(--primitive-ink-800);
+    }
+    .btn-reversed-swatch .btn-state-header-cell {
+      color: var(--primitive-ink-500, #8a96aa);
+      border-right-color: var(--primitive-ink-700);
+    }
+
+    /* Sizes grid */
+    .btn-size-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-400);
+      flex-wrap: wrap;
+      padding: var(--space-500) 0;
+      border-bottom: 1px solid var(--color-background-container);
+    }
+    .btn-size-row:last-child { border-bottom: none; }
+    .btn-size-label {
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      font-family: var(--font-family-sans);
+      min-width: 60px;
+    }
+
+    /* Icon SVG arrow for super CTA */
+    .btn-scta-arrow svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Bullet icon inside super CTA */
+    .btn-scta-bullet svg {
+      width: 55%;
+      height: 55%;
+    }
+
+    /* doc-subsection-title */
+    .doc-subsection-title {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-m);
+      font-weight: 500;
+      color: var(--color-content-default);
+      margin-bottom: var(--space-300);
+      margin-top: var(--space-500);
+    }
   </style>
 </head>
 <body>
@@ -2832,7 +3310,328 @@
     <div class="page-panel" id="page-comp-overview"><section class="section"><div class="section-header"><p class="section-eyebrow">Components</p><h2 class="section-title">Overview</h2><p class="section-description">30 components across 6 categories — all available as copy-paste code.</p></div><span class="stub-pill">In progress</span></section></div>
 
     <!-- Actions -->
-    <div class="page-panel" id="page-button"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Button</h2><p class="section-description">Primary, secondary, ghost, and destructive variants across all sizes.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-button">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Actions</p>
+        <h1 class="comp-title">Button</h1>
+        <p class="comp-description">The core interactive element across all surfaces. Available in filled, outlined, and clear styles — each with a reversed suite for dark surfaces — plus a Super CTA variant for high-emphasis calls to action.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=339-3391" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. LIVE PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Live Preview</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Interact with any button variant. Hover and press to feel the states.</p>
+
+        <!-- Controls -->
+        <div class="btn-controls">
+
+          <!-- Type picker -->
+          <div class="dropdown" id="btn-type-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="btn-type-label">Filled</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Button type">
+              <li class="dropdown-item" role="option" aria-selected="true"  data-value="filled"            tabindex="0">Filled</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="outlined"          tabindex="0">Outlined</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="clear"             tabindex="0">Clear</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="filled-reversed"   tabindex="0">Filled — Reversed</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="outlined-reversed" tabindex="0">Outlined — Reversed</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="clear-reversed"    tabindex="0">Clear — Reversed</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="super-cta-fill"    tabindex="0">Super CTA — Fill</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="super-cta-overlay" tabindex="0">Super CTA — Overlay</li>
+            </ul>
+          </div>
+
+          <!-- Size picker -->
+          <div class="dropdown" id="btn-size-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="btn-size-label">Large</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Button size">
+              <li class="dropdown-item" role="option" aria-selected="true"  data-value="large"  tabindex="0">Large</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="medium" tabindex="0">Medium</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="small"  tabindex="0">Small</li>
+            </ul>
+          </div>
+
+          <!-- Icon variant picker (hidden for super-cta) -->
+          <div class="dropdown" id="btn-icon-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="btn-icon-label">Label only</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Icon variant">
+              <li class="dropdown-item" role="option" aria-selected="true"  data-value="label-only"    tabindex="0">Label only</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="leading-icon"  tabindex="0">Leading icon</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="trailing-icon" tabindex="0">Trailing icon</li>
+              <li class="dropdown-item" role="option" aria-selected="false" data-value="icon-only"     tabindex="0">Icon only</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Live canvas — JS renders the button here -->
+        <div class="btn-live-canvas" id="btn-live-canvas">
+          <!-- populated by initButtonPreview() -->
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           2. STATES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">States</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">All interactive states shown statically. For hover and pressed, interact with the live preview above.</p>
+
+        <!-- Filled states -->
+        <h3 class="doc-subsection-title" style="margin-bottom:var(--space-300);">Filled</h3>
+        <div class="btn-state-grid" style="margin-bottom:var(--space-600);">
+          <div class="btn-state-header-row">
+            <div class="btn-state-header-cell"></div>
+            <div class="btn-state-header-cell">Large</div>
+            <div class="btn-state-header-cell">Medium</div>
+            <div class="btn-state-header-cell">Small</div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Default</div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--large">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--medium">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--small">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Focused</div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--large" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--medium" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--small" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Disabled</div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--large" disabled>Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--medium" disabled>Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-filled btn--small" disabled>Label</button></div>
+          </div>
+        </div>
+
+        <!-- Outlined states -->
+        <h3 class="doc-subsection-title" style="margin-bottom:var(--space-300);">Outlined</h3>
+        <div class="btn-state-grid" style="margin-bottom:var(--space-600);">
+          <div class="btn-state-header-row">
+            <div class="btn-state-header-cell"></div>
+            <div class="btn-state-header-cell">Large</div>
+            <div class="btn-state-header-cell">Medium</div>
+            <div class="btn-state-header-cell">Small</div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Default</div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--large">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--medium">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--small">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Focused</div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--large" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--medium" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--small" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Disabled</div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--large" disabled>Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--medium" disabled>Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-outlined btn--small" disabled>Label</button></div>
+          </div>
+        </div>
+
+        <!-- Clear states -->
+        <h3 class="doc-subsection-title" style="margin-bottom:var(--space-300);">Clear</h3>
+        <div class="btn-state-grid" style="margin-bottom:var(--space-600);">
+          <div class="btn-state-header-row">
+            <div class="btn-state-header-cell"></div>
+            <div class="btn-state-header-cell">Large</div>
+            <div class="btn-state-header-cell">Medium</div>
+            <div class="btn-state-header-cell">Small</div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Default</div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--large">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--medium">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--small">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Focused</div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--large" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--medium" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--small" style="box-shadow:0 0 0 3px var(--color-border-interactive);">Label</button></div>
+          </div>
+          <div class="btn-state-row">
+            <div class="btn-state-label">Disabled</div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--large" disabled>Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--medium" disabled>Label</button></div>
+            <div class="btn-state-cell"><button class="btn btn-clear btn--small" disabled>Label</button></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           3. REVERSED SUITE
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Reversed</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">For use on dark surfaces in light mode. Colors are pinned to light-mode primitives — they don't re-theme in dark mode.</p>
+
+        <div class="btn-reversed-swatch">
+
+          <!-- Filled reversed -->
+          <div class="btn-state-grid" style="border:none;border-radius:0;margin-bottom:0;">
+            <div class="btn-state-header-row" style="background:var(--primitive-ink-800);">
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Filled</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Large</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Medium</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);">Small</div>
+            </div>
+            <div class="btn-state-row dark-row">
+              <div class="btn-state-label" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-800);">Default</div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-filled-reversed btn--large">Label</button></div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-filled-reversed btn--medium">Label</button></div>
+              <div class="btn-state-cell"><button class="btn btn-filled-reversed btn--small">Label</button></div>
+            </div>
+            <div class="btn-state-row dark-row">
+              <div class="btn-state-label" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-800);">Disabled</div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-filled-reversed btn--large" disabled>Label</button></div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-filled-reversed btn--medium" disabled>Label</button></div>
+              <div class="btn-state-cell"><button class="btn btn-filled-reversed btn--small" disabled>Label</button></div>
+            </div>
+          </div>
+
+          <!-- Outlined reversed -->
+          <div class="btn-state-grid" style="border:none;border-radius:0;border-top:1px solid var(--primitive-ink-700);margin-bottom:0;">
+            <div class="btn-state-header-row" style="background:var(--primitive-ink-800);">
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Outlined</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Large</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Medium</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);">Small</div>
+            </div>
+            <div class="btn-state-row dark-row">
+              <div class="btn-state-label" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-800);">Default</div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-outlined-reversed btn--large">Label</button></div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-outlined-reversed btn--medium">Label</button></div>
+              <div class="btn-state-cell"><button class="btn btn-outlined-reversed btn--small">Label</button></div>
+            </div>
+            <div class="btn-state-row dark-row">
+              <div class="btn-state-label" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-800);">Disabled</div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-outlined-reversed btn--large" disabled>Label</button></div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-outlined-reversed btn--medium" disabled>Label</button></div>
+              <div class="btn-state-cell"><button class="btn btn-outlined-reversed btn--small" disabled>Label</button></div>
+            </div>
+          </div>
+
+          <!-- Clear reversed -->
+          <div class="btn-state-grid" style="border:none;border-radius:0;border-top:1px solid var(--primitive-ink-700);margin-bottom:0;">
+            <div class="btn-state-header-row" style="background:var(--primitive-ink-800);">
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Clear</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Large</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-700);">Medium</div>
+              <div class="btn-state-header-cell" style="color:var(--primitive-ink-500,#8a96aa);">Small</div>
+            </div>
+            <div class="btn-state-row dark-row">
+              <div class="btn-state-label" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-800);">Default</div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-clear-reversed btn--large">Label</button></div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-clear-reversed btn--medium">Label</button></div>
+              <div class="btn-state-cell"><button class="btn btn-clear-reversed btn--small">Label</button></div>
+            </div>
+            <div class="btn-state-row dark-row">
+              <div class="btn-state-label" style="color:var(--primitive-ink-500,#8a96aa);border-right-color:var(--primitive-ink-800);">Disabled</div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-clear-reversed btn--large" disabled>Label</button></div>
+              <div class="btn-state-cell" style="border-right-color:var(--primitive-ink-800);"><button class="btn btn-clear-reversed btn--medium" disabled>Label</button></div>
+              <div class="btn-state-cell"><button class="btn btn-clear-reversed btn--small" disabled>Label</button></div>
+            </div>
+          </div>
+
+        </div><!-- /.btn-reversed-swatch -->
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           4. SUPER CTA
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Super CTA</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">High-emphasis calls to action. The bullet adds visual weight and personality. Available in fill (on page surfaces) and overlay (over photography).</p>
+
+        <!-- Fill style sizes -->
+        <h3 class="doc-subsection-title" style="margin-bottom:var(--space-300);">Fill</h3>
+        <div class="preview-canvas" style="padding:var(--space-700);display:flex;flex-wrap:wrap;gap:var(--space-500);align-items:center;margin-bottom:var(--space-600);">
+          <!-- Large -->
+          <button class="btn btn-super-cta btn-scta-fill btn--large">
+            <span class="btn-scta-bullet">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
+            </span>
+            <span class="btn-scta-label">Get started</span>
+            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <!-- Medium -->
+          <button class="btn btn-super-cta btn-scta-fill btn--medium">
+            <span class="btn-scta-bullet">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
+            </span>
+            <span class="btn-scta-label">Get started</span>
+            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <!-- Small -->
+          <button class="btn btn-super-cta btn-scta-fill btn--small">
+            <span class="btn-scta-bullet">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
+            </span>
+            <span class="btn-scta-label">Get started</span>
+            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- Overlay style sizes -->
+        <h3 class="doc-subsection-title" style="margin-bottom:var(--space-300);">Overlay</h3>
+        <div class="btn-live-canvas photo-swatch" style="padding:var(--space-700);display:flex;flex-wrap:wrap;gap:var(--space-500);align-items:center;justify-content:flex-start;margin-bottom:var(--space-600);">
+          <button class="btn btn-super-cta btn-scta-overlay btn--large">
+            <span class="btn-scta-bullet">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
+            </span>
+            <span class="btn-scta-label">Get started</span>
+            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn btn-super-cta btn-scta-overlay btn--medium">
+            <span class="btn-scta-bullet">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
+            </span>
+            <span class="btn-scta-label">Get started</span>
+            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn btn-super-cta btn-scta-overlay btn--small">
+            <span class="btn-scta-bullet">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
+            </span>
+            <span class="btn-scta-label">Get started</span>
+            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+      </div>
+
+    </div><!-- /#page-button -->
     <div class="page-panel" id="page-choice-button"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Choice Button</h2><p class="section-description">Toggleable button for single or multi-select choices.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-chips"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Chips</h2><p class="section-description">Compact interactive elements for filtering and multi-select.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-tags"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Tags</h2><p class="section-description">Label-style elements for categorization and metadata.</p></div><span class="stub-pill">In progress</span></section></div>
@@ -5599,6 +6398,9 @@
     /* ── Icon Bullet icon picker ── */
     initIconPicker(document.getElementById('ibullet-icon-picker'));
 
+    /* ── Button live preview ── */
+    initButtonPreview();
+
     /* ── Bottom nav preview variant dropdown ── */
     initDropdown(document.getElementById('bnav-variant-dropdown'), value => {
       const demo = document.getElementById('bnav-demo');
@@ -5609,6 +6411,105 @@
     });
   });
   window.addEventListener('resize', updateChrome);
+
+    /* ── Button Live Preview ──────────────────── */
+    function initButtonPreview() {
+      const canvas   = document.getElementById('btn-live-canvas');
+      const typePicker = document.getElementById('btn-type-picker');
+      const sizePicker = document.getElementById('btn-size-picker');
+      const iconPicker = document.getElementById('btn-icon-picker');
+      if (!canvas) return;
+
+      let currentType = 'filled';
+      let currentSize = 'large';
+      let currentIcon = 'label-only';
+
+      // Icon SVG snippets
+      const leadingIconSvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>`;
+      const trailingIconSvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      const iconOnlySvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>`;
+
+      const typeClassMap = {
+        'filled':            'btn-filled',
+        'outlined':          'btn-outlined',
+        'clear':             'btn-clear',
+        'filled-reversed':   'btn-filled-reversed',
+        'outlined-reversed': 'btn-outlined-reversed',
+        'clear-reversed':    'btn-clear-reversed',
+        'super-cta-fill':    'btn-super-cta btn-scta-fill',
+        'super-cta-overlay': 'btn-super-cta btn-scta-overlay',
+      };
+
+      const sizeClassMap = {
+        'large':  'btn--large',
+        'medium': 'btn--medium',
+        'small':  'btn--small',
+      };
+
+      const reversedTypes = ['filled-reversed','outlined-reversed','clear-reversed'];
+      const superCtaTypes = ['super-cta-fill','super-cta-overlay'];
+
+      function isReversed(t) { return reversedTypes.includes(t); }
+      function isSuperCta(t) { return superCtaTypes.includes(t); }
+
+      function renderButton() {
+        const typeClass = typeClassMap[currentType] || 'btn-filled';
+        const sizeClass = sizeClassMap[currentSize] || 'btn--large';
+        const isIconOnly = currentIcon === 'icon-only' && !isSuperCta(currentType);
+
+        let inner = '';
+        if (isSuperCta(currentType)) {
+          inner = `
+            <span class="btn-scta-bullet">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
+            </span>
+            <span class="btn-scta-label">Get started</span>
+            <svg class="btn-scta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`;
+        } else if (currentIcon === 'leading-icon') {
+          inner = leadingIconSvg + `<span>Label</span>`;
+        } else if (currentIcon === 'trailing-icon') {
+          inner = `<span>Label</span>` + trailingIconSvg;
+        } else if (currentIcon === 'icon-only') {
+          inner = iconOnlySvg;
+        } else {
+          inner = `<span>Label</span>`;
+        }
+
+        const iconOnlyClass = isIconOnly ? ' btn--icon-only' : '';
+        canvas.className = `btn-live-canvas${isReversed(currentType) || currentType === 'super-cta-overlay' ? ' dark-swatch' : ''}${currentType === 'super-cta-overlay' ? ' photo-swatch' : ''}`;
+        canvas.innerHTML = `<button class="btn ${typeClass} ${sizeClass}${iconOnlyClass}" aria-label="Button preview">${inner}</button>`;
+      }
+
+      // Wire up type dropdown
+      initDropdown(typePicker, value => {
+        currentType = value;
+        document.getElementById('btn-type-label').textContent =
+          typePicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
+        // hide icon picker for super-cta
+        iconPicker.style.display = isSuperCta(value) ? 'none' : '';
+        renderButton();
+      });
+
+      // Wire up size dropdown
+      initDropdown(sizePicker, value => {
+        currentSize = value;
+        document.getElementById('btn-size-label').textContent =
+          sizePicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
+        renderButton();
+      });
+
+      // Wire up icon dropdown
+      initDropdown(iconPicker, value => {
+        currentIcon = value;
+        document.getElementById('btn-icon-label').textContent =
+          iconPicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
+        renderButton();
+      });
+
+      renderButton();
+    }
 
 </script>
 
