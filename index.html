@@ -2881,22 +2881,17 @@
       }
     }
 
-    /* Photo col badge labels (overlay columns) */
-    .btn-pcol-badge-wrap {
-      align-self: flex-start;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-100);
-      margin-bottom: var(--space-400);
-    }
+    /* Photo col badge labels — square highlight, same text style as btn-preview-col-label */
     .btn-pcol-badge {
       font-size: var(--font-size-body-xs);
       font-weight: 500;
-      letter-spacing: 0.02em;
-      border-radius: var(--corner-radius-round);
-      padding: 3px 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       align-self: flex-start;
       white-space: nowrap;
+      margin-bottom: var(--space-100);
+      border-radius: 2px;
+      padding: 1px 5px;
     }
     .btn-pcol-badge--dark-ovl {
       background: rgba(15, 22, 38, 0.45);
@@ -2910,12 +2905,6 @@
       -webkit-backdrop-filter: blur(24px);
       color: var(--primitive-ink-900);
     }
-    .btn-pcol-badge-sub {
-      font-size: var(--font-size-body-xs);
-      margin-left: var(--space-200);
-    }
-    .btn-pcol-badge-sub--dark  { color: rgba(255, 255, 255, 0.60); }
-    .btn-pcol-badge-sub--light { color: rgba(15, 23, 38, 0.55); }
 
     /* Super CTA preview subsection */
     .btn-preview-subhead {
@@ -6891,7 +6880,6 @@
         const ovlLabel   = currentOverlay === 'dark' ? 'Dark overlay' : 'Light overlay';
         const ovlSub     = currentOverlay === 'dark' ? 'Dark photography only' : 'Light photography only';
         const badgeClass = currentOverlay === 'dark' ? 'dark-ovl' : 'light-ovl';
-        const subClass   = currentOverlay === 'dark' ? 'dark' : 'light';
 
         colSctaDefault.innerHTML =
           `<span class="btn-preview-col-label">Default</span>` +
@@ -6899,15 +6887,29 @@
 
         colSctaOverlay.className = `btn-preview-col ${currentOverlay === 'dark' ? 'btn-preview-col--photo' : 'btn-preview-col--dunes'}`;
         colSctaOverlay.innerHTML =
-          `<div class="btn-pcol-badge-wrap">` +
-            `<span class="btn-pcol-badge btn-pcol-badge--${badgeClass}">${ovlLabel}</span>` +
-            `<span class="btn-pcol-badge-sub btn-pcol-badge-sub--${subClass}">${ovlSub}</span>` +
-          `</div>` +
+          `<span class="btn-pcol-badge btn-pcol-badge--${badgeClass}">${ovlLabel}</span>` +
           mkSctaBtn('btn-super-cta ' + ovlClass, sb, sc);
       }
 
       function updateShapePickerVisibility() {
-        if (shapePicker) shapePicker.style.display = currentIcon === 'label-only' ? 'none' : '';
+        if (!shapePicker) return;
+        // Hide entire picker for label-only
+        shapePicker.style.display = currentIcon === 'label-only' ? 'none' : '';
+        // Hide arrow option when leading icon (arrow doesn't belong leading)
+        const arrowOpt = shapePicker.querySelector('[data-value="arrow"]');
+        if (arrowOpt) {
+          arrowOpt.style.display = currentIcon === 'leading-icon' ? 'none' : '';
+        }
+        // If arrow was selected and we switch to leading, fall back to unica
+        if (currentIcon === 'leading-icon' && currentShape === 'arrow') {
+          currentShape = 'unica';
+          document.getElementById('btn-shape-label').textContent = 'ůnica';
+          const triggerUse = document.getElementById('btn-shape-trigger-use');
+          if (triggerUse) triggerUse.setAttribute('href', '#ico-unica');
+          shapePicker.querySelectorAll('.dropdown-option').forEach(o => {
+            o.setAttribute('aria-selected', o.dataset.value === 'unica' ? 'true' : 'false');
+          });
+        }
       }
 
       // Size picker
