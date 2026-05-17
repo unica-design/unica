@@ -2788,10 +2788,16 @@
       border-radius: var(--corner-radius-m);
       overflow: hidden;
     }
-    /* SCTA preview: taller cells so single button breathes */
+    /* SCTA preview: label stays at top, button floats to vertical center */
     #btn-preview-scta .btn-preview-col {
-      padding-top: var(--space-1100);
-      padding-bottom: var(--space-1100);
+      justify-content: flex-start;
+      min-height: 300px;
+    }
+    .scta-btn-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .btn-preview-col {
       display: flex;
@@ -6886,12 +6892,12 @@
 
         colSctaDefault.innerHTML =
           `<span class="btn-preview-col-label">Default</span>` +
-          mkSctaBtn('btn-super-cta btn-scta-fill', sb, sc);
+          `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta btn-scta-fill', sb, sc)}</div>`;
 
         colSctaOverlay.className = `btn-preview-col ${currentOverlay === 'dark' ? 'btn-preview-col--photo' : 'btn-preview-col--dunes'}`;
         colSctaOverlay.innerHTML =
           `<span class="btn-pcol-badge btn-pcol-badge--${badgeClass}">${ovlLabel}</span>` +
-          mkSctaBtn('btn-super-cta ' + ovlClass, sb, sc);
+          `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta ' + ovlClass, sb, sc)}</div>`;
       }
 
       function updateShapePickerVisibility() {
