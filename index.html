@@ -2943,6 +2943,19 @@
       border-color: transparent;
     }
 
+    /* States section header: description + toggle on same row */
+    .states-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-600);
+      margin-bottom: var(--space-700);
+    }
+    .states-header-row .switch-item-text {
+      font-size: var(--font-size-body-s);
+      padding-top: 7px;
+    }
+
     /* ── State showcase — modern preview-item style ─────────────── */
     .btn-states-section {
       display: flex;
@@ -3634,8 +3647,27 @@
       <div class="doc-section">
         <h2 class="doc-section-title">States</h2>
         <hr class="doc-rule">
-        <p class="doc-section-description">All interactive states shown statically across all sizes. Hover and press in the live preview above to feel the transitions.</p>
 
+        <div class="states-header-row">
+          <p class="doc-section-description" style="margin-bottom:0;">All interactive states shown statically across all sizes. Hover and press in the live preview above to feel the transitions.</p>
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch">
+              <input type="checkbox" id="states-mode-toggle">
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Reversed</span>
+          </label>
+        </div>
+
+        <!-- Standard states -->
+        <div id="btn-states-standard">
         <div class="btn-states-section">
 
           <!-- Filled -->
@@ -3744,16 +3776,10 @@
           </div>
 
         </div><!-- /.btn-states-section -->
-      </div>
+        </div><!-- /#btn-states-standard -->
 
-      <!-- ══════════════════════════════════════════
-           3. REVERSED SUITE
-           ══════════════════════════════════════════ -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Reversed</h2>
-        <hr class="doc-rule">
-        <p class="doc-section-description">For use on dark surfaces in light mode. Colors are pinned to light-mode primitives — they don't re-theme in dark mode.</p>
-
+        <!-- Reversed states (hidden until toggle is on) -->
+        <div id="btn-states-reversed" hidden>
         <div class="btn-reversed-swatch">
           <div class="btn-states-section" style="gap:var(--space-500);">
 
@@ -3837,10 +3863,12 @@
 
           </div>
         </div><!-- /.btn-reversed-swatch -->
-      </div>
+        </div><!-- /#btn-states-reversed -->
+
+      </div><!-- /.doc-section States -->
 
       <!-- ══════════════════════════════════════════
-           4. SUPER CTA
+           3. SUPER CTA
            ══════════════════════════════════════════ -->
       <div class="doc-section">
         <h2 class="doc-section-title">Super CTA</h2>
@@ -6968,6 +6996,17 @@
       updateShapePickerVisibility();
       renderStd();
       renderScta();
+    }
+
+    // States mode toggle (Standard ↔ Reversed)
+    const statesToggle = document.getElementById('states-mode-toggle');
+    const statesStd    = document.getElementById('btn-states-standard');
+    const statesRev    = document.getElementById('btn-states-reversed');
+    if (statesToggle) {
+      statesToggle.addEventListener('change', () => {
+        statesStd.hidden = statesToggle.checked;
+        statesRev.hidden = !statesToggle.checked;
+      });
     }
 
 </script>
