@@ -2026,6 +2026,16 @@
       font-weight: var(--font-weight-semibold);
     }
 
+    /* ─── Shape picker: icon + label inline ─── */
+    #btn-shape-picker .dropdown-menu { min-width: 176px; }
+    #btn-shape-picker .dropdown-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-300);
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+
     /* ─── Icon Picker (visual grid variant of .dropdown) ─── */
     .icon-picker-menu {
       display: grid;
@@ -2842,7 +2852,7 @@
       margin-bottom: var(--space-100);
     }
     .btn-preview-col--dark .btn-preview-col-label {
-      color: var(--primitive-ink-500);
+      color: rgba(255, 255, 255, 0.65);
     }
     .btn-preview-col--photo .btn-preview-col-label {
       color: rgba(255,255,255,0.92);
@@ -2870,6 +2880,42 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Photo col badge labels (overlay columns) */
+    .btn-pcol-badge-wrap {
+      align-self: flex-start;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-100);
+      margin-bottom: var(--space-400);
+    }
+    .btn-pcol-badge {
+      font-size: var(--font-size-body-xs);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-radius: var(--corner-radius-round);
+      padding: 3px 10px;
+      align-self: flex-start;
+      white-space: nowrap;
+    }
+    .btn-pcol-badge--dark-ovl {
+      background: rgba(15, 22, 38, 0.45);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .btn-pcol-badge--light-ovl {
+      background: rgba(31, 24, 46, 0.12);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      color: var(--primitive-ink-900);
+    }
+    .btn-pcol-badge-sub {
+      font-size: var(--font-size-body-xs);
+      margin-left: var(--space-200);
+    }
+    .btn-pcol-badge-sub--dark  { color: rgba(255, 255, 255, 0.60); }
+    .btn-pcol-badge-sub--light { color: rgba(15, 23, 38, 0.55); }
 
     /* Super CTA preview subsection */
     .btn-preview-subhead {
@@ -3004,7 +3050,7 @@
     <!-- ůnica unicons — all on a shared 24×24 keyline grid, matching Figma inset placement -->
     <!-- ůnica: inset(14.82% 16.65%) → translate(3.996 3.557) scale(0.75) -->
     <symbol id="ico-unica" viewBox="0 0 24 24" fill="none">
-      <g transform="translate(3.996 3.557) scale(0.75)">
+      <g transform="translate(2.4 1.85) scale(0.9)">
         <path d="M21.3428 11.8584H21.3369C21.3314 17.7446 16.5584 22.5145 10.6709 22.5146V21.0146C15.7305 21.0145 19.8322 16.9149 19.8369 11.8564L19.8389 10.3584H19.8428V1.60742C16.3932 2.10781 13.4924 4.30858 12.0205 7.33691L10.6719 10.1123L9.32227 7.33691C7.85037 4.30856 4.94965 2.10773 1.5 1.60742V10.3584H1.50293L1.50391 11.8564C1.50861 16.915 5.6112 21.0146 10.6709 21.0146V22.5146L10.1221 22.501C4.48934 22.2156 0.00927409 17.5608 0.00390625 11.8584H0V0C4.69298 0 8.74959 2.72656 10.6719 6.68164C12.5941 2.72663 16.6499 9.47923e-05 21.3428 0C21.3428 0 21.3428 9.92888 21.3428 11.8584Z" fill="currentColor"/>
       </g>
     </symbol>
@@ -3547,8 +3593,23 @@
         <h3 class="btn-preview-subhead">Super CTA</h3>
         <p class="btn-preview-subhead-desc">Super CTA is a style reserved for high emphasis, conversion sensitive moments with a fixed bullet preset. It is available both in the primary styling and in overlay fills to work well over both light and dark product and lifestyle photography.</p>
 
-        <!-- Overlay style toggle -->
+        <!-- SCTA controls: size + overlay style -->
         <div class="btn-controls">
+
+          <!-- SCTA size picker -->
+          <div class="dropdown" id="btn-scta-size-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="btn-scta-size-label">Large</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Super CTA size">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="large"  tabindex="0">Large</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="medium" tabindex="0">Medium</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="small"  tabindex="0">Small</li>
+            </ul>
+          </div>
+
+          <!-- Overlay style picker -->
           <div class="dropdown" id="btn-scta-overlay-picker">
             <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
               <span id="btn-scta-overlay-label">Dark photography</span>
@@ -3559,6 +3620,7 @@
               <li class="dropdown-option" role="option" aria-selected="false" data-value="light" tabindex="0">Light photography</li>
             </ul>
           </div>
+
         </div>
 
         <!-- Default + Overlay — 2-column SCTA preview (populated by JS) -->
@@ -6757,22 +6819,25 @@
 
     /* ── Button Live Preview ──────────────────── */
     function initButtonPreview() {
-      const colStd          = document.getElementById('btn-col-standard');
-      const colRev          = document.getElementById('btn-col-reversed');
-      const colSctaDefault  = document.getElementById('btn-col-scta-default');
-      const colSctaOverlay  = document.getElementById('btn-col-scta-overlay');
-      const sizePicker      = document.getElementById('btn-size-picker');
-      const iconPicker      = document.getElementById('btn-icon-picker');
-      const shapePicker     = document.getElementById('btn-shape-picker');
+      const colStd            = document.getElementById('btn-col-standard');
+      const colRev            = document.getElementById('btn-col-reversed');
+      const colSctaDefault    = document.getElementById('btn-col-scta-default');
+      const colSctaOverlay    = document.getElementById('btn-col-scta-overlay');
+      const sizePicker        = document.getElementById('btn-size-picker');
+      const iconPicker        = document.getElementById('btn-icon-picker');
+      const shapePicker       = document.getElementById('btn-shape-picker');
+      const sctaSizePicker    = document.getElementById('btn-scta-size-picker');
       const sctaOverlayPicker = document.getElementById('btn-scta-overlay-picker');
       if (!colStd) return;
 
-      let currentSize    = 'large';
-      let currentIcon    = 'leading-icon';
-      let currentShape   = 'unica';
-      let currentOverlay = 'dark';
+      let currentSize     = 'large';
+      let currentIcon     = 'leading-icon';
+      let currentShape    = 'unica';
+      let currentOverlay  = 'dark';
+      let currentSctaSize = 'large';
 
-      const sizeClass = () => ({ large:'btn--large', medium:'btn--medium', small:'btn--small' }[currentSize] || 'btn--large');
+      const sizeClass     = () => ({ large:'btn--large', medium:'btn--medium', small:'btn--small' }[currentSize]     || 'btn--large');
+      const sctaSizeClass = () => ({ large:'btn--large', medium:'btn--medium', small:'btn--small' }[currentSctaSize] || 'btn--large');
 
       const arrowSvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
@@ -6820,24 +6885,25 @@
       }
 
       function renderScta() {
-        const sb = sctaBadge();
-        const ovlClass = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
-        const ovlLabel = currentOverlay === 'dark' ? 'Dark overlay' : 'Light overlay';
-        const ovlSublabel = currentOverlay === 'dark' ? 'Dark photography only' : 'Light photography only';
+        const sb         = sctaBadge();
+        const sc         = sctaSizeClass();
+        const ovlClass   = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
+        const ovlLabel   = currentOverlay === 'dark' ? 'Dark overlay' : 'Light overlay';
+        const ovlSub     = currentOverlay === 'dark' ? 'Dark photography only' : 'Light photography only';
+        const badgeClass = currentOverlay === 'dark' ? 'dark-ovl' : 'light-ovl';
+        const subClass   = currentOverlay === 'dark' ? 'dark' : 'light';
 
         colSctaDefault.innerHTML =
           `<span class="btn-preview-col-label">Default</span>` +
-          mkSctaBtn('btn-super-cta btn-scta-fill', sb, 'btn--large') +
-          mkSctaBtn('btn-super-cta btn-scta-fill', sb, 'btn--medium') +
-          mkSctaBtn('btn-super-cta btn-scta-fill', sb, 'btn--small');
+          mkSctaBtn('btn-super-cta btn-scta-fill', sb, sc);
 
         colSctaOverlay.className = `btn-preview-col ${currentOverlay === 'dark' ? 'btn-preview-col--photo' : 'btn-preview-col--dunes'}`;
         colSctaOverlay.innerHTML =
-          `<span class="btn-preview-col-label">${ovlLabel}</span>` +
-          `<span class="btn-preview-col-sublabel">${ovlSublabel}</span>` +
-          mkSctaBtn('btn-super-cta ' + ovlClass, sb, 'btn--large') +
-          mkSctaBtn('btn-super-cta ' + ovlClass, sb, 'btn--medium') +
-          mkSctaBtn('btn-super-cta ' + ovlClass, sb, 'btn--small');
+          `<div class="btn-pcol-badge-wrap">` +
+            `<span class="btn-pcol-badge btn-pcol-badge--${badgeClass}">${ovlLabel}</span>` +
+            `<span class="btn-pcol-badge-sub btn-pcol-badge-sub--${subClass}">${ovlSub}</span>` +
+          `</div>` +
+          mkSctaBtn('btn-super-cta ' + ovlClass, sb, sc);
       }
 
       function updateShapePickerVisibility() {
@@ -6870,6 +6936,14 @@
         const triggerUse = document.getElementById('btn-shape-trigger-use');
         if (triggerUse) triggerUse.setAttribute('href', `#ico-${value}`);
         renderStd();
+      });
+
+      // SCTA size picker
+      initDropdown(sctaSizePicker, value => {
+        currentSctaSize = value;
+        document.getElementById('btn-scta-size-label').textContent =
+          sctaSizePicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
+        renderScta();
       });
 
       // SCTA overlay picker
