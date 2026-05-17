@@ -1049,6 +1049,14 @@
       margin-bottom: var(--space-500);
     }
 
+    .doc-section-description {
+      font-size: var(--font-size-body-s);
+      line-height: var(--font-leading-body-m);
+      color: var(--color-content-subtle);
+      max-width: 560px;
+      margin-bottom: var(--space-600);
+    }
+
     /* Preview canvas — open, no fill, no border. The component is the content. */
     .preview-canvas {
       background: var(--doc-surface-preview);
@@ -2431,6 +2439,10 @@
 
     /* ── Icon sizing ───────────────────────────────────────────── */
     .btn svg { flex-shrink: 0; }
+    .btn svg path,
+    .btn svg line,
+    .btn svg polyline,
+    .btn svg circle { vector-effect: non-scaling-stroke; }
     .btn--large  svg,
     .btn--medium svg { width: 24px; height: 24px; }
     .btn--small  svg { width: 16px; height: 16px; }
@@ -2594,7 +2606,7 @@
       flex-shrink: 0;
       background: var(--primitive-cafe-0);
       color: var(--primitive-ink-900);
-      transition: border-radius 150ms ease-out;
+      transition: border-radius 150ms ease-out, transform 150ms ease-out;
     }
     .btn-super-cta .btn-scta-badge svg {
       width: 55%;
@@ -2634,6 +2646,7 @@
     }
     .btn-scta-fill:hover:not(:disabled) .btn-scta-badge {
       border-radius: 12px;
+      transform: scale(0.875);
     }
     .btn-scta-fill:active:not(:disabled) {
       background: var(--color-action-pressed);
@@ -2668,6 +2681,7 @@
     }
     .btn-scta-overlay:hover:not(:disabled) .btn-scta-badge {
       border-radius: 12px;
+      transform: scale(0.875);
     }
     .btn-scta-overlay:active:not(:disabled) {
       background: rgba(15, 22, 38, 0.75);
@@ -2706,6 +2720,7 @@
     }
     .btn-scta-overlay-light:hover:not(:disabled) .btn-scta-badge {
       border-radius: 12px;
+      transform: scale(0.875);
     }
     .btn-scta-overlay-light:active:not(:disabled) {
       background: rgba(31, 24, 46, 0.28);
@@ -2808,8 +2823,8 @@
       letter-spacing: 0.08em;
       margin-bottom: var(--space-100);
     }
-    .scta-swatch-label--dark { color: rgba(255,255,255,0.55); }
-    .scta-swatch-label--light { color: rgba(15,23,38,0.45); }
+    .scta-swatch-label--dark { color: rgba(255,255,255,0.85); }
+    .scta-swatch-label--light { color: rgba(15,23,38,0.70); }
     /* 2-col comparison grid */
     .scta-compare-grid {
       display: grid;
@@ -2830,7 +2845,7 @@
       color: var(--primitive-ink-500);
     }
     .btn-preview-col--photo .btn-preview-col-label {
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.92);
     }
     .btn-preview-col-sublabel {
       font-size: var(--font-size-body-xs);
@@ -2841,19 +2856,36 @@
     }
     .btn-preview-col--photo .btn-preview-col-sublabel,
     .btn-preview-col--dark .btn-preview-col-sublabel {
-      color: rgba(255,255,255,0.40);
+      color: rgba(255,255,255,0.70);
     }
     .btn-preview-col--dunes .btn-preview-col-sublabel {
-      color: rgba(15,23,38,0.40);
+      color: rgba(15,23,38,0.60);
     }
     .btn-preview-col--dunes .btn-preview-col-label {
-      color: rgba(15,23,38,0.45);
+      color: rgba(15,23,38,0.75);
     }
     /* Mobile: collapse to single column */
     @media (max-width: 640px) {
       .btn-preview-cols {
         grid-template-columns: 1fr;
       }
+    }
+
+    /* Super CTA preview subsection */
+    .btn-preview-subhead {
+      font-family: var(--font-family-serif);
+      font-size: var(--font-size-heading-s);
+      font-weight: var(--font-weight-default);
+      line-height: var(--font-leading-heading-s);
+      color: var(--color-content-default);
+      margin: var(--space-800) 0 var(--space-300);
+    }
+    .btn-preview-subhead-desc {
+      font-size: var(--font-size-body-s);
+      line-height: var(--font-leading-body-m);
+      color: var(--color-content-subtle);
+      max-width: 560px;
+      margin-bottom: var(--space-500);
     }
 
     /* Reversed swatch: breathing room from copy above */
@@ -3027,6 +3059,11 @@
       <g transform="translate(2.0 4.0)">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M16 6C16 2.68629 13.3137 0 10 0C7.38441 0 5.15923 1.67349 4.33795 4.00829C1.88947 4.3322 0 6.42787 0 8.96484C0 8.96812 2.10001e-05 8.97139 6.28751e-05 8.97466C2.09748e-05 8.9831 0 8.99155 0 9C0 11.7614 2.23858 14 5 14H16C18.2091 14 20 12.2091 20 10C20 7.79086 18.2091 6 16 6ZM5.0203 5.4649L4.52637 5.53125C2.81807 5.76154 1.5 7.2283 1.5 9C1.5 10.933 3.067 12.5 5 12.5H16C17.3807 12.5 18.5 11.3807 18.5 10C18.5 8.61929 17.3807 7.5 16 7.5H14.5V6C14.5 3.51472 12.4853 1.5 10 1.5C8.21389 1.5 6.66789 2.54135 5.94135 4.05332C8.25275 4.49367 10 6.52521 10 8.96484C10 9.37906 9.66421 9.71484 9.25 9.71484C8.83579 9.71484 8.5 9.37906 8.5 8.96484C8.5 7.03862 6.94395 5.47582 5.0203 5.4649Z" fill="currentColor"/>
       </g>
+    </symbol>
+
+    <!-- arrow: right-pointing arrow stroke icon -->
+    <symbol id="ico-arrow" viewBox="0 0 24 24" fill="none">
+      <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
 
     <!-- Cushion: concave organic shape, normalized to 0–1 objectBoundingBox -->
@@ -3446,7 +3483,7 @@
         <hr class="doc-rule">
         <p class="doc-section-description">All styles at a glance. Hover and press each button to feel the states.</p>
 
-        <!-- Controls -->
+        <!-- Controls — standard buttons -->
         <div class="btn-controls">
 
           <!-- Size picker -->
@@ -3465,35 +3502,69 @@
           <!-- Icon variant picker -->
           <div class="dropdown" id="btn-icon-picker">
             <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="btn-icon-label">Label only</span>
+              <span id="btn-icon-label">Leading icon</span>
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Icon variant">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="label-only"    tabindex="0">Label only</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="leading-icon"  tabindex="0">Leading icon</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="leading-icon"  tabindex="0">Leading icon</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="trailing-icon" tabindex="0">Trailing icon</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="label-only"    tabindex="0">Label only</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="icon-only"     tabindex="0">Icon only</li>
+            </ul>
+          </div>
+
+          <!-- Icon shape picker (hidden when label-only) -->
+          <div class="dropdown" id="btn-shape-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex-shrink:0;"><use href="#ico-unica" id="btn-shape-trigger-use"/></svg>
+              <span id="btn-shape-label">ůnica</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Icon shape">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="unica"   tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg> ůnica</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="arrow"   tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow"/></svg> Arrow</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="fire"    tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-fire"/></svg> Fire</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="heart"   tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg> Heart</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="leaf"    tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg> Leaf</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="moon"    tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg> Moon</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="sun"     tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg> Sun</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="bulb"    tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bulb"/></svg> Bulb</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="bell"    tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg> Bell</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="message" tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-message"/></svg> Message</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="cloud"   tabindex="0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg> Cloud</li>
             </ul>
           </div>
 
         </div>
 
-        <!-- 2×2 four-up live preview — populated by initButtonPreview() -->
+        <!-- Standard + Reversed — 2-column preview (populated by JS) -->
         <div class="btn-preview-cols">
-          <!-- Row 1: Standard + Reversed -->
-          <div class="btn-preview-col" id="btn-col-standard">
-            <!-- JS renders buttons here -->
+          <div class="btn-preview-col" id="btn-col-standard"></div>
+          <div class="btn-preview-col btn-preview-col--dark" id="btn-col-reversed"></div>
+        </div>
+
+        <!-- ── Super CTA preview subsection ───────────────────────── -->
+        <h3 class="btn-preview-subhead">Super CTA</h3>
+        <p class="btn-preview-subhead-desc">Super CTA is a style reserved for high emphasis, conversion sensitive moments with a fixed bullet preset. It is available both in the primary styling and in overlay fills to work well over both light and dark product and lifestyle photography.</p>
+
+        <!-- Overlay style toggle -->
+        <div class="btn-controls">
+          <div class="dropdown" id="btn-scta-overlay-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="btn-scta-overlay-label">Dark photography</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Overlay photography type">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="dark"  tabindex="0">Dark photography</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="light" tabindex="0">Light photography</li>
+            </ul>
           </div>
-          <div class="btn-preview-col btn-preview-col--dark" id="btn-col-reversed">
-            <!-- JS renders buttons here -->
-          </div>
-          <!-- Row 2: Dark overlay (twilight) + Light overlay (dunes) -->
-          <div class="btn-preview-col btn-preview-col--photo" id="btn-col-dark-overlay">
-            <!-- JS renders buttons here -->
-          </div>
-          <div class="btn-preview-col btn-preview-col--dunes" id="btn-col-light-overlay">
-            <!-- JS renders buttons here -->
-          </div>
+        </div>
+
+        <!-- Default + Overlay — 2-column SCTA preview (populated by JS) -->
+        <div class="btn-preview-cols">
+          <div class="btn-preview-col" id="btn-col-scta-default"></div>
+          <div class="btn-preview-col btn-preview-col--photo" id="btn-col-scta-overlay"></div>
         </div>
       </div>
 
@@ -6686,26 +6757,35 @@
 
     /* ── Button Live Preview ──────────────────── */
     function initButtonPreview() {
-      const colStd        = document.getElementById('btn-col-standard');
-      const colRev        = document.getElementById('btn-col-reversed');
-      const colDarkOvl    = document.getElementById('btn-col-dark-overlay');
-      const colLightOvl   = document.getElementById('btn-col-light-overlay');
-      const sizePicker    = document.getElementById('btn-size-picker');
-      const iconPicker    = document.getElementById('btn-icon-picker');
+      const colStd          = document.getElementById('btn-col-standard');
+      const colRev          = document.getElementById('btn-col-reversed');
+      const colSctaDefault  = document.getElementById('btn-col-scta-default');
+      const colSctaOverlay  = document.getElementById('btn-col-scta-overlay');
+      const sizePicker      = document.getElementById('btn-size-picker');
+      const iconPicker      = document.getElementById('btn-icon-picker');
+      const shapePicker     = document.getElementById('btn-shape-picker');
+      const sctaOverlayPicker = document.getElementById('btn-scta-overlay-picker');
       if (!colStd) return;
 
-      let currentSize = 'large';
-      let currentIcon = 'label-only';
+      let currentSize    = 'large';
+      let currentIcon    = 'leading-icon';
+      let currentShape   = 'unica';
+      let currentOverlay = 'dark';
 
       const sizeClass = () => ({ large:'btn--large', medium:'btn--medium', small:'btn--small' }[currentSize] || 'btn--large');
 
       const arrowSvg = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-      const uniSvg   = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>`;
+
+      function getIconSvg(shape) {
+        if (shape === 'arrow') return arrowSvg;
+        return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-${shape}"/></svg>`;
+      }
 
       function stdInner() {
-        if (currentIcon === 'leading-icon')  return uniSvg + `<span>Label</span>`;
-        if (currentIcon === 'trailing-icon') return `<span>Label</span>` + arrowSvg;
-        if (currentIcon === 'icon-only')     return uniSvg;
+        const ico = getIconSvg(currentShape);
+        if (currentIcon === 'leading-icon')  return ico + `<span>Label</span>`;
+        if (currentIcon === 'trailing-icon') return `<span>Label</span>` + ico;
+        if (currentIcon === 'icon-only')     return ico;
         return `<span>Label</span>`;
       }
 
@@ -6713,58 +6793,96 @@
         return `<span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
       }
 
-      function mkBtn(typeClass, inner, extra = '') {
+      function mkBtn(typeClass, inner) {
+        const sc = sizeClass();
         const iconOnlyClass = currentIcon === 'icon-only' && !typeClass.includes('super-cta') ? ' btn--icon-only' : '';
         const lbl = currentIcon === 'icon-only' ? ' aria-label="Icon only"' : '';
-        return `<button class="btn ${typeClass} ${sizeClass()}${iconOnlyClass}"${lbl}>${inner}</button>`;
+        return `<button class="btn ${typeClass} ${sc}${iconOnlyClass}"${lbl}>${inner}</button>`;
       }
 
-      function renderAll() {
-        const si = stdInner();
-        const sb = sctaBadge();
+      function mkSctaBtn(typeClass, inner, size) {
+        return `<button class="btn ${typeClass} ${size}">${inner}</button>`;
+      }
 
-        // Row 1 Col 1 — standard
+      function renderStd() {
+        const si = stdInner();
         colStd.innerHTML =
           `<span class="btn-preview-col-label">Standard</span>` +
           mkBtn('btn-filled',   si) +
           mkBtn('btn-outlined', si) +
           mkBtn('btn-clear',    si);
 
-        // Row 1 Col 2 — reversed
         colRev.innerHTML =
           `<span class="btn-preview-col-label">Reversed</span>` +
           mkBtn('btn-filled-reversed',   si) +
           mkBtn('btn-outlined-reversed', si) +
           mkBtn('btn-clear-reversed',    si);
-
-        // Row 2 Col 1 — dark overlay (twilight photo)
-        colDarkOvl.innerHTML =
-          `<span class="btn-preview-col-label">Dark overlay</span>` +
-          `<span class="btn-preview-col-sublabel">Dark photography only</span>` +
-          mkBtn('btn-super-cta btn-scta-overlay', sb);
-
-        // Row 2 Col 2 — light overlay (dunes photo)
-        colLightOvl.innerHTML =
-          `<span class="btn-preview-col-label">Light overlay</span>` +
-          `<span class="btn-preview-col-sublabel">Light photography only</span>` +
-          mkBtn('btn-super-cta btn-scta-overlay-light', sb);
       }
 
+      function renderScta() {
+        const sb = sctaBadge();
+        const ovlClass = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
+        const ovlLabel = currentOverlay === 'dark' ? 'Dark overlay' : 'Light overlay';
+        const ovlSublabel = currentOverlay === 'dark' ? 'Dark photography only' : 'Light photography only';
+
+        colSctaDefault.innerHTML =
+          `<span class="btn-preview-col-label">Default</span>` +
+          mkSctaBtn('btn-super-cta btn-scta-fill', sb, 'btn--large') +
+          mkSctaBtn('btn-super-cta btn-scta-fill', sb, 'btn--medium') +
+          mkSctaBtn('btn-super-cta btn-scta-fill', sb, 'btn--small');
+
+        colSctaOverlay.className = `btn-preview-col ${currentOverlay === 'dark' ? 'btn-preview-col--photo' : 'btn-preview-col--dunes'}`;
+        colSctaOverlay.innerHTML =
+          `<span class="btn-preview-col-label">${ovlLabel}</span>` +
+          `<span class="btn-preview-col-sublabel">${ovlSublabel}</span>` +
+          mkSctaBtn('btn-super-cta ' + ovlClass, sb, 'btn--large') +
+          mkSctaBtn('btn-super-cta ' + ovlClass, sb, 'btn--medium') +
+          mkSctaBtn('btn-super-cta ' + ovlClass, sb, 'btn--small');
+      }
+
+      function updateShapePickerVisibility() {
+        if (shapePicker) shapePicker.style.display = currentIcon === 'label-only' ? 'none' : '';
+      }
+
+      // Size picker
       initDropdown(sizePicker, value => {
         currentSize = value;
         document.getElementById('btn-size-label').textContent =
           sizePicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
-        renderAll();
+        renderStd();
       });
 
+      // Icon variant picker
       initDropdown(iconPicker, value => {
         currentIcon = value;
         document.getElementById('btn-icon-label').textContent =
           iconPicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
-        renderAll();
+        updateShapePickerVisibility();
+        renderStd();
       });
 
-      renderAll();
+      // Icon shape picker
+      initDropdown(shapePicker, value => {
+        currentShape = value;
+        const opt = shapePicker.querySelector(`[data-value="${value}"]`);
+        document.getElementById('btn-shape-label').textContent = opt?.textContent?.trim() || value;
+        // Update trigger icon
+        const triggerUse = document.getElementById('btn-shape-trigger-use');
+        if (triggerUse) triggerUse.setAttribute('href', `#ico-${value}`);
+        renderStd();
+      });
+
+      // SCTA overlay picker
+      initDropdown(sctaOverlayPicker, value => {
+        currentOverlay = value;
+        document.getElementById('btn-scta-overlay-label').textContent =
+          sctaOverlayPicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
+        renderScta();
+      });
+
+      updateShapePickerVisibility();
+      renderStd();
+      renderScta();
     }
 
 </script>
