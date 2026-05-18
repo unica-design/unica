@@ -5616,36 +5616,14 @@
         </div>
       </div>
 
-        <button class="code-reveal-btn" id="badge-code-toggle" aria-expanded="false" aria-controls="badge-code-reveal" onclick="toggleCodeReveal(this,'badge-code-reveal')">
+        <button class="code-reveal-btn" id="badge-code-toggle" aria-expanded="false" aria-controls="badge-code-reveal">
           <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
           <span class="code-reveal-btn-label">Show code</span>
         </button>
         <div class="code-reveal" id="badge-code-reveal" hidden>
           <div class="code-block">
-            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
-            <pre><code class="language-html">&lt;!-- Dot badge --&gt;
-&lt;span class="badge-dot badge-dot--large"&gt;&lt;/span&gt;
-&lt;span class="badge-dot badge-dot--large badge-dot--alert"&gt;&lt;/span&gt;
-
-&lt;!-- Number badge --&gt;
-&lt;span class="badge-number badge-number--large"&gt;9&lt;/span&gt;
-&lt;span class="badge-number badge-number--large badge-number--alert"&gt;99+&lt;/span&gt;
-
-&lt;!-- Positioned over another element --&gt;
-&lt;div class="badge-host"&gt;
-  &lt;div class="avatar avatar--large avatar--circle"&gt;
-    &lt;img class="avatar-img" src="photo.jpg" alt=""&gt;
-  &lt;/div&gt;
-  &lt;span class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"
-        aria-hidden="true"&gt;&lt;/span&gt;
-&lt;/div&gt;
-
-&lt;!-- Accessible button with badge --&gt;
-&lt;button aria-label="Notifications, 5 unread"&gt;
-  &lt;svg&gt;...bell icon...&lt;/svg&gt;
-  &lt;span class="badge-number badge-number--small badge-number--alert badge-host-badge"
-        aria-hidden="true"&gt;5&lt;/span&gt;
-&lt;/button&gt;</code></pre>
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('badge-code-snippet').textContent)">Copy</button>
+            <pre><code id="badge-code-snippet" class="language-html"></code></pre>
           </div>
         </div>
 
@@ -7232,28 +7210,62 @@ ${badge}
     /* ── Badge Preview ───────────────────────────── */
     function initBadgePreview() {
       const toneControl = document.getElementById('badge-tone-control');
+      const codeToggle  = document.getElementById('badge-code-toggle');
+      const codeReveal  = document.getElementById('badge-code-reveal');
+      const codeSnippet = document.getElementById('badge-code-snippet');
       if (!toneControl) return;
 
       let currentTone = 'alert';
 
       function render() {
         const isAlert = currentTone === 'alert';
-
-        // Avatar dot
-        const avDot = document.getElementById('badge-av-dot');
-        if (avDot) avDot.className = `badge-dot badge-dot--large badge-host-badge${isAlert ? ' badge-dot--alert' : ''}`;
-
-        // Avatar number
-        const avNum = document.getElementById('badge-av-num');
-        if (avNum) avNum.className = `badge-number badge-number--small badge-host-badge${isAlert ? ' badge-number--alert' : ''}`;
-
-        // Icon dot
+        const avDot   = document.getElementById('badge-av-dot');
+        const avNum   = document.getElementById('badge-av-num');
         const iconDot = document.getElementById('badge-icon-dot');
-        if (iconDot) iconDot.className = `badge-dot badge-dot--small badge-host-badge${isAlert ? ' badge-dot--alert' : ''}`;
-
-        // Icon number
         const iconNum = document.getElementById('badge-icon-num');
+        if (avDot)   avDot.className   = `badge-dot badge-dot--large badge-host-badge${isAlert ? ' badge-dot--alert' : ''}`;
+        if (avNum)   avNum.className   = `badge-number badge-number--small badge-host-badge${isAlert ? ' badge-number--alert' : ''}`;
+        if (iconDot) iconDot.className = `badge-dot badge-dot--small badge-host-badge${isAlert ? ' badge-dot--alert' : ''}`;
         if (iconNum) iconNum.className = `badge-number badge-number--small badge-host-badge${isAlert ? ' badge-number--alert' : ''}`;
+        if (codeReveal && !codeReveal.hidden) updateCode();
+      }
+
+      function generateCode() {
+        const isAlert   = currentTone === 'alert';
+        const dotMod    = isAlert ? ' badge-dot--alert' : '';
+        const numMod    = isAlert ? ' badge-number--alert' : '';
+        const toneLabel = isAlert ? 'Alert' : 'Info';
+        return `<!-- ${toneLabel}: dot badge on avatar -->
+<div class="badge-host">
+  <div class="avatar avatar--large avatar--circle">
+    <img class="avatar-img" src="photo.jpg" alt="">
+  </div>
+  <span class="badge-dot badge-dot--large${dotMod} badge-host-badge"
+        aria-hidden="true"></span>
+</div>
+
+<!-- ${toneLabel}: number badge on icon -->
+<div class="badge-host badge-host--rect">
+  <svg><!-- icon --></svg>
+  <span class="badge-number badge-number--small${numMod} badge-host-badge"
+        aria-hidden="true">5</span>
+</div>`;
+      }
+
+      function updateCode() {
+        if (!codeSnippet) return;
+        codeSnippet.textContent = generateCode();
+        if (window.Prism) Prism.highlightElement(codeSnippet);
+      }
+
+      if (codeToggle) {
+        codeToggle.addEventListener('click', () => {
+          const isOpen = !codeReveal.hidden;
+          codeReveal.hidden = isOpen;
+          codeToggle.setAttribute('aria-expanded', String(!isOpen));
+          codeToggle.querySelector('.code-reveal-btn-label').textContent = isOpen ? 'Show code' : 'Hide code';
+          if (!isOpen) updateCode();
+        });
       }
 
       initSegControl(toneControl, value => {
