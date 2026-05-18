@@ -6967,8 +6967,7 @@
 
       // ── Code snippet generators ───────────────────────────────
       function generateStdCode() {
-        const sz     = sizeClass();
-        const sctaSz = sctaSizeClass();
+        const sz          = sizeClass();
         const strokeAttrs = `stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"`;
         const arrowPath   = `M5 12H19M19 12L13 6M19 12L13 18`;
 
@@ -7003,15 +7002,28 @@
         const strokeAttrs = `stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"`;
         const arrowPath   = `M5 12H19M19 12L13 6M19 12L13 18`;
         const ovlClass    = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
+        const ovlLabel    = currentOverlay === 'dark' ? 'Overlay dark — dark photography' : 'Overlay light — light photography';
 
-        return `<!-- Super CTA: also ${ovlClass} -->
-<button class="btn btn-super-cta btn-scta-fill ${sctaSz}">
-  <span class="btn-scta-label">Label</span>
+        const badge = `  <span class="btn-scta-label">Label</span>
   <span class="btn-scta-badge" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none">
       <path d="${arrowPath}" ${strokeAttrs}/>
     </svg>
-  </span>
+  </span>`;
+
+        return `<!-- Default -->
+<button class="btn btn-super-cta btn-scta-fill ${sctaSz}">
+${badge}
+</button>
+
+<!-- ${ovlLabel} -->
+<button class="btn btn-super-cta ${ovlClass} ${sctaSz}">
+${badge}
+</button>
+
+<!-- Disabled: add disabled to either variant -->
+<button class="btn btn-super-cta btn-scta-fill ${sctaSz}" disabled>
+${badge}
 </button>`;
       }
 
