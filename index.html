@@ -3031,6 +3031,128 @@
     .btn-reversed-swatch .btn-states-row-label { color: var(--primitive-ink-500); }
     .btn-reversed-swatch .btn-state-item-label { color: var(--primitive-ink-500); }
 
+    /* ── States Matrix ───────────────────────────────────────── */
+    .states-controls-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-600);
+      margin-bottom: var(--space-700);
+    }
+    .states-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-400);
+      flex-shrink: 0;
+    }
+    .states-controls .switch-item-text {
+      font-size: var(--font-size-body-s);
+      padding-top: 7px;
+    }
+    .states-matrix {
+      border: 1px solid var(--color-background-container);
+      border-radius: var(--corner-radius-m);
+      overflow: hidden;
+      overflow-x: auto;
+      margin-bottom: var(--space-600);
+    }
+    .states-matrix-head,
+    .states-matrix-row {
+      display: grid;
+      grid-template-columns: 88px repeat(5, 1fr);
+      min-width: 560px;
+    }
+    .states-matrix-head {
+      border-bottom: 1px solid var(--color-background-container);
+    }
+    .states-matrix-row {
+      border-bottom: 1px solid var(--color-background-container);
+    }
+    .states-matrix-row:last-child {
+      border-bottom: none;
+    }
+    .states-matrix-head-spacer,
+    .states-matrix-head-cell {
+      padding: var(--space-200) var(--space-300);
+      background: var(--color-background-section);
+      font-size: var(--font-size-body-xs);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-content-subtle);
+      text-align: center;
+    }
+    .states-matrix-head-cell {
+      border-left: 1px solid var(--color-background-container);
+    }
+    .states-matrix-label {
+      display: flex;
+      align-items: center;
+      padding: var(--space-300) var(--space-400);
+      background: var(--color-background-section);
+      border-right: 1px solid var(--color-background-container);
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-subtle);
+    }
+    .states-matrix-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-600) var(--space-400);
+      background: var(--color-background-page);
+      border-left: 1px solid var(--color-background-container);
+    }
+    /* Reversed variant — dark background */
+    .states-matrix--reversed {
+      border-color: var(--primitive-ink-700);
+    }
+    .states-matrix--reversed .states-matrix-head {
+      border-bottom-color: var(--primitive-ink-700);
+    }
+    .states-matrix--reversed .states-matrix-row {
+      border-bottom-color: var(--primitive-ink-700);
+    }
+    .states-matrix--reversed .states-matrix-head-spacer,
+    .states-matrix--reversed .states-matrix-head-cell {
+      background: var(--primitive-ink-800);
+      border-left-color: var(--primitive-ink-700);
+      color: var(--primitive-ink-500);
+    }
+    .states-matrix--reversed .states-matrix-label {
+      background: var(--primitive-ink-800);
+      border-right-color: var(--primitive-ink-700);
+      color: var(--primitive-ink-500);
+    }
+    .states-matrix--reversed .states-matrix-cell {
+      background: var(--primitive-ink-900);
+      border-left-color: var(--primitive-ink-700);
+    }
+    /* SCTA overlay row backgrounds */
+    .states-matrix-row--dark-photo .states-matrix-cell {
+      background: url('assets/bg-overlay-demo.png') center/cover no-repeat;
+    }
+    .states-matrix-row--dark-photo .states-matrix-label {
+      background: var(--primitive-ink-900);
+      border-right-color: var(--primitive-ink-700);
+      color: var(--primitive-ink-500);
+    }
+    .states-matrix-row--light-photo .states-matrix-cell {
+      background: url('assets/bg-dunes-demo.png') center/cover no-repeat;
+    }
+    .states-matrix-row--light-photo .states-matrix-label {
+      background: var(--primitive-cafe-200);
+      color: var(--color-content-subtle);
+    }
+    .states-scta-heading {
+      font-size: var(--font-size-body-s);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-300);
+      margin-top: var(--space-200);
+    }
+
     /* doc-subsection-title */
     .doc-subsection-title {
       font-family: var(--font-family-sans);
@@ -3653,324 +3775,151 @@
         <h2 class="doc-section-title">States</h2>
         <hr class="doc-rule">
 
-        <div class="states-header-row">
-          <p class="doc-section-description" style="margin-bottom:0;">All interactive states shown statically across all sizes. Hover and press in the live preview above to feel the transitions.</p>
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="states-mode-toggle">
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="states-controls-row">
+          <p class="doc-section-description" style="margin-bottom:0;">All interactive states across each button type. Adjust size to inspect at any scale.</p>
+          <div class="states-controls">
+            <div class="dropdown" id="states-size-picker">
+              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="dropdown-label">Large</span>
+                <svg class="dropdown-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="dropdown-menu" role="listbox" aria-label="Size">
+                <li class="dropdown-option is-selected" role="option" data-value="large">Large</li>
+                <li class="dropdown-option" role="option" data-value="medium">Medium</li>
+                <li class="dropdown-option" role="option" data-value="small">Small</li>
+              </ul>
+            </div>
+            <label class="switch-item" style="flex-shrink:0;">
+              <div class="toggle-switch">
+                <input type="checkbox" id="states-mode-toggle">
+                <div class="toggle-track">
+                  <div class="toggle-handle">
+                    <div class="toggle-icon">
+                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <span class="switch-item-text">Reversed</span>
-          </label>
+              <span class="switch-item-text">Reversed</span>
+            </label>
+          </div>
         </div>
 
-        <!-- Standard states -->
+        <!-- Standard states matrix -->
         <div id="btn-states-standard">
-        <div class="btn-states-section">
-
-          <!-- Filled -->
-          <div class="btn-states-group">
-            <span class="btn-states-group-label">Filled</span>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Large</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-filled btn--large" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--large" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--large" style="background:var(--color-action-pressed);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--large" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
+          <div class="states-matrix">
+            <div class="states-matrix-head">
+              <div class="states-matrix-head-spacer"></div>
+              <div class="states-matrix-head-cell">Default</div>
+              <div class="states-matrix-head-cell">Hover</div>
+              <div class="states-matrix-head-cell">Pressed</div>
+              <div class="states-matrix-head-cell">Focused</div>
+              <div class="states-matrix-head-cell">Disabled</div>
             </div>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Medium</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-filled btn--medium" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--medium" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--medium" style="background:var(--color-action-pressed);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--medium" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--medium" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Filled</div>
+              <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" style="background:var(--color-action-pressed);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" disabled tabindex="-1">Label</button></div>
             </div>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Small</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-filled btn--small" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--small" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--small" style="background:var(--color-action-pressed);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--small" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-filled btn--small" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Outlined</div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" style="background:var(--color-action-active-subtle);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" disabled tabindex="-1">Label</button></div>
+            </div>
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Clear</div>
+              <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" style="background:var(--color-action-active-subtle);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" disabled tabindex="-1">Label</button></div>
             </div>
           </div>
-
-          <!-- Outlined -->
-          <div class="btn-states-group">
-            <span class="btn-states-group-label">Outlined</span>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Large</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-outlined btn--large" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--large" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--large" style="background:var(--color-action-active-subtle);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--large" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
-            </div>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Medium</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-outlined btn--medium" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--medium" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--medium" style="background:var(--color-action-active-subtle);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--medium" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--medium" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
-            </div>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Small</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-outlined btn--small" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--small" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--small" style="background:var(--color-action-active-subtle);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--small" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-outlined btn--small" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Clear -->
-          <div class="btn-states-group">
-            <span class="btn-states-group-label">Clear</span>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Large</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-clear btn--large" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--large" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--large" style="background:var(--color-action-active-subtle);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--large" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
-            </div>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Medium</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-clear btn--medium" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--medium" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--medium" style="background:var(--color-action-active-subtle);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--medium" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--medium" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
-            </div>
-            <div class="btn-states-row">
-              <span class="btn-states-row-label">Small</span>
-              <div class="btn-states-cells">
-                <div class="btn-state-item"><button class="btn btn-clear btn--small" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--small" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--small" style="background:var(--color-action-active-subtle);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--small" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                <div class="btn-state-item"><button class="btn btn-clear btn--small" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /.btn-states-section -->
         </div><!-- /#btn-states-standard -->
 
-        <!-- Reversed states (hidden until toggle is on) -->
+        <!-- Reversed states matrix (hidden until toggle is on) -->
         <div id="btn-states-reversed" hidden>
-        <div class="btn-reversed-swatch">
-          <div class="btn-states-section" style="gap:var(--space-500);">
-
-            <!-- Filled reversed -->
-            <div class="btn-states-group">
-              <span class="btn-states-group-label">Filled</span>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Large</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--large" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--large" style="background:var(--primitive-ink-100);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--large" style="background:var(--primitive-cafe-0);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--large" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Medium</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--medium" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--medium" style="background:var(--primitive-ink-100);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--medium" style="background:var(--primitive-cafe-0);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--medium" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--medium" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Small</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--small" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--small" style="background:var(--primitive-ink-100);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--small" style="background:var(--primitive-cafe-0);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--small" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-filled-reversed btn--small" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
+          <div class="states-matrix states-matrix--reversed">
+            <div class="states-matrix-head">
+              <div class="states-matrix-head-spacer"></div>
+              <div class="states-matrix-head-cell">Default</div>
+              <div class="states-matrix-head-cell">Hover</div>
+              <div class="states-matrix-head-cell">Pressed</div>
+              <div class="states-matrix-head-cell">Focused</div>
+              <div class="states-matrix-head-cell">Disabled</div>
             </div>
-
-            <!-- Outlined reversed -->
-            <div class="btn-states-group">
-              <span class="btn-states-group-label">Outlined</span>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Large</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--large" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--large" style="background:rgba(255,255,255,0.08);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--large" style="background:rgba(255,255,255,0.20);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--large" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Medium</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--medium" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--medium" style="background:rgba(255,255,255,0.08);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--medium" style="background:rgba(255,255,255,0.20);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--medium" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--medium" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Small</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--small" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--small" style="background:rgba(255,255,255,0.08);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--small" style="background:rgba(255,255,255,0.20);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--small" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-outlined-reversed btn--small" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Filled</div>
+              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" style="background:var(--primitive-ink-100);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" style="background:var(--primitive-cafe-0);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" disabled tabindex="-1">Label</button></div>
             </div>
-
-            <!-- Clear reversed -->
-            <div class="btn-states-group">
-              <span class="btn-states-group-label">Clear</span>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Large</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--large" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--large" style="background:rgba(255,255,255,0.08);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--large" style="background:rgba(255,255,255,0.20);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--large" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Medium</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--medium" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--medium" style="background:rgba(255,255,255,0.08);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--medium" style="background:rgba(255,255,255,0.20);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--medium" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--medium" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
-              <div class="btn-states-row">
-                <span class="btn-states-row-label">Small</span>
-                <div class="btn-states-cells">
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--small" tabindex="-1">Label</button><span class="btn-state-item-label">Default</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--small" style="background:rgba(255,255,255,0.08);border-radius:12px;" tabindex="-1">Label</button><span class="btn-state-item-label">Hover</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--small" style="background:rgba(255,255,255,0.20);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button><span class="btn-state-item-label">Pressed</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--small" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button><span class="btn-state-item-label">Focused</span></div>
-                  <div class="btn-state-item"><button class="btn btn-clear-reversed btn--small" disabled tabindex="-1">Label</button><span class="btn-state-item-label">Disabled</span></div>
-                </div>
-              </div>
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Outlined</div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" style="background:rgba(255,255,255,0.08);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" style="background:rgba(255,255,255,0.20);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" disabled tabindex="-1">Label</button></div>
             </div>
-
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Clear</div>
+              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" style="background:rgba(255,255,255,0.08);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" style="background:rgba(255,255,255,0.20);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" disabled tabindex="-1">Label</button></div>
+            </div>
           </div>
-        </div><!-- /.btn-reversed-swatch -->
         </div><!-- /#btn-states-reversed -->
 
+        <!-- Super CTA states (always shown — separate context, no toggle) -->
+        <p class="states-scta-heading">Super CTA</p>
+        <div class="states-matrix">
+          <div class="states-matrix-head">
+            <div class="states-matrix-head-spacer"></div>
+            <div class="states-matrix-head-cell">Default</div>
+            <div class="states-matrix-head-cell">Hover</div>
+            <div class="states-matrix-head-cell">Pressed</div>
+            <div class="states-matrix-head-cell">Focused</div>
+            <div class="states-matrix-head-cell">Disabled</div>
+          </div>
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Fill</div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" style="background:var(--color-action-pressed);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+          </div>
+          <div class="states-matrix-row states-matrix-row--dark-photo">
+            <div class="states-matrix-label">Overlay</div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" style="background:rgba(15,22,38,0.60);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" style="background:rgba(15,22,38,0.75);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+          </div>
+          <div class="states-matrix-row states-matrix-row--light-photo">
+            <div class="states-matrix-label">Overlay Light</div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" style="background:rgba(31,24,46,0.20);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" style="background:rgba(31,24,46,0.28);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" style="outline:2px solid var(--primitive-ink-900);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+          </div>
+        </div><!-- /.states-matrix SCTA -->
+
       </div><!-- /.doc-section States -->
-
-      <!-- ══════════════════════════════════════════
-           3. SUPER CTA
-           ══════════════════════════════════════════ -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Super CTA</h2>
-        <hr class="doc-rule">
-        <p class="doc-section-description">High-emphasis calls to action. The bullet adds visual weight and personality. Available in fill (on page surfaces) and overlay (over photography).</p>
-
-        <!-- Fill style sizes -->
-        <h3 class="doc-subsection-title" style="margin-bottom:var(--space-300);">Fill</h3>
-        <div class="preview-canvas" style="padding:var(--space-700);display:flex;flex-wrap:wrap;gap:var(--space-500);align-items:center;margin-bottom:var(--space-600);">
-          <button class="btn btn-super-cta btn-scta-fill btn--large">
-            <span class="btn-scta-label">Get started</span>
-            <span class="btn-scta-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <button class="btn btn-super-cta btn-scta-fill btn--medium">
-            <span class="btn-scta-label">Get started</span>
-            <span class="btn-scta-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <button class="btn btn-super-cta btn-scta-fill btn--small">
-            <span class="btn-scta-label">Get started</span>
-            <span class="btn-scta-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-        </div>
-
-        <!-- Overlay variant comparison — 2×2 grid: 2 styles × 2 photos -->
-        <h3 class="doc-subsection-title" style="margin-bottom:var(--space-400);">Overlay</h3>
-        <p class="doc-section-description" style="margin-bottom:var(--space-500);">Two distinct overlay styles, each designed for a specific photographic context. <strong>Dark overlay</strong> — 40% ink fill, white label — is for moody, low-key, dark photography only. <strong>Light overlay</strong> — 12% frosted glass, dark label — is for bright, high-key, light photography only. Never swap them: the wrong pairing kills contrast.</p>
-
-        <div class="scta-compare-grid">
-
-          <!-- Dark overlay on twilight photo -->
-          <div class="scta-photo-swatch scta-photo-swatch--twilight">
-            <span class="scta-swatch-label scta-swatch-label--dark">Dark overlay — dark photography only</span>
-          <button class="btn btn-super-cta btn-scta-overlay btn--large"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="btn btn-super-cta btn-scta-overlay btn--medium"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="btn btn-super-cta btn-scta-overlay btn--small"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          </div>
-
-          <!-- Light overlay on twilight photo -->
-          <div class="scta-photo-swatch scta-photo-swatch--twilight">
-            <span class="scta-swatch-label scta-swatch-label--dark">Light overlay — light photography only</span>
-          <button class="btn btn-super-cta btn-scta-overlay-light btn--large"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="btn btn-super-cta btn-scta-overlay-light btn--medium"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="btn btn-super-cta btn-scta-overlay-light btn--small"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          </div>
-
-          <!-- Dark overlay on dunes photo -->
-          <div class="scta-photo-swatch scta-photo-swatch--dunes">
-            <span class="scta-swatch-label scta-swatch-label--light">Dark overlay — dark photography only</span>
-          <button class="btn btn-super-cta btn-scta-overlay btn--large"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="btn btn-super-cta btn-scta-overlay btn--medium"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="btn btn-super-cta btn-scta-overlay btn--small"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          </div>
-
-          <!-- Light overlay on dunes photo -->
-          <div class="scta-photo-swatch scta-photo-swatch--dunes">
-            <span class="scta-swatch-label scta-swatch-label--light">Light overlay — light photography only</span>
-          <button class="btn btn-super-cta btn-scta-overlay-light btn--large"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="btn btn-super-cta btn-scta-overlay-light btn--medium"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="btn btn-super-cta btn-scta-overlay-light btn--small"><span class="btn-scta-label">Get started</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          </div>
-
-        </div>
-
-      </div>
 
       <!-- ══════════════════════════════════════════
            5. PROPERTIES
@@ -7031,13 +6980,57 @@
     }
 
     // States mode toggle (Standard ↔ Reversed)
-    const statesToggle = document.getElementById('states-mode-toggle');
-    const statesStd    = document.getElementById('btn-states-standard');
-    const statesRev    = document.getElementById('btn-states-reversed');
+    // ── States section: size picker + reversed toggle ──────────
+    const statesToggle  = document.getElementById('states-mode-toggle');
+    const statesStd     = document.getElementById('btn-states-standard');
+    const statesRev     = document.getElementById('btn-states-reversed');
+    const statesSizePkr = document.getElementById('states-size-picker');
+
     if (statesToggle) {
       statesToggle.addEventListener('change', () => {
         statesStd.hidden = statesToggle.checked;
         statesRev.hidden = !statesToggle.checked;
+      });
+    }
+
+    if (statesSizePkr) {
+      const sizeTrigger = statesSizePkr.querySelector('.dropdown-trigger');
+      const sizeLabel   = statesSizePkr.querySelector('.dropdown-label');
+      const sizeOptions = statesSizePkr.querySelectorAll('.dropdown-option');
+      const sizeMap = { large: 'btn--large', medium: 'btn--medium', small: 'btn--small' };
+      const sizeNames = { large: 'Large', medium: 'Medium', small: 'Small' };
+      let currentStatesSize = 'large';
+
+      function applyStatesSize(size) {
+        currentStatesSize = size;
+        const cls = sizeMap[size] || 'btn--large';
+        document.querySelectorAll('.states-btn').forEach(btn => {
+          btn.classList.remove('btn--large', 'btn--medium', 'btn--small');
+          btn.classList.add(cls);
+        });
+        sizeLabel.textContent = sizeNames[size] || 'Large';
+        sizeOptions.forEach(opt => opt.classList.toggle('is-selected', opt.dataset.value === size));
+      }
+
+      sizeTrigger.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = statesSizePkr.classList.toggle('is-open');
+        sizeTrigger.setAttribute('aria-expanded', isOpen);
+      });
+
+      sizeOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+          applyStatesSize(opt.dataset.value);
+          statesSizePkr.classList.remove('is-open');
+          sizeTrigger.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      document.addEventListener('click', e => {
+        if (!statesSizePkr.contains(e.target)) {
+          statesSizePkr.classList.remove('is-open');
+          sizeTrigger.setAttribute('aria-expanded', 'false');
+        }
       });
     }
 
