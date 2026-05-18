@@ -3132,9 +3132,7 @@
       background: url('assets/bg-overlay-demo.png') center/cover no-repeat;
     }
     .states-matrix-row--dark-photo .states-matrix-label {
-      background: var(--primitive-ink-900);
-      border-right-color: var(--primitive-ink-700);
-      color: var(--primitive-ink-500);
+      /* inherits standard section background — photo provides context in cells */
     }
     .states-matrix-row--light-photo .states-matrix-cell {
       background: url('assets/bg-dunes-demo.png') center/cover no-repeat;
@@ -3776,19 +3774,8 @@
         <hr class="doc-rule">
 
         <div class="states-controls-row">
-          <p class="doc-section-description" style="margin-bottom:0;">All interactive states across each button type. Adjust size to inspect at any scale.</p>
+          <p class="doc-section-description" style="margin-bottom:0;">All interactive states across each button type. Hover and press in the live preview above to feel the transitions.</p>
           <div class="states-controls">
-            <div class="dropdown" id="states-size-picker">
-              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-                <span class="dropdown-label">Large</span>
-                <svg class="dropdown-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <ul class="dropdown-menu" role="listbox" aria-label="Size">
-                <li class="dropdown-option is-selected" role="option" data-value="large">Large</li>
-                <li class="dropdown-option" role="option" data-value="medium">Medium</li>
-                <li class="dropdown-option" role="option" data-value="small">Small</li>
-              </ul>
-            </div>
             <label class="switch-item" style="flex-shrink:0;">
               <div class="toggle-switch">
                 <input type="checkbox" id="states-mode-toggle">
@@ -3895,27 +3882,27 @@
           </div>
           <div class="states-matrix-row">
             <div class="states-matrix-label">Fill</div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" style="background:var(--color-action-pressed);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--large" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--medium" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--medium" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--medium" style="background:var(--color-action-pressed);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--medium" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--medium" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
           </div>
           <div class="states-matrix-row states-matrix-row--dark-photo">
             <div class="states-matrix-label">Overlay</div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" style="background:rgba(15,22,38,0.60);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" style="background:rgba(15,22,38,0.75);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--large" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--medium" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--medium" style="background:rgba(15,22,38,0.60);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--medium" style="background:rgba(15,22,38,0.75);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--medium" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--medium" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
           </div>
           <div class="states-matrix-row states-matrix-row--light-photo">
             <div class="states-matrix-label">Overlay Light</div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" style="background:rgba(31,24,46,0.20);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" style="background:rgba(31,24,46,0.28);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" style="outline:2px solid var(--primitive-ink-900);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--large" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--medium" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--medium" style="background:rgba(31,24,46,0.20);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--medium" style="background:rgba(31,24,46,0.28);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--medium" style="outline:2px solid var(--primitive-ink-900);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--medium" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
           </div>
         </div><!-- /.states-matrix SCTA -->
 
@@ -3929,61 +3916,56 @@
         <hr class="doc-rule">
         <p class="doc-section-description">All configurable properties exposed on the Button component.</p>
 
-        <table class="doc-table">
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Type</th>
-              <th>Values</th>
-              <th>Default</th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>style</code></td>
-              <td>enum</td>
-              <td><code>filled</code> · <code>outlined</code> · <code>clear</code> · <code>filled-reversed</code> · <code>outlined-reversed</code> · <code>clear-reversed</code> · <code>super-cta-fill</code> · <code>super-cta-overlay</code></td>
-              <td><code>filled</code></td>
-              <td>Reversed variants are pinned to light-mode primitives — they don't re-theme in dark mode.</td>
-            </tr>
-            <tr>
-              <td><code>size</code></td>
-              <td>enum</td>
-              <td><code>large</code> · <code>medium</code> · <code>small</code></td>
-              <td><code>large</code></td>
-              <td>Small uses 16px icons; medium and large use 24px icons.</td>
-            </tr>
-            <tr>
-              <td><code>icon</code></td>
-              <td>enum</td>
-              <td><code>none</code> · <code>leading</code> · <code>trailing</code> · <code>icon-only</code></td>
-              <td><code>none</code></td>
-              <td>Super CTA always uses the trailing white badge — the icon property does not apply to that style.</td>
-            </tr>
-            <tr>
-              <td><code>label</code></td>
-              <td>string</td>
-              <td>Any text</td>
-              <td>—</td>
-              <td>Required unless <code>icon=icon-only</code>. Icon-only buttons must have an <code>aria-label</code>.</td>
-            </tr>
-            <tr>
-              <td><code>disabled</code></td>
-              <td>boolean</td>
-              <td><code>true</code> · <code>false</code></td>
-              <td><code>false</code></td>
-              <td>Use the native <code>disabled</code> attribute — not <code>aria-disabled</code> — so the button is removed from tab order automatically.</td>
-            </tr>
-            <tr>
-              <td><code>fixed-width</code></td>
-              <td>boolean</td>
-              <td><code>true</code> · <code>false</code></td>
-              <td><code>false</code></td>
-              <td>When true, the button fills its container width. Useful in form layouts and mobile contexts.</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Attribute</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">style</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">filled</td>
+                <td>Visual style. One of <code style="font-family:monospace;font-size:0.9em;">filled</code> · <code style="font-family:monospace;font-size:0.9em;">outlined</code> · <code style="font-family:monospace;font-size:0.9em;">clear</code> · <code style="font-family:monospace;font-size:0.9em;">filled-reversed</code> · <code style="font-family:monospace;font-size:0.9em;">outlined-reversed</code> · <code style="font-family:monospace;font-size:0.9em;">clear-reversed</code> · <code style="font-family:monospace;font-size:0.9em;">super-cta-fill</code> · <code style="font-family:monospace;font-size:0.9em;">super-cta-overlay</code>. Reversed variants are pinned to light-mode primitives — they don't re-theme in dark mode.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">size</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">large</td>
+                <td>One of <code style="font-family:monospace;font-size:0.9em;">large</code> · <code style="font-family:monospace;font-size:0.9em;">medium</code> · <code style="font-family:monospace;font-size:0.9em;">small</code>. Small uses 16px icons; medium and large use 24px icons.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">icon</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">none</td>
+                <td>One of <code style="font-family:monospace;font-size:0.9em;">none</code> · <code style="font-family:monospace;font-size:0.9em;">leading</code> · <code style="font-family:monospace;font-size:0.9em;">trailing</code> · <code style="font-family:monospace;font-size:0.9em;">icon-only</code>. Super CTA always uses the trailing badge — this property does not apply to that style.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">label</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Button label text. Required unless <code style="font-family:monospace;font-size:0.9em;">icon=icon-only</code>. Icon-only buttons must have an <code style="font-family:monospace;font-size:0.9em;">aria-label</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">disabled</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Prevents interaction. Use the native <code style="font-family:monospace;font-size:0.9em;">disabled</code> attribute — not <code style="font-family:monospace;font-size:0.9em;">aria-disabled</code> — so the button is removed from tab order automatically.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">fixed-width</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>When true, the button fills its container width. Useful in form layouts and mobile contexts.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- ══════════════════════════════════════════
@@ -6979,58 +6961,15 @@
       renderScta();
     }
 
-    // States mode toggle (Standard ↔ Reversed)
-    // ── States section: size picker + reversed toggle ──────────
-    const statesToggle  = document.getElementById('states-mode-toggle');
-    const statesStd     = document.getElementById('btn-states-standard');
-    const statesRev     = document.getElementById('btn-states-reversed');
-    const statesSizePkr = document.getElementById('states-size-picker');
+    // ── States section: Standard ↔ Reversed toggle ──────────
+    const statesToggle = document.getElementById('states-mode-toggle');
+    const statesStd    = document.getElementById('btn-states-standard');
+    const statesRev    = document.getElementById('btn-states-reversed');
 
     if (statesToggle) {
       statesToggle.addEventListener('change', () => {
         statesStd.hidden = statesToggle.checked;
         statesRev.hidden = !statesToggle.checked;
-      });
-    }
-
-    if (statesSizePkr) {
-      const sizeTrigger = statesSizePkr.querySelector('.dropdown-trigger');
-      const sizeLabel   = statesSizePkr.querySelector('.dropdown-label');
-      const sizeOptions = statesSizePkr.querySelectorAll('.dropdown-option');
-      const sizeMap = { large: 'btn--large', medium: 'btn--medium', small: 'btn--small' };
-      const sizeNames = { large: 'Large', medium: 'Medium', small: 'Small' };
-      let currentStatesSize = 'large';
-
-      function applyStatesSize(size) {
-        currentStatesSize = size;
-        const cls = sizeMap[size] || 'btn--large';
-        document.querySelectorAll('.states-btn').forEach(btn => {
-          btn.classList.remove('btn--large', 'btn--medium', 'btn--small');
-          btn.classList.add(cls);
-        });
-        sizeLabel.textContent = sizeNames[size] || 'Large';
-        sizeOptions.forEach(opt => opt.classList.toggle('is-selected', opt.dataset.value === size));
-      }
-
-      sizeTrigger.addEventListener('click', e => {
-        e.stopPropagation();
-        const isOpen = statesSizePkr.classList.toggle('is-open');
-        sizeTrigger.setAttribute('aria-expanded', isOpen);
-      });
-
-      sizeOptions.forEach(opt => {
-        opt.addEventListener('click', () => {
-          applyStatesSize(opt.dataset.value);
-          statesSizePkr.classList.remove('is-open');
-          sizeTrigger.setAttribute('aria-expanded', 'false');
-        });
-      });
-
-      document.addEventListener('click', e => {
-        if (!statesSizePkr.contains(e.target)) {
-          statesSizePkr.classList.remove('is-open');
-          sizeTrigger.setAttribute('aria-expanded', 'false');
-        }
       });
     }
 
