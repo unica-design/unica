@@ -5517,55 +5517,52 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
+        <div class="preview-canvas" style="gap: var(--space-900);">
 
-        <!-- Dot badges -->
-        <p class="avatar-group-label">Dot</p>
-        <div class="preview-canvas" style="margin-bottom:var(--space-700);">
+          <!-- Dot on avatar -->
           <div class="preview-item">
-            <span class="badge-dot badge-dot--small"></span>
-            <span class="preview-label">Small · Info</span>
+            <div class="badge-host">
+              <div class="avatar avatar--large avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <span class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"></span>
+            </div>
+            <span class="preview-label">Avatar · dot</span>
           </div>
-          <div class="preview-item">
-            <span class="badge-dot badge-dot--large"></span>
-            <span class="preview-label">Large · Info</span>
-          </div>
-          <div class="preview-item">
-            <span class="badge-dot badge-dot--small badge-dot--alert"></span>
-            <span class="preview-label">Small · Alert</span>
-          </div>
-          <div class="preview-item">
-            <span class="badge-dot badge-dot--large badge-dot--alert"></span>
-            <span class="preview-label">Large · Alert</span>
-          </div>
-        </div>
 
-        <!-- Number badges -->
-        <p class="avatar-group-label">Number</p>
-        <div class="preview-canvas">
+          <!-- Number on avatar -->
           <div class="preview-item">
-            <span class="badge-number badge-number--small">9</span>
-            <span class="preview-label">Small · Info</span>
+            <div class="badge-host">
+              <div class="avatar avatar--large avatar--circle">
+                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
+              </div>
+              <span class="badge-number badge-number--small badge-number--alert badge-host-badge">3</span>
+            </div>
+            <span class="preview-label">Avatar · number</span>
           </div>
+
+          <!-- Dot on icon -->
           <div class="preview-item">
-            <span class="badge-number badge-number--large">9</span>
-            <span class="preview-label">Large · Info</span>
+            <div class="badge-host badge-host--rect">
+              <div class="badge-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <span class="badge-dot badge-dot--small badge-dot--info badge-host-badge"></span>
+            </div>
+            <span class="preview-label">Icon · dot</span>
           </div>
+
+          <!-- Number on icon -->
           <div class="preview-item">
-            <span class="badge-number badge-number--small badge-number--alert">9</span>
-            <span class="preview-label">Small · Alert</span>
+            <div class="badge-host badge-host--rect">
+              <div class="badge-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <span class="badge-number badge-number--small badge-number--alert badge-host-badge">5</span>
+            </div>
+            <span class="preview-label">Icon · number</span>
           </div>
-          <div class="preview-item">
-            <span class="badge-number badge-number--large badge-number--alert">9</span>
-            <span class="preview-label">Large · Alert</span>
-          </div>
-          <div class="preview-item">
-            <span class="badge-number badge-number--large">99</span>
-            <span class="preview-label">Double digit</span>
-          </div>
-          <div class="preview-item">
-            <span class="badge-number badge-number--large badge-number--alert">99+</span>
-            <span class="preview-label">Overflow</span>
-          </div>
+
         </div>
       </div>
 
@@ -5602,61 +5599,7 @@
           </div>
         </div>
 
-      <!-- ── 2. In context ──────────────────────── -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">In context</h2>
-        <hr class="doc-rule">
-        <div class="preview-canvas" style="gap: var(--space-900);">
-
-          <!-- Dot on avatar -->
-          <div class="preview-item">
-            <div class="badge-host">
-              <div class="avatar avatar--large avatar--circle">
-                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
-              </div>
-              <span class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"></span>
-            </div>
-            <span class="preview-label">Avatar · dot</span>
-          </div>
-
-          <!-- Number on avatar -->
-          <div class="preview-item">
-            <div class="badge-host">
-              <div class="avatar avatar--large avatar--circle">
-                <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
-              </div>
-              <span class="badge-number badge-number--small badge-number--alert badge-host-badge">3</span>
-            </div>
-            <span class="preview-label">Avatar · number</span>
-          </div>
-
-          <!-- Dot on icon -->
-          <div class="preview-item">
-            <div class="badge-host badge-host--rect">
-              <div class="badge-icon-box">
-                <!-- Bell icon -->
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <span class="badge-dot badge-dot--small badge-dot--info badge-host-badge"></span>
-            </div>
-            <span class="preview-label">Icon · dot</span>
-          </div>
-
-          <!-- Number on icon -->
-          <div class="preview-item">
-            <div class="badge-host badge-host--rect">
-              <div class="badge-icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <span class="badge-number badge-number--small badge-number--alert badge-host-badge">5</span>
-            </div>
-            <span class="preview-label">Icon · number</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ── 3. Variants ────────────────────────── -->
+      <!-- ── 2. Variants ────────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
@@ -5691,7 +5634,7 @@
         </div>
       </div>
 
-      <!-- ── 4. Accessibility ───────────────────── -->
+      <!-- ── 3. Accessibility ───────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
