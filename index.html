@@ -5814,16 +5814,16 @@
           <!-- Size picker -->
           <div class="dropdown" id="avatar-size-picker">
             <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="avatar-size-label">xlarge</span>
+              <span id="avatar-size-label">XXLarge</span>
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Avatar size">
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="xsmall"  tabindex="0">xsmall</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="small"   tabindex="0">small</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="medium"  tabindex="0">medium</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="large"   tabindex="0">large</li>
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="xlarge"  tabindex="0">xlarge</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="xxlarge" tabindex="0">xxlarge</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="xsmall"  tabindex="0">XSmall</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="small"   tabindex="0">Small</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="medium"  tabindex="0">Medium</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="large"   tabindex="0">Large</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="xlarge"  tabindex="0">XLarge</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="xxlarge" tabindex="0">XXLarge</li>
             </ul>
           </div>
 
@@ -5846,13 +5846,13 @@
         <!-- Live avatar preview — photo + initials side by side -->
         <div class="preview-canvas" style="gap: var(--space-800);">
           <div class="preview-item">
-            <div class="avatar avatar--xlarge avatar--circle" id="avatar-preview-photo">
+            <div class="avatar avatar--xxlarge avatar--circle" id="avatar-preview-photo">
               <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
             </div>
             <span class="preview-label">Photo</span>
           </div>
           <div class="preview-item">
-            <div class="avatar avatar--xlarge avatar--circle" id="avatar-preview-initials">
+            <div class="avatar avatar--xxlarge avatar--circle" id="avatar-preview-initials">
               <span class="avatar-initials">A</span>
             </div>
             <span class="preview-label">Initials</span>
@@ -7145,7 +7145,7 @@ ${badge}
       const shapePicker = document.getElementById('avatar-shape-picker');
       if (!photoEl) return;
 
-      let currentSize  = 'xlarge';
+      let currentSize  = 'xxlarge';
       let currentShape = 'circle';
 
       function applyClasses(el) {
