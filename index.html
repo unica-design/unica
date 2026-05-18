@@ -1338,6 +1338,36 @@
       margin-top: var(--space-400);
     }
 
+    /* ── Segmented control — binary variant picker ── */
+    .seg-control {
+      display: inline-flex;
+      border: var(--border-width-default) solid var(--color-border-default);
+      border-radius: var(--corner-radius-round);
+      overflow: hidden;
+      background: var(--color-background-ui);
+    }
+    .seg-control-btn {
+      padding: var(--space-200) var(--space-400);
+      border: none;
+      background: transparent;
+      color: var(--color-content-subtle);
+      font-size: var(--font-size-body-s);
+      font-family: var(--font-family-sans);
+      font-weight: var(--font-weight-default);
+      cursor: pointer;
+      transition: background 120ms, color 120ms;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .seg-control-btn:hover {
+      background: var(--color-action-hover-subtle);
+      color: var(--color-content-default);
+    }
+    .seg-control-btn[aria-pressed="true"] {
+      background: var(--color-background-contrast);
+      color: var(--color-inverse);
+    }
+
     /* Code block: always dark background, never inverts in dark mode */
     [data-theme="dark"] .code-block {
       background: #000000 !important;
@@ -3797,16 +3827,10 @@
             </ul>
           </div>
 
-          <!-- Overlay style picker -->
-          <div class="dropdown" id="btn-scta-overlay-picker">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="btn-scta-overlay-label">Dark photography</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Overlay photography type">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="dark"  tabindex="0">Dark photography</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="light" tabindex="0">Light photography</li>
-            </ul>
+          <!-- Overlay style seg control -->
+          <div class="seg-control" id="btn-scta-overlay-control" role="group" aria-label="Overlay type">
+            <button class="seg-control-btn" data-value="dark"  aria-pressed="true">Dark</button>
+            <button class="seg-control-btn" data-value="light" aria-pressed="false">Light</button>
           </div>
 
         </div>
@@ -5517,6 +5541,15 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
+
+        <!-- Tone seg control -->
+        <div class="btn-controls">
+          <div class="seg-control" id="badge-tone-control" role="group" aria-label="Badge tone">
+            <button class="seg-control-btn" data-value="alert" aria-pressed="true">Alert</button>
+            <button class="seg-control-btn" data-value="info"  aria-pressed="false">Info</button>
+          </div>
+        </div>
+
         <div class="preview-canvas" style="gap: var(--space-900);">
 
           <!-- Dot on avatar -->
@@ -5525,7 +5558,7 @@
               <div class="avatar avatar--large avatar--circle">
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
-              <span class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"></span>
+              <span id="badge-av-dot" class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"></span>
             </div>
             <span class="preview-label">Avatar · dot</span>
           </div>
@@ -5536,7 +5569,7 @@
               <div class="avatar avatar--large avatar--circle">
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
-              <span class="badge-number badge-number--small badge-number--alert badge-host-badge">3</span>
+              <span id="badge-av-num" class="badge-number badge-number--small badge-number--alert badge-host-badge">3</span>
             </div>
             <span class="preview-label">Avatar · number</span>
           </div>
@@ -5547,7 +5580,7 @@
               <div class="badge-icon-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-              <span class="badge-dot badge-dot--small badge-dot--info badge-host-badge"></span>
+              <span id="badge-icon-dot" class="badge-dot badge-dot--small badge-dot--alert badge-host-badge"></span>
             </div>
             <span class="preview-label">Icon · dot</span>
           </div>
@@ -5558,7 +5591,7 @@
               <div class="badge-icon-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-              <span class="badge-number badge-number--small badge-number--alert badge-host-badge">5</span>
+              <span id="badge-icon-num" class="badge-number badge-number--small badge-number--alert badge-host-badge">5</span>
             </div>
             <span class="preview-label">Icon · number</span>
           </div>
@@ -6801,6 +6834,9 @@
     /* ── Icon Bullet icon picker ── */
     initIconPicker(document.getElementById('ibullet-icon-picker'));
 
+    /* ── Badge preview ── */
+    initBadgePreview();
+
     /* ── Avatar live preview ── */
     initAvatarPreview();
 
@@ -6828,7 +6864,7 @@
       const iconPicker        = document.getElementById('btn-icon-picker');
       const shapePicker       = document.getElementById('btn-shape-picker');
       const sctaSizePicker    = document.getElementById('btn-scta-size-picker');
-      const sctaOverlayPicker = document.getElementById('btn-scta-overlay-picker');
+      const sctaOverlayControl = document.getElementById('btn-scta-overlay-control');
       const stdCodeToggle  = document.getElementById('btn-std-code-toggle');
       const stdCodeReveal  = document.getElementById('btn-std-code-reveal');
       const stdCodeSnippet = document.getElementById('btn-std-code-snippet');
@@ -7064,11 +7100,9 @@ ${badge}
         renderScta();
       });
 
-      // SCTA overlay picker
-      initDropdown(sctaOverlayPicker, value => {
+      // SCTA overlay seg control
+      initSegControl(sctaOverlayControl, value => {
         currentOverlay = value;
-        document.getElementById('btn-scta-overlay-label').textContent =
-          sctaOverlayPicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
         renderScta();
       });
 
@@ -7144,6 +7178,54 @@ ${badge}
         currentShape = value;
         const opt = shapePicker.querySelector(`[data-value="${value}"]`);
         document.getElementById('avatar-shape-label').textContent = opt?.textContent?.trim() || value;
+        render();
+      });
+
+      render();
+    }
+
+    /* ── Segmented control utility ──────────────── */
+    function initSegControl(el, onChange) {
+      if (!el) return;
+      const buttons = Array.from(el.querySelectorAll('.seg-control-btn'));
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.setAttribute('aria-pressed', 'false'));
+          btn.setAttribute('aria-pressed', 'true');
+          onChange(btn.dataset.value);
+        });
+      });
+    }
+
+    /* ── Badge Preview ───────────────────────────── */
+    function initBadgePreview() {
+      const toneControl = document.getElementById('badge-tone-control');
+      if (!toneControl) return;
+
+      let currentTone = 'alert';
+
+      function render() {
+        const isAlert = currentTone === 'alert';
+
+        // Avatar dot
+        const avDot = document.getElementById('badge-av-dot');
+        if (avDot) avDot.className = `badge-dot badge-dot--large badge-host-badge${isAlert ? ' badge-dot--alert' : ''}`;
+
+        // Avatar number
+        const avNum = document.getElementById('badge-av-num');
+        if (avNum) avNum.className = `badge-number badge-number--small badge-host-badge${isAlert ? ' badge-number--alert' : ''}`;
+
+        // Icon dot
+        const iconDot = document.getElementById('badge-icon-dot');
+        if (iconDot) iconDot.className = `badge-dot badge-dot--small badge-host-badge${isAlert ? ' badge-dot--alert' : ''}`;
+
+        // Icon number
+        const iconNum = document.getElementById('badge-icon-num');
+        if (iconNum) iconNum.className = `badge-number badge-number--small badge-host-badge${isAlert ? ' badge-number--alert' : ''}`;
+      }
+
+      initSegControl(toneControl, value => {
+        currentTone = value;
         render();
       });
 
