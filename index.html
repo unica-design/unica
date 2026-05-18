@@ -1338,16 +1338,31 @@
       margin-top: var(--space-400);
     }
 
-    /* ── Segmented control — binary variant picker ── */
+    /* ── Segmented control — sliding pill picker ── */
     .seg-control {
       display: inline-flex;
-      border: var(--border-width-default) solid var(--color-border-default);
+      position: relative;
+      padding: 2px;
       border-radius: var(--corner-radius-round);
-      overflow: hidden;
       background: var(--color-background-ui);
     }
+    /* The sliding selector pill */
+    .seg-control-slider {
+      position: absolute;
+      top: 2px;
+      bottom: 2px;
+      left: 2px;
+      border-radius: var(--corner-radius-round);
+      background: var(--color-background-contrast);
+      transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      will-change: transform;
+    }
     .seg-control-btn {
-      padding: var(--space-200) var(--space-400);
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      padding: var(--space-200) var(--space-500);
       border: none;
       background: transparent;
       color: var(--color-content-subtle);
@@ -1355,16 +1370,16 @@
       font-family: var(--font-family-sans);
       font-weight: var(--font-weight-default);
       cursor: pointer;
-      transition: background 120ms, color 120ms;
+      transition: color 150ms;
       white-space: nowrap;
       line-height: 1;
+      border-radius: var(--corner-radius-round);
+      user-select: none;
     }
     .seg-control-btn:hover {
-      background: var(--color-action-hover-subtle);
       color: var(--color-content-default);
     }
     .seg-control-btn[aria-pressed="true"] {
-      background: var(--color-background-contrast);
       color: var(--color-inverse);
     }
 
@@ -3829,6 +3844,7 @@
 
           <!-- Overlay style seg control -->
           <div class="seg-control" id="btn-scta-overlay-control" role="group" aria-label="Overlay type">
+            <span class="seg-control-slider" aria-hidden="true"></span>
             <button class="seg-control-btn" data-value="dark"  aria-pressed="true">Dark</button>
             <button class="seg-control-btn" data-value="light" aria-pressed="false">Light</button>
           </div>
@@ -5545,6 +5561,7 @@
         <!-- Tone seg control -->
         <div class="btn-controls">
           <div class="seg-control" id="badge-tone-control" role="group" aria-label="Badge tone">
+            <span class="seg-control-slider" aria-hidden="true"></span>
             <button class="seg-control-btn" data-value="alert" aria-pressed="true">Alert</button>
             <button class="seg-control-btn" data-value="info"  aria-pressed="false">Info</button>
           </div>
@@ -7188,10 +7205,25 @@ ${badge}
     function initSegControl(el, onChange) {
       if (!el) return;
       const buttons = Array.from(el.querySelectorAll('.seg-control-btn'));
-      buttons.forEach(btn => {
+      const slider  = el.querySelector('.seg-control-slider');
+
+      function updateSlider(index) {
+        if (!slider || !buttons[index]) return;
+        let xOffset = 0;
+        for (let i = 0; i < index; i++) xOffset += buttons[i].offsetWidth;
+        slider.style.width     = buttons[index].offsetWidth + 'px';
+        slider.style.transform = `translateX(${xOffset}px)`;
+      }
+
+      // Position on load after layout is ready
+      const initialIndex = buttons.findIndex(b => b.getAttribute('aria-pressed') === 'true');
+      requestAnimationFrame(() => updateSlider(initialIndex >= 0 ? initialIndex : 0));
+
+      buttons.forEach((btn, i) => {
         btn.addEventListener('click', () => {
           buttons.forEach(b => b.setAttribute('aria-pressed', 'false'));
           btn.setAttribute('aria-pressed', 'true');
+          updateSlider(i);
           onChange(btn.dataset.value);
         });
       });
