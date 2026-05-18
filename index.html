@@ -1316,6 +1316,35 @@
       color: rgba(255,255,255,0.9);
     }
 
+    /* ── Code Reveal Toggle ───────────────────────────────────── */
+    .code-reveal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-200);
+      margin-top: var(--space-600);
+      padding: var(--space-200) var(--space-400);
+      background: transparent;
+      border: var(--border-width-default) solid var(--color-border-default);
+      border-radius: var(--corner-radius-round);
+      color: var(--color-content-subtle);
+      font-size: var(--font-size-body-s);
+      font-family: var(--font-family-sans);
+      cursor: pointer;
+      transition: background 120ms, color 120ms, border-color 120ms;
+    }
+    .code-reveal-btn:hover {
+      background: var(--color-action-hover-subtle);
+      color: var(--color-content-default);
+    }
+    .code-reveal-btn-icon {
+      font-family: monospace;
+      font-size: 11px;
+      letter-spacing: -0.5px;
+    }
+    .code-reveal {
+      margin-top: var(--space-400);
+    }
+
     /* Code block: always dark background, never inverts in dark mode */
     [data-theme="dark"] .code-block {
       background: #000000 !important;
@@ -3777,6 +3806,18 @@
         <div class="btn-preview-cols" id="btn-preview-scta">
           <div class="btn-preview-col" id="btn-col-scta-default"></div>
           <div class="btn-preview-col btn-preview-col--photo" id="btn-col-scta-overlay"></div>
+        </div>
+
+        <!-- Show / hide code -->
+        <button class="code-reveal-btn" id="btn-code-toggle" aria-expanded="false" aria-controls="btn-code-reveal">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="btn-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('btn-code-snippet').textContent)">Copy</button>
+            <pre><code id="btn-code-snippet" class="language-html"></code></pre>
+          </div>
         </div>
       </div>
 
@@ -6835,6 +6876,9 @@
       const shapePicker       = document.getElementById('btn-shape-picker');
       const sctaSizePicker    = document.getElementById('btn-scta-size-picker');
       const sctaOverlayPicker = document.getElementById('btn-scta-overlay-picker');
+      const codeToggle        = document.getElementById('btn-code-toggle');
+      const codeReveal        = document.getElementById('btn-code-reveal');
+      const codeSnippet       = document.getElementById('btn-code-snippet');
       if (!colStd) return;
 
       let currentSize     = 'large';
@@ -6889,6 +6933,8 @@
           mkBtn('btn-filled-reversed',   si) +
           mkBtn('btn-outlined-reversed', si) +
           mkBtn('btn-clear-reversed',    si);
+
+        if (codeReveal && !codeReveal.hidden) updateBtnCode();
       }
 
       function renderScta() {
@@ -6907,6 +6953,69 @@
         colSctaOverlay.innerHTML =
           `<span class="btn-pcol-badge btn-pcol-badge--${badgeClass}">${ovlLabel}</span>` +
           `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta ' + ovlClass, sb, sc)}</div>`;
+
+        if (codeReveal && !codeReveal.hidden) updateBtnCode();
+      }
+
+      // ── Code snippet generator ────────────────────────────────
+      function generateBtnCode() {
+        const sz     = sizeClass();
+        const sctaSz = sctaSizeClass();
+        const strokeAttrs = `stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"`;
+        const arrowPath   = `M5 12H19M19 12L13 6M19 12L13 18`;
+
+        const iconMarkup = currentShape === 'arrow'
+          ? `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="${arrowPath}" ${strokeAttrs}/></svg>`
+          : `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-${currentShape}"/></svg>`;
+
+        let inner      = `Label`;
+        let extraClass = ``;
+        let ariaAttr   = ``;
+
+        if (currentIcon === 'leading-icon')  inner = `\n  ${iconMarkup}\n  <span>Label</span>\n`;
+        if (currentIcon === 'trailing-icon') inner = `\n  <span>Label</span>\n  ${iconMarkup}\n`;
+        if (currentIcon === 'icon-only') {
+          inner      = `\n  ${iconMarkup}\n`;
+          extraClass = ` btn--icon-only`;
+          ariaAttr   = ` aria-label="Action"`;
+        }
+
+        const ovlClass = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
+
+        return `<!-- Standard: also btn-outlined · btn-clear -->
+<button class="btn btn-filled ${sz}${extraClass}"${ariaAttr}>${inner}</button>
+
+<!-- Reversed (dark surfaces): add -reversed suffix -->
+<button class="btn btn-filled-reversed ${sz}${extraClass}"${ariaAttr}>${inner}</button>
+
+<!-- Disabled -->
+<button class="btn btn-filled ${sz}${extraClass}" disabled>${inner}</button>
+
+<!-- Super CTA: also ${ovlClass} -->
+<button class="btn btn-super-cta btn-scta-fill ${sctaSz}">
+  <span class="btn-scta-label">Label</span>
+  <span class="btn-scta-badge" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="${arrowPath}" ${strokeAttrs}/>
+    </svg>
+  </span>
+</button>`;
+      }
+
+      function updateBtnCode() {
+        if (!codeSnippet) return;
+        codeSnippet.textContent = generateBtnCode();
+        if (window.Prism) Prism.highlightElement(codeSnippet);
+      }
+
+      if (codeToggle) {
+        codeToggle.addEventListener('click', () => {
+          const isOpen = !codeReveal.hidden;
+          codeReveal.hidden = isOpen;
+          codeToggle.setAttribute('aria-expanded', String(!isOpen));
+          codeToggle.querySelector('.code-reveal-btn-label').textContent = isOpen ? 'Show code' : 'Hide code';
+          if (!isOpen) updateBtnCode();
+        });
       }
 
       function updateShapePickerVisibility() {
