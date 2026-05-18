@@ -2427,7 +2427,8 @@
       align-items: center;
       justify-content: center;
       gap: var(--space-400);
-      padding: var(--space-700) var(--space-400);
+      padding: var(--space-800) var(--space-600);
+      min-height: 120px;
       border-radius: var(--corner-radius-m);
     }
     .ibullet-tile-label {
@@ -2441,6 +2442,7 @@
     /* Tile backgrounds — fixed light-mode primitives, intentional */
     .ibullet-tile--white    { background: var(--primitive-ink-900); }
     .ibullet-tile--white .ibullet-tile-label { color: rgba(255, 255, 255, 0.65); }
+    [data-theme="dark"] .ibullet-tile--white { background: var(--primitive-ink-1000); }
     .ibullet-tile--ink      { background: var(--primitive-ink-100); }
     .ibullet-tile--violet   { background: var(--primitive-violet-100); }
     .ibullet-tile--berry    { background: var(--primitive-berry-100); }
@@ -6075,51 +6077,50 @@
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
 
-        <div class="preview-canvas" style="padding: var(--space-700);">
+        <!-- Controls -->
+        <div class="btn-controls">
 
-          <!-- Controls -->
-          <div class="btn-controls" style="margin-bottom: var(--space-600);">
-
-            <!-- Size picker -->
-            <div class="dropdown" id="ibullet-size-picker">
-              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Choose size">
-                <span>XLarge</span>
-                <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <ul class="dropdown-menu" role="listbox" aria-label="Select size">
-                <li class="dropdown-option" role="option" aria-selected="true"  data-value="xlarge"  tabindex="0">XLarge</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="large"   tabindex="0">Large</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="medium"  tabindex="0">Medium</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="small"   tabindex="0">Small</li>
-              </ul>
-            </div>
-
-            <!-- Icon picker -->
-            <div class="dropdown" id="ibullet-icon-picker">
-              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Choose icon">
-                <svg class="icon-picker-trigger-icon" width="12" height="12" fill="none" aria-hidden="true">
-                  <use href="#ico-unica" id="ibullet-trigger-use"/>
-                </svg>
-                <span id="ibullet-trigger-label">ůnica</span>
-                <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <ul class="dropdown-menu icon-picker-menu" role="listbox" aria-label="Select icon">
-                <li class="icon-picker-cell" role="option" aria-selected="true"  data-icon="unica"   data-name="ůnica"   tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg><span class="icon-picker-cell-label">ůnica</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="fire"    data-name="fire"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-fire"/></svg><span class="icon-picker-cell-label">fire</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="heart"   data-name="heart"   tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg><span class="icon-picker-cell-label">heart</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="leaf"    data-name="leaf"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg><span class="icon-picker-cell-label">leaf</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="moon"    data-name="moon"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg><span class="icon-picker-cell-label">moon</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="sun"     data-name="sun"     tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg><span class="icon-picker-cell-label">sun</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="bulb"    data-name="bulb"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-bulb"/></svg><span class="icon-picker-cell-label">bulb</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="bell"    data-name="bell"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg><span class="icon-picker-cell-label">bell</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="message" data-name="message" tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-message"/></svg><span class="icon-picker-cell-label">message</span></li>
-                <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="cloud"   data-name="cloud"   tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg><span class="icon-picker-cell-label">cloud</span></li>
-              </ul>
-            </div>
-
+          <!-- Size picker -->
+          <div class="dropdown" id="ibullet-size-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Choose size">
+              <span>XLarge</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Select size">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="xlarge"  tabindex="0">XLarge</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="large"   tabindex="0">Large</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="medium"  tabindex="0">Medium</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="small"   tabindex="0">Small</li>
+            </ul>
           </div>
 
-          <!-- Color tile grid -->
+          <!-- Icon picker -->
+          <div class="dropdown" id="ibullet-icon-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Choose icon">
+              <svg class="icon-picker-trigger-icon" width="12" height="12" fill="none" aria-hidden="true">
+                <use href="#ico-unica" id="ibullet-trigger-use"/>
+              </svg>
+              <span id="ibullet-trigger-label">ůnica</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu icon-picker-menu" role="listbox" aria-label="Select icon">
+              <li class="icon-picker-cell" role="option" aria-selected="true"  data-icon="unica"   data-name="ůnica"   tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg><span class="icon-picker-cell-label">ůnica</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="fire"    data-name="fire"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-fire"/></svg><span class="icon-picker-cell-label">fire</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="heart"   data-name="heart"   tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg><span class="icon-picker-cell-label">heart</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="leaf"    data-name="leaf"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg><span class="icon-picker-cell-label">leaf</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="moon"    data-name="moon"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg><span class="icon-picker-cell-label">moon</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="sun"     data-name="sun"     tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg><span class="icon-picker-cell-label">sun</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="bulb"    data-name="bulb"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-bulb"/></svg><span class="icon-picker-cell-label">bulb</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="bell"    data-name="bell"    tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg><span class="icon-picker-cell-label">bell</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="message" data-name="message" tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-message"/></svg><span class="icon-picker-cell-label">message</span></li>
+              <li class="icon-picker-cell" role="option" aria-selected="false" data-icon="cloud"   data-name="cloud"   tabindex="0"><svg width="18" height="18" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg><span class="icon-picker-cell-label">cloud</span></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Color tile grid -->
+        <div class="preview-canvas" style="display:block;padding:var(--space-700);">
           <div class="ibullet-color-grid" id="ibullet-color-grid">
 
             <div class="ibullet-tile ibullet-tile--white">
@@ -6160,19 +6161,18 @@
             </div>
 
           </div>
+        </div>
 
-          <!-- Code reveal -->
-          <button class="code-reveal-btn" id="ibullet-code-toggle" aria-expanded="false" aria-controls="ibullet-code-reveal">
-            <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-            <span class="code-reveal-btn-label">Show code</span>
-          </button>
-          <div class="code-reveal" id="ibullet-code-reveal" hidden>
-            <div class="code-block" style="margin-top:0;border-top-left-radius:0;border-top-right-radius:0;">
-              <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('ibullet-code-snippet').textContent)">Copy</button>
-              <pre><code id="ibullet-code-snippet" class="language-html"></code></pre>
-            </div>
-          </div>
+      </div>
 
+      <button class="code-reveal-btn" id="ibullet-code-toggle" aria-expanded="false" aria-controls="ibullet-code-reveal">
+        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+        <span class="code-reveal-btn-label">Show code</span>
+      </button>
+      <div class="code-reveal" id="ibullet-code-reveal" hidden>
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('ibullet-code-snippet').textContent)">Copy</button>
+          <pre><code id="ibullet-code-snippet" class="language-html"></code></pre>
         </div>
       </div>
 
@@ -6791,26 +6791,28 @@
       function generateCode() {
         const s = currentSize;
         const i = currentIcon;
-        return `<!-- ${s} violet -->
-<span class="icon-bullet icon-bullet--${s} icon-bullet--violet" aria-hidden="true">
+        return `<span class="icon-bullet icon-bullet--${s} icon-bullet--violet" aria-hidden="true">
   <svg viewBox="0 0 24 24" fill="none">
     <use href="#ico-${i}"/>
   </svg>
 </span>
 
-<!-- ${s} berry -->
-<span class="icon-bullet icon-bullet--${s} icon-bullet--berry" aria-hidden="true">
-  <svg viewBox="0 0 24 24" fill="none">
-    <use href="#ico-${i}"/>
-  </svg>
-</span>
+<!-- Size modifiers:
+  icon-bullet--xlarge   56 × 56 px
+  icon-bullet--large    48 × 48 px
+  icon-bullet--medium   40 × 40 px
+  icon-bullet--small    32 × 32 px -->
 
-<!-- ${s} ink -->
-<span class="icon-bullet icon-bullet--${s} icon-bullet--ink" aria-hidden="true">
-  <svg viewBox="0 0 24 24" fill="none">
-    <use href="#ico-${i}"/>
-  </svg>
-</span>`;
+<!-- Color modifiers:
+  icon-bullet--white
+  icon-bullet--ink
+  icon-bullet--violet
+  icon-bullet--berry
+  icon-bullet--apricot
+  icon-bullet--mint
+  icon-bullet--pool
+  icon-bullet--citron
+  icon-bullet--dark-pool -->`;
       }
 
       function updateCode() {
