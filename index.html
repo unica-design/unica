@@ -3108,16 +3108,15 @@
       border-bottom-color: var(--primitive-ink-700);
     }
     .states-matrix--reversed .states-matrix-head-spacer,
-    .states-matrix--reversed .states-matrix-head-cell {
-      background: var(--primitive-ink-800);
-      color: var(--primitive-ink-500);
-    }
-    .states-matrix--reversed .states-matrix-label {
-      background: var(--primitive-ink-800);
-      color: var(--primitive-ink-500);
-    }
+    .states-matrix--reversed .states-matrix-head-cell,
+    .states-matrix--reversed .states-matrix-label,
     .states-matrix--reversed .states-matrix-cell {
       background: var(--primitive-ink-900);
+    }
+    .states-matrix--reversed .states-matrix-head-spacer,
+    .states-matrix--reversed .states-matrix-head-cell,
+    .states-matrix--reversed .states-matrix-label {
+      color: var(--primitive-ink-500);
     }
     /* SCTA overlay row backgrounds — inset rounded tiles per cell */
     .states-matrix-row--dark-photo .states-matrix-cell,
@@ -3980,45 +3979,49 @@
         <p class="doc-section-description">Built on the native <code>&lt;button&gt;</code> element — ARIA roles and keyboard behaviour are handled by the browser.</p>
 
         <h3 class="doc-subsection-title">Keyboard interaction</h3>
-        <table class="doc-table" style="margin-bottom:var(--space-600);">
-          <thead>
-            <tr><th>Key</th><th>Action</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>Tab</code></td><td>Move focus to the next focusable button.</td></tr>
-            <tr><td><code>Shift + Tab</code></td><td>Move focus to the previous focusable button.</td></tr>
-            <tr><td><code>Enter</code> / <code>Space</code></td><td>Activate the focused button.</td></tr>
-          </tbody>
-        </table>
+        <div class="table-wrap" style="margin-bottom:var(--space-600);">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Key</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="td-mono">Tab</td><td>Move focus to the next focusable button.</td></tr>
+              <tr><td class="td-mono">Shift + Tab</td><td>Move focus to the previous focusable button.</td></tr>
+              <tr><td class="td-mono">Enter / Space</td><td>Activate the focused button.</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3 class="doc-subsection-title">ARIA &amp; roles</h3>
-        <table class="doc-table" style="margin-bottom:var(--space-600);">
-          <thead>
-            <tr><th>Attribute</th><th>Guidance</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>role="button"</code></td>
-              <td>Implicit on native <code>&lt;button&gt;</code>. Don't apply it manually unless rendering a non-button element.</td>
-            </tr>
-            <tr>
-              <td><code>aria-label</code></td>
-              <td>Required on icon-only buttons. Describes the action, not the icon (e.g. "Close dialog", not "X icon").</td>
-            </tr>
-            <tr>
-              <td><code>aria-disabled="true"</code></td>
-              <td>Avoid. Prefer the native <code>disabled</code> attribute — it removes the element from the tab order and suppresses events automatically.</td>
-            </tr>
-            <tr>
-              <td><code>aria-pressed</code></td>
-              <td>Use only for toggle buttons (on/off state). Not applicable to standard action buttons.</td>
-            </tr>
-            <tr>
-              <td><code>aria-busy</code></td>
-              <td>Set to <code>true</code> while the button is loading. Pair with a visible spinner and keep the label descriptive (e.g. "Saving…").</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-wrap" style="margin-bottom:var(--space-600);">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Attribute</th><th>Guidance</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">role="button"</td>
+                <td>Implicit on native <code style="font-family:monospace;font-size:0.9em;">&lt;button&gt;</code>. Don't apply it manually unless rendering a non-button element.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-label</td>
+                <td>Required on icon-only buttons. Describes the action, not the icon (e.g. "Close dialog", not "X icon").</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-disabled="true"</td>
+                <td>Avoid. Prefer the native <code style="font-family:monospace;font-size:0.9em;">disabled</code> attribute — it removes the element from the tab order and suppresses events automatically.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-pressed</td>
+                <td>Use only for toggle buttons (on/off state). Not applicable to standard action buttons.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-busy</td>
+                <td>Set to <code style="font-family:monospace;font-size:0.9em;">true</code> while the button is loading. Pair with a visible spinner and keep the label descriptive (e.g. "Saving…").</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3 class="doc-subsection-title">Contrast &amp; motion</h3>
         <ul class="doc-list">
