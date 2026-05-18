@@ -2134,6 +2134,10 @@
         overflow: hidden;
         padding: 32px 16px;
       }
+      [data-theme="dark"] .phone-mock {
+        box-shadow: none;
+        border: var(--border-width-default) solid var(--color-border-default);
+      }
     }
     @media (max-width: 640px) {
       .phone-mock-screen { display: none; }
@@ -5304,6 +5308,50 @@
         </div>
       </div>
 
+        <button class="code-reveal-btn" id="bnav-code-toggle" aria-expanded="false" aria-controls="bnav-code-reveal" onclick="toggleCodeReveal(this,'bnav-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="bnav-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;nav class="bnav" aria-label="Main navigation"&gt;
+  &lt;div class="bnav-track"&gt;
+    &lt;span class="bnav-pill" aria-hidden="true"&gt;&lt;/span&gt;
+
+    &lt;button class="bnav-tab bnav-tab--active" data-bnav-tab
+            aria-label="Home" aria-selected="true"&gt;
+      &lt;span class="bnav-icon" aria-hidden="true"&gt;&lt;!-- SVG --&gt;&lt;/span&gt;
+      &lt;span class="bnav-label"&gt;Home&lt;/span&gt;
+    &lt;/button&gt;
+
+    &lt;button class="bnav-tab" data-bnav-tab
+            aria-label="Search" aria-selected="false"&gt;
+      &lt;span class="bnav-icon" aria-hidden="true"&gt;&lt;!-- SVG --&gt;&lt;/span&gt;
+      &lt;span class="bnav-label"&gt;Search&lt;/span&gt;
+    &lt;/button&gt;
+
+    &lt;!-- repeat for each tab --&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Optional FAB --&gt;
+  &lt;button class="bnav-fab" aria-label="New post"&gt;
+    &lt;!-- SVG --&gt;
+  &lt;/button&gt;
+&lt;/nav&gt;
+
+&lt;!-- Reversed (dark surfaces) --&gt;
+&lt;nav class="bnav bnav--reversed" aria-label="Main navigation"&gt;
+  &lt;!-- same structure --&gt;
+&lt;/nav&gt;
+
+&lt;!-- Icon only (no labels) --&gt;
+&lt;nav class="bnav bnav--icon-only" aria-label="Main navigation"&gt;
+  &lt;!-- same structure, bnav-label spans still present but hidden --&gt;
+&lt;/nav&gt;</code></pre>
+          </div>
+        </div>
+
       <!-- ── 2. Variants ─────────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Variants</h2>
@@ -5439,35 +5487,6 @@
             </tbody>
           </table>
         </div>
-      </div>
-
-      <!-- ── 4. Code ─────────────────────────────────── -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Code</h2>
-        <hr class="doc-rule">
-        <div class="code-block"><pre><code class="language-markup">&lt;nav class="bnav" aria-label="Main navigation"&gt;
-  &lt;div class="bnav-track"&gt;
-    &lt;span class="bnav-pill" aria-hidden="true"&gt;&lt;/span&gt;
-
-    &lt;button class="bnav-tab bnav-tab--active" data-bnav-tab
-            aria-label="Home" aria-selected="true"&gt;
-      &lt;span class="bnav-icon" aria-hidden="true"&gt;&lt;!-- SVG --&gt;&lt;/span&gt;
-      &lt;span class="bnav-label"&gt;Home&lt;/span&gt;
-    &lt;/button&gt;
-
-    &lt;button class="bnav-tab" data-bnav-tab
-            aria-label="Search" aria-selected="false"&gt;
-      &lt;span class="bnav-icon" aria-hidden="true"&gt;&lt;!-- SVG --&gt;&lt;/span&gt;
-      &lt;span class="bnav-label"&gt;Search&lt;/span&gt;
-    &lt;/button&gt;
-
-    &lt;!-- repeat for each tab --&gt;
-  &lt;/div&gt;
-
-  &lt;button class="bnav-fab" aria-label="New post"&gt;
-    &lt;!-- SVG --&gt;
-  &lt;/button&gt;
-&lt;/nav&gt;</code></pre></div>
       </div>
 
     </div><!-- /page-bottom-nav -->
