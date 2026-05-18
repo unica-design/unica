@@ -898,7 +898,21 @@
       .border-demo { display: none; }
       .footer-inner { flex-wrap: wrap; gap: var(--space-300); }
       .usage-grid { grid-template-columns: 1fr; }
-      .preview-canvas { gap: var(--space-600); padding: var(--space-700) var(--space-500); }
+      .preview-canvas {
+        flex-wrap: nowrap;          /* stop items wrapping to a second row */
+        overflow-x: auto;           /* scroll instead of squish */
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        gap: var(--space-700);
+        padding: var(--space-700) var(--space-500);
+        /* Right-edge fade hint */
+        background-image:
+          linear-gradient(to left, var(--doc-surface-preview), transparent);
+        background-repeat: no-repeat;
+        background-size: 48px 100%;
+        background-position: right;
+        background-attachment: scroll;
+      }
     }
 
     /* ═════════════════════════════════════════
@@ -1074,12 +1088,14 @@
       flex-direction: column;
       align-items: center;
       gap: var(--space-300);
+      flex-shrink: 0; /* never squish below natural width */
     }
 
     .preview-label {
       font-size: var(--font-size-body-xs);
       color: var(--color-content-subtle);
       letter-spacing: 0.02em;
+      white-space: nowrap; /* single-line labels always */
     }
 
     /* Settings list preview — white card, Ink borders */
@@ -1150,6 +1166,8 @@
     }
 
     .variants-table td:not(:first-child) { text-align: center; }
+    .variants-table th,
+    .variants-table td { min-width: 80px; }
 
     /* Do / Don't */
     .usage-grid {
@@ -1205,6 +1223,24 @@
       overflow-x: auto;
       overflow-y: visible;
       -webkit-overflow-scrolling: touch;
+      /* Scroll-fade hint — masks appear at edges when content fits,
+         shadows appear when scrollable (background-attachment trick) */
+      background-image:
+        linear-gradient(to right, var(--color-background-page), transparent),
+        linear-gradient(to left,  var(--color-background-page), transparent),
+        linear-gradient(to right, rgba(0,0,0,0.05), transparent),
+        linear-gradient(to left,  rgba(0,0,0,0.05), transparent);
+      background-repeat: no-repeat;
+      background-size: 24px 100%, 24px 100%, 48px 100%, 48px 100%;
+      background-position: left, right, left, right;
+      background-attachment: local, local, scroll, scroll;
+    }
+    [data-theme="dark"] .table-wrap {
+      background-image:
+        linear-gradient(to right, var(--color-background-page), transparent),
+        linear-gradient(to left,  var(--color-background-page), transparent),
+        linear-gradient(to right, rgba(255,255,255,0.05), transparent),
+        linear-gradient(to left,  rgba(255,255,255,0.05), transparent);
     }
 
     .doc-table {
@@ -1251,6 +1287,9 @@
     }
 
     .doc-table .td-subtle { color: var(--color-content-subtle); }
+    .doc-table th,
+    .doc-table td { min-width: 80px; }
+    .doc-table td:last-child { min-width: 160px; } /* description/guidance col */
 
     /* ─────────────────────────────────────────
        CODE SYNTAX — ůnica theme (Prism.js)
@@ -3135,8 +3174,20 @@
     .states-matrix {
       overflow: hidden;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       margin-bottom: var(--space-600);
       border-radius: var(--corner-radius-m); /* clips photo/dark row backgrounds */
+      /* Scroll-fade hint at right edge */
+      background-image:
+        linear-gradient(to left, var(--color-background-page), transparent);
+      background-repeat: no-repeat;
+      background-size: 48px 100%;
+      background-position: right;
+      background-attachment: scroll;
+    }
+    [data-theme="dark"] .states-matrix {
+      background-image:
+        linear-gradient(to left, var(--color-background-page), transparent);
     }
     .states-matrix-head,
     .states-matrix-row {
