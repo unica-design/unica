@@ -4221,6 +4221,45 @@
         </div>
       </div>
 
+        <button class="code-reveal-btn" id="check-code-toggle" aria-expanded="false" aria-controls="check-code-reveal" onclick="toggleCodeReveal(this,'check-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="check-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;!-- Standalone checkbox --&gt;
+&lt;span class="checkbox"&gt;
+  &lt;input type="checkbox" aria-label="Option name"&gt;
+  &lt;span class="checkbox-box"&gt;
+    &lt;svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
+      &lt;path d="M9.44038 0.240068...Z" fill="currentColor"/&gt;
+    &lt;/svg&gt;
+    &lt;span class="checkbox-dash"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/span&gt;
+
+&lt;!-- Checkbox with label --&gt;
+&lt;label class="checkbox-item"&gt;
+  &lt;span class="checkbox"&gt;
+    &lt;input type="checkbox"&gt;
+    &lt;span class="checkbox-box"&gt;
+      &lt;svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
+        &lt;path d="M9.44038 0.240068...Z" fill="currentColor"/&gt;
+      &lt;/svg&gt;
+      &lt;span class="checkbox-dash"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span class="checkbox-item-text"&gt;Option label&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- Indeterminate (JS required) --&gt;
+&lt;script&gt;
+  document.querySelector('#my-checkbox').indeterminate = true;
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+
       <!-- ── 2. With label ───────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">With label</h2>
@@ -4453,49 +4492,6 @@
         </div>
       </div>
 
-      <!-- ── 6. Code ────────────────────────────── -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Code</h2>
-        <hr class="doc-rule">
-        <button class="code-reveal-btn" id="check-code-toggle" aria-expanded="false" aria-controls="check-code-reveal" onclick="toggleCodeReveal(this,'check-code-reveal')">
-          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-          <span class="code-reveal-btn-label">Show code</span>
-        </button>
-        <div class="code-reveal" id="check-code-reveal" hidden>
-        <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
-          <pre><code class="language-html">&lt;!-- Standalone checkbox --&gt;
-&lt;span class="checkbox"&gt;
-  &lt;input type="checkbox" aria-label="Option name"&gt;
-  &lt;span class="checkbox-box"&gt;
-    &lt;svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
-      &lt;path d="M9.44038 0.240068...Z" fill="currentColor"/&gt;
-    &lt;/svg&gt;
-    &lt;span class="checkbox-dash"&gt;&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/span&gt;
-
-&lt;!-- Checkbox with label --&gt;
-&lt;label class="checkbox-item"&gt;
-  &lt;span class="checkbox"&gt;
-    &lt;input type="checkbox"&gt;
-    &lt;span class="checkbox-box"&gt;
-      &lt;svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
-        &lt;path d="M9.44038 0.240068...Z" fill="currentColor"/&gt;
-      &lt;/svg&gt;
-      &lt;span class="checkbox-dash"&gt;&lt;/span&gt;
-    &lt;/span&gt;
-  &lt;/span&gt;
-  &lt;span class="checkbox-item-text"&gt;Option label&lt;/span&gt;
-&lt;/label&gt;
-
-&lt;!-- Indeterminate (JS required) --&gt;
-&lt;script&gt;
-  document.querySelector('#my-checkbox').indeterminate = true;
-&lt;/script&gt;</code></pre>
-        </div>
-        </div>
-      </div>
 
     </div>
     <div class="page-panel" id="page-radio">
@@ -4580,6 +4576,50 @@
           </label>
         </div>
       </div>
+
+        <button class="code-reveal-btn" id="radio-code-toggle" aria-expanded="false" aria-controls="radio-code-reveal" onclick="toggleCodeReveal(this,'radio-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="radio-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;!-- Standalone radio --&gt;
+&lt;span class="radio"&gt;
+  &lt;input type="radio" name="group" aria-label="Option name"&gt;
+  &lt;span class="radio-circle"&gt;
+    &lt;span class="radio-dot"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/span&gt;
+
+&lt;!-- Radio with label (wrap in label for click area) --&gt;
+&lt;label class="radio-item"&gt;
+  &lt;span class="radio"&gt;
+    &lt;input type="radio" name="group"&gt;
+    &lt;span class="radio-circle"&gt;
+      &lt;span class="radio-dot"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span class="radio-item-text"&gt;Option label&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- Radio group (mutually exclusive — share the same name) --&gt;
+&lt;label class="radio-item"&gt;
+  &lt;span class="radio"&gt;
+    &lt;input type="radio" name="plan" value="free"&gt;
+    &lt;span class="radio-circle"&gt;&lt;span class="radio-dot"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span class="radio-item-text"&gt;Free&lt;/span&gt;
+&lt;/label&gt;
+&lt;label class="radio-item"&gt;
+  &lt;span class="radio"&gt;
+    &lt;input type="radio" name="plan" value="plus" checked&gt;
+    &lt;span class="radio-circle"&gt;&lt;span class="radio-dot"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span class="radio-item-text"&gt;Plus&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+          </div>
+        </div>
 
       <!-- ── 2. With label ─────────────────────── -->
       <div class="doc-section">
@@ -4782,54 +4822,6 @@
         </div>
       </div>
 
-      <!-- ── 6. Code ────────────────────────────── -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Code</h2>
-        <hr class="doc-rule">
-        <button class="code-reveal-btn" id="radio-code-toggle" aria-expanded="false" aria-controls="radio-code-reveal" onclick="toggleCodeReveal(this,'radio-code-reveal')">
-          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-          <span class="code-reveal-btn-label">Show code</span>
-        </button>
-        <div class="code-reveal" id="radio-code-reveal" hidden>
-        <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
-          <pre><code class="language-html">&lt;!-- Standalone radio --&gt;
-&lt;span class="radio"&gt;
-  &lt;input type="radio" name="group" aria-label="Option name"&gt;
-  &lt;span class="radio-circle"&gt;
-    &lt;span class="radio-dot"&gt;&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/span&gt;
-
-&lt;!-- Radio with label (wrap in label for click area) --&gt;
-&lt;label class="radio-item"&gt;
-  &lt;span class="radio"&gt;
-    &lt;input type="radio" name="group"&gt;
-    &lt;span class="radio-circle"&gt;
-      &lt;span class="radio-dot"&gt;&lt;/span&gt;
-    &lt;/span&gt;
-  &lt;/span&gt;
-  &lt;span class="radio-item-text"&gt;Option label&lt;/span&gt;
-&lt;/label&gt;
-
-&lt;!-- Radio group (mutually exclusive — share the same name) --&gt;
-&lt;label class="radio-item"&gt;
-  &lt;span class="radio"&gt;
-    &lt;input type="radio" name="plan" value="free"&gt;
-    &lt;span class="radio-circle"&gt;&lt;span class="radio-dot"&gt;&lt;/span&gt;&lt;/span&gt;
-  &lt;/span&gt;
-  &lt;span class="radio-item-text"&gt;Free&lt;/span&gt;
-&lt;/label&gt;
-&lt;label class="radio-item"&gt;
-  &lt;span class="radio"&gt;
-    &lt;input type="radio" name="plan" value="plus" checked&gt;
-    &lt;span class="radio-circle"&gt;&lt;span class="radio-dot"&gt;&lt;/span&gt;&lt;/span&gt;
-  &lt;/span&gt;
-  &lt;span class="radio-item-text"&gt;Plus&lt;/span&gt;
-&lt;/label&gt;</code></pre>
-        </div>
-        </div>
-      </div>
 
     </div>
     <div class="page-panel" id="page-switch">
@@ -4940,6 +4932,50 @@
           </div>
         </div>
       </div>
+
+        <button class="code-reveal-btn" id="switch-code-toggle" aria-expanded="false" aria-controls="switch-code-reveal" onclick="toggleCodeReveal(this,'switch-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="switch-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;!-- Basic switch --&gt;
+&lt;label class="toggle-switch"&gt;
+  &lt;input type="checkbox" role="switch" aria-label="Setting name"&gt;
+  &lt;span class="toggle-track"&gt;
+    &lt;span class="toggle-handle"&gt;
+      &lt;span class="toggle-icon"&gt;
+        &lt;svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
+          &lt;path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024...Z" fill="currentColor"/&gt;
+        &lt;/svg&gt;
+        &lt;svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
+          &lt;path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467...Z" fill="currentColor"/&gt;
+        &lt;/svg&gt;
+      &lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- With visible label (settings row pattern) --&gt;
+&lt;div style="display:flex; align-items:center; justify-content:space-between; gap:24px;"&gt;
+  &lt;div&gt;
+    &lt;label for="ts-setting" style="font-weight:600;"&gt;Push notifications&lt;/label&gt;
+    &lt;p style="font-size:14px; color:var(--color-content-subtle);"&gt;Receive alerts when something requires your attention.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;label class="toggle-switch"&gt;
+    &lt;input type="checkbox" role="switch" id="ts-setting" checked&gt;
+    &lt;span class="toggle-track"&gt;...&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+
+&lt;!-- Disabled --&gt;
+&lt;label class="toggle-switch"&gt;
+  &lt;input type="checkbox" role="switch" disabled aria-label="Locked setting"&gt;
+  &lt;span class="toggle-track"&gt;...&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+          </div>
+        </div>
 
       <!-- ── 2. With label ───────────────────────── -->
       <div class="doc-section">
@@ -5173,54 +5209,6 @@
         </div>
       </div>
 
-      <!-- ── 6. Code ────────────────────────────── -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Code</h2>
-        <hr class="doc-rule">
-        <button class="code-reveal-btn" id="switch-code-toggle" aria-expanded="false" aria-controls="switch-code-reveal" onclick="toggleCodeReveal(this,'switch-code-reveal')">
-          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-          <span class="code-reveal-btn-label">Show code</span>
-        </button>
-        <div class="code-reveal" id="switch-code-reveal" hidden>
-        <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
-          <pre><code class="language-html">&lt;!-- Basic switch --&gt;
-&lt;label class="toggle-switch"&gt;
-  &lt;input type="checkbox" role="switch" aria-label="Setting name"&gt;
-  &lt;span class="toggle-track"&gt;
-    &lt;span class="toggle-handle"&gt;
-      &lt;span class="toggle-icon"&gt;
-        &lt;svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
-          &lt;path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024...Z" fill="currentColor"/&gt;
-        &lt;/svg&gt;
-        &lt;svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"&gt;
-          &lt;path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467...Z" fill="currentColor"/&gt;
-        &lt;/svg&gt;
-      &lt;/span&gt;
-    &lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-
-&lt;!-- With visible label (settings row pattern) --&gt;
-&lt;div style="display:flex; align-items:center; justify-content:space-between; gap:24px;"&gt;
-  &lt;div&gt;
-    &lt;label for="ts-setting" style="font-weight:600;"&gt;Push notifications&lt;/label&gt;
-    &lt;p style="font-size:14px; color:var(--color-content-subtle);"&gt;Receive alerts when something requires your attention.&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;label class="toggle-switch"&gt;
-    &lt;input type="checkbox" role="switch" id="ts-setting" checked&gt;
-    &lt;span class="toggle-track"&gt;...&lt;/span&gt;
-  &lt;/label&gt;
-&lt;/div&gt;
-
-&lt;!-- Disabled --&gt;
-&lt;label class="toggle-switch"&gt;
-  &lt;input type="checkbox" role="switch" disabled aria-label="Locked setting"&gt;
-  &lt;span class="toggle-track"&gt;...&lt;/span&gt;
-&lt;/label&gt;</code></pre>
-        </div>
-        </div>
-      </div>
 
       <!-- ── 7. Related ─────────────────────────── -->
       <div class="doc-section" style="padding-bottom:var(--space-1000);">
@@ -5562,6 +5550,39 @@
         </div>
       </div>
 
+        <button class="code-reveal-btn" id="badge-code-toggle" aria-expanded="false" aria-controls="badge-code-reveal" onclick="toggleCodeReveal(this,'badge-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="badge-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;!-- Dot badge --&gt;
+&lt;span class="badge-dot badge-dot--large"&gt;&lt;/span&gt;
+&lt;span class="badge-dot badge-dot--large badge-dot--alert"&gt;&lt;/span&gt;
+
+&lt;!-- Number badge --&gt;
+&lt;span class="badge-number badge-number--large"&gt;9&lt;/span&gt;
+&lt;span class="badge-number badge-number--large badge-number--alert"&gt;99+&lt;/span&gt;
+
+&lt;!-- Positioned over another element --&gt;
+&lt;div class="badge-host"&gt;
+  &lt;div class="avatar avatar--large avatar--circle"&gt;
+    &lt;img class="avatar-img" src="photo.jpg" alt=""&gt;
+  &lt;/div&gt;
+  &lt;span class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"
+        aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Accessible button with badge --&gt;
+&lt;button aria-label="Notifications, 5 unread"&gt;
+  &lt;svg&gt;...bell icon...&lt;/svg&gt;
+  &lt;span class="badge-number badge-number--small badge-number--alert badge-host-badge"
+        aria-hidden="true"&gt;5&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+
       <!-- ── 2. In context ──────────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">In context</h2>
@@ -5733,43 +5754,6 @@
         </div>
       </div>
 
-      <!-- ── 6. Code ────────────────────────────── -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Code</h2>
-        <hr class="doc-rule">
-        <button class="code-reveal-btn" id="badge-code-toggle" aria-expanded="false" aria-controls="badge-code-reveal" onclick="toggleCodeReveal(this,'badge-code-reveal')">
-          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-          <span class="code-reveal-btn-label">Show code</span>
-        </button>
-        <div class="code-reveal" id="badge-code-reveal" hidden>
-        <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
-          <pre><code class="language-html">&lt;!-- Dot badge --&gt;
-&lt;span class="badge-dot badge-dot--large"&gt;&lt;/span&gt;
-&lt;span class="badge-dot badge-dot--large badge-dot--alert"&gt;&lt;/span&gt;
-
-&lt;!-- Number badge --&gt;
-&lt;span class="badge-number badge-number--large"&gt;9&lt;/span&gt;
-&lt;span class="badge-number badge-number--large badge-number--alert"&gt;99+&lt;/span&gt;
-
-&lt;!-- Positioned over another element --&gt;
-&lt;div class="badge-host"&gt;
-  &lt;div class="avatar avatar--large avatar--circle"&gt;
-    &lt;img class="avatar-img" src="photo.jpg" alt=""&gt;
-  &lt;/div&gt;
-  &lt;span class="badge-dot badge-dot--large badge-dot--alert badge-host-badge"
-        aria-hidden="true"&gt;&lt;/span&gt;
-&lt;/div&gt;
-
-&lt;!-- Accessible button with badge --&gt;
-&lt;button aria-label="Notifications, 5 unread"&gt;
-  &lt;svg&gt;...bell icon...&lt;/svg&gt;
-  &lt;span class="badge-number badge-number--small badge-number--alert badge-host-badge"
-        aria-hidden="true"&gt;5&lt;/span&gt;
-&lt;/button&gt;</code></pre>
-        </div>
-        </div>
-      </div>
 
     </div>
     <div class="page-panel" id="page-progress"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Progress Indicators</h2><p class="section-description">Linear and circular progress bars, determinate and indeterminate.</p></div><span class="stub-pill">In progress</span></section></div>
@@ -5863,6 +5847,39 @@
           </div>
         </div>
       </div>
+
+        <button class="code-reveal-btn" id="avatar-code-toggle" aria-expanded="false" aria-controls="avatar-code-reveal" onclick="toggleCodeReveal(this,'avatar-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="avatar-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;!-- Photo avatar --&gt;
+&lt;div class="avatar avatar--large avatar--circle"&gt;
+  &lt;img class="avatar-img" src="photo.jpg" alt="Sofia Esposito's avatar"&gt;
+&lt;/div&gt;
+
+&lt;!-- Initials avatar --&gt;
+&lt;div class="avatar avatar--large avatar--circle" aria-label="Sofia Esposito"&gt;
+  &lt;span class="avatar-initials" aria-hidden="true"&gt;A&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Size variants --&gt;
+&lt;div class="avatar avatar--xsmall  avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--small   avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--medium  avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--large   avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--xlarge  avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--xxlarge avatar--circle"&gt;...&lt;/div&gt;
+
+&lt;!-- Shape variants --&gt;
+&lt;div class="avatar avatar--large avatar--circle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--large avatar--squircle"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--large avatar--diamond"&gt;...&lt;/div&gt;
+&lt;div class="avatar avatar--large avatar--cushion"&gt;...&lt;/div&gt;</code></pre>
+          </div>
+        </div>
 
       <!-- ── 2. Sizes ──────────────────────────── -->
       <div class="doc-section">
@@ -6048,43 +6065,6 @@
         </div>
       </div>
 
-      <!-- ── 6. Code ────────────────────────────── -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Code</h2>
-        <hr class="doc-rule">
-        <button class="code-reveal-btn" id="avatar-code-toggle" aria-expanded="false" aria-controls="avatar-code-reveal" onclick="toggleCodeReveal(this,'avatar-code-reveal')">
-          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-          <span class="code-reveal-btn-label">Show code</span>
-        </button>
-        <div class="code-reveal" id="avatar-code-reveal" hidden>
-        <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
-          <pre><code class="language-html">&lt;!-- Photo avatar --&gt;
-&lt;div class="avatar avatar--large avatar--circle"&gt;
-  &lt;img class="avatar-img" src="photo.jpg" alt="Sofia Esposito's avatar"&gt;
-&lt;/div&gt;
-
-&lt;!-- Initials avatar --&gt;
-&lt;div class="avatar avatar--large avatar--circle" aria-label="Sofia Esposito"&gt;
-  &lt;span class="avatar-initials" aria-hidden="true"&gt;A&lt;/span&gt;
-&lt;/div&gt;
-
-&lt;!-- Size variants --&gt;
-&lt;div class="avatar avatar--xsmall  avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--small   avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--medium  avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--large   avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--xlarge  avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--xxlarge avatar--circle"&gt;...&lt;/div&gt;
-
-&lt;!-- Shape variants --&gt;
-&lt;div class="avatar avatar--large avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--large avatar--squircle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--large avatar--diamond"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--large avatar--cushion"&gt;...&lt;/div&gt;</code></pre>
-        </div>
-        </div>
-      </div>
 
     </div>
     <div class="page-panel" id="page-divider"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Divider</h2><p class="section-description">Horizontal rule for separating content regions.</p></div><span class="stub-pill">In progress</span></section></div>
