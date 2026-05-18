@@ -5808,102 +5808,77 @@
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
 
-        <!-- Photo row -->
-        <p class="avatar-group-label">Photo</p>
-        <div class="preview-canvas" style="gap: var(--space-700); margin-bottom: var(--space-700);">
+        <!-- Controls -->
+        <div class="btn-controls">
+
+          <!-- Size picker -->
+          <div class="dropdown" id="avatar-size-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="avatar-size-label">xlarge</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Avatar size">
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="xsmall"  tabindex="0">xsmall</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="small"   tabindex="0">small</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="medium"  tabindex="0">medium</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="large"   tabindex="0">large</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="xlarge"  tabindex="0">xlarge</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="xxlarge" tabindex="0">xxlarge</li>
+            </ul>
+          </div>
+
+          <!-- Shape picker -->
+          <div class="dropdown" id="avatar-shape-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="avatar-shape-label">Circle</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Avatar shape">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="circle"   tabindex="0">Circle</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="squircle" tabindex="0">Squircle</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="diamond"  tabindex="0">Diamond</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="cushion"  tabindex="0">Cushion</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Live avatar preview — photo + initials side by side -->
+        <div class="preview-canvas" style="gap: var(--space-800);">
           <div class="preview-item">
-            <div class="avatar avatar--large avatar--circle">
+            <div class="avatar avatar--xlarge avatar--circle" id="avatar-preview-photo">
               <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
             </div>
-            <span class="preview-label">Circle</span>
+            <span class="preview-label">Photo</span>
           </div>
           <div class="preview-item">
-            <div class="avatar avatar--large avatar--squircle">
-              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
+            <div class="avatar avatar--xlarge avatar--circle" id="avatar-preview-initials">
+              <span class="avatar-initials">A</span>
             </div>
-            <span class="preview-label">Squircle</span>
-          </div>
-          <div class="preview-item">
-            <div class="avatar avatar--large avatar--diamond">
-              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
-            </div>
-            <span class="preview-label">Diamond</span>
-          </div>
-          <div class="preview-item">
-            <div class="avatar avatar--large avatar--cushion">
-              <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="User avatar">
-            </div>
-            <span class="preview-label">Cushion</span>
+            <span class="preview-label">Initials</span>
           </div>
         </div>
 
-        <!-- Initials row -->
-        <p class="avatar-group-label">Initials</p>
-        <div class="preview-canvas" style="gap: var(--space-700);">
-          <div class="preview-item">
-            <div class="avatar avatar--large avatar--circle">
-              <span class="avatar-initials">A</span>
-            </div>
-            <span class="preview-label">Circle</span>
-          </div>
-          <div class="preview-item">
-            <div class="avatar avatar--large avatar--squircle">
-              <span class="avatar-initials">A</span>
-            </div>
-            <span class="preview-label">Squircle</span>
-          </div>
-          <div class="preview-item">
-            <div class="avatar avatar--large avatar--diamond">
-              <span class="avatar-initials">A</span>
-            </div>
-            <span class="preview-label">Diamond</span>
-          </div>
-          <div class="preview-item">
-            <div class="avatar avatar--large avatar--cushion">
-              <span class="avatar-initials">A</span>
-            </div>
-            <span class="preview-label">Cushion</span>
-          </div>
-        </div>
       </div>
 
-        <button class="code-reveal-btn" id="avatar-code-toggle" aria-expanded="false" aria-controls="avatar-code-reveal" onclick="toggleCodeReveal(this,'avatar-code-reveal')">
+        <button class="code-reveal-btn" id="avatar-code-toggle" aria-expanded="false" aria-controls="avatar-code-reveal">
           <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
           <span class="code-reveal-btn-label">Show code</span>
         </button>
         <div class="code-reveal" id="avatar-code-reveal" hidden>
           <div class="code-block">
-            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
-            <pre><code class="language-html">&lt;!-- Photo avatar --&gt;
-&lt;div class="avatar avatar--large avatar--circle"&gt;
-  &lt;img class="avatar-img" src="photo.jpg" alt="Sofia Esposito's avatar"&gt;
-&lt;/div&gt;
-
-&lt;!-- Initials avatar --&gt;
-&lt;div class="avatar avatar--large avatar--circle" aria-label="Sofia Esposito"&gt;
-  &lt;span class="avatar-initials" aria-hidden="true"&gt;A&lt;/span&gt;
-&lt;/div&gt;
-
-&lt;!-- Size variants --&gt;
-&lt;div class="avatar avatar--xsmall  avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--small   avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--medium  avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--large   avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--xlarge  avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--xxlarge avatar--circle"&gt;...&lt;/div&gt;
-
-&lt;!-- Shape variants --&gt;
-&lt;div class="avatar avatar--large avatar--circle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--large avatar--squircle"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--large avatar--diamond"&gt;...&lt;/div&gt;
-&lt;div class="avatar avatar--large avatar--cushion"&gt;...&lt;/div&gt;</code></pre>
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('avatar-code-snippet').textContent)">Copy</button>
+            <pre><code id="avatar-code-snippet" class="language-html"></code></pre>
           </div>
         </div>
 
-      <!-- ── 2. Sizes ──────────────────────────── -->
+      <!-- ── 2. Variants ────────────────────────── -->
       <div class="doc-section">
-        <h2 class="doc-section-title">Sizes</h2>
+        <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
+
+        <!-- Sizes -->
+        <p class="avatar-group-label">Sizes</p>
         <div class="avatar-sizes-grid">
 
           <div class="avatar-size-item">
@@ -5979,12 +5954,9 @@
           </div>
 
         </div>
-      </div>
 
-      <!-- ── 3. Shapes ─────────────────────────── -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Shapes</h2>
-        <hr class="doc-rule">
+        <!-- Shapes -->
+        <p class="avatar-group-label" style="margin-top: var(--space-800);">Shapes</p>
         <div class="preview-canvas" style="gap:var(--space-1000);">
           <div class="avatar-shape-item">
             <div class="avatar avatar--xxlarge avatar--circle">
@@ -6011,9 +5983,10 @@
             <span class="preview-label">Cushion</span>
           </div>
         </div>
+
       </div>
 
-      <!-- ── 4. Accessibility ───────────────────── -->
+      <!-- ── 3. Accessibility ───────────────────── -->
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
@@ -6885,6 +6858,9 @@
     /* ── Icon Bullet icon picker ── */
     initIconPicker(document.getElementById('ibullet-icon-picker'));
 
+    /* ── Avatar live preview ── */
+    initAvatarPreview();
+
     /* ── Button live preview ── */
     initButtonPreview();
 
@@ -7156,6 +7132,79 @@ ${badge}
       updateShapePickerVisibility();
       renderStd();
       renderScta();
+    }
+
+    /* ── Avatar Live Preview ─────────────────── */
+    function initAvatarPreview() {
+      const photoEl    = document.getElementById('avatar-preview-photo');
+      const initialsEl = document.getElementById('avatar-preview-initials');
+      const codeToggle = document.getElementById('avatar-code-toggle');
+      const codeReveal = document.getElementById('avatar-code-reveal');
+      const codeSnippet = document.getElementById('avatar-code-snippet');
+      const sizePicker  = document.getElementById('avatar-size-picker');
+      const shapePicker = document.getElementById('avatar-shape-picker');
+      if (!photoEl) return;
+
+      let currentSize  = 'xlarge';
+      let currentShape = 'circle';
+
+      function applyClasses(el) {
+        // Remove any previous size/shape classes
+        el.className = el.className
+          .replace(/\bavatar--(xsmall|small|medium|large|xlarge|xxlarge)\b/g, '')
+          .replace(/\bavatar--(circle|squircle|diamond|cushion)\b/g, '')
+          .trim();
+        el.classList.add(`avatar--${currentSize}`, `avatar--${currentShape}`);
+      }
+
+      function render() {
+        applyClasses(photoEl);
+        applyClasses(initialsEl);
+        if (codeReveal && !codeReveal.hidden) updateCode();
+      }
+
+      function generateCode() {
+        return `<!-- Photo avatar -->
+<div class="avatar avatar--${currentSize} avatar--${currentShape}">
+  <img class="avatar-img" src="photo.jpg" alt="User's avatar">
+</div>
+
+<!-- Initials avatar -->
+<div class="avatar avatar--${currentSize} avatar--${currentShape}" aria-label="User name">
+  <span class="avatar-initials" aria-hidden="true">A</span>
+</div>`;
+      }
+
+      function updateCode() {
+        if (!codeSnippet) return;
+        codeSnippet.textContent = generateCode();
+        if (window.Prism) Prism.highlightElement(codeSnippet);
+      }
+
+      if (codeToggle) {
+        codeToggle.addEventListener('click', () => {
+          const isOpen = !codeReveal.hidden;
+          codeReveal.hidden = isOpen;
+          codeToggle.setAttribute('aria-expanded', String(!isOpen));
+          codeToggle.querySelector('.code-reveal-btn-label').textContent = isOpen ? 'Show code' : 'Hide code';
+          if (!isOpen) updateCode();
+        });
+      }
+
+      initDropdown(sizePicker, value => {
+        currentSize = value;
+        document.getElementById('avatar-size-label').textContent = value;
+        render();
+      });
+
+      initDropdown(shapePicker, value => {
+        currentShape = value;
+        const opt = shapePicker.querySelector(`[data-value="${value}"]`);
+        document.getElementById('avatar-shape-label').textContent = opt?.textContent?.trim() || value;
+        render();
+      });
+
+      render();
     }
 
     // ── Shared code reveal toggle (static code sections) ────
