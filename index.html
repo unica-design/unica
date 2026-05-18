@@ -2561,46 +2561,48 @@
       border-radius: var(--corner-radius-m);
     }
     .btn-filled:active:not(:disabled) {
-      background: var(--color-action-pressed);
+      background: var(--color-action-active);
       border-radius: var(--corner-radius-round);
     }
     .btn-filled:focus-visible {
-      outline: 2px solid var(--color-action-default);
+      outline: 2px solid var(--color-border-strong);
       outline-offset: 2px;
     }
     .btn-filled:disabled {
       background: var(--color-background-disabled);
       color: var(--color-content-disabled);
+      border: 1.5px solid var(--color-border-default);
     }
 
     /* ── Filled Reversed ───────────────────────────────────────── */
     .btn-filled-reversed {
-      background: var(--primitive-cafe-0);
-      color: var(--primitive-ink-900);
+      background: var(--color-action-inverse-default);
+      color: var(--color-content-default);
       border: none;
     }
     .btn-filled-reversed:hover:not(:disabled) {
-      background: var(--primitive-ink-100);
+      background: var(--color-action-inverse-hover);
       border-radius: var(--corner-radius-m);
     }
     .btn-filled-reversed:active:not(:disabled) {
-      background: var(--primitive-cafe-0);
+      background: var(--color-action-inverse-active);
       border-radius: var(--corner-radius-round);
     }
     .btn-filled-reversed:focus-visible {
-      outline: 2px solid var(--primitive-cafe-0);
+      outline: 2px solid var(--color-border-inverse);
       outline-offset: 2px;
     }
     .btn-filled-reversed:disabled {
-      background: rgba(255, 255, 255, 0.15);
-      color: var(--color-inverse-disabled);
+      background: var(--color-background-inverse-disabled);
+      color: var(--color-content-inverse-disabled);
+      border: 1.5px solid var(--color-border-inverse-subtle);
     }
 
     /* ── Outlined ──────────────────────────────────────────────── */
     .btn-outlined {
       background: transparent;
-      color: var(--color-action-default);
-      border: 1.5px solid var(--color-action-default);
+      color: var(--color-content-default);
+      border: 1.5px solid var(--color-border-strong);
     }
     .btn-outlined:hover:not(:disabled) {
       background: var(--color-action-hover-subtle);
@@ -2611,10 +2613,11 @@
       border-radius: var(--corner-radius-round);
     }
     .btn-outlined:focus-visible {
-      outline: 2px solid var(--color-action-default);
+      outline: 2px solid var(--color-border-strong);
       outline-offset: 2px;
     }
     .btn-outlined:disabled {
+      background: var(--color-background-disabled);
       border-color: var(--color-border-disabled);
       color: var(--color-content-disabled);
     }
@@ -2622,24 +2625,25 @@
     /* ── Outlined Reversed ─────────────────────────────────────── */
     .btn-outlined-reversed {
       background: transparent;
-      color: var(--primitive-cafe-0);
-      border: 1.5px solid var(--primitive-cafe-0);
+      color: var(--color-inverse);
+      border: 1.5px solid var(--color-border-inverse);
     }
     .btn-outlined-reversed:hover:not(:disabled) {
-      background: var(--color-action-hover-subtle-inverse);
+      background: var(--color-action-inverse-hover-subtle);
       border-radius: var(--corner-radius-m);
     }
     .btn-outlined-reversed:active:not(:disabled) {
-      background: var(--color-action-active-subtle-inverse);
+      background: var(--color-action-inverse-active-subtle);
       border-radius: var(--corner-radius-round);
     }
     .btn-outlined-reversed:focus-visible {
-      outline: 2px solid var(--primitive-cafe-0);
+      outline: 2px solid var(--color-border-inverse);
       outline-offset: 2px;
     }
     .btn-outlined-reversed:disabled {
-      border-color: var(--color-inverse-disabled);
-      color: var(--color-inverse-disabled);
+      background: var(--color-background-inverse-disabled);
+      border-color: var(--color-border-inverse-subtle);
+      color: var(--color-content-inverse-disabled);
     }
 
     /* ── Clear ─────────────────────────────────────────────────── */
@@ -2657,7 +2661,7 @@
       border-radius: var(--corner-radius-round);
     }
     .btn-clear:focus-visible {
-      outline: 2px solid var(--color-action-default);
+      outline: 2px solid var(--color-border-strong);
       outline-offset: 2px;
     }
     .btn-clear:disabled {
@@ -2667,23 +2671,23 @@
     /* ── Clear Reversed ────────────────────────────────────────── */
     .btn-clear-reversed {
       background: transparent;
-      color: var(--primitive-cafe-0);
+      color: var(--color-inverse);
       border: none;
     }
     .btn-clear-reversed:hover:not(:disabled) {
-      background: var(--color-action-hover-subtle-inverse);
+      background: var(--color-action-inverse-hover-subtle);
       border-radius: var(--corner-radius-m);
     }
     .btn-clear-reversed:active:not(:disabled) {
-      background: var(--color-action-active-subtle-inverse);
+      background: var(--color-action-inverse-active-subtle);
       border-radius: var(--corner-radius-round);
     }
     .btn-clear-reversed:focus-visible {
-      outline: 2px solid var(--primitive-cafe-0);
+      outline: 2px solid var(--color-border-inverse);
       outline-offset: 2px;
     }
     .btn-clear-reversed:disabled {
-      color: var(--color-inverse-disabled);
+      color: var(--color-content-inverse-disabled);
     }
 
     /* ── Super CTA — shared base ───────────────────────────────── */
@@ -3940,7 +3944,7 @@
             <div class="states-matrix-row">
               <div class="states-matrix-label">Filled</div>
               <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" style="background:var(--color-action-hover);border-radius:var(--corner-radius-m);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" style="background:var(--color-action-pressed);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-filled states-btn btn--large" disabled tabindex="-1">Label</button></div>
@@ -3948,7 +3952,7 @@
             <div class="states-matrix-row">
               <div class="states-matrix-label">Outlined</div>
               <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" style="background:var(--color-action-hover-subtle);border-radius:var(--corner-radius-m);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" style="background:var(--color-action-active-subtle);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-outlined states-btn btn--large" disabled tabindex="-1">Label</button></div>
@@ -3956,7 +3960,7 @@
             <div class="states-matrix-row">
               <div class="states-matrix-label">Clear</div>
               <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" style="background:var(--color-action-hover-subtle);border-radius:12px;" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" style="background:var(--color-action-hover-subtle);border-radius:var(--corner-radius-m);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" style="background:var(--color-action-active-subtle);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-clear states-btn btn--large" disabled tabindex="-1">Label</button></div>
@@ -3978,24 +3982,24 @@
             <div class="states-matrix-row">
               <div class="states-matrix-label">Filled</div>
               <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" style="background:var(--primitive-ink-100);border-radius:12px;" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" style="background:var(--primitive-cafe-0);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" style="background:var(--color-action-inverse-hover);border-radius:var(--corner-radius-m);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" style="background:var(--color-action-inverse-active);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-filled-reversed states-btn btn--large" disabled tabindex="-1">Label</button></div>
             </div>
             <div class="states-matrix-row">
               <div class="states-matrix-label">Outlined</div>
               <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" style="background:var(--color-action-hover-subtle-inverse);border-radius:12px;" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" style="background:var(--color-action-active-subtle-inverse);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" style="background:var(--color-action-inverse-hover-subtle);border-radius:var(--corner-radius-m);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" style="background:var(--color-action-inverse-active-subtle);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-outlined-reversed states-btn btn--large" disabled tabindex="-1">Label</button></div>
             </div>
             <div class="states-matrix-row">
               <div class="states-matrix-label">Clear</div>
               <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" style="background:var(--color-action-hover-subtle-inverse);border-radius:12px;" tabindex="-1">Label</button></div>
-              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" style="background:var(--color-action-active-subtle-inverse);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" style="background:var(--color-action-inverse-hover-subtle);border-radius:var(--corner-radius-m);" tabindex="-1">Label</button></div>
+              <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" style="background:var(--color-action-inverse-active-subtle);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" style="outline:2px solid var(--primitive-cafe-0);outline-offset:2px;" tabindex="-1">Label</button></div>
               <div class="states-matrix-cell"><button class="btn btn-clear-reversed states-btn btn--large" disabled tabindex="-1">Label</button></div>
             </div>
@@ -4016,7 +4020,7 @@
           <div class="states-matrix-row">
             <div class="states-matrix-label">Fill</div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--small" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--small" style="background:var(--color-action-hover);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--small" style="background:var(--color-action-hover);border-radius:var(--corner-radius-m);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:var(--corner-radius-m);transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--small" style="background:var(--color-action-pressed);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:50%;transform:none;" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--small" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--small" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
@@ -4024,7 +4028,7 @@
           <div class="states-matrix-row states-matrix-row--dark-photo">
             <div class="states-matrix-label">Overlay Dark</div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" style="background:rgba(15,22,38,0.60);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" style="background:rgba(15,22,38,0.60);border-radius:var(--corner-radius-m);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:var(--corner-radius-m);transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" style="background:rgba(15,22,38,0.75);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:50%;transform:none;" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" style="outline:2px solid var(--color-action-default);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
@@ -4032,7 +4036,7 @@
           <div class="states-matrix-row states-matrix-row--light-photo">
             <div class="states-matrix-label">Overlay Light</div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--small" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
-            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--small" style="background:rgba(31,24,46,0.20);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+            <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--small" style="background:rgba(31,24,46,0.20);border-radius:var(--corner-radius-m);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:var(--corner-radius-m);transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--small" style="background:rgba(31,24,46,0.28);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:50%;transform:none;" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--small" style="outline:2px solid var(--primitive-ink-900);outline-offset:2px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay-light states-btn btn--small" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
