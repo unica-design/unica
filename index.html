@@ -3119,12 +3119,30 @@
     .states-matrix--reversed .states-matrix-cell {
       background: var(--primitive-ink-900);
     }
-    /* SCTA overlay row backgrounds */
-    .states-matrix-row--dark-photo .states-matrix-cell {
+    /* SCTA overlay row backgrounds — inset rounded tiles per cell */
+    .states-matrix-row--dark-photo .states-matrix-cell,
+    .states-matrix-row--light-photo .states-matrix-cell {
+      position: relative;
+      background: transparent;
+    }
+    .states-matrix-row--dark-photo .states-matrix-cell::before,
+    .states-matrix-row--light-photo .states-matrix-cell::before {
+      content: '';
+      position: absolute;
+      inset: var(--space-200);
+      border-radius: var(--corner-radius-s);
+      z-index: 0;
+    }
+    .states-matrix-row--dark-photo .states-matrix-cell::before {
       background: url('assets/bg-overlay-demo.png') center/cover no-repeat;
     }
-    .states-matrix-row--light-photo .states-matrix-cell {
+    .states-matrix-row--light-photo .states-matrix-cell::before {
       background: url('assets/bg-dunes-demo.png') center/cover no-repeat;
+    }
+    .states-matrix-row--dark-photo .states-matrix-cell > *,
+    .states-matrix-row--light-photo .states-matrix-cell > * {
+      position: relative;
+      z-index: 1;
     }
     .states-scta-heading {
       font-size: var(--font-size-body-s);
@@ -3874,7 +3892,7 @@
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-fill states-btn btn--small" disabled tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
           </div>
           <div class="states-matrix-row states-matrix-row--dark-photo">
-            <div class="states-matrix-label">Overlay</div>
+            <div class="states-matrix-label">Overlay Dark</div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" style="background:rgba(15,22,38,0.60);border-radius:12px;" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" style="border-radius:12px;transform:scale(0.875);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
             <div class="states-matrix-cell"><button class="btn btn-super-cta btn-scta-overlay states-btn btn--small" style="background:rgba(15,22,38,0.75);border-radius:var(--corner-radius-round);transform:scale(0.96);" tabindex="-1"><span class="btn-scta-label">Label</span><span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
