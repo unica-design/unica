@@ -2439,6 +2439,10 @@
       color: rgba(15, 23, 38, 0.55);
     }
 
+    @media (max-width: 560px) {
+      .ibullet-color-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* Tile backgrounds — fixed light-mode primitives, intentional */
     .ibullet-tile--white    { background: var(--primitive-ink-900); }
     .ibullet-tile--white .ibullet-tile-label { color: rgba(255, 255, 255, 0.65); }
@@ -6816,7 +6820,10 @@
       }
 
       function updateCode() {
-        if (codeSnippet) codeSnippet.textContent = generateCode();
+        if (codeSnippet) {
+          codeSnippet.textContent = generateCode();
+          if (window.Prism) Prism.highlightElement(codeSnippet);
+        }
       }
 
       initIconPicker(document.getElementById('ibullet-icon-picker'), id => {
