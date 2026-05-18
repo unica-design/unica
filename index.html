@@ -4457,6 +4457,11 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Code</h2>
         <hr class="doc-rule">
+        <button class="code-reveal-btn" id="check-code-toggle" aria-expanded="false" aria-controls="check-code-reveal" onclick="toggleCodeReveal(this,'check-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="check-code-reveal" hidden>
         <div class="code-block">
           <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
           <pre><code class="language-html">&lt;!-- Standalone checkbox --&gt;
@@ -4488,6 +4493,7 @@
 &lt;script&gt;
   document.querySelector('#my-checkbox').indeterminate = true;
 &lt;/script&gt;</code></pre>
+        </div>
         </div>
       </div>
 
@@ -4780,6 +4786,11 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Code</h2>
         <hr class="doc-rule">
+        <button class="code-reveal-btn" id="radio-code-toggle" aria-expanded="false" aria-controls="radio-code-reveal" onclick="toggleCodeReveal(this,'radio-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="radio-code-reveal" hidden>
         <div class="code-block">
           <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
           <pre><code class="language-html">&lt;!-- Standalone radio --&gt;
@@ -4816,6 +4827,7 @@
   &lt;/span&gt;
   &lt;span class="radio-item-text"&gt;Plus&lt;/span&gt;
 &lt;/label&gt;</code></pre>
+        </div>
         </div>
       </div>
 
@@ -5165,6 +5177,11 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Code</h2>
         <hr class="doc-rule">
+        <button class="code-reveal-btn" id="switch-code-toggle" aria-expanded="false" aria-controls="switch-code-reveal" onclick="toggleCodeReveal(this,'switch-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="switch-code-reveal" hidden>
         <div class="code-block">
           <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
           <pre><code class="language-html">&lt;!-- Basic switch --&gt;
@@ -5201,6 +5218,7 @@
   &lt;input type="checkbox" role="switch" disabled aria-label="Locked setting"&gt;
   &lt;span class="toggle-track"&gt;...&lt;/span&gt;
 &lt;/label&gt;</code></pre>
+        </div>
         </div>
       </div>
 
@@ -5719,6 +5737,11 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Code</h2>
         <hr class="doc-rule">
+        <button class="code-reveal-btn" id="badge-code-toggle" aria-expanded="false" aria-controls="badge-code-reveal" onclick="toggleCodeReveal(this,'badge-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="badge-code-reveal" hidden>
         <div class="code-block">
           <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
           <pre><code class="language-html">&lt;!-- Dot badge --&gt;
@@ -5744,6 +5767,7 @@
   &lt;span class="badge-number badge-number--small badge-number--alert badge-host-badge"
         aria-hidden="true"&gt;5&lt;/span&gt;
 &lt;/button&gt;</code></pre>
+        </div>
         </div>
       </div>
 
@@ -5815,25 +5839,25 @@
         <div class="preview-canvas" style="gap: var(--space-700);">
           <div class="preview-item">
             <div class="avatar avatar--large avatar--circle">
-              <span class="avatar-initials">SE</span>
+              <span class="avatar-initials">A</span>
             </div>
             <span class="preview-label">Circle</span>
           </div>
           <div class="preview-item">
             <div class="avatar avatar--large avatar--squircle">
-              <span class="avatar-initials">SE</span>
+              <span class="avatar-initials">A</span>
             </div>
             <span class="preview-label">Squircle</span>
           </div>
           <div class="preview-item">
             <div class="avatar avatar--large avatar--diamond">
-              <span class="avatar-initials">SE</span>
+              <span class="avatar-initials">A</span>
             </div>
             <span class="preview-label">Diamond</span>
           </div>
           <div class="preview-item">
             <div class="avatar avatar--large avatar--cushion">
-              <span class="avatar-initials">SE</span>
+              <span class="avatar-initials">A</span>
             </div>
             <span class="preview-label">Cushion</span>
           </div>
@@ -5852,7 +5876,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--xsmall avatar--circle">
-                <span class="avatar-initials">SE</span>
+                <span class="avatar-initials">A</span>
               </div>
             </div>
             <span class="preview-label">xsmall · 24</span>
@@ -5864,7 +5888,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--small avatar--circle">
-                <span class="avatar-initials">SE</span>
+                <span class="avatar-initials">A</span>
               </div>
             </div>
             <span class="preview-label">small · 32</span>
@@ -5876,7 +5900,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--medium avatar--circle">
-                <span class="avatar-initials">SE</span>
+                <span class="avatar-initials">A</span>
               </div>
             </div>
             <span class="preview-label">medium · 40</span>
@@ -5888,7 +5912,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--large avatar--circle">
-                <span class="avatar-initials">SE</span>
+                <span class="avatar-initials">A</span>
               </div>
             </div>
             <span class="preview-label">large · 48</span>
@@ -5900,7 +5924,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--xlarge avatar--circle">
-                <span class="avatar-initials">SE</span>
+                <span class="avatar-initials">A</span>
               </div>
             </div>
             <span class="preview-label">xlarge · 56</span>
@@ -5912,7 +5936,7 @@
                 <img class="avatar-img" src="assets/avatar-placeholder.jpg" alt="">
               </div>
               <div class="avatar avatar--xxlarge avatar--circle">
-                <span class="avatar-initials">SE</span>
+                <span class="avatar-initials">A</span>
               </div>
             </div>
             <span class="preview-label">xxlarge · 64</span>
@@ -6028,6 +6052,11 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Code</h2>
         <hr class="doc-rule">
+        <button class="code-reveal-btn" id="avatar-code-toggle" aria-expanded="false" aria-controls="avatar-code-reveal" onclick="toggleCodeReveal(this,'avatar-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="avatar-code-reveal" hidden>
         <div class="code-block">
           <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
           <pre><code class="language-html">&lt;!-- Photo avatar --&gt;
@@ -6037,7 +6066,7 @@
 
 &lt;!-- Initials avatar --&gt;
 &lt;div class="avatar avatar--large avatar--circle" aria-label="Sofia Esposito"&gt;
-  &lt;span class="avatar-initials" aria-hidden="true"&gt;SE&lt;/span&gt;
+  &lt;span class="avatar-initials" aria-hidden="true"&gt;A&lt;/span&gt;
 &lt;/div&gt;
 
 &lt;!-- Size variants --&gt;
@@ -6053,6 +6082,7 @@
 &lt;div class="avatar avatar--large avatar--squircle"&gt;...&lt;/div&gt;
 &lt;div class="avatar avatar--large avatar--diamond"&gt;...&lt;/div&gt;
 &lt;div class="avatar avatar--large avatar--cushion"&gt;...&lt;/div&gt;</code></pre>
+        </div>
         </div>
       </div>
 
@@ -7128,6 +7158,15 @@ ${badge}
       renderStd();
       renderScta();
     }
+
+    // ── Shared code reveal toggle (static code sections) ────
+    window.toggleCodeReveal = function(toggleEl, revealId) {
+      const reveal = document.getElementById(revealId);
+      const isOpen = !reveal.hidden;
+      reveal.hidden = isOpen;
+      toggleEl.setAttribute('aria-expanded', String(!isOpen));
+      toggleEl.querySelector('.code-reveal-btn-label').textContent = isOpen ? 'Show code' : 'Hide code';
+    };
 
     // ── States section: Standard ↔ Reversed toggle ──────────
     const statesToggle = document.getElementById('states-mode-toggle');
