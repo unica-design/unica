@@ -1283,16 +1283,9 @@
       font-size: 13px;
       line-height: 1.65;
       color: var(--color-inverse);
-      white-space: pre;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
       margin: 0;
-    }
-
-    @media (max-width: 640px) {
-      /* On mobile: lines wrap and scroll vertically, not horizontally */
-      .code-block pre {
-        white-space: pre-wrap;
-        word-break: break-all;
-      }
     }
 
     .code-copy-btn {
@@ -3768,6 +3761,18 @@
           <div class="btn-preview-col btn-preview-col--dark" id="btn-col-reversed"></div>
         </div>
 
+        <!-- Show / hide code — standard buttons -->
+        <button class="code-reveal-btn" id="btn-std-code-toggle" aria-expanded="false" aria-controls="btn-std-code-reveal">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="btn-std-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('btn-std-code-snippet').textContent)">Copy</button>
+            <pre><code id="btn-std-code-snippet" class="language-html"></code></pre>
+          </div>
+        </div>
+
         <!-- ── Super CTA preview subsection ───────────────────────── -->
         <h3 class="btn-preview-subhead">Super CTA</h3>
         <p class="btn-preview-subhead-desc">Super CTA is a style reserved for high emphasis, conversion sensitive moments with a fixed bullet preset. It is available both in the primary styling and in overlay fills to work well over both light and dark product and lifestyle photography.</p>
@@ -3808,15 +3813,15 @@
           <div class="btn-preview-col btn-preview-col--photo" id="btn-col-scta-overlay"></div>
         </div>
 
-        <!-- Show / hide code -->
-        <button class="code-reveal-btn" id="btn-code-toggle" aria-expanded="false" aria-controls="btn-code-reveal">
+        <!-- Show / hide code — Super CTA -->
+        <button class="code-reveal-btn" id="btn-scta-code-toggle" aria-expanded="false" aria-controls="btn-scta-code-reveal">
           <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
           <span class="code-reveal-btn-label">Show code</span>
         </button>
-        <div class="code-reveal" id="btn-code-reveal" hidden>
+        <div class="code-reveal" id="btn-scta-code-reveal" hidden>
           <div class="code-block">
-            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('btn-code-snippet').textContent)">Copy</button>
-            <pre><code id="btn-code-snippet" class="language-html"></code></pre>
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('btn-scta-code-snippet').textContent)">Copy</button>
+            <pre><code id="btn-scta-code-snippet" class="language-html"></code></pre>
           </div>
         </div>
       </div>
@@ -6876,9 +6881,12 @@
       const shapePicker       = document.getElementById('btn-shape-picker');
       const sctaSizePicker    = document.getElementById('btn-scta-size-picker');
       const sctaOverlayPicker = document.getElementById('btn-scta-overlay-picker');
-      const codeToggle        = document.getElementById('btn-code-toggle');
-      const codeReveal        = document.getElementById('btn-code-reveal');
-      const codeSnippet       = document.getElementById('btn-code-snippet');
+      const stdCodeToggle  = document.getElementById('btn-std-code-toggle');
+      const stdCodeReveal  = document.getElementById('btn-std-code-reveal');
+      const stdCodeSnippet = document.getElementById('btn-std-code-snippet');
+      const sctaCodeToggle = document.getElementById('btn-scta-code-toggle');
+      const sctaCodeReveal = document.getElementById('btn-scta-code-reveal');
+      const sctaCodeSnippet = document.getElementById('btn-scta-code-snippet');
       if (!colStd) return;
 
       let currentSize     = 'large';
@@ -6934,7 +6942,7 @@
           mkBtn('btn-outlined-reversed', si) +
           mkBtn('btn-clear-reversed',    si);
 
-        if (codeReveal && !codeReveal.hidden) updateBtnCode();
+        if (stdCodeReveal && !stdCodeReveal.hidden) updateStdCode();
       }
 
       function renderScta() {
@@ -6954,11 +6962,11 @@
           `<span class="btn-pcol-badge btn-pcol-badge--${badgeClass}">${ovlLabel}</span>` +
           `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta ' + ovlClass, sb, sc)}</div>`;
 
-        if (codeReveal && !codeReveal.hidden) updateBtnCode();
+        if (sctaCodeReveal && !sctaCodeReveal.hidden) updateSctaCode();
       }
 
-      // ── Code snippet generator ────────────────────────────────
-      function generateBtnCode() {
+      // ── Code snippet generators ───────────────────────────────
+      function generateStdCode() {
         const sz     = sizeClass();
         const sctaSz = sctaSizeClass();
         const strokeAttrs = `stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"`;
@@ -6980,8 +6988,6 @@
           ariaAttr   = ` aria-label="Action"`;
         }
 
-        const ovlClass = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
-
         return `<!-- Standard: also btn-outlined · btn-clear -->
 <button class="btn btn-filled ${sz}${extraClass}"${ariaAttr}>${inner}</button>
 
@@ -6989,9 +6995,16 @@
 <button class="btn btn-filled-reversed ${sz}${extraClass}"${ariaAttr}>${inner}</button>
 
 <!-- Disabled -->
-<button class="btn btn-filled ${sz}${extraClass}" disabled>${inner}</button>
+<button class="btn btn-filled ${sz}${extraClass}" disabled>${inner}</button>`;
+      }
 
-<!-- Super CTA: also ${ovlClass} -->
+      function generateSctaCode() {
+        const sctaSz      = sctaSizeClass();
+        const strokeAttrs = `stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"`;
+        const arrowPath   = `M5 12H19M19 12L13 6M19 12L13 18`;
+        const ovlClass    = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
+
+        return `<!-- Super CTA: also ${ovlClass} -->
 <button class="btn btn-super-cta btn-scta-fill ${sctaSz}">
   <span class="btn-scta-label">Label</span>
   <span class="btn-scta-badge" aria-hidden="true">
@@ -7002,19 +7015,35 @@
 </button>`;
       }
 
-      function updateBtnCode() {
-        if (!codeSnippet) return;
-        codeSnippet.textContent = generateBtnCode();
-        if (window.Prism) Prism.highlightElement(codeSnippet);
+      function updateStdCode() {
+        if (!stdCodeSnippet) return;
+        stdCodeSnippet.textContent = generateStdCode();
+        if (window.Prism) Prism.highlightElement(stdCodeSnippet);
       }
 
-      if (codeToggle) {
-        codeToggle.addEventListener('click', () => {
-          const isOpen = !codeReveal.hidden;
-          codeReveal.hidden = isOpen;
-          codeToggle.setAttribute('aria-expanded', String(!isOpen));
-          codeToggle.querySelector('.code-reveal-btn-label').textContent = isOpen ? 'Show code' : 'Hide code';
-          if (!isOpen) updateBtnCode();
+      function updateSctaCode() {
+        if (!sctaCodeSnippet) return;
+        sctaCodeSnippet.textContent = generateSctaCode();
+        if (window.Prism) Prism.highlightElement(sctaCodeSnippet);
+      }
+
+      if (stdCodeToggle) {
+        stdCodeToggle.addEventListener('click', () => {
+          const isOpen = !stdCodeReveal.hidden;
+          stdCodeReveal.hidden = isOpen;
+          stdCodeToggle.setAttribute('aria-expanded', String(!isOpen));
+          stdCodeToggle.querySelector('.code-reveal-btn-label').textContent = isOpen ? 'Show code' : 'Hide code';
+          if (!isOpen) updateStdCode();
+        });
+      }
+
+      if (sctaCodeToggle) {
+        sctaCodeToggle.addEventListener('click', () => {
+          const isOpen = !sctaCodeReveal.hidden;
+          sctaCodeReveal.hidden = isOpen;
+          sctaCodeToggle.setAttribute('aria-expanded', String(!isOpen));
+          sctaCodeToggle.querySelector('.code-reveal-btn-label').textContent = isOpen ? 'Show code' : 'Hide code';
+          if (!isOpen) updateSctaCode();
         });
       }
 
