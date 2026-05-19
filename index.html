@@ -2882,6 +2882,206 @@
     }
 
     /* ============================================================
+       CHOICE BUTTON
+       ============================================================ */
+    .choice-btn {
+      display: flex;
+      background: var(--color-background-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--corner-radius-l);
+      padding: var(--space-400);
+      cursor: pointer;
+      text-align: left;
+      gap: var(--space-200);
+      transition: border-color 120ms ease, background 120ms ease, transform 80ms ease;
+      font-family: inherit;
+      color: var(--color-content-default);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Vertical layout */
+    .choice-btn--vertical {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* Horizontal layout */
+    .choice-btn--horizontal {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .choice-btn-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .choice-btn-label {
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+      font-weight: 600;
+      color: var(--color-content-default);
+    }
+    .choice-btn-sublabel {
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+      font-weight: 400;
+      color: var(--color-content-default);
+    }
+
+    .choice-btn-accessory {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .choice-btn-accessory svg {
+      width: 24px; height: 24px;
+      color: var(--color-content-default);
+    }
+
+    /* States */
+    .choice-btn:hover:not(:disabled):not([aria-pressed="true"]) {
+      border-color: var(--color-border-strong);
+    }
+    .choice-btn:active:not(:disabled) {
+      border-color: var(--color-border-strong);
+      transform: scale(0.98);
+    }
+    .choice-btn:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
+      border-color: var(--color-border-strong);
+    }
+    .choice-btn[aria-pressed="true"] {
+      background: var(--color-background-selection);
+      border: 2px solid var(--color-border-strong);
+    }
+    .choice-btn[aria-pressed="true"]:hover:not(:disabled) {
+      border-color: var(--color-border-strong);
+    }
+    .choice-btn:disabled {
+      background: var(--color-background-disabled);
+      border-color: var(--color-border-disabled);
+      color: var(--color-content-disabled);
+      cursor: not-allowed;
+    }
+    .choice-btn:disabled .choice-btn-label,
+    .choice-btn:disabled .choice-btn-sublabel {
+      color: var(--color-content-disabled);
+    }
+    .choice-btn:disabled .choice-btn-accessory svg,
+    .choice-btn:disabled .choice-btn-accessory .icon-bullet {
+      opacity: 0.4;
+    }
+
+    /* Reversed */
+    .choice-btn--reversed {
+      background: var(--color-background-inverse);
+      border-color: var(--color-border-inverse-default);
+      color: var(--color-inverse);
+    }
+    .choice-btn--reversed .choice-btn-label,
+    .choice-btn--reversed .choice-btn-sublabel {
+      color: var(--color-inverse);
+    }
+    .choice-btn--reversed .choice-btn-accessory svg { color: var(--color-inverse); }
+    .choice-btn--reversed:hover:not(:disabled):not([aria-pressed="true"]) {
+      border-color: var(--color-border-inverse);
+    }
+    .choice-btn--reversed:focus-visible {
+      outline-color: var(--color-border-inverse);
+      border-color: var(--color-border-inverse);
+    }
+    .choice-btn--reversed[aria-pressed="true"] {
+      background: var(--color-background-inverse-selection);
+      border: 2px solid var(--color-border-inverse);
+    }
+    .choice-btn--reversed:disabled {
+      background: var(--color-background-inverse-disabled);
+      border-color: var(--color-border-inverse-subtle);
+      color: var(--color-content-inverse-disabled);
+    }
+    .choice-btn--reversed:disabled .choice-btn-label,
+    .choice-btn--reversed:disabled .choice-btn-sublabel { color: var(--color-content-inverse-disabled); }
+
+    /* Avatar accessory size */
+    .choice-btn--horizontal .choice-btn-accessory .avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .choice-btn-avatar-placeholder { width: 48px; height: 48px; border-radius: 50%; background: var(--color-background-container); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px; font-weight:600; color:var(--color-content-default); }
+
+    /* Live preview card */
+    .cb-preview-card {
+      max-width: 375px;
+      background: var(--color-background-section);
+      border-radius: var(--corner-radius-xl);
+      padding: 24px;
+      margin: 0 auto;
+    }
+    .cb-preview-card--reversed {
+      background: var(--color-background-contrast);
+    }
+    .cb-preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .cb-preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* States matrix for choice buttons — wider to fit 9 columns */
+    .states-matrix--cb .states-matrix-head,
+    .states-matrix--cb .states-matrix-row {
+      grid-template-columns: 100px repeat(9, 1fr);
+      min-width: 1000px;
+    }
+    .states-matrix--cb .states-matrix-head-cell,
+    .states-matrix--cb .states-matrix-cell { min-width: 100px; }
+
+    /* Patterns section */
+    .cb-patterns-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 16px;
+    }
+    @media (max-width: 900px) {
+      .cb-patterns-grid { grid-template-columns: 1fr; }
+    }
+    .cb-pattern-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cb-pattern-label {
+      font-size: var(--font-size-body-s);
+      font-weight: 600;
+      color: var(--color-content-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .cb-pattern-desc {
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-secondary);
+      margin: 0;
+    }
+    .cb-pattern-frame {
+      background: var(--color-background-section);
+      border-radius: var(--corner-radius-xl);
+      padding: 24px;
+    }
+    .cb-pattern-frame--reversed {
+      background: var(--color-background-contrast);
+    }
+
+    /* ============================================================
        BUTTON DOC PAGE
        ============================================================ */
 
@@ -4188,7 +4388,672 @@
       </div>
 
     </div><!-- /#page-button -->
-    <div class="page-panel" id="page-choice-button"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Choice Button</h2><p class="section-description">Toggleable button for single or multi-select choices.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-choice-button">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Input</p>
+        <h1 class="comp-title">Choice Button</h1>
+        <p class="comp-description">Choice buttons provide a method of direct input for single or multi-select scenarios where a more graphical presentation improves the experience. Available in vertical and horizontal layouts with icon, icon bullet, or avatar accessories — and a reversed suite for use on dark surfaces.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=342-1379" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. LIVE PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Live Preview</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Interact with the controls to explore layout and accessory combinations. Click any choice button to toggle its selected state.</p>
+
+        <!-- Controls -->
+        <div class="btn-controls">
+          <!-- Layout seg control -->
+          <div class="seg-control" id="cb-layout-control" role="group" aria-label="Layout">
+            <span class="seg-control-slider" aria-hidden="true"></span>
+            <button class="seg-control-btn" data-value="vertical"   aria-pressed="true">Vertical</button>
+            <button class="seg-control-btn" data-value="horizontal" aria-pressed="false">Horizontal</button>
+          </div>
+
+          <!-- Media dropdown -->
+          <div class="dropdown" id="cb-media-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="cb-media-label">Icon</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Accessory type">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="icon"        tabindex="0">Icon</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="icon-bullet" tabindex="0">Icon Bullet</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar"      tabindex="0">Avatar</li>
+            </ul>
+          </div>
+
+          <!-- Reversed toggle -->
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch">
+              <input type="checkbox" id="cb-reversed-toggle">
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Reversed</span>
+          </label>
+        </div>
+
+        <!-- Preview card (populated by JS) -->
+        <div id="cb-preview-card-wrap">
+          <div class="cb-preview-card" id="cb-preview-card">
+            <div class="cb-preview-grid" id="cb-preview-inner">
+              <!-- populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Show code toggle -->
+        <button class="code-reveal-btn" id="cb-code-toggle" aria-expanded="false" aria-controls="cb-code-reveal">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="cb-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('cb-code-snippet').textContent)">Copy</button>
+            <pre><code id="cb-code-snippet" class="language-html"></code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           2. STATES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">States</h2>
+        <hr class="doc-rule">
+
+        <div class="states-controls-row">
+          <p class="doc-section-description" style="margin-bottom:0;">All interactive states across each configuration.</p>
+          <div class="states-controls">
+            <!-- States layout seg control -->
+            <div class="seg-control" id="cb-states-layout" role="group" aria-label="States layout">
+              <span class="seg-control-slider" aria-hidden="true"></span>
+              <button class="seg-control-btn" data-value="vertical"   aria-pressed="true">Vertical</button>
+              <button class="seg-control-btn" data-value="horizontal" aria-pressed="false">Horizontal</button>
+            </div>
+            <!-- Reversed toggle -->
+            <label class="switch-item" style="flex-shrink:0;">
+              <div class="toggle-switch">
+                <input type="checkbox" id="cb-states-reversed-toggle">
+                <div class="toggle-track">
+                  <div class="toggle-handle">
+                    <div class="toggle-icon">
+                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="switch-item-text">Reversed</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Standard states matrix -->
+        <div id="cb-states-standard">
+          <div class="states-matrix states-matrix--cb">
+            <div class="states-matrix-head">
+              <div class="states-matrix-head-spacer"></div>
+              <div class="states-matrix-head-cell">Default</div>
+              <div class="states-matrix-head-cell">Hover</div>
+              <div class="states-matrix-head-cell">Pressed</div>
+              <div class="states-matrix-head-cell">Focused</div>
+              <div class="states-matrix-head-cell">Selected</div>
+              <div class="states-matrix-head-cell">Sel+Hover</div>
+              <div class="states-matrix-head-cell">Sel+Pressed</div>
+              <div class="states-matrix-head-cell">Sel+Focused</div>
+              <div class="states-matrix-head-cell">Disabled</div>
+            </div>
+            <!-- Row: Icon -->
+            <div class="states-matrix-row" id="cb-states-icon-row">
+              <div class="states-matrix-label">Icon</div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true" style="transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true" style="outline:2px solid var(--color-border-strong);outline-offset:2px;">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" disabled>
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+            </div>
+            <!-- Row: Icon Bullet -->
+            <div class="states-matrix-row" id="cb-states-ibullet-row">
+              <div class="states-matrix-label">Icon Bullet</div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true" style="transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true" style="outline:2px solid var(--color-border-strong);outline-offset:2px;">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" disabled>
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+            </div>
+            <!-- Row: Avatar -->
+            <div class="states-matrix-row" id="cb-states-avatar-row">
+              <div class="states-matrix-label">Avatar</div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true" style="transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true" style="outline:2px solid var(--color-border-strong);outline-offset:2px;">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" disabled>
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div><!-- /#cb-states-standard -->
+
+        <!-- Reversed states matrix (hidden until toggle is on) -->
+        <div id="cb-states-reversed" hidden>
+          <div class="states-matrix states-matrix--cb states-matrix--reversed">
+            <div class="states-matrix-head">
+              <div class="states-matrix-head-spacer"></div>
+              <div class="states-matrix-head-cell">Default</div>
+              <div class="states-matrix-head-cell">Hover</div>
+              <div class="states-matrix-head-cell">Pressed</div>
+              <div class="states-matrix-head-cell">Focused</div>
+              <div class="states-matrix-head-cell">Selected</div>
+              <div class="states-matrix-head-cell">Sel+Hover</div>
+              <div class="states-matrix-head-cell">Sel+Pressed</div>
+              <div class="states-matrix-head-cell">Sel+Focused</div>
+              <div class="states-matrix-head-cell">Disabled</div>
+            </div>
+            <!-- Row: Icon (reversed) -->
+            <div class="states-matrix-row" id="cb-rev-states-icon-row">
+              <div class="states-matrix-label">Icon</div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true" style="transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+            </div>
+            <!-- Row: Icon Bullet (reversed) -->
+            <div class="states-matrix-row" id="cb-rev-states-ibullet-row">
+              <div class="states-matrix-label">Icon Bullet</div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true" style="transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;">
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
+                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+              </div>
+            </div>
+            <!-- Row: Avatar (reversed) -->
+            <div class="states-matrix-row" id="cb-rev-states-avatar-row">
+              <div class="states-matrix-label">Avatar</div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true" style="transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div><!-- /#cb-states-reversed -->
+
+      </div><!-- /.doc-section States -->
+
+      <!-- ══════════════════════════════════════════
+           3. PATTERNS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Patterns</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Common usage patterns showing choice buttons in context.</p>
+
+        <div class="cb-patterns-grid">
+          <!-- Pattern 1: Single select -->
+          <div class="cb-pattern-card">
+            <span class="cb-pattern-label">Single select</span>
+            <p class="cb-pattern-desc">2-column vertical grid for mutually exclusive choices (e.g. Day or Night?)</p>
+            <div class="cb-pattern-frame">
+              <div class="cb-preview-grid" id="cb-pattern-single">
+                <button class="choice-btn choice-btn--vertical" aria-pressed="true" data-single-group="1">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+                <button class="choice-btn choice-btn--vertical" aria-pressed="false" data-single-group="1">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Night</span></div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pattern 2: Multi select -->
+          <div class="cb-pattern-card">
+            <span class="cb-pattern-label">Multi select</span>
+            <p class="cb-pattern-desc">Stacked horizontal list for multiple selections (e.g. Select friends)</p>
+            <div class="cb-pattern-frame">
+              <div class="cb-preview-stack" id="cb-pattern-multi">
+                <button class="choice-btn choice-btn--horizontal" aria-pressed="true">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan J.</span><span class="choice-btn-sublabel">@morganj</span></div>
+                </button>
+                <button class="choice-btn choice-btn--horizontal" aria-pressed="false">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-mint-300);">AK</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Alex K.</span><span class="choice-btn-sublabel">@alexk</span></div>
+                </button>
+                <button class="choice-btn choice-btn--horizontal" aria-pressed="true">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-apricot-300);">SR</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Sam R.</span><span class="choice-btn-sublabel">@samr</span></div>
+                </button>
+                <button class="choice-btn choice-btn--horizontal" aria-pressed="false">
+                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-pool-300);">DL</div></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Dana L.</span><span class="choice-btn-sublabel">@danal</span></div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pattern 3: Reversed -->
+          <div class="cb-pattern-card">
+            <span class="cb-pattern-label">Reversed</span>
+            <p class="cb-pattern-desc">On dark surface for bottom sheet and overlay contexts</p>
+            <div class="cb-pattern-frame cb-pattern-frame--reversed">
+              <div class="cb-preview-grid" id="cb-pattern-reversed">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" aria-pressed="true" data-single-group="2">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                </button>
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" aria-pressed="false" data-single-group="2">
+                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Night</span></div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           4. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">All configurable properties exposed on the Choice Button component.</p>
+
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Values</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">layout</td>
+                <td class="td-type">vertical · horizontal</td>
+                <td class="td-subtle">vertical</td>
+                <td>Orientation of the button content. Vertical stacks accessory above label; horizontal places them side by side.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">media</td>
+                <td class="td-type">icon · icon-bullet · avatar</td>
+                <td class="td-subtle">icon</td>
+                <td>Type of leading accessory. Icon uses a raw SVG icon; icon-bullet uses the Icon Bullet component; avatar uses a circular photo or initials placeholder.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">state</td>
+                <td class="td-type">default · hover · pressed · focused · selected · disabled</td>
+                <td class="td-subtle">default</td>
+                <td>Interactive state of the button. Selected is communicated via <code style="font-family:monospace;font-size:0.9em;">aria-pressed="true"</code> and a distinct filled background.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">style</td>
+                <td class="td-type">standard · reversed</td>
+                <td class="td-subtle">standard</td>
+                <td>Surface context. Reversed uses inverse tokens pinned to light-mode primitives — for dark backgrounds and overlays. Does not re-theme in dark mode.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           5. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Choice buttons use native <code>&lt;button&gt;</code> elements with <code>aria-pressed</code> to communicate selection state to assistive technology.</p>
+
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Interaction</th><th>Behaviour</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">role="button"</td>
+                <td>Implicit on native <code style="font-family:monospace;font-size:0.9em;">&lt;button&gt;</code>. Communicates interactive nature to assistive technology.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-pressed="true/false"</td>
+                <td>Communicates selected/unselected state. Must be updated on every toggle — never omit this attribute on a choice button.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Space / Enter</td>
+                <td>Toggles selection state when the choice button has keyboard focus.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Tab</td>
+                <td>Moves focus to the next choice button (or next focusable element). Each button is individually focusable.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">disabled</td>
+                <td>Use the native <code style="font-family:monospace;font-size:0.9em;">disabled</code> attribute — not <code style="font-family:monospace;font-size:0.9em;">aria-disabled</code>. Removes the button from tab order and prevents all interaction automatically.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /#page-choice-button -->
     <div class="page-panel" id="page-chips"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Chips</h2><p class="section-description">Compact interactive elements for filtering and multi-select.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-tags"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Tags</h2><p class="section-description">Label-style elements for categorization and metadata.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-link"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Link Standalone</h2><p class="section-description">A standalone text link with optional icon, used outside of body copy.</p></div><span class="stub-pill">In progress</span></section></div>
@@ -7323,6 +8188,241 @@ ${badge}
         statesRev.hidden = !statesToggle.checked;
       });
     }
+
+    /* ══════════════════════════════════════════════════════
+       CHOICE BUTTON LIVE PREVIEW
+       ══════════════════════════════════════════════════════ */
+    (function initChoiceButtonPreview() {
+      const previewInner  = document.getElementById('cb-preview-inner');
+      const previewCard   = document.getElementById('cb-preview-card');
+      const codeToggle    = document.getElementById('cb-code-toggle');
+      const codeReveal    = document.getElementById('cb-code-reveal');
+      const codeSnippet   = document.getElementById('cb-code-snippet');
+      const layoutControl = document.getElementById('cb-layout-control');
+      const mediaPicker   = document.getElementById('cb-media-picker');
+      const reversedToggle = document.getElementById('cb-reversed-toggle');
+      if (!previewInner) return;
+
+      let currentLayout   = 'vertical';
+      let currentMedia    = 'icon';
+      let currentReversed = false;
+
+      // State for the 4 live preview buttons
+      const previewStates = [true, false, false, false];
+
+      const ITEMS = [
+        { label: 'Day',   sub: null,         icon: 'sun',  initials: 'MJ', avatarColor: 'var(--primitive-violet-300)' },
+        { label: 'Night', sub: null,         icon: 'moon', initials: 'AK', avatarColor: 'var(--primitive-mint-300)' },
+        { label: 'Pool',  sub: 'Outdoors',   icon: 'leaf', initials: 'SR', avatarColor: 'var(--primitive-apricot-300)' },
+        { label: 'Cozy',  sub: 'Indoors',    icon: 'fire', initials: 'DL', avatarColor: 'var(--primitive-pool-300)' },
+      ];
+
+      function makeAccessory(media, item, reversed) {
+        if (media === 'icon') {
+          return `<div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-${item.icon}"/></svg></div>`;
+        }
+        if (media === 'icon-bullet') {
+          const color = reversed ? 'white' : 'violet';
+          return `<div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--${color}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-${item.icon}"/></svg></span></div>`;
+        }
+        // avatar
+        return `<div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:${item.avatarColor};">${item.initials}</div></div>`;
+      }
+
+      function render() {
+        const layout   = currentLayout;
+        const media    = currentMedia;
+        const reversed = currentReversed;
+
+        const revClass  = reversed ? ' choice-btn--reversed' : '';
+        const layClass  = layout === 'horizontal' ? ' choice-btn--horizontal' : ' choice-btn--vertical';
+
+        const isGrid  = layout === 'vertical';
+        const wrapCls = isGrid ? 'cb-preview-grid' : 'cb-preview-stack';
+
+        // Update card class
+        previewCard.className = 'cb-preview-card' + (reversed ? ' cb-preview-card--reversed' : '');
+        // Update wrapper class
+        previewInner.className = wrapCls;
+
+        previewInner.innerHTML = ITEMS.map((item, i) => {
+          const pressed = previewStates[i] ? 'true' : 'false';
+          const acc = makeAccessory(media, item, reversed);
+          const subHtml = (media === 'avatar' && item.sub) ? `<span class="choice-btn-sublabel">${item.sub}</span>` : '';
+          return `<button class="choice-btn${layClass}${revClass}" aria-pressed="${pressed}" data-cb-preview-idx="${i}" tabindex="0">
+            ${acc}
+            <div class="choice-btn-text">
+              <span class="choice-btn-label">${item.label}</span>
+              ${subHtml}
+            </div>
+          </button>`;
+        }).join('');
+
+        // Re-attach click handlers
+        previewInner.querySelectorAll('[data-cb-preview-idx]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.cbPreviewIdx, 10);
+            previewStates[idx] = !previewStates[idx];
+            render();
+          });
+        });
+
+        if (codeReveal && !codeReveal.hidden) updateCode();
+      }
+
+      function generateCode() {
+        const layout   = currentLayout;
+        const media    = currentMedia;
+        const reversed = currentReversed;
+
+        const layClass  = layout === 'horizontal' ? 'choice-btn--horizontal' : 'choice-btn--vertical';
+        const revClass  = reversed ? ' choice-btn--reversed' : '';
+
+        let accessoryComment = '';
+        let accessoryMarkup  = '';
+        if (media === 'icon') {
+          accessoryComment = '<!-- Icon accessory -->';
+          accessoryMarkup  = `  <div class="choice-btn-accessory">\n    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg>\n  </div>`;
+        } else if (media === 'icon-bullet') {
+          accessoryComment = '<!-- Icon Bullet accessory -->';
+          accessoryMarkup  = `  <div class="choice-btn-accessory">\n    <span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true">\n      <svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg>\n    </span>\n  </div>`;
+        } else {
+          accessoryComment = '<!-- Avatar accessory -->';
+          accessoryMarkup  = `  <div class="choice-btn-accessory">\n    <div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div>\n  </div>`;
+        }
+
+        return `${accessoryComment}
+<!-- aria-pressed toggles selection state -->
+<button class="choice-btn ${layClass}${revClass}" aria-pressed="false">
+${accessoryMarkup}
+  <div class="choice-btn-text">
+    <span class="choice-btn-label">Label</span>
+  </div>
+</button>
+
+<!-- Selected state -->
+<button class="choice-btn ${layClass}${revClass}" aria-pressed="true">
+${accessoryMarkup}
+  <div class="choice-btn-text">
+    <span class="choice-btn-label">Label</span>
+  </div>
+</button>
+
+<!-- Disabled state -->
+<button class="choice-btn ${layClass}${revClass}" aria-pressed="false" disabled>
+${accessoryMarkup}
+  <div class="choice-btn-text">
+    <span class="choice-btn-label">Label</span>
+  </div>
+</button>`;
+      }
+
+      function updateCode() {
+        if (!codeSnippet) return;
+        codeSnippet.textContent = generateCode();
+        if (window.Prism) Prism.highlightElement(codeSnippet);
+      }
+
+      // Code toggle
+      if (codeToggle && codeReveal) {
+        codeToggle.addEventListener('click', () => {
+          const isOpen = !codeReveal.hidden;
+          codeReveal.hidden = isOpen;
+          codeToggle.setAttribute('aria-expanded', String(!isOpen));
+          codeToggle.querySelector('.code-reveal-btn-label').textContent = isOpen ? 'Show code' : 'Hide code';
+          if (!isOpen) updateCode();
+        });
+      }
+
+      // Layout seg control
+      initSegControl(layoutControl, value => {
+        currentLayout = value;
+        render();
+      });
+
+      // Media dropdown
+      initDropdown(mediaPicker, value => {
+        currentMedia = value;
+        document.getElementById('cb-media-label').textContent =
+          mediaPicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
+        render();
+      });
+
+      // Reversed toggle
+      if (reversedToggle) {
+        reversedToggle.addEventListener('change', () => {
+          currentReversed = reversedToggle.checked;
+          render();
+        });
+      }
+
+      render();
+    })();
+
+    /* ══════════════════════════════════════════════════════
+       CHOICE BUTTON STATES SECTION CONTROLS
+       ══════════════════════════════════════════════════════ */
+    (function initCbStates() {
+      const statesLayout  = document.getElementById('cb-states-layout');
+      const statesRevToggle = document.getElementById('cb-states-reversed-toggle');
+      const statesStd     = document.getElementById('cb-states-standard');
+      const statesRev     = document.getElementById('cb-states-reversed');
+
+      if (!statesLayout) return;
+
+      function applyLayout(value) {
+        // Swap layout class on all choice buttons in both matrices
+        [statesStd, statesRev].forEach(matrix => {
+          if (!matrix) return;
+          matrix.querySelectorAll('.choice-btn').forEach(btn => {
+            btn.classList.toggle('choice-btn--vertical',   value === 'vertical');
+            btn.classList.toggle('choice-btn--horizontal', value === 'horizontal');
+          });
+        });
+      }
+
+      initSegControl(statesLayout, value => {
+        applyLayout(value);
+      });
+
+      if (statesRevToggle) {
+        statesRevToggle.addEventListener('change', () => {
+          if (statesRevToggle.checked) {
+            statesStd.hidden = true;
+            statesRev.hidden = false;
+          } else {
+            statesStd.hidden = false;
+            statesRev.hidden = true;
+          }
+        });
+      }
+    })();
+
+    /* ══════════════════════════════════════════════════════
+       CHOICE BUTTON PATTERNS — interactive toggles
+       ══════════════════════════════════════════════════════ */
+    (function initCbPatterns() {
+      // Multi-select: independent toggles
+      const multiSelect = document.getElementById('cb-pattern-multi');
+      if (multiSelect) {
+        multiSelect.querySelectorAll('.choice-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const cur = btn.getAttribute('aria-pressed') === 'true';
+            btn.setAttribute('aria-pressed', cur ? 'false' : 'true');
+          });
+        });
+      }
+
+      // Single-select: radio-like groups by data-single-group attribute
+      document.querySelectorAll('[data-single-group]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const group = btn.dataset.singleGroup;
+          document.querySelectorAll(`[data-single-group="${group}"]`).forEach(b => {
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+          });
+        });
+      });
+    })();
 
 </script>
 
