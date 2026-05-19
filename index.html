@@ -3521,6 +3521,266 @@
       color: var(--color-content-subtle);
       line-height: var(--font-leading-body-s);
     }
+
+    /* ─────────────────────────────────────────
+       BOTTOM SHEET
+    ───────────────────────────────────────── */
+
+    /* Component root */
+    .bottom-sheet {
+      background: var(--color-background-page);
+      border-radius: var(--corner-radius-xl) var(--corner-radius-xl) 0 0;
+      box-shadow: 0 -2px 24px rgba(0, 11, 30, 0.14);
+      padding: var(--space-500) var(--space-500) var(--space-600);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-500);
+      align-items: center;
+      width: 100%;
+    }
+    .bottom-sheet--reversed {
+      background: var(--color-background-contrast);
+    }
+    /* Standalone card — all four corners rounded, for docs/variants gallery */
+    .bottom-sheet--card {
+      border-radius: var(--corner-radius-xl);
+      box-shadow: 0 0 16px rgba(0, 11, 30, 0.14);
+    }
+
+    /* Grabber */
+    .bs-grabber {
+      width: 44px;
+      height: 4px;
+      background: var(--primitive-ink-300);
+      border-radius: var(--corner-radius-round);
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    /* Content block (media + title + body) */
+    .bs-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-400);
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    /* Leading media — logo badge */
+    .bs-media-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--corner-radius-round);
+      background: var(--color-background-contrast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .bottom-sheet--reversed .bs-media-logo {
+      background: var(--color-inverse);
+    }
+    .bs-media-logo img {
+      width: 19px;
+      height: 19px;
+      display: block;
+    }
+
+    /* Leading media — icon bullet */
+    .bs-media-icon-bullet {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--corner-radius-round);
+      background: var(--primitive-violet-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .bottom-sheet--reversed .bs-media-icon-bullet {
+      background: var(--primitive-pool-300);
+    }
+    .bs-media-icon-bullet svg {
+      width: 24px;
+      height: 24px;
+      color: var(--primitive-ink-900); /* always dark — both bullet bg colours are light */
+    }
+
+    /* Leading media — avatar */
+    .bs-media-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    /* Typography */
+    .bs-title {
+      font-family: var(--font-family-serif);
+      font-weight: 700;
+      font-size: var(--font-size-heading-l);
+      line-height: var(--font-leading-heading-l);
+      color: var(--color-content-default);
+      width: 100%;
+    }
+    .bs-body {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+      color: var(--color-content-default);
+      width: 100%;
+    }
+    .bottom-sheet--reversed .bs-title,
+    .bottom-sheet--reversed .bs-body {
+      color: var(--color-inverse);
+    }
+
+    /* Button group */
+    .bs-actions {
+      display: flex;
+      gap: var(--space-400);
+      width: 100%;
+      min-height: 80px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .bs-btn {
+      flex: 1;
+      height: 48px;
+      border-radius: 180px;
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-m);
+      line-height: 1;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0 var(--space-400);
+      transition: opacity 150ms ease;
+    }
+    .bs-btn:hover:not(:disabled) { opacity: 0.8; }
+    .bs-btn-filled {
+      background: var(--color-action-default);
+      color: var(--color-inverse);
+      border: none;
+    }
+    .bs-btn-outlined {
+      background: transparent;
+      border: 1.5px solid var(--color-border-strong);
+      color: var(--color-content-default);
+    }
+    .bottom-sheet--reversed .bs-btn-filled {
+      background: var(--color-action-inverse-default);
+      color: var(--color-content-default);
+      border: none;
+    }
+    .bottom-sheet--reversed .bs-btn-outlined {
+      border-color: var(--color-border-inverse);
+      color: var(--color-inverse);
+      background: transparent;
+    }
+
+    /* ── Phone mock override for bottom sheet ── */
+    #bs-phone-mock {
+      position: relative;
+      padding: 0 !important;
+      height: 480px;
+    }
+    .bs-phone-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: opacity 0.3s ease;
+    }
+    .bs-scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 38, 0.64);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .bs-scrim.is-visible {
+      opacity: 1;
+      pointer-events: all;
+      cursor: pointer;
+    }
+    .bs-sheet-demo {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: translateY(110%);
+      transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+      will-change: transform;
+      z-index: 2;
+    }
+    .bs-sheet-demo.is-open {
+      transform: translateY(0);
+    }
+
+    /* Retrigger button */
+    .bs-retrigger {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-200);
+      height: 40px;
+      padding: 0 var(--space-400);
+      border-radius: 180px;
+      border: 1.5px solid var(--color-border-default);
+      color: var(--color-content-subtle);
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      line-height: 1;
+      cursor: pointer;
+      background: var(--color-background-page);
+      transition: border-color 150ms ease, color 150ms ease;
+      margin-top: var(--space-400);
+    }
+    .bs-retrigger:hover:not(:disabled) {
+      border-color: var(--color-border-strong);
+      color: var(--color-content-default);
+    }
+    .bs-retrigger:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .bs-retrigger svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Variants grid */
+    .bs-variants-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-500);
+      max-width: 760px;
+    }
+    .bs-variant-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-200);
+    }
+    .bs-variant-label {
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-subtle);
+      line-height: var(--font-leading-body-s);
+    }
+    @media (max-width: 640px) {
+      .bs-variants-grid { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -6353,7 +6613,414 @@
 
     <!-- Overlays -->
     <div class="page-panel" id="page-modal"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Modal Dialog</h2><p class="section-description">Focused overlay requiring user acknowledgement or action.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-bottom-sheet"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Bottom Sheet</h2><p class="section-description">Slide-up panel for supplementary content on mobile.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-bottom-sheet">
+
+      <!-- ── Component header ──────────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Overlays</p>
+        <h1 class="comp-title">Bottom Sheet</h1>
+        <p class="comp-description">Bottom sheets slide up from the screen edge to display supplementary content or actions. Triggered by a user action, they float above the current context on a scrim and can be dismissed by tapping the scrim or completing an action. Both modal and non-modal configurations are supported.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=339-3395" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══ 1. PREVIEW ══ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="states-controls-row" style="margin-bottom:var(--space-600);">
+          <p class="doc-section-description" style="margin-bottom:0;">Tap a button or the scrim to dismiss. Use "Show again" to retrigger.</p>
+          <div class="states-controls">
+            <label class="switch-item" style="flex-shrink:0;">
+              <input type="checkbox" class="switch-input" id="bs-reversed-toggle">
+              <span class="switch-track" aria-hidden="true"></span>
+              <span class="switch-item-text">Reversed</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="preview-canvas" style="padding:var(--space-800) var(--space-600);">
+          <div style="display:flex;flex-direction:column;align-items:center;">
+
+            <!-- Phone mock -->
+            <div class="phone-mock" id="bs-phone-mock" aria-label="Phone preview">
+              <img class="bs-phone-bg" src="assets/bg-dunes-demo.png" alt="">
+              <div class="bs-scrim is-visible" id="bs-scrim" role="button" aria-label="Close sheet" tabindex="-1"></div>
+
+              <!-- Animated bottom sheet -->
+              <div class="bottom-sheet bs-sheet-demo is-open" id="bs-sheet-demo"
+                   role="dialog" aria-modal="true" aria-label="Update available">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <div class="bs-media">
+                    <div class="bs-media-logo" id="bs-demo-media-logo">
+                      <img src="assets/unica-mark-dark.png" id="bs-logo-img" alt="ůnica">
+                    </div>
+                  </div>
+                  <h2 class="bs-title">Update available</h2>
+                  <p class="bs-body">A new version of the app is ready to install — performance improvements and security fixes included.</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined" data-bs-dismiss>Not now</button>
+                  <button class="bs-btn bs-btn-filled" data-bs-dismiss>Update</button>
+                </div>
+              </div>
+            </div><!-- /phone mock -->
+
+            <!-- Retrigger -->
+            <button class="bs-retrigger" id="bs-retrigger" disabled aria-label="Show bottom sheet again">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 12V4M4 7.5L8 3.5L12 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Show again
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- code reveal -->
+      <button class="code-reveal-btn" id="bs-code-toggle" aria-expanded="false" aria-controls="bs-code-reveal" onclick="toggleCodeReveal(this,'bs-code-reveal')">
+        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+        <span class="code-reveal-btn-label">Show code</span>
+      </button>
+      <div class="code-reveal" id="bs-code-reveal" hidden>
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+          <pre><code class="language-html">&lt;!-- Scrim (sibling of the sheet, inside the positioned container) --&gt;
+&lt;div class="bs-scrim is-visible" id="bs-scrim"
+     role="button" aria-label="Close sheet" tabindex="-1"&gt;&lt;/div&gt;
+
+&lt;!-- Bottom Sheet --&gt;
+&lt;div class="bottom-sheet bs-sheet-demo is-open"
+     role="dialog" aria-modal="true" aria-label="Update available"&gt;
+  &lt;div class="bs-grabber"&gt;&lt;/div&gt;
+
+  &lt;div class="bs-content"&gt;
+    &lt;!-- Logo leading media --&gt;
+    &lt;div class="bs-media"&gt;
+      &lt;div class="bs-media-logo"&gt;
+        &lt;img src="unica-mark-dark.png" alt="ůnica"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;h2 class="bs-title"&gt;Update available&lt;/h2&gt;
+    &lt;p class="bs-body"&gt;A new version of the app is ready to install.&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div class="bs-actions"&gt;
+    &lt;button class="bs-btn bs-btn-outlined"&gt;Not now&lt;/button&gt;
+    &lt;button class="bs-btn bs-btn-filled"&gt;Update&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Reversed (dark surfaces) --&gt;
+&lt;div class="bottom-sheet bottom-sheet--reversed bs-sheet-demo"
+     role="dialog" aria-modal="true"&gt;
+  &lt;div class="bs-grabber"&gt;&lt;/div&gt;
+  &lt;div class="bs-content"&gt;
+    &lt;div class="bs-media"&gt;
+      &lt;div class="bs-media-logo"&gt;&lt;img src="unica-mark.png" alt=""&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;h2 class="bs-title"&gt;Title&lt;/h2&gt;
+    &lt;p class="bs-body"&gt;An in-app message&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="bs-actions"&gt;
+    &lt;button class="bs-btn bs-btn-outlined"&gt;Cancel&lt;/button&gt;
+    &lt;button class="bs-btn bs-btn-filled"&gt;Confirm&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- ══ 2. VARIANTS ══ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+
+        <div class="states-controls-row" style="margin-bottom:var(--space-600);">
+          <p class="doc-section-description" style="margin-bottom:0;">Four leading-media variants across both colour modes.</p>
+          <div class="states-controls">
+            <label class="switch-item" style="flex-shrink:0;">
+              <input type="checkbox" class="switch-input" id="bs-var-reversed-toggle">
+              <span class="switch-track" aria-hidden="true"></span>
+              <span class="switch-item-text">Reversed</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Standard variants -->
+        <div id="bs-variants-standard">
+          <div class="bs-variants-grid">
+
+            <div class="bs-variant-item">
+              <p class="bs-variant-label">Logo</p>
+              <div class="bottom-sheet bottom-sheet--card">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <div class="bs-media"><div class="bs-media-logo"><img src="assets/unica-mark-dark.png" alt=""></div></div>
+                  <p class="bs-title">Title</p>
+                  <p class="bs-body">An in-app message</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined">Cancel</button>
+                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="bs-variant-item">
+              <p class="bs-variant-label">Icon Bullet</p>
+              <div class="bottom-sheet bottom-sheet--card">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <div class="bs-media">
+                    <div class="bs-media-icon-bullet">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L4.09 12.69C3.74 13.11 3.57 13.32 3.57 13.49C3.56 13.65 3.63 13.79 3.75 13.89C3.89 14 4.16 14 4.71 14H12L11 22L19.91 11.31C20.26 10.89 20.43 10.68 20.43 10.51C20.43 10.35 20.37 10.21 20.25 10.11C20.11 10 19.84 10 19.29 10H12L13 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </div>
+                  <p class="bs-title">Title</p>
+                  <p class="bs-body">An in-app message</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined">Cancel</button>
+                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="bs-variant-item">
+              <p class="bs-variant-label">Avatar</p>
+              <div class="bottom-sheet bottom-sheet--card">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <div class="bs-media"><img class="bs-media-avatar" src="assets/avatars/avatar-1.png" alt=""></div>
+                  <p class="bs-title">Title</p>
+                  <p class="bs-body">An in-app message</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined">Cancel</button>
+                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="bs-variant-item">
+              <p class="bs-variant-label">No media</p>
+              <div class="bottom-sheet bottom-sheet--card">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <p class="bs-title">Title</p>
+                  <p class="bs-body">An in-app message</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined">Cancel</button>
+                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /bs-variants-standard -->
+
+        <!-- Reversed variants -->
+        <div id="bs-variants-reversed" hidden>
+          <div class="bs-variants-grid">
+
+            <div class="bs-variant-item">
+              <p class="bs-variant-label">Logo</p>
+              <div class="bottom-sheet bottom-sheet--reversed bottom-sheet--card">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <div class="bs-media"><div class="bs-media-logo"><img src="assets/unica-mark.png" alt=""></div></div>
+                  <p class="bs-title">Title</p>
+                  <p class="bs-body">An in-app message</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined">Cancel</button>
+                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="bs-variant-item">
+              <p class="bs-variant-label">Icon Bullet</p>
+              <div class="bottom-sheet bottom-sheet--reversed bottom-sheet--card">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <div class="bs-media">
+                    <div class="bs-media-icon-bullet">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L4.09 12.69C3.74 13.11 3.57 13.32 3.57 13.49C3.56 13.65 3.63 13.79 3.75 13.89C3.89 14 4.16 14 4.71 14H12L11 22L19.91 11.31C20.26 10.89 20.43 10.68 20.43 10.51C20.43 10.35 20.37 10.21 20.25 10.11C20.11 10 19.84 10 19.29 10H12L13 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </div>
+                  <p class="bs-title">Title</p>
+                  <p class="bs-body">An in-app message</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined">Cancel</button>
+                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="bs-variant-item">
+              <p class="bs-variant-label">Avatar</p>
+              <div class="bottom-sheet bottom-sheet--reversed bottom-sheet--card">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <div class="bs-media"><img class="bs-media-avatar" src="assets/avatars/avatar-1.png" alt=""></div>
+                  <p class="bs-title">Title</p>
+                  <p class="bs-body">An in-app message</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined">Cancel</button>
+                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="bs-variant-item">
+              <p class="bs-variant-label">No media</p>
+              <div class="bottom-sheet bottom-sheet--reversed bottom-sheet--card">
+                <div class="bs-grabber"></div>
+                <div class="bs-content">
+                  <p class="bs-title">Title</p>
+                  <p class="bs-body">An in-app message</p>
+                </div>
+                <div class="bs-actions">
+                  <button class="bs-btn bs-btn-outlined">Cancel</button>
+                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /bs-variants-reversed -->
+
+      </div><!-- /variants section -->
+
+      <!-- ══ 3. ACCESSIBILITY ══ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body" style="margin-bottom:var(--space-500);">Bottom sheets use the <code style="font-family:monospace;font-size:.9em;">dialog</code> role with <code style="font-family:monospace;font-size:.9em;">aria-modal="true"</code> to create a modal context. Focus should be trapped inside the sheet while open and returned to the trigger element on close.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Attribute / Pattern</th><th>Usage</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">role="dialog"</td>
+                <td>Applied to the sheet container. Tells screen readers this is a dialog and pauses interaction with the background content.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-modal="true"</td>
+                <td>Signals that content behind the sheet is inert. Prevents screen readers from navigating outside the sheet while it is open.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-label / aria-labelledby</td>
+                <td>Names the dialog. Use <code style="font-family:monospace;font-size:.9em;">aria-label</code> when the sheet has no visible heading; use <code style="font-family:monospace;font-size:.9em;">aria-labelledby</code> pointing at <code style="font-family:monospace;font-size:.9em;">.bs-title</code> when a heading is present.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Focus management</td>
+                <td>Move focus into the sheet on open (first focusable element or the dialog container). Loop focus within the sheet. On close, restore focus to the trigger element.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Escape key</td>
+                <td>Always closes the sheet and returns focus to the trigger. This is the standard dialog dismissal pattern expected on all platforms.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Scrim / backdrop</td>
+                <td>Make the scrim keyboard-accessible via Escape or a visible "Close" button. The scrim itself can be a <code style="font-family:monospace;font-size:.9em;">button</code> element or handle <code style="font-family:monospace;font-size:.9em;">click</code> with a complementary keyboard listener.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">inert</td>
+                <td>Apply <code style="font-family:monospace;font-size:.9em;">inert</code> to all page content behind the scrim when the sheet is open. Prevents background focus and screen reader traversal without needing <code style="font-family:monospace;font-size:.9em;">aria-hidden</code> on every sibling.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══ 4. PROPERTIES ══ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Class</th><th>Values</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">bottom-sheet</td>
+                <td class="td-subtle">—</td>
+                <td>Root container. Anchors to the bottom edge of its positioned parent. Applies top corner radius, padding, vertical gap, and elevation shadow.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bottom-sheet--reversed</td>
+                <td class="td-subtle">—</td>
+                <td>Dark-surface variant. Switches background to <code style="font-family:monospace;font-size:.9em;">color-background-contrast</code> and inverts all text, button, and media accent tokens.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bottom-sheet--card</td>
+                <td class="td-subtle">—</td>
+                <td>Standalone display modifier. Rounds all four corners for use in documentation, onboarding previews, or any context where the sheet is not anchored to a screen edge.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-grabber</td>
+                <td class="td-subtle">—</td>
+                <td>44 × 4 px pill handle, centered at the top of the sheet. Uses <code style="font-family:monospace;font-size:.9em;">primitive-ink-300</code> — same in both modes, as it sits against the sheet background rather than the scrim.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-media-logo</td>
+                <td class="td-subtle">—</td>
+                <td>48 px circular logo badge. Background is <code style="font-family:monospace;font-size:.9em;">color-background-contrast</code> (dark) in standard mode and <code style="font-family:monospace;font-size:.9em;">color-inverse</code> (white) in reversed mode — maintaining contrast for the enclosed brand mark.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-media-icon-bullet</td>
+                <td class="td-subtle">—</td>
+                <td>48 px circular icon container. Background: <code style="font-family:monospace;font-size:.9em;">primitive-violet-300</code> (standard) · <code style="font-family:monospace;font-size:.9em;">primitive-pool-300</code> (reversed). Both are light-value colours — icon always uses <code style="font-family:monospace;font-size:.9em;">primitive-ink-900</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-media-avatar</td>
+                <td class="td-subtle">—</td>
+                <td>48 px circular avatar <code style="font-family:monospace;font-size:.9em;">&lt;img&gt;</code>. Apply <code style="font-family:monospace;font-size:.9em;">object-fit: cover</code> to preserve proportions regardless of source dimensions.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-title</td>
+                <td class="td-subtle">—</td>
+                <td>Heading text. Serif typeface, bold, <code style="font-family:monospace;font-size:.9em;">font-size-heading-l</code> (32 px / 40 lh). Inverts to <code style="font-family:monospace;font-size:.9em;">color-inverse</code> in reversed mode.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-body</td>
+                <td class="td-subtle">—</td>
+                <td>Supporting body copy. Sans-serif, <code style="font-family:monospace;font-size:.9em;">font-size-body-m</code>, regular weight. Inverts to <code style="font-family:monospace;font-size:.9em;">color-inverse</code> in reversed mode.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-actions</td>
+                <td class="td-subtle">—</td>
+                <td>Horizontal button group container. 80 px min-height, flex row, 16 px gap. Each child <code style="font-family:monospace;font-size:.9em;">bs-btn</code> takes equal width via <code style="font-family:monospace;font-size:.9em;">flex: 1</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-btn-filled</td>
+                <td class="td-subtle">—</td>
+                <td>Primary action. Background <code style="font-family:monospace;font-size:.9em;">color-action-default</code>; reversed: <code style="font-family:monospace;font-size:.9em;">color-action-inverse-default</code> (white) with dark label.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">bs-btn-outlined</td>
+                <td class="td-subtle">—</td>
+                <td>Secondary action. Border <code style="font-family:monospace;font-size:.9em;">color-border-strong</code>, label <code style="font-family:monospace;font-size:.9em;">color-content-default</code>; reversed: <code style="font-family:monospace;font-size:.9em;">color-border-inverse</code> with <code style="font-family:monospace;font-size:.9em;">color-inverse</code> label.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /page-bottom-sheet -->
     <div class="page-panel" id="page-date-picker"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Date Picker Calendar</h2><p class="section-description">Calendar overlay for single and range date selection.</p></div><span class="stub-pill">In progress</span></section></div>
 
     <!-- Content -->
@@ -8110,6 +8777,71 @@ ${accessoryMarkup}
     /* ══════════════════════════════════════════════════════
        CHOICE BUTTON PATTERNS — interactive toggles
        ══════════════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════════════════
+       BOTTOM SHEET DEMO
+       ══════════════════════════════════════════════════════ */
+    (function initBsDemo() {
+      const phone      = document.getElementById('bs-phone-mock');
+      const scrim      = document.getElementById('bs-scrim');
+      const sheet      = document.getElementById('bs-sheet-demo');
+      const retrigger  = document.getElementById('bs-retrigger');
+      const revToggle  = document.getElementById('bs-reversed-toggle');
+      const varRevToggle = document.getElementById('bs-var-reversed-toggle');
+      const varsStd    = document.getElementById('bs-variants-standard');
+      const varsRev    = document.getElementById('bs-variants-reversed');
+
+      if (!phone) return;
+
+      function bsOpen() {
+        sheet.classList.add('is-open');
+        scrim.classList.add('is-visible');
+        retrigger.disabled = true;
+      }
+
+      function bsClose() {
+        sheet.classList.remove('is-open');
+        scrim.classList.remove('is-visible');
+        // Re-enable retrigger after animation completes
+        setTimeout(() => { retrigger.disabled = false; }, 420);
+      }
+
+      retrigger.addEventListener('click', bsOpen);
+      scrim.addEventListener('click', bsClose);
+
+      // Keyboard: Escape closes the sheet
+      phone.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && sheet.classList.contains('is-open')) bsClose();
+      });
+
+      // Dismiss buttons inside the sheet
+      phone.querySelectorAll('[data-bs-dismiss]').forEach(btn => {
+        btn.addEventListener('click', bsClose);
+      });
+
+      // ── Preview reversed toggle ──
+      if (revToggle) {
+        revToggle.addEventListener('change', () => {
+          const rev = revToggle.checked;
+          sheet.classList.toggle('bottom-sheet--reversed', rev);
+          // Swap logo mark — dark mark on light bg vs light mark on dark bg
+          const logoImg = document.getElementById('bs-logo-img');
+          if (logoImg) logoImg.src = rev ? 'assets/unica-mark.png' : 'assets/unica-mark-dark.png';
+          // Dim/undim the background photo for context
+          const photoBg = phone.querySelector('.bs-phone-bg');
+          if (photoBg) photoBg.style.opacity = rev ? '0.3' : '1';
+          phone.style.background = rev ? 'var(--color-background-contrast)' : '';
+        });
+      }
+
+      // ── Variants reversed toggle ──
+      if (varRevToggle) {
+        varRevToggle.addEventListener('change', () => {
+          varsStd.hidden =  varRevToggle.checked;
+          varsRev.hidden = !varRevToggle.checked;
+        });
+      }
+    })();
+
     (function initCbPatterns() {
       // Multi-select: independent toggles
       const multiSelect = document.getElementById('cb-pattern-multi');
