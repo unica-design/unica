@@ -3084,6 +3084,11 @@
     .variants-table--reversed td        { background: var(--color-background-contrast); border-bottom-color: var(--primitive-ink-700); }
     .variants-table--reversed th        { color: var(--primitive-ink-500); }
     .variants-table--reversed td:first-child { color: var(--primitive-ink-500); }
+    /* Rounded container for any reversed variants swatch — universal */
+    .table-wrap:has(.variants-table--reversed) {
+      border-radius: var(--corner-radius-m);
+      overflow: hidden;
+    }
 
     /* ============================================================
        BUTTON DOC PAGE
