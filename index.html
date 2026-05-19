@@ -3686,10 +3686,22 @@
     }
 
     /* ── Phone mock override for bottom sheet ── */
+    /* Phone mock — always rendered as a proper phone, regardless of viewport */
     #bs-phone-mock {
       position: relative;
       padding: 0 !important;
       height: 600px;
+      /* Override the responsive phone-mock styles to always look like a phone */
+      width: 100%;
+      max-width: 375px;
+      border-radius: 24px;
+      background: var(--color-background-page);
+      box-shadow: 0 1px 8px 0 rgba(8, 5, 13, 0.25);
+      overflow: hidden;
+    }
+    [data-theme="dark"] #bs-phone-mock {
+      box-shadow: none;
+      border: var(--border-width-default) solid var(--color-border-default);
     }
     .bs-phone-bg {
       position: absolute;
@@ -3699,7 +3711,9 @@
       object-fit: cover;
       object-position: center;
       transition: opacity 0.3s ease;
+      display: block;
     }
+    /* Default scrim: dark (for light/standard sheet) */
     .bs-scrim {
       position: absolute;
       inset: 0;
@@ -3707,7 +3721,7 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, background 0.3s ease;
       pointer-events: none;
       z-index: 1;
     }
@@ -3715,6 +3729,10 @@
       opacity: 1;
       pointer-events: all;
       cursor: pointer;
+    }
+    /* Light scrim for reversed (dark-background) mode */
+    .bs-scrim--light {
+      background: rgba(255, 255, 255, 0.20);
     }
     .bs-sheet-demo {
       position: absolute;
@@ -3768,12 +3786,6 @@
       opacity: 1;
       pointer-events: all;
     }
-    .bs-retrigger svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
-
     /* Btn inside bs-actions fills available width */
     .bs-actions .btn { flex: 1; }
 
@@ -6683,10 +6695,10 @@
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
 
-        <p class="doc-section-description" style="margin-bottom:var(--space-600);">Tap a choice, the grabber, or the scrim to dismiss. Pick Day or Night to switch colour modes.</p>
+        <p class="doc-section-description" style="margin-bottom:var(--space-600);">Tap a choice, the grabber, or the scrim to dismiss. Day uses the default sheet; Night switches to the reversed version for stronger contrast and emphasis.</p>
 
-        <div class="preview-canvas" style="padding:var(--space-800) var(--space-600);">
-          <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="preview-canvas" style="padding:var(--space-800) var(--space-600); overflow:visible;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:375px;">
 
             <!-- Phone mock -->
             <div class="phone-mock" id="bs-phone-mock" aria-label="Phone preview">
@@ -6735,7 +6747,6 @@
 
               <!-- Retrigger — overlaid inside phone mock -->
               <button class="bs-retrigger" id="bs-retrigger" disabled aria-label="Show bottom sheet again">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.66-5.66M20 12a8 8 0 0 1-13.66 5.66M20 6v4h-4M4 18v-4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Show again
               </button>
             </div><!-- /phone mock -->
@@ -6802,7 +6813,7 @@
         <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
 
-        <p class="doc-section-description" style="margin-bottom:var(--space-600);">Add a logo, icon, or avatar to give in-app messages visual context and brand presence. The reversed version is available for dark-themed or high-contrast surfaces. Select Day or Night in the preview above to switch colour modes.</p>
+        <p class="doc-section-description" style="margin-bottom:var(--space-600);">Add a logo, icon, or avatar to give in-app messages visual context and brand presence. The reversed version creates a high-contrast surface for more emphatic or impactful messaging. Select Day or Night in the preview to toggle between them.</p>
 
         <!-- Standard variants -->
         <div id="bs-variants-standard">
@@ -8854,10 +8865,15 @@ ${accessoryMarkup}
           doneBtn.className = 'btn btn--large ' + (rev ? 'btn-filled-reversed' : 'btn-filled');
           doneBtn.setAttribute('data-bs-dismiss', '');
         }
-        // Background photo
+        // Phone background — fills edge-to-edge behind image to prevent sliver
+        phone.style.background = rev
+          ? 'var(--color-background-contrast)'
+          : 'var(--color-background-page)';
+        // Background photo: dim when reversed so dark surface reads clearly
         const photoBg = phone.querySelector('.bs-phone-bg');
-        if (photoBg) photoBg.style.opacity = rev ? '0.25' : '1';
-        phone.style.background = rev ? 'var(--color-background-contrast)' : '';
+        if (photoBg) photoBg.style.opacity = rev ? '0.18' : '1';
+        // Scrim: dark for standard, light for reversed
+        scrim.classList.toggle('bs-scrim--light', rev);
         // Variants grid
         if (varsStd) varsStd.hidden = rev;
         if (varsRev) varsRev.hidden = !rev;
