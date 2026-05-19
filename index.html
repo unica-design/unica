@@ -2907,10 +2907,11 @@
       justify-content: center;
     }
 
-    /* Horizontal layout */
+    /* Horizontal layout — wider gap between accessory and text per Figma */
     .choice-btn--horizontal {
       flex-direction: row;
       align-items: center;
+      gap: var(--space-400);
     }
 
     .choice-btn-text {
@@ -2940,7 +2941,8 @@
       justify-content: center;
       flex-shrink: 0;
     }
-    .choice-btn-accessory svg {
+    /* Direct SVG only — icon-bullets handle their own colors via primitives */
+    .choice-btn-accessory > svg {
       width: 24px; height: 24px;
       color: var(--color-content-default);
     }
@@ -3011,8 +3013,7 @@
     .choice-btn--reversed:disabled .choice-btn-sublabel { color: var(--color-content-inverse-disabled); }
 
     /* Avatar accessory size */
-    .choice-btn--horizontal .choice-btn-accessory .avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
-    .choice-btn-avatar-placeholder { width: 48px; height: 48px; border-radius: 50%; background: var(--color-background-container); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px; font-weight:600; color:var(--color-content-default); }
+    .choice-btn-avatar-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; display: block; }
 
     /* Live preview card */
     .cb-preview-card {
@@ -3551,7 +3552,7 @@
     </symbol>
     <!-- moon: inset(8.33% 13.44% 8.32% 8.33%) → translate(2.0 2.0) -->
     <symbol id="ico-moon" viewBox="0 0 24 24" fill="none">
-      <g transform="translate(2.0 2.0)">
+      <g transform="translate(2.6 2.5)">
         <path d="M10.2008 0.00217141C7.68268 2.82154 7.12852 7.04589 9.12175 10.4983C11.119 13.9575 15.066 15.5892 18.7731 14.8069C17.9231 16.3621 16.6488 17.7113 15.0016 18.6623L14.5495 18.9084C9.99161 21.2407 4.39113 19.7394 1.61003 15.4406L1.34147 15.0022C-1.33362 10.3688 0.120419 4.48441 4.56218 1.61057L5.00163 1.34202C6.64097 0.395553 8.43707 -0.0346234 10.2008 0.00217141ZM7.22038 1.96799C6.71986 2.14198 6.22825 2.36568 5.75163 2.64084C1.68614 4.98805 0.293092 10.1867 2.6403 14.2522C4.98759 18.3174 10.1862 19.7107 14.2516 17.3635C14.7351 17.0844 15.1791 16.7637 15.5846 16.4114C12.4476 16.0082 9.5265 14.2006 7.82194 11.2483C6.1222 8.30412 6.01178 4.88095 7.22038 1.96799Z" fill="currentColor"/>
       </g>
     </symbol>
@@ -4632,55 +4633,55 @@
               <div class="states-matrix-label">Avatar</div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true" style="transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true" style="outline:2px solid var(--color-border-strong);outline-offset:2px;">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
@@ -4824,55 +4825,55 @@
               <div class="states-matrix-label">Avatar</div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true" style="transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
               <div class="states-matrix-cell">
                 <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
@@ -4916,19 +4917,19 @@
             <div class="cb-pattern-frame">
               <div class="cb-preview-stack" id="cb-pattern-multi">
                 <button class="choice-btn choice-btn--horizontal" aria-pressed="true">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan J.</span><span class="choice-btn-sublabel">@morganj</span></div>
                 </button>
                 <button class="choice-btn choice-btn--horizontal" aria-pressed="false">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-mint-300);">AK</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-2.png" alt="Marcus"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Alex K.</span><span class="choice-btn-sublabel">@alexk</span></div>
                 </button>
                 <button class="choice-btn choice-btn--horizontal" aria-pressed="true">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-apricot-300);">SR</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-3.png" alt="Andre"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Sam R.</span><span class="choice-btn-sublabel">@samr</span></div>
                 </button>
                 <button class="choice-btn choice-btn--horizontal" aria-pressed="false">
-                  <div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:var(--primitive-pool-300);">DL</div></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-4.png" alt="Kai"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Dana L.</span><span class="choice-btn-sublabel">@danal</span></div>
                 </button>
               </div>
@@ -8198,10 +8199,10 @@ ${badge}
       const previewStates = [true, false, false, false];
 
       const ITEMS = [
-        { label: 'Day',   sub: null,         icon: 'sun',  initials: 'MJ', avatarColor: 'var(--primitive-violet-300)' },
-        { label: 'Night', sub: null,         icon: 'moon', initials: 'AK', avatarColor: 'var(--primitive-mint-300)' },
-        { label: 'Pool',  sub: 'Outdoors',   icon: 'leaf', initials: 'SR', avatarColor: 'var(--primitive-apricot-300)' },
-        { label: 'Cozy',  sub: 'Indoors',    icon: 'fire', initials: 'DL', avatarColor: 'var(--primitive-pool-300)' },
+        { label: 'Day',   name: 'Mia',    sub: null,        icon: 'sun',  avatar: 'avatar-1.png' },
+        { label: 'Night', name: 'Marcus', sub: null,        icon: 'moon', avatar: 'avatar-2.png' },
+        { label: 'Pool',  name: 'Andre',  sub: 'Outdoors',  icon: 'leaf', avatar: 'avatar-3.png' },
+        { label: 'Cozy',  name: 'Kai',    sub: 'Indoors',   icon: 'fire', avatar: 'avatar-4.png' },
       ];
 
       function makeAccessory(media, item) {
@@ -8211,8 +8212,8 @@ ${badge}
         if (media === 'icon-bullet') {
           return `<div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-${item.icon}"/></svg></span></div>`;
         }
-        // avatar
-        return `<div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:${item.avatarColor};">${item.initials}</div></div>`;
+        // avatar — use real photo, name as label
+        return `<div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/${item.avatar}" alt="${item.name}"></div>`;
       }
 
       function render() {
@@ -8227,11 +8228,12 @@ ${badge}
         previewInner.innerHTML = ITEMS.map((item, i) => {
           const pressed = previewStates[i] ? 'true' : 'false';
           const acc = makeAccessory(media, item);
+          const displayLabel = media === 'avatar' ? item.name : item.label;
           const subHtml = (media === 'avatar' && item.sub) ? `<span class="choice-btn-sublabel">${item.sub}</span>` : '';
           return `<button class="choice-btn${layClass}" aria-pressed="${pressed}" data-cb-preview-idx="${i}" tabindex="0">
             ${acc}
             <div class="choice-btn-text">
-              <span class="choice-btn-label">${item.label}</span>
+              <span class="choice-btn-label">${displayLabel}</span>
               ${subHtml}
             </div>
           </button>`;
@@ -8264,7 +8266,7 @@ ${badge}
           accessoryMarkup  = `  <div class="choice-btn-accessory">\n    <span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true">\n      <svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg>\n    </span>\n  </div>`;
         } else {
           accessoryComment = '<!-- Avatar accessory -->';
-          accessoryMarkup  = `  <div class="choice-btn-accessory">\n    <div class="choice-btn-avatar-placeholder" style="background:var(--primitive-violet-300);">MJ</div>\n  </div>`;
+          accessoryMarkup  = `  <div class="choice-btn-accessory">\n    <img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia">\n  </div>`;
         }
 
         return `${accessoryComment}
