@@ -149,6 +149,8 @@
   --color-background-contrast:         var(--primitive-ink-900);
   --color-background-selection:        var(--primitive-cafe-100);
   --color-background-ui:               var(--primitive-ink-100);
+  --color-background-inverse:          var(--primitive-ink-900);
+  --color-background-inverse-selection: var(--primitive-ink-800);
   --color-background-inverse-disabled: rgba(255, 255, 255, 0.2);
 
   /* --- Brand --- */
@@ -168,6 +170,7 @@
   --color-border-interactive:    var(--primitive-violet-600);
   --color-border-disabled:       var(--primitive-cafe-300);
   --color-border-inverse:        var(--primitive-cafe-0);
+  --color-border-inverse-default: var(--primitive-ink-700);
   --color-border-inverse-subtle: var(--primitive-ink-500);
 
   /* --- Content (text & icons) --- */
@@ -222,6 +225,8 @@
   --color-background-contrast:         var(--primitive-cafe-0);
   --color-background-selection:        var(--primitive-ink-800);
   --color-background-ui:               var(--primitive-ink-600);
+  --color-background-inverse:          var(--primitive-cafe-0);
+  --color-background-inverse-selection: var(--primitive-cafe-100);
   --color-background-inverse-disabled: var(--primitive-ink-100);
 
   /* --- Brand --- */
@@ -241,6 +246,7 @@
   --color-border-interactive:    var(--primitive-violet-500);
   --color-border-disabled:       var(--primitive-ink-700);
   --color-border-inverse:        var(--primitive-ink-900);
+  --color-border-inverse-default: var(--primitive-cafe-300);
   --color-border-inverse-subtle: var(--primitive-cafe-200);
 
   /* --- Content (text & icons) --- */
