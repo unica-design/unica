@@ -3016,14 +3016,17 @@
 
     /* Live preview card */
     .cb-preview-card {
-      max-width: 375px;
-      background: var(--color-background-section);
-      border-radius: var(--corner-radius-xl);
-      padding: 24px;
+      width: 375px;
+      max-width: 100%;
+      background: var(--color-background-page);
+      border-radius: var(--corner-radius-l);
+      box-shadow: 0 1px 8px 0 rgba(8, 5, 13, 0.25);
+      padding: 32px 24px;
       margin: 0 auto;
     }
-    .cb-preview-card--reversed {
-      background: var(--color-background-contrast);
+    [data-theme="dark"] .cb-preview-card {
+      box-shadow: none;
+      border: var(--border-width-default) solid var(--color-border-default);
     }
     .cb-preview-grid {
       display: grid;
@@ -3089,6 +3092,7 @@
     .btn-controls {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
       gap: var(--space-200);
       margin-bottom: var(--space-500);
     }
@@ -4434,21 +4438,6 @@
             </ul>
           </div>
 
-          <!-- Reversed toggle -->
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="cb-reversed-toggle">
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="switch-item-text">Reversed</span>
-          </label>
         </div>
 
         <!-- Preview card (populated by JS) -->
@@ -8200,12 +8189,10 @@ ${badge}
       const codeSnippet   = document.getElementById('cb-code-snippet');
       const layoutControl = document.getElementById('cb-layout-control');
       const mediaPicker   = document.getElementById('cb-media-picker');
-      const reversedToggle = document.getElementById('cb-reversed-toggle');
       if (!previewInner) return;
 
-      let currentLayout   = 'vertical';
-      let currentMedia    = 'icon';
-      let currentReversed = false;
+      let currentLayout = 'vertical';
+      let currentMedia  = 'icon';
 
       // State for the 4 live preview buttons
       const previewStates = [true, false, false, false];
@@ -8217,39 +8204,31 @@ ${badge}
         { label: 'Cozy',  sub: 'Indoors',    icon: 'fire', initials: 'DL', avatarColor: 'var(--primitive-pool-300)' },
       ];
 
-      function makeAccessory(media, item, reversed) {
+      function makeAccessory(media, item) {
         if (media === 'icon') {
           return `<div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-${item.icon}"/></svg></div>`;
         }
         if (media === 'icon-bullet') {
-          const color = reversed ? 'white' : 'violet';
-          return `<div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--${color}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-${item.icon}"/></svg></span></div>`;
+          return `<div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-${item.icon}"/></svg></span></div>`;
         }
         // avatar
         return `<div class="choice-btn-accessory"><div class="choice-btn-avatar-placeholder" style="background:${item.avatarColor};">${item.initials}</div></div>`;
       }
 
       function render() {
-        const layout   = currentLayout;
-        const media    = currentMedia;
-        const reversed = currentReversed;
-
-        const revClass  = reversed ? ' choice-btn--reversed' : '';
-        const layClass  = layout === 'horizontal' ? ' choice-btn--horizontal' : ' choice-btn--vertical';
-
+        const layout  = currentLayout;
+        const media   = currentMedia;
+        const layClass = layout === 'horizontal' ? ' choice-btn--horizontal' : ' choice-btn--vertical';
         const isGrid  = layout === 'vertical';
         const wrapCls = isGrid ? 'cb-preview-grid' : 'cb-preview-stack';
 
-        // Update card class
-        previewCard.className = 'cb-preview-card' + (reversed ? ' cb-preview-card--reversed' : '');
-        // Update wrapper class
         previewInner.className = wrapCls;
 
         previewInner.innerHTML = ITEMS.map((item, i) => {
           const pressed = previewStates[i] ? 'true' : 'false';
-          const acc = makeAccessory(media, item, reversed);
+          const acc = makeAccessory(media, item);
           const subHtml = (media === 'avatar' && item.sub) ? `<span class="choice-btn-sublabel">${item.sub}</span>` : '';
-          return `<button class="choice-btn${layClass}${revClass}" aria-pressed="${pressed}" data-cb-preview-idx="${i}" tabindex="0">
+          return `<button class="choice-btn${layClass}" aria-pressed="${pressed}" data-cb-preview-idx="${i}" tabindex="0">
             ${acc}
             <div class="choice-btn-text">
               <span class="choice-btn-label">${item.label}</span>
@@ -8271,12 +8250,9 @@ ${badge}
       }
 
       function generateCode() {
-        const layout   = currentLayout;
-        const media    = currentMedia;
-        const reversed = currentReversed;
-
-        const layClass  = layout === 'horizontal' ? 'choice-btn--horizontal' : 'choice-btn--vertical';
-        const revClass  = reversed ? ' choice-btn--reversed' : '';
+        const layout  = currentLayout;
+        const media   = currentMedia;
+        const layClass = layout === 'horizontal' ? 'choice-btn--horizontal' : 'choice-btn--vertical';
 
         let accessoryComment = '';
         let accessoryMarkup  = '';
@@ -8293,7 +8269,7 @@ ${badge}
 
         return `${accessoryComment}
 <!-- aria-pressed toggles selection state -->
-<button class="choice-btn ${layClass}${revClass}" aria-pressed="false">
+<button class="choice-btn ${layClass}" aria-pressed="false">
 ${accessoryMarkup}
   <div class="choice-btn-text">
     <span class="choice-btn-label">Label</span>
@@ -8301,7 +8277,7 @@ ${accessoryMarkup}
 </button>
 
 <!-- Selected state -->
-<button class="choice-btn ${layClass}${revClass}" aria-pressed="true">
+<button class="choice-btn ${layClass}" aria-pressed="true">
 ${accessoryMarkup}
   <div class="choice-btn-text">
     <span class="choice-btn-label">Label</span>
@@ -8309,7 +8285,7 @@ ${accessoryMarkup}
 </button>
 
 <!-- Disabled state -->
-<button class="choice-btn ${layClass}${revClass}" aria-pressed="false" disabled>
+<button class="choice-btn ${layClass}" aria-pressed="false" disabled>
 ${accessoryMarkup}
   <div class="choice-btn-text">
     <span class="choice-btn-label">Label</span>
@@ -8347,14 +8323,6 @@ ${accessoryMarkup}
           mediaPicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
         render();
       });
-
-      // Reversed toggle
-      if (reversedToggle) {
-        reversedToggle.addEventListener('change', () => {
-          currentReversed = reversedToggle.checked;
-          render();
-        });
-      }
 
       render();
     })();
