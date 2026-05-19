@@ -2745,7 +2745,7 @@
     /* Badge inverts with the button in dark mode */
     .btn-scta-fill .btn-scta-badge {
       background: var(--color-inverse);
-      color: var(--color-action-default);
+      color: var(--color-content-default);
     }
     .btn-scta-fill:hover:not(:disabled) {
       background: var(--color-action-hover);
@@ -2766,15 +2766,16 @@
       transform: none;
     }
     .btn-scta-fill:focus-visible {
-      outline: 2px solid var(--color-action-default);
+      outline: 2px solid var(--color-border-strong);
       outline-offset: 2px;
     }
     .btn-scta-fill:disabled {
       background: var(--color-background-disabled);
       color: var(--color-content-disabled);
+      border: 1.5px solid var(--color-border-disabled);
     }
     .btn-scta-fill:disabled .btn-scta-badge {
-      background: var(--color-background-container);
+      background: var(--color-inverse);
       color: var(--color-content-disabled);
     }
 
