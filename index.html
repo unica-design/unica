@@ -2955,10 +2955,15 @@
       border-color: var(--color-border-strong);
       transform: scale(0.98);
     }
-    .choice-btn:focus-visible {
+    .choice-btn:focus-visible,
+    .choice-btn.is-demo-focused {
       outline: 2px solid var(--color-border-strong);
       outline-offset: 2px;
       border-color: var(--color-border-strong);
+    }
+    .choice-btn--reversed.is-demo-focused {
+      outline-color: var(--color-border-inverse);
+      border-color: var(--color-border-inverse);
     }
     .choice-btn[aria-pressed="true"] {
       background: var(--color-background-selection);
@@ -4572,8 +4577,8 @@
                 </tr>
                 <tr>
                   <td>Focus</td>
-                  <td><button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
-                  <td><button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--vertical is-demo-focused" tabindex="-1" aria-pressed="false"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal is-demo-focused" tabindex="-1" aria-pressed="false"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
                 </tr>
                 <tr>
                   <td>Selected</td>
