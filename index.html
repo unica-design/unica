@@ -3594,8 +3594,8 @@
       height: 19px;
       display: block;
       flex-shrink: 0;
-      /* White mark on black circle */
-      filter: invert(1);
+      /* Flatten any colour to pure black, then invert to white */
+      filter: brightness(0) invert(1);
     }
 
     /* White circle + black mark: dark surfaces
@@ -3608,7 +3608,8 @@
     }
     .bottom-sheet--reversed .bs-media-logo img,
     [data-theme="dark"] .bottom-sheet:not(.bottom-sheet--reversed) .bs-media-logo img {
-      filter: none;
+      /* Flatten to pure black — readable on white circle */
+      filter: brightness(0);
     }
 
     /* Dark mode reversed = light contrast sheet → back to black circle + white mark */
@@ -3617,7 +3618,7 @@
       box-shadow: none;
     }
     [data-theme="dark"] .bottom-sheet--reversed .bs-media-logo img {
-      filter: invert(1);
+      filter: brightness(0) invert(1);
     }
 
     /* Leading media — icon bullet */
