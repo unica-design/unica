@@ -3572,24 +3572,52 @@
       width: 100%;
     }
 
-    /* Leading media — logo badge */
+    /* Leading media — logo badge
+       Rule: contrast with the surface it sits on.
+       Light surface → black circle + white mark (invert)
+       Dark surface  → white circle + black mark (no filter)
+       ─────────────────────────────────────────────────── */
     .bs-media-logo {
       width: 48px;
       height: 48px;
       border-radius: var(--corner-radius-round);
-      background: #fff; /* always white — dark mark stays visible in every mode */
+      /* Default: light mode standard = light page → black circle */
+      background: var(--primitive-ink-900);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       flex-shrink: 0;
-      box-shadow: 0 0 0 1px rgba(8, 5, 13, 0.08); /* subtle ring so it reads on white pages */
     }
     .bs-media-logo img {
       width: 19px;
       height: 19px;
       display: block;
       flex-shrink: 0;
+      /* White mark on black circle */
+      filter: invert(1);
+    }
+
+    /* White circle + black mark: dark surfaces
+       (a) light mode reversed (dark contrast sheet)
+       (b) dark mode standard (dark page sheet) */
+    .bottom-sheet--reversed .bs-media-logo,
+    [data-theme="dark"] .bottom-sheet:not(.bottom-sheet--reversed) .bs-media-logo {
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(8, 5, 13, 0.08);
+    }
+    .bottom-sheet--reversed .bs-media-logo img,
+    [data-theme="dark"] .bottom-sheet:not(.bottom-sheet--reversed) .bs-media-logo img {
+      filter: none;
+    }
+
+    /* Dark mode reversed = light contrast sheet → back to black circle + white mark */
+    [data-theme="dark"] .bottom-sheet--reversed .bs-media-logo {
+      background: var(--primitive-ink-900);
+      box-shadow: none;
+    }
+    [data-theme="dark"] .bottom-sheet--reversed .bs-media-logo img {
+      filter: invert(1);
     }
 
     /* Leading media — icon bullet */
@@ -3597,14 +3625,14 @@
       width: 48px;
       height: 48px;
       border-radius: var(--corner-radius-round);
-      background: var(--primitive-violet-300);
+      background: var(--primitive-berry-300);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
     .bottom-sheet--reversed .bs-media-icon-bullet {
-      background: var(--primitive-pool-300);
+      background: var(--primitive-berry-300);
     }
     .bs-media-icon-bullet svg {
       width: 24px;
