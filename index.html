@@ -3014,6 +3014,30 @@
 
     /* Avatar accessory size */
     .choice-btn-avatar-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; display: block; }
+    /* Shape overrides — applied by JS via av-shape-* class */
+    .choice-btn-avatar-img.av-shape-squircle { border-radius: unset; clip-path: inset(0 round 33.33%); }
+    .choice-btn-avatar-img.av-shape-diamond  { border-radius: unset; clip-path: url(#avatar-clip-diamond); }
+
+    /* Conditional controls — shown only when certain media types are active */
+    .cb-cond-control { display: none; }
+    .cb-cond-control.cb-cond--visible { display: inline-flex; }
+
+    /* Colour swatch dot inside dropdown trigger + options */
+    .cb-color-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.08);
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    /* White swatch needs a border so it's visible in light mode */
+    .cb-color-dot--white { border-color: var(--color-border-subtle); }
+    /* Hide ink option in dark mode, white option in light mode */
+    [data-theme="dark"] .cb-color-opt--ink   { display: none; }
+    :not([data-theme]) .cb-color-opt--white  { display: none; }
+    [data-theme="light"] .cb-color-opt--white { display: none; }
 
     /* Live preview card */
     .cb-preview-card {
@@ -4436,6 +4460,38 @@
               <li class="dropdown-option" role="option" aria-selected="true"  data-value="icon"        tabindex="0">Icon</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="icon-bullet" tabindex="0">Icon Bullet</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar"      tabindex="0">Avatar</li>
+            </ul>
+          </div>
+
+          <!-- Color picker — visible when media = icon-bullet -->
+          <div class="dropdown cb-cond-control" id="cb-color-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="cb-color-label"><span class="cb-color-dot" style="background:var(--primitive-violet-300)"></span>Violet</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Icon bullet color">
+              <li class="dropdown-option cb-color-opt--ink"   role="option" aria-selected="false" data-value="ink"       tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-ink-900)"></span>Ink</li>
+              <li class="dropdown-option"                     role="option" aria-selected="true"  data-value="violet"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-violet-300)"></span>Violet</li>
+              <li class="dropdown-option"                     role="option" aria-selected="false" data-value="berry"     tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-berry-300)"></span>Berry</li>
+              <li class="dropdown-option"                     role="option" aria-selected="false" data-value="apricot"   tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-apricot-300)"></span>Apricot</li>
+              <li class="dropdown-option"                     role="option" aria-selected="false" data-value="mint"      tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-mint-300)"></span>Mint</li>
+              <li class="dropdown-option"                     role="option" aria-selected="false" data-value="pool"      tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-pool-300)"></span>Pool</li>
+              <li class="dropdown-option"                     role="option" aria-selected="false" data-value="citron"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-citron-300)"></span>Citron</li>
+              <li class="dropdown-option"                     role="option" aria-selected="false" data-value="dark-pool" tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-pool-1000)"></span>Dark Pool</li>
+              <li class="dropdown-option cb-color-opt--white" role="option" aria-selected="false" data-value="white"    tabindex="0"><span class="cb-color-dot cb-color-dot--white" style="background:var(--primitive-cafe-0)"></span>White</li>
+            </ul>
+          </div>
+
+          <!-- Shape picker — visible when media = avatar -->
+          <div class="dropdown cb-cond-control" id="cb-shape-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="cb-shape-label">Circle</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Avatar shape">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="circle"   tabindex="0">Circle</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="squircle" tabindex="0">Squircle</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="diamond"  tabindex="0">Diamond</li>
             </ul>
           </div>
 
@@ -8190,10 +8246,50 @@ ${badge}
       const codeSnippet   = document.getElementById('cb-code-snippet');
       const layoutControl = document.getElementById('cb-layout-control');
       const mediaPicker   = document.getElementById('cb-media-picker');
+      const colorPicker   = document.getElementById('cb-color-picker');
+      const shapePicker   = document.getElementById('cb-shape-picker');
       if (!previewInner) return;
 
       let currentLayout = 'vertical';
       let currentMedia  = 'icon';
+      let currentColor  = 'violet';
+      let currentShape  = 'circle';
+
+      const COLOR_META = {
+        violet:      { label: 'Violet',    bg: 'var(--primitive-violet-300)' },
+        berry:       { label: 'Berry',     bg: 'var(--primitive-berry-300)'  },
+        apricot:     { label: 'Apricot',   bg: 'var(--primitive-apricot-300)'},
+        mint:        { label: 'Mint',      bg: 'var(--primitive-mint-300)'   },
+        pool:        { label: 'Pool',      bg: 'var(--primitive-pool-300)'   },
+        citron:      { label: 'Citron',    bg: 'var(--primitive-citron-300)' },
+        'dark-pool': { label: 'Dark Pool', bg: 'var(--primitive-pool-1000)'  },
+        ink:         { label: 'Ink',       bg: 'var(--primitive-ink-900)'    },
+        white:       { label: 'White',     bg: 'var(--primitive-cafe-0)'     },
+      };
+
+      function setColorLabel(value) {
+        const meta = COLOR_META[value];
+        const el = document.getElementById('cb-color-label');
+        if (el && meta) {
+          const extraClass = value === 'white' ? ' cb-color-dot--white' : '';
+          el.innerHTML = `<span class="cb-color-dot${extraClass}" style="background:${meta.bg}"></span>${meta.label}`;
+        }
+      }
+
+      function updateCondControls() {
+        colorPicker && colorPicker.classList.toggle('cb-cond--visible', currentMedia === 'icon-bullet');
+        shapePicker && shapePicker.classList.toggle('cb-cond--visible', currentMedia === 'avatar');
+      }
+
+      function resetColorToViolet() {
+        currentColor = 'violet';
+        setColorLabel('violet');
+        if (colorPicker) {
+          colorPicker.querySelectorAll('.dropdown-option').forEach(o => {
+            o.setAttribute('aria-selected', String(o.dataset.value === 'violet'));
+          });
+        }
+      }
 
       // State for the 4 live preview buttons
       const previewStates = [true, false, false, false];
@@ -8210,10 +8306,11 @@ ${badge}
           return `<div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-${item.icon}"/></svg></div>`;
         }
         if (media === 'icon-bullet') {
-          return `<div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-${item.icon}"/></svg></span></div>`;
+          return `<div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--${currentColor}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-${item.icon}"/></svg></span></div>`;
         }
         // avatar — use real photo, name as label
-        return `<div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/${item.avatar}" alt="${item.name}"></div>`;
+        const shapeClass = currentShape !== 'circle' ? ` av-shape-${currentShape}` : '';
+        return `<div class="choice-btn-accessory"><img class="choice-btn-avatar-img${shapeClass}" src="assets/avatars/${item.avatar}" alt="${item.name}"></div>`;
       }
 
       function render() {
@@ -8323,8 +8420,34 @@ ${accessoryMarkup}
         currentMedia = value;
         document.getElementById('cb-media-label').textContent =
           mediaPicker.querySelector(`[data-value="${value}"]`)?.textContent || value;
+        updateCondControls();
         render();
       });
+
+      // Color picker (icon-bullet colorway)
+      initDropdown(colorPicker, value => {
+        currentColor = value;
+        setColorLabel(value);
+        render();
+      });
+
+      // Shape picker (avatar shape)
+      initDropdown(shapePicker, value => {
+        currentShape = value;
+        render();
+      });
+
+      // Reset invalid color when theme changes (ink not available in dark, white not in light)
+      new MutationObserver(() => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark && currentColor === 'ink') {
+          resetColorToViolet();
+          if (currentMedia === 'icon-bullet') render();
+        } else if (!isDark && currentColor === 'white') {
+          resetColorToViolet();
+          if (currentMedia === 'icon-bullet') render();
+        }
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
       render();
     })();
