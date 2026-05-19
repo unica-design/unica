@@ -8871,68 +8871,83 @@ ${accessoryMarkup}
 
       if (!phone) return;
 
+      const photoBg = phone.querySelector('.bs-phone-bg');
+
       // ── Scrim: light scrim over dark sheet, dark scrim over light sheet.
-      //    Accounts for dark mode: default sheet is dark in dark mode,
-      //    reversed is light in dark mode (inverse of default).
-      function updateScrim(rev) {
+      //    isDark XOR rev tells us whether the sheet is dark:
+      //      light+default → F XOR F = F → dark scrim
+      //      light+reversed → F XOR T = T → light scrim
+      //      dark+default  → T XOR F = T → light scrim
+      //      dark+reversed → T XOR T = F → dark scrim
+      function syncScrim(rev) {
         const isDark = document.documentElement.dataset.theme === 'dark';
-        // Sheet is dark when: (light mode + reversed) OR (dark mode + default)
-        const sheetIsDark = isDark !== rev; // true → light scrim needed
-        scrim.classList.toggle('bs-scrim--light', sheetIsDark);
+        scrim.classList.toggle('bs-scrim--light', isDark !== rev);
       }
 
-      // ── Theme: switch preview sheet between standard / reversed ──
+      // ── Sheet appearance only — phone visuals handled by open/close ──
       function setReversed(rev) {
-        // Preview sheet
         sheet.classList.toggle('bottom-sheet--reversed', rev);
         sheet.querySelectorAll('.choice-btn').forEach(b =>
           b.classList.toggle('choice-btn--reversed', rev)
         );
-        // Swap Done button style
         const doneBtn = sheet.querySelector('[data-bs-dismiss].btn');
         if (doneBtn) {
           doneBtn.className = 'btn btn--large ' + (rev ? 'btn-filled-reversed' : 'btn-filled');
           doneBtn.setAttribute('data-bs-dismiss', '');
         }
-        // Phone background behind the photo
+        // Only update phone visuals when the sheet is actually visible
+        if (sheet.classList.contains('is-open')) {
+          applyPhoneOpen(rev);
+        }
+        syncScrim(rev);
+      }
+
+      // ── Apply/reset phone background + photo opacity ──
+      function applyPhoneOpen(rev) {
         phone.style.background = rev
           ? 'var(--color-background-contrast)'
           : 'var(--color-background-page)';
-        // Background photo: dim when reversed so dark surface reads clearly
-        const photoBg = phone.querySelector('.bs-phone-bg');
         if (photoBg) photoBg.style.opacity = rev ? '0.18' : '1';
-        // Scrim colour
-        updateScrim(rev);
       }
 
-      // Re-sync scrim whenever the global theme toggle fires
+      function resetPhone() {
+        // Always restore to clean neutral state when no sheet is showing
+        phone.style.background = 'var(--color-background-page)';
+        if (photoBg) photoBg.style.opacity = '1';
+      }
+
+      // Re-sync scrim when the global theme toggle fires (dark↔light)
       const themeToggleBtn = document.querySelector('.theme-toggle');
       if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-          // Allow the DOM to update data-theme first, then re-check
           requestAnimationFrame(() => {
-            const rev = sheet.classList.contains('bottom-sheet--reversed');
-            updateScrim(rev);
-            // Also re-sync phone background (CSS vars will have changed)
-            phone.style.background = rev
-              ? 'var(--color-background-contrast)'
-              : 'var(--color-background-page)';
+            syncScrim(sheet.classList.contains('bottom-sheet--reversed'));
+            // Re-apply phone bg so CSS vars resolve to new theme values
+            if (sheet.classList.contains('is-open')) {
+              applyPhoneOpen(sheet.classList.contains('bottom-sheet--reversed'));
+            } else {
+              resetPhone();
+            }
           });
         });
       }
 
       // ── Open / close with spring animation ──
       function bsOpen() {
+        const rev = sheet.classList.contains('bottom-sheet--reversed');
         sheet.classList.remove('is-closing');
         sheet.classList.add('is-open');
         scrim.classList.add('is-visible');
         retrigger.disabled = true;
+        applyPhoneOpen(rev);
+        syncScrim(rev);
       }
 
       function bsClose() {
         sheet.classList.add('is-closing');
         sheet.classList.remove('is-open');
         scrim.classList.remove('is-visible');
+        resetPhone(); // ← always restore; no stale bg or dimmed photo
         setTimeout(() => {
           sheet.classList.remove('is-closing');
           retrigger.disabled = false;
