@@ -3722,45 +3722,60 @@
       right: 0;
       bottom: 0;
       transform: translateY(110%);
-      transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+      transition: transform 0.48s cubic-bezier(0.22, 1.25, 0.36, 1);
       will-change: transform;
       z-index: 2;
     }
     .bs-sheet-demo.is-open {
       transform: translateY(0);
     }
+    .bs-sheet-demo.is-closing {
+      transition: transform 0.28s cubic-bezier(0.55, 0, 1, 0.45);
+    }
 
-    /* Retrigger button */
+    /* Grabber is tappable */
+    .bs-grabber { cursor: pointer; }
+
+    /* Retrigger — overlay pill inside phone mock */
     .bs-retrigger {
+      position: absolute;
+      bottom: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
       display: inline-flex;
       align-items: center;
       gap: var(--space-200);
       height: 40px;
       padding: 0 var(--space-400);
       border-radius: 180px;
-      border: 1.5px solid var(--color-border-default);
-      color: var(--color-content-subtle);
+      border: none;
+      color: var(--primitive-ink-900);
       font-family: var(--font-family-sans);
       font-size: var(--font-size-body-s);
       line-height: 1;
       cursor: pointer;
-      background: var(--color-background-page);
-      transition: border-color 150ms ease, color 150ms ease;
-      margin-top: var(--space-400);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 1px 8px rgba(8, 5, 13, 0.18);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
     }
-    .bs-retrigger:hover:not(:disabled) {
-      border-color: var(--color-border-strong);
-      color: var(--color-content-default);
-    }
-    .bs-retrigger:disabled {
-      opacity: 0.4;
-      cursor: default;
+    .bs-retrigger:not(:disabled) {
+      opacity: 1;
+      pointer-events: all;
     }
     .bs-retrigger svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       flex-shrink: 0;
     }
+
+    /* Btn inside bs-actions fills available width */
+    .bs-actions .btn { flex: 1; }
 
     /* Slot content styles */
     .bs-slot-image {
@@ -6668,25 +6683,7 @@
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
 
-        <div class="states-controls-row" style="margin-bottom:var(--space-600);">
-          <p class="doc-section-description" style="margin-bottom:0;">Tap a button or the scrim to dismiss. Use "Show again" to retrigger.</p>
-          <div class="states-controls">
-            <label class="switch-item" style="flex-shrink:0;">
-              <div class="toggle-switch">
-                <input type="checkbox" id="bs-reversed-toggle">
-                <div class="toggle-track">
-                  <div class="toggle-handle">
-                    <div class="toggle-icon">
-                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <span class="switch-item-text">Reversed</span>
-            </label>
-          </div>
-        </div>
+        <p class="doc-section-description" style="margin-bottom:var(--space-600);">Tap a choice, the grabber, or the scrim to dismiss. Pick Day or Night to switch colour modes.</p>
 
         <div class="preview-canvas" style="padding:var(--space-800) var(--space-600);">
           <div style="display:flex;flex-direction:column;align-items:center;">
@@ -6699,7 +6696,7 @@
               <!-- Animated bottom sheet (slot type — Figma example) -->
               <div class="bottom-sheet bs-sheet-demo is-open" id="bs-sheet-demo"
                    role="dialog" aria-modal="true" aria-label="Day or Night?">
-                <div class="bs-grabber"></div>
+                <div class="bs-grabber" data-bs-dismiss></div>
                 <div class="bs-content">
                   <!-- Architecture photo -->
                   <div class="bs-slot-image">
@@ -6709,18 +6706,18 @@
                   <div style="display:flex;flex-direction:column;gap:var(--space-400);width:100%;">
                     <p class="bs-slot-heading">Day or Night?</p>
                     <div class="bs-choice-row">
-                      <button class="choice-btn choice-btn--vertical" aria-pressed="false" data-single-group="bs-daynight">
+                      <button class="choice-btn choice-btn--vertical" aria-pressed="false" data-single-group="bs-daynight" data-bs-theme="day">
                         <div class="choice-btn-accessory">
-                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.25C12.4142 2.25 12.75 2.58579 12.75 3V4C12.75 4.41421 12.4142 4.75 12 4.75C11.5858 4.75 11.25 4.41421 11.25 4V3C11.25 2.58579 11.5858 2.25 12 2.25ZM12 7.25C9.37665 7.25 7.25 9.37665 7.25 12C7.25 14.6234 9.37665 16.75 12 16.75C14.6234 16.75 16.75 14.6234 16.75 12C16.75 9.37665 14.6234 7.25 12 7.25ZM5.75 12C5.75 8.54822 8.54822 5.75 12 5.75C15.4518 5.75 18.25 8.54822 18.25 12C18.25 15.4518 15.4518 18.25 12 18.25C8.54822 18.25 5.75 15.4518 5.75 12ZM19.7071 4.29289C20.0976 4.68342 20.0976 5.31658 19.7071 5.70711L19.0607 6.35355C18.6702 6.74408 18.037 6.74408 17.6465 6.35355C17.2559 5.96303 17.2559 5.32986 17.6465 4.93934L18.2929 4.29289C18.6834 3.90237 19.3166 3.90237 19.7071 4.29289ZM4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L6.35355 4.93934C6.74408 5.32986 6.74408 5.96303 6.35355 6.35355C5.96303 6.74408 5.32986 6.74408 4.93934 6.35355L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289ZM2.25 12C2.25 11.5858 2.58579 11.25 3 11.25H4C4.41421 11.25 4.75 11.5858 4.75 12C4.75 12.4142 4.41421 12.75 4 12.75H3C2.58579 12.75 2.25 12.4142 2.25 12ZM19.25 12C19.25 11.5858 19.5858 11.25 20 11.25H21C21.4142 11.25 21.75 11.5858 21.75 12C21.75 12.4142 21.4142 12.75 21 12.75H20C19.5858 12.75 19.25 12.4142 19.25 12ZM6.35355 17.6465C6.74408 18.037 6.74408 18.6702 6.35355 19.0607L5.70711 19.7071C5.31658 20.0976 4.68342 20.0976 4.29289 19.7071C3.90237 19.3166 3.90237 18.6834 4.29289 18.2929L4.93934 17.6465C5.32986 17.2559 5.96303 17.2559 6.35355 17.6465ZM17.6465 17.6465C18.037 17.2559 18.6702 17.2559 19.0607 17.6465L19.7071 18.2929C20.0976 18.6834 20.0976 19.3166 19.7071 19.7071C19.3166 20.0976 18.6834 20.0976 18.2929 19.7071L17.6465 19.0607C17.2559 18.6702 17.2559 18.037 17.6465 17.6465ZM12 19.25C12.4142 19.25 12.75 19.5858 12.75 20V21C12.75 21.4142 12.4142 21.75 12 21.75C11.5858 21.75 11.25 21.4142 11.25 21V20C11.25 19.5858 11.5858 19.25 12 19.25Z" fill="currentColor"/></svg>
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-sun"/></svg>
                         </div>
                         <div class="choice-btn-text">
                           <span class="choice-btn-label">Day</span>
                           <span class="choice-btn-sublabel">am reminder</span>
                         </div>
                       </button>
-                      <button class="choice-btn choice-btn--vertical" aria-pressed="false" data-single-group="bs-daynight">
+                      <button class="choice-btn choice-btn--vertical" aria-pressed="false" data-single-group="bs-daynight" data-bs-theme="night">
                         <div class="choice-btn-accessory">
-                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.5748 3.27111C11.7759 3.46382 11.8504 3.75365 11.7673 4.02049C11.5586 4.69693 11.4453 5.41596 11.4453 6.16226C11.4453 10.2114 14.7182 13.4844 18.7673 13.4844C19.5136 13.4844 20.2327 13.3711 20.9091 13.1624C21.176 13.0793 21.4658 13.1538 21.6585 13.3549C21.8512 13.556 21.9065 13.8499 21.7994 14.1066C20.4332 17.4357 17.1578 19.75 13.3286 19.75C8.23963 19.75 4.11328 15.6237 4.11328 10.5347C4.11328 6.70554 6.42758 3.43013 9.75673 2.06398C10.0134 1.95681 10.3073 2.01208 10.5085 2.20479L11.5748 3.27111ZM8.77854 4.39399C6.51727 5.62201 4.97656 7.98952 4.97656 10.7148C4.97656 15.2461 8.61602 18.8856 13.1473 18.8856C15.8727 18.8856 18.2401 17.3449 19.4681 15.0836C19.2153 15.1115 18.9629 15.1258 18.7083 15.1258C14.1771 15.1258 10.5376 11.4863 10.5376 6.95508C10.5376 6.70047 10.5519 6.44808 10.5798 6.1953C10.1977 6.54547 9.85817 6.94835 9.57283 7.39247C9.37082 7.70723 8.94972 7.79843 8.63496 7.59642C8.32019 7.39441 8.229 6.97331 8.43101 6.65855C8.81613 6.05201 9.28489 5.50939 9.82268 5.04519L8.77854 4.39399Z" fill="currentColor"/></svg>
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-moon"/></svg>
                         </div>
                         <div class="choice-btn-text">
                           <span class="choice-btn-label">Night</span>
@@ -6732,18 +6729,16 @@
                 </div>
                 <!-- Single action button -->
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-filled" data-bs-dismiss>Done</button>
+                  <button class="btn btn--large btn-filled" data-bs-dismiss>Done</button>
                 </div>
               </div>
-            </div><!-- /phone mock -->
 
-            <!-- Retrigger -->
-            <button class="bs-retrigger" id="bs-retrigger" disabled aria-label="Show bottom sheet again">
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 12V4M4 7.5L8 3.5L12 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Show again
-            </button>
+              <!-- Retrigger — overlaid inside phone mock -->
+              <button class="bs-retrigger" id="bs-retrigger" disabled aria-label="Show bottom sheet again">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.66-5.66M20 12a8 8 0 0 1-13.66 5.66M20 6v4h-4M4 18v-4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Show again
+              </button>
+            </div><!-- /phone mock -->
 
           </div>
         </div>
@@ -6807,25 +6802,7 @@
         <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
 
-        <div class="states-controls-row" style="margin-bottom:var(--space-600);">
-          <p class="doc-section-description" style="margin-bottom:0;">Add a logo, icon, or avatar to give in-app messages visual context and brand presence. The reversed version is available for dark-themed or high-contrast surfaces.</p>
-          <div class="states-controls">
-            <label class="switch-item" style="flex-shrink:0;">
-              <div class="toggle-switch">
-                <input type="checkbox" id="bs-var-reversed-toggle">
-                <div class="toggle-track">
-                  <div class="toggle-handle">
-                    <div class="toggle-icon">
-                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <span class="switch-item-text">Reversed</span>
-            </label>
-          </div>
-        </div>
+        <p class="doc-section-description" style="margin-bottom:var(--space-600);">Add a logo, icon, or avatar to give in-app messages visual context and brand presence. The reversed version is available for dark-themed or high-contrast surfaces. Select Day or Night in the preview above to switch colour modes.</p>
 
         <!-- Standard variants -->
         <div id="bs-variants-standard">
@@ -6841,8 +6818,8 @@
                   <p class="bs-body">An in-app message</p>
                 </div>
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined">Cancel</button>
-                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                  <button class="btn btn--large btn-outlined">Cancel</button>
+                  <button class="btn btn--large btn-filled">Confirm</button>
                 </div>
               </div>
             </div>
@@ -6861,8 +6838,8 @@
                   <p class="bs-body">An in-app message</p>
                 </div>
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined">Cancel</button>
-                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                  <button class="btn btn--large btn-outlined">Cancel</button>
+                  <button class="btn btn--large btn-filled">Confirm</button>
                 </div>
               </div>
             </div>
@@ -6877,8 +6854,8 @@
                   <p class="bs-body">An in-app message</p>
                 </div>
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined">Cancel</button>
-                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                  <button class="btn btn--large btn-outlined">Cancel</button>
+                  <button class="btn btn--large btn-filled">Confirm</button>
                 </div>
               </div>
             </div>
@@ -6892,8 +6869,8 @@
                   <p class="bs-body">An in-app message</p>
                 </div>
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined">Cancel</button>
-                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                  <button class="btn btn--large btn-outlined">Cancel</button>
+                  <button class="btn btn--large btn-filled">Confirm</button>
                 </div>
               </div>
             </div>
@@ -6915,8 +6892,8 @@
                   <p class="bs-body">An in-app message</p>
                 </div>
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined">Cancel</button>
-                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                  <button class="btn btn--large btn-outlined-reversed">Cancel</button>
+                  <button class="btn btn--large btn-filled-reversed">Confirm</button>
                 </div>
               </div>
             </div>
@@ -6935,8 +6912,8 @@
                   <p class="bs-body">An in-app message</p>
                 </div>
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined">Cancel</button>
-                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                  <button class="btn btn--large btn-outlined-reversed">Cancel</button>
+                  <button class="btn btn--large btn-filled-reversed">Confirm</button>
                 </div>
               </div>
             </div>
@@ -6951,8 +6928,8 @@
                   <p class="bs-body">An in-app message</p>
                 </div>
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined">Cancel</button>
-                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                  <button class="btn btn--large btn-outlined-reversed">Cancel</button>
+                  <button class="btn btn--large btn-filled-reversed">Confirm</button>
                 </div>
               </div>
             </div>
@@ -6966,8 +6943,8 @@
                   <p class="bs-body">An in-app message</p>
                 </div>
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined">Cancel</button>
-                  <button class="bs-btn bs-btn-filled">Confirm</button>
+                  <button class="btn btn--large btn-outlined-reversed">Cancel</button>
+                  <button class="btn btn--large btn-filled-reversed">Confirm</button>
                 </div>
               </div>
             </div>
@@ -8855,66 +8832,77 @@ ${accessoryMarkup}
        BOTTOM SHEET DEMO
        ══════════════════════════════════════════════════════ */
     (function initBsDemo() {
-      const phone      = document.getElementById('bs-phone-mock');
-      const scrim      = document.getElementById('bs-scrim');
-      const sheet      = document.getElementById('bs-sheet-demo');
-      const retrigger  = document.getElementById('bs-retrigger');
-      const revToggle  = document.getElementById('bs-reversed-toggle');
-      const varRevToggle = document.getElementById('bs-var-reversed-toggle');
-      const varsStd    = document.getElementById('bs-variants-standard');
-      const varsRev    = document.getElementById('bs-variants-reversed');
+      const phone     = document.getElementById('bs-phone-mock');
+      const scrim     = document.getElementById('bs-scrim');
+      const sheet     = document.getElementById('bs-sheet-demo');
+      const retrigger = document.getElementById('bs-retrigger');
+      const varsStd   = document.getElementById('bs-variants-standard');
+      const varsRev   = document.getElementById('bs-variants-reversed');
 
       if (!phone) return;
 
+      // ── Theme: switch sheet + variants between standard / reversed ──
+      function setReversed(rev) {
+        // Preview sheet
+        sheet.classList.toggle('bottom-sheet--reversed', rev);
+        sheet.querySelectorAll('.choice-btn').forEach(b =>
+          b.classList.toggle('choice-btn--reversed', rev)
+        );
+        // Swap Done button style
+        const doneBtn = sheet.querySelector('[data-bs-dismiss].btn');
+        if (doneBtn) {
+          doneBtn.className = 'btn btn--large ' + (rev ? 'btn-filled-reversed' : 'btn-filled');
+          doneBtn.setAttribute('data-bs-dismiss', '');
+        }
+        // Background photo
+        const photoBg = phone.querySelector('.bs-phone-bg');
+        if (photoBg) photoBg.style.opacity = rev ? '0.25' : '1';
+        phone.style.background = rev ? 'var(--color-background-contrast)' : '';
+        // Variants grid
+        if (varsStd) varsStd.hidden = rev;
+        if (varsRev) varsRev.hidden = !rev;
+      }
+
+      // ── Open / close with spring animation ──
       function bsOpen() {
+        sheet.classList.remove('is-closing');
         sheet.classList.add('is-open');
         scrim.classList.add('is-visible');
         retrigger.disabled = true;
       }
 
       function bsClose() {
+        sheet.classList.add('is-closing');
         sheet.classList.remove('is-open');
         scrim.classList.remove('is-visible');
-        // Re-enable retrigger after animation completes
-        setTimeout(() => { retrigger.disabled = false; }, 420);
+        setTimeout(() => {
+          sheet.classList.remove('is-closing');
+          retrigger.disabled = false;
+        }, 300);
       }
 
+      // Retrigger (overlaid inside phone mock)
       retrigger.addEventListener('click', bsOpen);
+
+      // Scrim tap
       scrim.addEventListener('click', bsClose);
 
-      // Keyboard: Escape closes the sheet
+      // Keyboard: Escape
       phone.addEventListener('keydown', e => {
         if (e.key === 'Escape' && sheet.classList.contains('is-open')) bsClose();
       });
 
-      // Dismiss buttons inside the sheet
-      phone.querySelectorAll('[data-bs-dismiss]').forEach(btn => {
-        btn.addEventListener('click', bsClose);
+      // All dismiss targets: grabber + Done button
+      phone.querySelectorAll('[data-bs-dismiss]').forEach(el => {
+        el.addEventListener('click', bsClose);
       });
 
-      // ── Preview reversed toggle ──
-      if (revToggle) {
-        revToggle.addEventListener('change', () => {
-          const rev = revToggle.checked;
-          sheet.classList.toggle('bottom-sheet--reversed', rev);
-          // Toggle choice buttons inside the demo sheet
-          sheet.querySelectorAll('.choice-btn').forEach(btn => {
-            btn.classList.toggle('choice-btn--reversed', rev);
-          });
-          // Dim/restore the background photo for context
-          const photoBg = phone.querySelector('.bs-phone-bg');
-          if (photoBg) photoBg.style.opacity = rev ? '0.25' : '1';
-          phone.style.background = rev ? 'var(--color-background-contrast)' : '';
+      // Day / Night choice buttons → setReversed + keep aria-pressed in sync
+      sheet.querySelectorAll('[data-bs-theme]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          setReversed(btn.dataset.bsTheme === 'night');
         });
-      }
-
-      // ── Variants reversed toggle ──
-      if (varRevToggle) {
-        varRevToggle.addEventListener('change', () => {
-          varsStd.hidden =  varRevToggle.checked;
-          varsRev.hidden = !varRevToggle.checked;
-        });
-      }
+      });
     })();
 
     (function initCbPatterns() {
