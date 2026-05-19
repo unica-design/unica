@@ -3015,8 +3015,14 @@
     /* Avatar accessory size */
     .choice-btn-avatar-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; display: block; }
     /* Shape overrides — applied by JS via av-shape-* class */
-    .choice-btn-avatar-img.av-shape-squircle { border-radius: unset; clip-path: inset(0 round 33.33%); }
-    .choice-btn-avatar-img.av-shape-diamond  { border-radius: unset; clip-path: url(#avatar-clip-diamond); }
+    .choice-btn-avatar-img.av-shape-squircle  { border-radius: unset; clip-path: inset(0 round 33.33%); }
+    .choice-btn-avatar-img.av-shape-diamond   { border-radius: unset; clip-path: url(#avatar-clip-diamond); }
+    .choice-btn-avatar-img.av-shape-cushion   { border-radius: unset; clip-path: url(#avatar-clip-cushion); }
+    .choice-btn-avatar-img.av-shape-flor      { border-radius: unset; clip-path: url(#avatar-clip-flor); }
+    .choice-btn-avatar-img.av-shape-leaf      { border-radius: unset; clip-path: url(#avatar-clip-leaf); }
+    .choice-btn-avatar-img.av-shape-sunburst  { border-radius: unset; clip-path: polygon(50% 2%, 63% 18%, 84% 16%, 82% 37%, 98% 50%, 82% 63%, 84% 84%, 63% 82%, 50% 98%, 37% 82%, 16% 84%, 18% 63%, 2% 50%, 18% 37%, 16% 16%, 37% 18%); }
+    .choice-btn-avatar-img.av-shape-mondrian  { border-radius: unset; clip-path: polygon(0% 30%, 30% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%); }
+    .choice-btn-avatar-img.av-shape-mod       { border-radius: unset; clip-path: inset(0 round 8% 8% 8% 48%); }
 
     /* Conditional controls — shown only when certain media types are active */
     .cb-cond-control { display: none; }
@@ -3035,9 +3041,10 @@
     /* White swatch needs a border so it's visible in light mode */
     .cb-color-dot--white { border-color: var(--color-border-subtle); }
     /* Hide ink option in dark mode, white option in light mode */
-    [data-theme="dark"] .cb-color-opt--ink   { display: none; }
-    :not([data-theme]) .cb-color-opt--white  { display: none; }
-    [data-theme="light"] .cb-color-opt--white { display: none; }
+    [data-theme="dark"] .cb-color-opt--ink       { display: none; }
+    [data-theme="dark"] .cb-color-opt--dark-pool { display: none; }
+    :not([data-theme]) .cb-color-opt--white      { display: none; }
+    [data-theme="light"] .cb-color-opt--white    { display: none; }
 
     /* Live preview card */
     .cb-preview-card {
@@ -3619,6 +3626,14 @@
     <!-- Cushion: concave organic shape, normalized to 0–1 objectBoundingBox -->
     <clipPath id="avatar-clip-cushion" clipPathUnits="objectBoundingBox">
       <path d="M0.9363 0.4335 C0.9157 0.4753 0.9157 0.5247 0.9363 0.5665 C1.0142 0.7249 1.0240 0.8703 0.9471 0.9471 C0.8703 1.0240 0.7249 1.0142 0.5665 0.9363 C0.5247 0.9157 0.4753 0.9157 0.4335 0.9363 C0.2751 1.0142 0.1297 1.0240 0.0529 0.9471 C-0.0240 0.8703 -0.0142 0.7249 0.0637 0.5665 C0.0843 0.5247 0.0843 0.4753 0.0637 0.4335 C-0.0142 0.2751 -0.0240 0.1297 0.0529 0.0529 C0.1297 -0.0240 0.2751 -0.0142 0.4335 0.0637 C0.4753 0.0843 0.5247 0.0843 0.5665 0.0637 C0.7249 -0.0142 0.8703 -0.0240 0.9471 0.0529 C1.0240 0.1297 1.0142 0.2751 0.9363 0.4335 Z"/>
+    </clipPath>
+    <!-- Flôr: 4-petal flower — bezier arcs from corner junctions (0.28) to edge midpoints -->
+    <clipPath id="avatar-clip-flor" clipPathUnits="objectBoundingBox">
+      <path d="M0.280 0.280 C0.280 0.000 0.720 0.000 0.720 0.280 C1.000 0.280 1.000 0.720 0.720 0.720 C0.720 1.000 0.280 1.000 0.280 0.720 C0.000 0.720 0.000 0.280 0.280 0.280 Z"/>
+    </clipPath>
+    <!-- Leaf: pointed teardrop — sharp apex at top, softly rounded base -->
+    <clipPath id="avatar-clip-leaf" clipPathUnits="objectBoundingBox">
+      <path d="M0.500 0.010 C0.710 0.065 0.960 0.330 0.960 0.530 C0.960 0.785 0.750 0.978 0.500 0.978 C0.250 0.978 0.040 0.785 0.040 0.530 C0.040 0.330 0.290 0.065 0.500 0.010 Z"/>
     </clipPath>
   </defs>
 </svg>
@@ -4477,7 +4492,7 @@
               <li class="dropdown-option"                     role="option" aria-selected="false" data-value="mint"      tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-mint-300)"></span>Mint</li>
               <li class="dropdown-option"                     role="option" aria-selected="false" data-value="pool"      tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-pool-300)"></span>Pool</li>
               <li class="dropdown-option"                     role="option" aria-selected="false" data-value="citron"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-citron-300)"></span>Citron</li>
-              <li class="dropdown-option"                     role="option" aria-selected="false" data-value="dark-pool" tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-pool-1000)"></span>Dark Pool</li>
+              <li class="dropdown-option cb-color-opt--dark-pool" role="option" aria-selected="false" data-value="dark-pool" tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-pool-1000)"></span>Dark Pool</li>
               <li class="dropdown-option cb-color-opt--white" role="option" aria-selected="false" data-value="white"    tabindex="0"><span class="cb-color-dot cb-color-dot--white" style="background:var(--primitive-cafe-0)"></span>White</li>
             </ul>
           </div>
@@ -4490,8 +4505,14 @@
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Avatar shape">
               <li class="dropdown-option" role="option" aria-selected="true"  data-value="circle"   tabindex="0">Circle</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="flor"     tabindex="0">Flôr</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="sunburst" tabindex="0">Sunburst</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="mondrian" tabindex="0">Mondrian</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="squircle" tabindex="0">Squircle</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="cushion"  tabindex="0">Cushion</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="diamond"  tabindex="0">Diamond</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="leaf"     tabindex="0">Leaf</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="mod"      tabindex="0">Mod</li>
             </ul>
           </div>
 
@@ -8437,10 +8458,12 @@ ${accessoryMarkup}
         render();
       });
 
-      // Reset invalid color when theme changes (ink not available in dark, white not in light)
+      // Reset invalid color when theme changes
+      // ink + dark-pool not available in dark mode; white not available in light mode
       new MutationObserver(() => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        if (isDark && currentColor === 'ink') {
+        const darkOnlyColors = ['ink', 'dark-pool'];
+        if (isDark && darkOnlyColors.includes(currentColor)) {
           resetColorToViolet();
           if (currentMedia === 'icon-bullet') render();
         } else if (!isDark && currentColor === 'white') {
