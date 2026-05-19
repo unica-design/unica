@@ -3020,9 +3020,9 @@
     .choice-btn-avatar-img.av-shape-cushion   { border-radius: unset; clip-path: url(#avatar-clip-cushion); }
     .choice-btn-avatar-img.av-shape-flor      { border-radius: unset; clip-path: url(#avatar-clip-flor); }
     .choice-btn-avatar-img.av-shape-leaf      { border-radius: unset; clip-path: url(#avatar-clip-leaf); }
-    .choice-btn-avatar-img.av-shape-sunburst  { border-radius: unset; clip-path: polygon(50% 2%, 63% 18%, 84% 16%, 82% 37%, 98% 50%, 82% 63%, 84% 84%, 63% 82%, 50% 98%, 37% 82%, 16% 84%, 18% 63%, 2% 50%, 18% 37%, 16% 16%, 37% 18%); }
-    .choice-btn-avatar-img.av-shape-mondrian  { border-radius: unset; clip-path: polygon(0% 30%, 30% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%); }
-    .choice-btn-avatar-img.av-shape-mod       { border-radius: unset; clip-path: inset(0 round 8% 8% 8% 48%); }
+    .choice-btn-avatar-img.av-shape-sunburst  { border-radius: unset; clip-path: url(#avatar-clip-sunburst); }
+    .choice-btn-avatar-img.av-shape-mondrian  { border-radius: unset; clip-path: url(#avatar-clip-mondrian); }
+    .choice-btn-avatar-img.av-shape-mod       { border-radius: unset; clip-path: url(#avatar-clip-mod); }
 
     /* Conditional controls — shown only when certain media types are active */
     .cb-cond-control { display: none; }
@@ -3627,13 +3627,25 @@
     <clipPath id="avatar-clip-cushion" clipPathUnits="objectBoundingBox">
       <path d="M0.9363 0.4335 C0.9157 0.4753 0.9157 0.5247 0.9363 0.5665 C1.0142 0.7249 1.0240 0.8703 0.9471 0.9471 C0.8703 1.0240 0.7249 1.0142 0.5665 0.9363 C0.5247 0.9157 0.4753 0.9157 0.4335 0.9363 C0.2751 1.0142 0.1297 1.0240 0.0529 0.9471 C-0.0240 0.8703 -0.0142 0.7249 0.0637 0.5665 C0.0843 0.5247 0.0843 0.4753 0.0637 0.4335 C-0.0142 0.2751 -0.0240 0.1297 0.0529 0.0529 C0.1297 -0.0240 0.2751 -0.0142 0.4335 0.0637 C0.4753 0.0843 0.5247 0.0843 0.5665 0.0637 C0.7249 -0.0142 0.8703 -0.0240 0.9471 0.0529 C1.0240 0.1297 1.0142 0.2751 0.9363 0.4335 Z"/>
     </clipPath>
-    <!-- Flôr: 4-petal flower — bezier arcs from corner junctions (0.28) to edge midpoints -->
+    <!-- Flôr: 4-petal flower — exact Figma path, normalized to objectBoundingBox -->
     <clipPath id="avatar-clip-flor" clipPathUnits="objectBoundingBox">
-      <path d="M0.280 0.280 C0.280 0.000 0.720 0.000 0.720 0.280 C1.000 0.280 1.000 0.720 0.720 0.720 C0.720 1.000 0.280 1.000 0.280 0.720 C0.000 0.720 0.000 0.280 0.280 0.280 Z"/>
+      <path d="M0.2708 1.0000C0.3579 1.0000 0.4353 0.9590 0.4848 0.8952C0.4924 0.8855 0.5076 0.8855 0.5152 0.8952C0.5647 0.9590 0.6421 1.0000 0.7292 1.0000C0.8787 1.0000 1.0000 0.8787 1.0000 0.7292C1.0000 0.6421 0.9590 0.5647 0.8952 0.5152C0.8855 0.5076 0.8855 0.4924 0.8952 0.4848C0.9590 0.4353 1.0000 0.3579 1.0000 0.2708C1.0000 0.1213 0.8787 0.0000 0.7292 0.0000C0.6421 0.0000 0.5647 0.0410 0.5152 0.1048C0.5076 0.1145 0.4924 0.1145 0.4848 0.1048C0.4353 0.0410 0.3579 0.0000 0.2708 0.0000C0.1213 0.0000 0.0000 0.1213 0.0000 0.2708C0.0000 0.3579 0.0410 0.4353 0.1048 0.4848C0.1145 0.4924 0.1145 0.5076 0.1048 0.5152C0.0410 0.5647 0.0000 0.6421 0.0000 0.7292C0.0000 0.8787 0.1213 1.0000 0.2708 1.0000Z"/>
     </clipPath>
-    <!-- Leaf: pointed teardrop — sharp apex at top, softly rounded base -->
+    <!-- Sunburst: 16-point shield — exact Figma path (viewBox 46.137×48, 0.9315px h-inset), normalized -->
+    <clipPath id="avatar-clip-sunburst" clipPathUnits="objectBoundingBox">
+      <path d="M0.4468 0.0147C0.4795 -0.0049 0.5204 -0.0049 0.5532 0.0147L0.6202 0.0549C0.6337 0.0630 0.6487 0.0679 0.6643 0.0693L0.7422 0.0761C0.7802 0.0795 0.8133 0.1035 0.8283 0.1387L0.8589 0.2106C0.8650 0.2250 0.8743 0.2378 0.8861 0.2481L0.9451 0.2995C0.9739 0.3245 0.9865 0.3634 0.9780 0.4006L0.9604 0.4768C0.9569 0.4921 0.9569 0.5079 0.9604 0.5232L0.9780 0.5994C0.9865 0.6366 0.9739 0.6755 0.9451 0.7005L0.8861 0.7519C0.8743 0.7622 0.8650 0.7750 0.8589 0.7894L0.8283 0.8613C0.8133 0.8965 0.7802 0.9205 0.7422 0.9239L0.6643 0.9307C0.6487 0.9321 0.6337 0.9370 0.6202 0.9451L0.5532 0.9853C0.5204 1.0049 0.4795 1.0049 0.4468 0.9853L0.3798 0.9451C0.3663 0.9370 0.3513 0.9321 0.3357 0.9307L0.2578 0.9239C0.2198 0.9205 0.1867 0.8965 0.1717 0.8613L0.1411 0.7894C0.1350 0.7750 0.1257 0.7622 0.1139 0.7519L0.0549 0.7005C0.0261 0.6755 0.0135 0.6366 0.0220 0.5994L0.0396 0.5232C0.0431 0.5079 0.0431 0.4921 0.0396 0.4768L0.0220 0.4006C0.0135 0.3634 0.0261 0.3245 0.0549 0.2995L0.1139 0.2481C0.1257 0.2378 0.1350 0.2250 0.1411 0.2106L0.1717 0.1387C0.1867 0.1035 0.2198 0.0795 0.2578 0.0761L0.3357 0.0693C0.3513 0.0679 0.3663 0.0630 0.3798 0.0549Z"/>
+    </clipPath>
+    <!-- Mondrian: L-shape with inner notch — exact Figma path, normalized -->
+    <clipPath id="avatar-clip-mondrian" clipPathUnits="objectBoundingBox">
+      <path d="M0.7917 0.1333C0.7917 0.0597 0.7320 0.0000 0.6583 0.0000H0.1333C0.0597 0.0000 0.0000 0.0597 0.0000 0.1333V0.4792C0.0000 0.5367 0.0466 0.5833 0.1042 0.5833C0.1617 0.5833 0.2083 0.6300 0.2083 0.6875V0.8667C0.2083 0.9403 0.2680 1.0000 0.3417 1.0000H0.8667C0.9403 1.0000 1.0000 0.9403 1.0000 0.8667V0.5208C1.0000 0.4633 0.9534 0.4167 0.8958 0.4167C0.8383 0.4167 0.7917 0.3700 0.7917 0.3125V0.1333Z"/>
+    </clipPath>
+    <!-- Leaf: sharp top-left + bottom-right, rounded top-right + bottom-left — exact Figma path, normalized -->
     <clipPath id="avatar-clip-leaf" clipPathUnits="objectBoundingBox">
-      <path d="M0.500 0.010 C0.710 0.065 0.960 0.330 0.960 0.530 C0.960 0.785 0.750 0.978 0.500 0.978 C0.250 0.978 0.040 0.785 0.040 0.530 C0.040 0.330 0.290 0.065 0.500 0.010 Z"/>
+      <path d="M0.0000 0.0000H0.7500C0.8881 0.0000 1.0000 0.1119 1.0000 0.2500V1.0000H0.2500C0.1119 1.0000 0.0000 0.8881 0.0000 0.7500V0.0000Z"/>
+    </clipPath>
+    <!-- Mod: rounded-corner square with concave mid-side indentations — exact Figma path, normalized -->
+    <clipPath id="avatar-clip-mod" clipPathUnits="objectBoundingBox">
+      <path d="M0.1333 0.0000C0.0597 0.0000 0.0000 0.0597 0.0000 0.1333V0.3667C0.0000 0.4403 0.0597 0.5000 0.1333 0.5000C0.0597 0.5000 0.0000 0.5597 0.0000 0.6333V0.8667C0.0000 0.9403 0.0597 1.0000 0.1333 1.0000H0.3667C0.4403 1.0000 0.5000 0.9403 0.5000 0.8667C0.5000 0.9403 0.5597 1.0000 0.6333 1.0000H0.8667C0.9403 1.0000 1.0000 0.9403 1.0000 0.8667V0.6333C1.0000 0.5597 0.9403 0.5000 0.8667 0.5000C0.9403 0.5000 1.0000 0.4403 1.0000 0.3667V0.1333C1.0000 0.0597 0.9403 0.0000 0.8667 0.0000H0.6333C0.5597 0.0000 0.5000 0.0597 0.5000 0.1333C0.5000 0.0597 0.4403 0.0000 0.3667 0.0000H0.1333Z"/>
     </clipPath>
   </defs>
 </svg>
