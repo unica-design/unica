@@ -1231,7 +1231,7 @@
         linear-gradient(to right, rgba(0,0,0,0.05), transparent),
         linear-gradient(to left,  rgba(0,0,0,0.05), transparent);
       background-repeat: no-repeat;
-      background-size: 24px 100%, 24px 100%, 48px 100%, 48px 100%;
+      background-size: 48px 100%, 48px 100%, 48px 100%, 48px 100%;
       background-position: left, right, left, right;
       background-attachment: local, local, scroll, scroll;
     }
@@ -3071,38 +3071,12 @@
       gap: 8px;
     }
 
-    /* ── CB States List — 2-column, states stacked as rows ── */
-    .cb-states-list {
-      border: var(--border-width-default) solid var(--doc-rule-subtle);
-      border-radius: var(--corner-radius-m);
-      overflow: hidden;
-      margin-bottom: var(--space-600);
+    /* ── CB States Matrix — 6 state columns, matches Button template ── */
+    .states-matrix--cb .states-matrix-head,
+    .states-matrix--cb .states-matrix-row {
+      grid-template-columns: 96px repeat(6, 1fr);
+      min-width: calc(96px + 6 * 160px);
     }
-    .cb-states-row {
-      display: grid;
-      grid-template-columns: 96px 1fr;
-      align-items: center;
-      border-bottom: var(--border-width-default) solid var(--doc-rule-subtle);
-      padding: var(--space-500);
-      gap: var(--space-400);
-    }
-    .cb-states-row:last-child { border-bottom: none; }
-    .cb-states-row-label {
-      font-size: var(--doc-label-size);
-      font-weight: var(--font-weight-semibold);
-      text-transform: uppercase;
-      letter-spacing: var(--doc-label-tracking);
-      color: var(--color-content-subtle);
-    }
-    /* Button width follows layout toggle */
-    #cb-states-standard.cb-layout--vertical .choice-btn,
-    #cb-states-reversed.cb-layout--vertical .choice-btn { width: 160px; }
-    #cb-states-standard.cb-layout--horizontal .choice-btn,
-    #cb-states-reversed.cb-layout--horizontal .choice-btn { width: 343px; }
-    /* Reversed swatch */
-    .cb-states-list--reversed { background: var(--color-background-contrast); }
-    .cb-states-list--reversed .cb-states-row { border-bottom-color: var(--primitive-ink-700); }
-    .cb-states-list--reversed .cb-states-row-label { color: var(--primitive-ink-500); }
 
     /* ============================================================
        BUTTON DOC PAGE
@@ -4548,14 +4522,8 @@
         <hr class="doc-rule">
 
         <div class="states-controls-row">
-          <p class="doc-section-description" style="margin-bottom:0;">All interactive states across each configuration.</p>
+          <p class="doc-section-description" style="margin-bottom:0;">All interactive states shown with avatar and body text.</p>
           <div class="states-controls">
-            <!-- States layout seg control -->
-            <div class="seg-control" id="cb-states-layout" role="group" aria-label="States layout">
-              <span class="seg-control-slider" aria-hidden="true"></span>
-              <button class="seg-control-btn" data-value="vertical"   aria-pressed="true">Vertical</button>
-              <button class="seg-control-btn" data-value="horizontal" aria-pressed="false">Horizontal</button>
-            </div>
             <!-- Reversed toggle -->
             <label class="switch-item" style="flex-shrink:0;">
               <div class="toggle-switch">
@@ -4574,58 +4542,52 @@
           </div>
         </div>
 
-        <!-- Standard states list (avatar + body, states as rows) -->
-        <div id="cb-states-standard" class="cb-layout--vertical">
-          <div class="cb-states-list">
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Default</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false">
+        <!-- Standard states matrix — horizontal avatar buttons, 6 state columns -->
+        <div id="cb-states-standard">
+          <div class="states-matrix states-matrix--cb">
+            <div class="states-matrix-head">
+              <div class="states-matrix-head-spacer"></div>
+              <div class="states-matrix-head-cell">Default</div>
+              <div class="states-matrix-head-cell">Hover</div>
+              <div class="states-matrix-head-cell">Pressed</div>
+              <div class="states-matrix-head-cell">Focus</div>
+              <div class="states-matrix-head-cell">Selected</div>
+              <div class="states-matrix-head-cell">Disabled</div>
+            </div>
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Avatar</div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Hover</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Pressed</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Focus</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Selected</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true">
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Disabled</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" disabled>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" disabled>
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
@@ -4634,58 +4596,52 @@
           </div>
         </div><!-- /#cb-states-standard -->
 
-        <!-- Reversed states list (hidden until toggle is on) -->
-        <div id="cb-states-reversed" class="cb-layout--vertical" hidden>
-          <div class="cb-states-list cb-states-list--reversed">
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Default</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false">
+        <!-- Reversed states matrix (hidden until toggle is on) -->
+        <div id="cb-states-reversed" hidden>
+          <div class="states-matrix states-matrix--cb states-matrix--reversed">
+            <div class="states-matrix-head">
+              <div class="states-matrix-head-spacer"></div>
+              <div class="states-matrix-head-cell">Default</div>
+              <div class="states-matrix-head-cell">Hover</div>
+              <div class="states-matrix-head-cell">Pressed</div>
+              <div class="states-matrix-head-cell">Focus</div>
+              <div class="states-matrix-head-cell">Selected</div>
+              <div class="states-matrix-head-cell">Disabled</div>
+            </div>
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Avatar</div>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Hover</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Pressed</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Focus</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Selected</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true">
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true">
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
               </div>
-            </div>
-            <div class="cb-states-row">
-              <div class="cb-states-row-label">Disabled</div>
-              <div class="cb-states-row-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
+              <div class="states-matrix-cell">
+                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
                   <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
                 </button>
@@ -8142,42 +8098,16 @@ ${accessoryMarkup}
        CHOICE BUTTON STATES SECTION CONTROLS
        ══════════════════════════════════════════════════════ */
     (function initCbStates() {
-      const statesLayout  = document.getElementById('cb-states-layout');
       const statesRevToggle = document.getElementById('cb-states-reversed-toggle');
-      const statesStd     = document.getElementById('cb-states-standard');
-      const statesRev     = document.getElementById('cb-states-reversed');
+      const statesStd       = document.getElementById('cb-states-standard');
+      const statesRev       = document.getElementById('cb-states-reversed');
 
-      if (!statesLayout) return;
+      if (!statesRevToggle) return;
 
-      function applyLayout(value) {
-        [statesStd, statesRev].forEach(container => {
-          if (!container) return;
-          // Swap button orientation class
-          container.querySelectorAll('.choice-btn').forEach(btn => {
-            btn.classList.toggle('choice-btn--vertical',   value === 'vertical');
-            btn.classList.toggle('choice-btn--horizontal', value === 'horizontal');
-          });
-          // Swap layout class on wrapper (drives fixed button widths via CSS)
-          container.classList.toggle('cb-layout--vertical',   value === 'vertical');
-          container.classList.toggle('cb-layout--horizontal', value === 'horizontal');
-        });
-      }
-
-      initSegControl(statesLayout, value => {
-        applyLayout(value);
+      statesRevToggle.addEventListener('change', () => {
+        statesStd.hidden = statesRevToggle.checked;
+        statesRev.hidden = !statesRevToggle.checked;
       });
-
-      if (statesRevToggle) {
-        statesRevToggle.addEventListener('change', () => {
-          if (statesRevToggle.checked) {
-            statesStd.hidden = true;
-            statesRev.hidden = false;
-          } else {
-            statesStd.hidden = false;
-            statesRev.hidden = true;
-          }
-        });
-      }
     })();
 
     /* ══════════════════════════════════════════════════════
