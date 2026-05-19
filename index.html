@@ -3705,9 +3705,9 @@
     }
     .bs-phone-bg {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      inset: -1px; /* bleed 1px to prevent subpixel sliver at border-radius clip */
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
       object-fit: cover;
       object-position: center;
       transition: opacity 0.3s ease;
@@ -6813,7 +6813,25 @@
         <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
 
-        <p class="doc-section-description" style="margin-bottom:var(--space-600);">Add a logo, icon, or avatar to give in-app messages visual context and brand presence. The reversed version creates a high-contrast surface for more emphatic or impactful messaging. Select Day or Night in the preview to toggle between them.</p>
+        <div class="states-controls-row" style="margin-bottom:var(--space-600);">
+          <p class="doc-section-description" style="margin-bottom:0;">Add a logo, icon, or avatar to give in-app messages visual context and brand presence. The reversed version creates a high-contrast surface for more emphatic or impactful messaging.</p>
+          <div class="states-controls">
+            <label class="switch-item" style="flex-shrink:0;">
+              <div class="toggle-switch">
+                <input type="checkbox" id="bs-var-reversed-toggle">
+                <div class="toggle-track">
+                  <div class="toggle-handle">
+                    <div class="toggle-icon">
+                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="switch-item-text">Reversed</span>
+            </label>
+          </div>
+        </div>
 
         <!-- Standard variants -->
         <div id="bs-variants-standard">
@@ -8843,16 +8861,27 @@ ${accessoryMarkup}
        BOTTOM SHEET DEMO
        ══════════════════════════════════════════════════════ */
     (function initBsDemo() {
-      const phone     = document.getElementById('bs-phone-mock');
-      const scrim     = document.getElementById('bs-scrim');
-      const sheet     = document.getElementById('bs-sheet-demo');
-      const retrigger = document.getElementById('bs-retrigger');
-      const varsStd   = document.getElementById('bs-variants-standard');
-      const varsRev   = document.getElementById('bs-variants-reversed');
+      const phone        = document.getElementById('bs-phone-mock');
+      const scrim        = document.getElementById('bs-scrim');
+      const sheet        = document.getElementById('bs-sheet-demo');
+      const retrigger    = document.getElementById('bs-retrigger');
+      const varRevToggle = document.getElementById('bs-var-reversed-toggle');
+      const varsStd      = document.getElementById('bs-variants-standard');
+      const varsRev      = document.getElementById('bs-variants-reversed');
 
       if (!phone) return;
 
-      // ── Theme: switch sheet + variants between standard / reversed ──
+      // ── Scrim: light scrim over dark sheet, dark scrim over light sheet.
+      //    Accounts for dark mode: default sheet is dark in dark mode,
+      //    reversed is light in dark mode (inverse of default).
+      function updateScrim(rev) {
+        const isDark = document.documentElement.dataset.theme === 'dark';
+        // Sheet is dark when: (light mode + reversed) OR (dark mode + default)
+        const sheetIsDark = isDark !== rev; // true → light scrim needed
+        scrim.classList.toggle('bs-scrim--light', sheetIsDark);
+      }
+
+      // ── Theme: switch preview sheet between standard / reversed ──
       function setReversed(rev) {
         // Preview sheet
         sheet.classList.toggle('bottom-sheet--reversed', rev);
@@ -8865,18 +8894,31 @@ ${accessoryMarkup}
           doneBtn.className = 'btn btn--large ' + (rev ? 'btn-filled-reversed' : 'btn-filled');
           doneBtn.setAttribute('data-bs-dismiss', '');
         }
-        // Phone background — fills edge-to-edge behind image to prevent sliver
+        // Phone background behind the photo
         phone.style.background = rev
           ? 'var(--color-background-contrast)'
           : 'var(--color-background-page)';
         // Background photo: dim when reversed so dark surface reads clearly
         const photoBg = phone.querySelector('.bs-phone-bg');
         if (photoBg) photoBg.style.opacity = rev ? '0.18' : '1';
-        // Scrim: dark for standard, light for reversed
-        scrim.classList.toggle('bs-scrim--light', rev);
-        // Variants grid
-        if (varsStd) varsStd.hidden = rev;
-        if (varsRev) varsRev.hidden = !rev;
+        // Scrim colour
+        updateScrim(rev);
+      }
+
+      // Re-sync scrim whenever the global theme toggle fires
+      const themeToggleBtn = document.querySelector('.theme-toggle');
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          // Allow the DOM to update data-theme first, then re-check
+          requestAnimationFrame(() => {
+            const rev = sheet.classList.contains('bottom-sheet--reversed');
+            updateScrim(rev);
+            // Also re-sync phone background (CSS vars will have changed)
+            phone.style.background = rev
+              ? 'var(--color-background-contrast)'
+              : 'var(--color-background-page)';
+          });
+        });
       }
 
       // ── Open / close with spring animation ──
@@ -8913,12 +8955,20 @@ ${accessoryMarkup}
         el.addEventListener('click', bsClose);
       });
 
-      // Day / Night choice buttons → setReversed + keep aria-pressed in sync
+      // Day / Night choice buttons → setReversed (preview only)
       sheet.querySelectorAll('[data-bs-theme]').forEach(btn => {
         btn.addEventListener('click', () => {
           setReversed(btn.dataset.bsTheme === 'night');
         });
       });
+
+      // ── Variants reversed toggle ──
+      if (varRevToggle) {
+        varRevToggle.addEventListener('change', () => {
+          varsStd.hidden =  varRevToggle.checked;
+          varsRev.hidden = !varRevToggle.checked;
+        });
+      }
     })();
 
     (function initCbPatterns() {
