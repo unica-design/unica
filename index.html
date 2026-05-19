@@ -3071,12 +3071,14 @@
       gap: 8px;
     }
 
-    /* ── CB States Matrix — 6 state columns, matches Button template ── */
-    .states-matrix--cb .states-matrix-head,
-    .states-matrix--cb .states-matrix-row {
-      grid-template-columns: 96px repeat(6, 1fr);
-      min-width: calc(96px + 6 * 160px);
-    }
+    /* ── Choice Button variants table ── */
+    .variants-table .choice-btn        { margin: 0 auto; }
+    .variants-table .choice-btn--vertical { width: 160px; }
+    /* Reversed swatch — dark background for all cells */
+    .variants-table--reversed th,
+    .variants-table--reversed td        { background: var(--color-background-contrast); border-bottom-color: var(--primitive-ink-700); }
+    .variants-table--reversed th        { color: var(--primitive-ink-500); }
+    .variants-table--reversed td:first-child { color: var(--primitive-ink-500); }
 
     /* ============================================================
        BUTTON DOC PAGE
@@ -4515,16 +4517,15 @@
       </div>
 
       <!-- ══════════════════════════════════════════
-           2. STATES
+           2. VARIANTS
            ══════════════════════════════════════════ -->
       <div class="doc-section">
-        <h2 class="doc-section-title">States</h2>
+        <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
 
         <div class="states-controls-row">
-          <p class="doc-section-description" style="margin-bottom:0;">All interactive states shown with avatar and body text.</p>
+          <p class="doc-section-description" style="margin-bottom:0;">All interactive states across both layout orientations.</p>
           <div class="states-controls">
-            <!-- Reversed toggle -->
             <label class="switch-item" style="flex-shrink:0;">
               <div class="toggle-switch">
                 <input type="checkbox" id="cb-states-reversed-toggle">
@@ -4542,115 +4543,101 @@
           </div>
         </div>
 
-        <!-- Standard states matrix — horizontal avatar buttons, 6 state columns -->
+        <!-- Standard variants table -->
         <div id="cb-states-standard">
-          <div class="states-matrix states-matrix--cb">
-            <div class="states-matrix-head">
-              <div class="states-matrix-head-spacer"></div>
-              <div class="states-matrix-head-cell">Default</div>
-              <div class="states-matrix-head-cell">Hover</div>
-              <div class="states-matrix-head-cell">Pressed</div>
-              <div class="states-matrix-head-cell">Focus</div>
-              <div class="states-matrix-head-cell">Selected</div>
-              <div class="states-matrix-head-cell">Disabled</div>
-            </div>
-            <div class="states-matrix-row">
-              <div class="states-matrix-label">Avatar</div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-            </div>
+          <div class="table-wrap">
+            <table class="variants-table">
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>Vertical</th>
+                  <th>Horizontal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Default</td>
+                  <td><button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Hover</td>
+                  <td><button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Pressed</td>
+                  <td><button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Focus</td>
+                  <td><button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Selected</td>
+                  <td><button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Disabled</td>
+                  <td><button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" disabled><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" disabled><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div><!-- /#cb-states-standard -->
 
-        <!-- Reversed states matrix (hidden until toggle is on) -->
+        <!-- Reversed variants table (hidden until toggle is on) -->
         <div id="cb-states-reversed" hidden>
-          <div class="states-matrix states-matrix--cb states-matrix--reversed">
-            <div class="states-matrix-head">
-              <div class="states-matrix-head-spacer"></div>
-              <div class="states-matrix-head-cell">Default</div>
-              <div class="states-matrix-head-cell">Hover</div>
-              <div class="states-matrix-head-cell">Pressed</div>
-              <div class="states-matrix-head-cell">Focus</div>
-              <div class="states-matrix-head-cell">Selected</div>
-              <div class="states-matrix-head-cell">Disabled</div>
-            </div>
-            <div class="states-matrix-row">
-              <div class="states-matrix-label">Avatar</div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div>
-                </button>
-              </div>
-            </div>
+          <div class="table-wrap">
+            <table class="variants-table variants-table--reversed">
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>Vertical</th>
+                  <th>Horizontal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Default</td>
+                  <td><button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Hover</td>
+                  <td><button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Pressed</td>
+                  <td><button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Focus</td>
+                  <td><button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Selected</td>
+                  <td><button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true"><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+                <tr>
+                  <td>Disabled</td>
+                  <td><button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                  <td><button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled><div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div><div class="choice-btn-text"><span class="choice-btn-label">Morgan</span><span class="choice-btn-sublabel">Product Designer</span></div></button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div><!-- /#cb-states-reversed -->
 
-      </div><!-- /.doc-section States -->
+      </div><!-- /.doc-section Variants -->
 
       <!-- ══════════════════════════════════════════
            3. PROPERTIES
