@@ -3071,18 +3071,35 @@
       gap: 8px;
     }
 
-    /* States matrix for choice buttons — 6-column layout */
-    .states-matrix--cb .states-matrix-head,
-    .states-matrix--cb .states-matrix-row {
-      grid-template-columns: 100px repeat(6, 1fr);
-      min-width: 820px;
+    /* ── CB States List — row-based layout (avatar only) ── */
+    .cb-states-list {
+      border: var(--border-width-default) solid var(--doc-rule-subtle);
+      border-radius: var(--corner-radius-m);
+      overflow: hidden;
+      margin-bottom: var(--space-600);
     }
-    .states-matrix--cb .states-matrix-head-cell,
-    .states-matrix--cb .states-matrix-cell { min-width: 120px; }
-    /* Buttons fill their cell; labels truncate if needed */
-    .states-matrix--cb .states-matrix-cell { overflow: hidden; align-items: stretch; }
-    .states-matrix--cb .states-matrix-cell .choice-btn { width: 100%; box-sizing: border-box; min-width: 0; }
-    .states-matrix--cb .states-matrix-cell .choice-btn-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+    .cb-states-row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      align-items: center;
+      border-bottom: var(--border-width-default) solid var(--doc-rule-subtle);
+      padding: var(--space-500);
+      gap: var(--space-400);
+    }
+    .cb-states-row:last-child { border-bottom: none; }
+    .cb-states-row-label {
+      font-size: var(--doc-label-size);
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--doc-label-tracking);
+      color: var(--color-content-subtle);
+    }
+    .cb-states-row-cell { display: flex; }
+    .cb-states-row-cell .choice-btn { flex: 1; box-sizing: border-box; }
+    /* Reversed swatch */
+    .cb-states-list--reversed { background: var(--color-background-contrast); }
+    .cb-states-list--reversed .cb-states-row { border-bottom-color: var(--primitive-ink-700); }
+    .cb-states-list--reversed .cb-states-row-label { color: var(--primitive-ink-500); }
 
     /* ============================================================
        BUTTON DOC PAGE
@@ -4554,134 +4571,59 @@
           </div>
         </div>
 
-        <!-- Standard states matrix -->
+        <!-- Standard states list (avatar, row-per-state) -->
         <div id="cb-states-standard">
-          <div class="states-matrix states-matrix--cb">
-            <div class="states-matrix-head">
-              <div class="states-matrix-head-spacer"></div>
-              <div class="states-matrix-head-cell">Default</div>
-              <div class="states-matrix-head-cell">Hover</div>
-              <div class="states-matrix-head-cell">Pressed</div>
-              <div class="states-matrix-head-cell">Focus</div>
-              <div class="states-matrix-head-cell">Selected</div>
-              <div class="states-matrix-head-cell">Disabled</div>
-            </div>
-            <!-- Row: Icon -->
-            <div class="states-matrix-row" id="cb-states-icon-row">
-              <div class="states-matrix-label">Icon</div>
-              <div class="states-matrix-cell">
+          <div class="cb-states-list">
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Default</div>
+              <div class="cb-states-row-cell">
                 <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
             </div>
-            <!-- Row: Icon Bullet -->
-            <div class="states-matrix-row" id="cb-states-ibullet-row">
-              <div class="states-matrix-label">Icon Bullet</div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Hover</div>
+              <div class="cb-states-row-cell">
                 <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
             </div>
-            <!-- Row: Avatar -->
-            <div class="states-matrix-row" id="cb-states-avatar-row">
-              <div class="states-matrix-label">Avatar</div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Pressed</div>
+              <div class="cb-states-row-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
+            </div>
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Focus</div>
+              <div class="cb-states-row-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-strong);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
+            </div>
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Selected</div>
+              <div class="cb-states-row-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-color:var(--color-border-strong);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
+            </div>
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Disabled</div>
+              <div class="cb-states-row-cell">
+                <button class="choice-btn choice-btn--vertical" tabindex="-1" aria-pressed="false" disabled>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
@@ -4689,134 +4631,59 @@
           </div>
         </div><!-- /#cb-states-standard -->
 
-        <!-- Reversed states matrix (hidden until toggle is on) -->
+        <!-- Reversed states list (hidden until toggle is on) -->
         <div id="cb-states-reversed" hidden>
-          <div class="states-matrix states-matrix--cb states-matrix--reversed">
-            <div class="states-matrix-head">
-              <div class="states-matrix-head-spacer"></div>
-              <div class="states-matrix-head-cell">Default</div>
-              <div class="states-matrix-head-cell">Hover</div>
-              <div class="states-matrix-head-cell">Pressed</div>
-              <div class="states-matrix-head-cell">Focus</div>
-              <div class="states-matrix-head-cell">Selected</div>
-              <div class="states-matrix-head-cell">Disabled</div>
-            </div>
-            <!-- Row: Icon (reversed) -->
-            <div class="states-matrix-row" id="cb-rev-states-icon-row">
-              <div class="states-matrix-label">Icon</div>
-              <div class="states-matrix-cell">
+          <div class="cb-states-list cb-states-list--reversed">
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Default</div>
+              <div class="cb-states-row-cell">
                 <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
             </div>
-            <!-- Row: Icon Bullet (reversed) -->
-            <div class="states-matrix-row" id="cb-rev-states-ibullet-row">
-              <div class="states-matrix-label">Icon Bullet</div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Hover</div>
+              <div class="cb-states-row-cell">
                 <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><span class="icon-bullet icon-bullet--medium icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-sun"/></svg></span></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Day</span></div>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
+                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
             </div>
-            <!-- Row: Avatar (reversed) -->
-            <div class="states-matrix-row" id="cb-rev-states-avatar-row">
-              <div class="states-matrix-label">Avatar</div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Pressed</div>
+              <div class="cb-states-row-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
+            </div>
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Focus</div>
+              <div class="cb-states-row-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="border-color:var(--color-border-inverse);transform:scale(0.98);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
+            </div>
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Selected</div>
+              <div class="cb-states-row-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="true">
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" style="outline:2px solid var(--color-border-inverse);outline-offset:2px;border-color:var(--color-border-inverse);">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="true">
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
-                  <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
-                </button>
-              </div>
-              <div class="states-matrix-cell">
-                <button class="choice-btn choice-btn--horizontal choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
-                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Mia"></div>
+            </div>
+            <div class="cb-states-row">
+              <div class="cb-states-row-label">Disabled</div>
+              <div class="cb-states-row-cell">
+                <button class="choice-btn choice-btn--vertical choice-btn--reversed" tabindex="-1" aria-pressed="false" disabled>
+                  <div class="choice-btn-accessory"><img class="choice-btn-avatar-img" src="assets/avatars/avatar-1.png" alt="Morgan"></div>
                   <div class="choice-btn-text"><span class="choice-btn-label">Morgan</span></div>
                 </button>
               </div>
