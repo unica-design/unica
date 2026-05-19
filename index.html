@@ -3689,7 +3689,7 @@
     #bs-phone-mock {
       position: relative;
       padding: 0 !important;
-      height: 480px;
+      height: 600px;
     }
     .bs-phone-bg {
       position: absolute;
@@ -3703,7 +3703,9 @@
     .bs-scrim {
       position: absolute;
       inset: 0;
-      background: rgba(15, 23, 38, 0.64);
+      background: rgba(8, 5, 13, 0.50);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
@@ -3760,6 +3762,41 @@
       flex-shrink: 0;
     }
 
+    /* Slot content styles */
+    .bs-slot-image {
+      width: 100%;
+      aspect-ratio: 295 / 153;
+      border-radius: var(--corner-radius-l);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .bs-slot-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .bs-slot-heading {
+      font-family: var(--font-family-sans);
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-body-l);
+      line-height: var(--font-leading-body-l);
+      color: var(--color-content-default);
+      width: 100%;
+    }
+    .bottom-sheet--reversed .bs-slot-heading {
+      color: var(--color-inverse);
+    }
+    .bs-choice-row {
+      display: flex;
+      gap: var(--space-200);
+      width: 100%;
+    }
+    .bs-choice-row .choice-btn {
+      flex: 1;
+      min-width: 0;
+    }
+
     /* Variants grid */
     .bs-variants-grid {
       display: grid;
@@ -3770,12 +3807,10 @@
     .bs-variant-item {
       display: flex;
       flex-direction: column;
-      gap: var(--space-200);
+      gap: var(--space-400);
     }
-    .bs-variant-label {
-      font-size: var(--font-size-body-s);
-      color: var(--color-content-subtle);
-      line-height: var(--font-leading-body-s);
+    .bs-variant-item > .avatar-group-label {
+      margin-bottom: 0; /* gap on parent handles spacing */
     }
     @media (max-width: 640px) {
       .bs-variants-grid { grid-template-columns: 1fr; }
@@ -6637,8 +6672,17 @@
           <p class="doc-section-description" style="margin-bottom:0;">Tap a button or the scrim to dismiss. Use "Show again" to retrigger.</p>
           <div class="states-controls">
             <label class="switch-item" style="flex-shrink:0;">
-              <input type="checkbox" class="switch-input" id="bs-reversed-toggle">
-              <span class="switch-track" aria-hidden="true"></span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="bs-reversed-toggle">
+                <div class="toggle-track">
+                  <div class="toggle-handle">
+                    <div class="toggle-icon">
+                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <span class="switch-item-text">Reversed</span>
             </label>
           </div>
@@ -6649,25 +6693,46 @@
 
             <!-- Phone mock -->
             <div class="phone-mock" id="bs-phone-mock" aria-label="Phone preview">
-              <img class="bs-phone-bg" src="assets/bg-dunes-demo.png" alt="">
+              <img class="bs-phone-bg" src="assets/arch-house.png" alt="">
               <div class="bs-scrim is-visible" id="bs-scrim" role="button" aria-label="Close sheet" tabindex="-1"></div>
 
-              <!-- Animated bottom sheet -->
+              <!-- Animated bottom sheet (slot type — Figma example) -->
               <div class="bottom-sheet bs-sheet-demo is-open" id="bs-sheet-demo"
-                   role="dialog" aria-modal="true" aria-label="Update available">
+                   role="dialog" aria-modal="true" aria-label="Day or Night?">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
-                  <div class="bs-media">
-                    <div class="bs-media-logo" id="bs-demo-media-logo">
-                      <img src="assets/unica-mark-dark.png" id="bs-logo-img" alt="ůnica">
+                  <!-- Architecture photo -->
+                  <div class="bs-slot-image">
+                    <img src="assets/arch-house.png" alt="Modern house exterior">
+                  </div>
+                  <!-- Slot text + choice buttons -->
+                  <div style="display:flex;flex-direction:column;gap:var(--space-400);width:100%;">
+                    <p class="bs-slot-heading">Day or Night?</p>
+                    <div class="bs-choice-row">
+                      <button class="choice-btn choice-btn--vertical" aria-pressed="false" data-single-group="bs-daynight">
+                        <div class="choice-btn-accessory">
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.25C12.4142 2.25 12.75 2.58579 12.75 3V4C12.75 4.41421 12.4142 4.75 12 4.75C11.5858 4.75 11.25 4.41421 11.25 4V3C11.25 2.58579 11.5858 2.25 12 2.25ZM12 7.25C9.37665 7.25 7.25 9.37665 7.25 12C7.25 14.6234 9.37665 16.75 12 16.75C14.6234 16.75 16.75 14.6234 16.75 12C16.75 9.37665 14.6234 7.25 12 7.25ZM5.75 12C5.75 8.54822 8.54822 5.75 12 5.75C15.4518 5.75 18.25 8.54822 18.25 12C18.25 15.4518 15.4518 18.25 12 18.25C8.54822 18.25 5.75 15.4518 5.75 12ZM19.7071 4.29289C20.0976 4.68342 20.0976 5.31658 19.7071 5.70711L19.0607 6.35355C18.6702 6.74408 18.037 6.74408 17.6465 6.35355C17.2559 5.96303 17.2559 5.32986 17.6465 4.93934L18.2929 4.29289C18.6834 3.90237 19.3166 3.90237 19.7071 4.29289ZM4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L6.35355 4.93934C6.74408 5.32986 6.74408 5.96303 6.35355 6.35355C5.96303 6.74408 5.32986 6.74408 4.93934 6.35355L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289ZM2.25 12C2.25 11.5858 2.58579 11.25 3 11.25H4C4.41421 11.25 4.75 11.5858 4.75 12C4.75 12.4142 4.41421 12.75 4 12.75H3C2.58579 12.75 2.25 12.4142 2.25 12ZM19.25 12C19.25 11.5858 19.5858 11.25 20 11.25H21C21.4142 11.25 21.75 11.5858 21.75 12C21.75 12.4142 21.4142 12.75 21 12.75H20C19.5858 12.75 19.25 12.4142 19.25 12ZM6.35355 17.6465C6.74408 18.037 6.74408 18.6702 6.35355 19.0607L5.70711 19.7071C5.31658 20.0976 4.68342 20.0976 4.29289 19.7071C3.90237 19.3166 3.90237 18.6834 4.29289 18.2929L4.93934 17.6465C5.32986 17.2559 5.96303 17.2559 6.35355 17.6465ZM17.6465 17.6465C18.037 17.2559 18.6702 17.2559 19.0607 17.6465L19.7071 18.2929C20.0976 18.6834 20.0976 19.3166 19.7071 19.7071C19.3166 20.0976 18.6834 20.0976 18.2929 19.7071L17.6465 19.0607C17.2559 18.6702 17.2559 18.037 17.6465 17.6465ZM12 19.25C12.4142 19.25 12.75 19.5858 12.75 20V21C12.75 21.4142 12.4142 21.75 12 21.75C11.5858 21.75 11.25 21.4142 11.25 21V20C11.25 19.5858 11.5858 19.25 12 19.25Z" fill="currentColor"/></svg>
+                        </div>
+                        <div class="choice-btn-text">
+                          <span class="choice-btn-label">Day</span>
+                          <span class="choice-btn-sublabel">am reminder</span>
+                        </div>
+                      </button>
+                      <button class="choice-btn choice-btn--vertical" aria-pressed="false" data-single-group="bs-daynight">
+                        <div class="choice-btn-accessory">
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.5748 3.27111C11.7759 3.46382 11.8504 3.75365 11.7673 4.02049C11.5586 4.69693 11.4453 5.41596 11.4453 6.16226C11.4453 10.2114 14.7182 13.4844 18.7673 13.4844C19.5136 13.4844 20.2327 13.3711 20.9091 13.1624C21.176 13.0793 21.4658 13.1538 21.6585 13.3549C21.8512 13.556 21.9065 13.8499 21.7994 14.1066C20.4332 17.4357 17.1578 19.75 13.3286 19.75C8.23963 19.75 4.11328 15.6237 4.11328 10.5347C4.11328 6.70554 6.42758 3.43013 9.75673 2.06398C10.0134 1.95681 10.3073 2.01208 10.5085 2.20479L11.5748 3.27111ZM8.77854 4.39399C6.51727 5.62201 4.97656 7.98952 4.97656 10.7148C4.97656 15.2461 8.61602 18.8856 13.1473 18.8856C15.8727 18.8856 18.2401 17.3449 19.4681 15.0836C19.2153 15.1115 18.9629 15.1258 18.7083 15.1258C14.1771 15.1258 10.5376 11.4863 10.5376 6.95508C10.5376 6.70047 10.5519 6.44808 10.5798 6.1953C10.1977 6.54547 9.85817 6.94835 9.57283 7.39247C9.37082 7.70723 8.94972 7.79843 8.63496 7.59642C8.32019 7.39441 8.229 6.97331 8.43101 6.65855C8.81613 6.05201 9.28489 5.50939 9.82268 5.04519L8.77854 4.39399Z" fill="currentColor"/></svg>
+                        </div>
+                        <div class="choice-btn-text">
+                          <span class="choice-btn-label">Night</span>
+                          <span class="choice-btn-sublabel">pm reminder</span>
+                        </div>
+                      </button>
                     </div>
                   </div>
-                  <h2 class="bs-title">Update available</h2>
-                  <p class="bs-body">A new version of the app is ready to install — performance improvements and security fixes included.</p>
                 </div>
+                <!-- Single action button -->
                 <div class="bs-actions">
-                  <button class="bs-btn bs-btn-outlined" data-bs-dismiss>Not now</button>
-                  <button class="bs-btn bs-btn-filled" data-bs-dismiss>Update</button>
+                  <button class="bs-btn bs-btn-filled" data-bs-dismiss>Done</button>
                 </div>
               </div>
             </div><!-- /phone mock -->
@@ -6743,11 +6808,20 @@
         <hr class="doc-rule">
 
         <div class="states-controls-row" style="margin-bottom:var(--space-600);">
-          <p class="doc-section-description" style="margin-bottom:0;">Four leading-media variants across both colour modes.</p>
+          <p class="doc-section-description" style="margin-bottom:0;">Add a logo, icon, or avatar to give in-app messages visual context and brand presence. The reversed version is available for dark-themed or high-contrast surfaces.</p>
           <div class="states-controls">
             <label class="switch-item" style="flex-shrink:0;">
-              <input type="checkbox" class="switch-input" id="bs-var-reversed-toggle">
-              <span class="switch-track" aria-hidden="true"></span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="bs-var-reversed-toggle">
+                <div class="toggle-track">
+                  <div class="toggle-handle">
+                    <div class="toggle-icon">
+                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <span class="switch-item-text">Reversed</span>
             </label>
           </div>
@@ -6758,7 +6832,7 @@
           <div class="bs-variants-grid">
 
             <div class="bs-variant-item">
-              <p class="bs-variant-label">Logo</p>
+              <p class="avatar-group-label">Logo</p>
               <div class="bottom-sheet bottom-sheet--card">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
@@ -6774,7 +6848,7 @@
             </div>
 
             <div class="bs-variant-item">
-              <p class="bs-variant-label">Icon Bullet</p>
+              <p class="avatar-group-label">Icon Bullet</p>
               <div class="bottom-sheet bottom-sheet--card">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
@@ -6794,7 +6868,7 @@
             </div>
 
             <div class="bs-variant-item">
-              <p class="bs-variant-label">Avatar</p>
+              <p class="avatar-group-label">Avatar</p>
               <div class="bottom-sheet bottom-sheet--card">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
@@ -6810,7 +6884,7 @@
             </div>
 
             <div class="bs-variant-item">
-              <p class="bs-variant-label">No media</p>
+              <p class="avatar-group-label">No media</p>
               <div class="bottom-sheet bottom-sheet--card">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
@@ -6832,7 +6906,7 @@
           <div class="bs-variants-grid">
 
             <div class="bs-variant-item">
-              <p class="bs-variant-label">Logo</p>
+              <p class="avatar-group-label">Logo</p>
               <div class="bottom-sheet bottom-sheet--reversed bottom-sheet--card">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
@@ -6848,7 +6922,7 @@
             </div>
 
             <div class="bs-variant-item">
-              <p class="bs-variant-label">Icon Bullet</p>
+              <p class="avatar-group-label">Icon Bullet</p>
               <div class="bottom-sheet bottom-sheet--reversed bottom-sheet--card">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
@@ -6868,7 +6942,7 @@
             </div>
 
             <div class="bs-variant-item">
-              <p class="bs-variant-label">Avatar</p>
+              <p class="avatar-group-label">Avatar</p>
               <div class="bottom-sheet bottom-sheet--reversed bottom-sheet--card">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
@@ -6884,7 +6958,7 @@
             </div>
 
             <div class="bs-variant-item">
-              <p class="bs-variant-label">No media</p>
+              <p class="avatar-group-label">No media</p>
               <div class="bottom-sheet bottom-sheet--reversed bottom-sheet--card">
                 <div class="bs-grabber"></div>
                 <div class="bs-content">
@@ -8823,12 +8897,13 @@ ${accessoryMarkup}
         revToggle.addEventListener('change', () => {
           const rev = revToggle.checked;
           sheet.classList.toggle('bottom-sheet--reversed', rev);
-          // Swap logo mark — dark mark on light bg vs light mark on dark bg
-          const logoImg = document.getElementById('bs-logo-img');
-          if (logoImg) logoImg.src = rev ? 'assets/unica-mark.png' : 'assets/unica-mark-dark.png';
-          // Dim/undim the background photo for context
+          // Toggle choice buttons inside the demo sheet
+          sheet.querySelectorAll('.choice-btn').forEach(btn => {
+            btn.classList.toggle('choice-btn--reversed', rev);
+          });
+          // Dim/restore the background photo for context
           const photoBg = phone.querySelector('.bs-phone-bg');
-          if (photoBg) photoBg.style.opacity = rev ? '0.3' : '1';
+          if (photoBg) photoBg.style.opacity = rev ? '0.25' : '1';
           phone.style.background = rev ? 'var(--color-background-contrast)' : '';
         });
       }
