@@ -3183,6 +3183,12 @@
     .btn-preview-col--dark {
       background: var(--primitive-ink-900);
     }
+    .btn-preview-col--contrast {
+      background: var(--color-background-contrast);
+    }
+    .btn-preview-col--contrast .btn-preview-col-label {
+      color: rgba(255, 255, 255, 0.65);
+    }
     .btn-preview-col--photo {
       background:
         url('assets/bg-overlay-demo.png') center/cover no-repeat;
@@ -4919,12 +4925,21 @@
             </ul>
           </div>
 
-          <!-- Overlay style seg control -->
-          <div class="seg-control" id="btn-scta-overlay-control" role="group" aria-label="Overlay type">
-            <span class="seg-control-slider" aria-hidden="true"></span>
-            <button class="seg-control-btn" data-value="dark"  aria-pressed="true">Dark</button>
-            <button class="seg-control-btn" data-value="light" aria-pressed="false">Light</button>
-          </div>
+          <!-- Reversed toggle -->
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch">
+              <input type="checkbox" id="btn-scta-reversed-toggle">
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Reversed</span>
+          </label>
 
         </div>
 
@@ -9448,7 +9463,7 @@
       const iconPicker        = document.getElementById('btn-icon-picker');
       const shapePicker       = document.getElementById('btn-shape-picker');
       const sctaSizePicker    = document.getElementById('btn-scta-size-picker');
-      const sctaOverlayControl = document.getElementById('btn-scta-overlay-control');
+      const sctaReversedToggle = document.getElementById('btn-scta-reversed-toggle');
       const stdCodeToggle  = document.getElementById('btn-std-code-toggle');
       const stdCodeReveal  = document.getElementById('btn-std-code-reveal');
       const stdCodeSnippet = document.getElementById('btn-std-code-snippet');
@@ -9460,8 +9475,8 @@
       let currentSize     = 'large';
       let currentIcon     = 'leading-icon';
       let currentShape    = 'unica';
-      let currentOverlay  = 'dark';
-      let currentSctaSize = 'large';
+      let currentSctaReversed = false;
+      let currentSctaSize     = 'large';
 
       const sizeClass     = () => ({ large:'btn--large', medium:'btn--medium', small:'btn--small' }[currentSize]     || 'btn--large');
       const sctaSizeClass = () => ({ large:'btn--large', medium:'btn--medium', small:'btn--small' }[currentSctaSize] || 'btn--large');
@@ -9514,21 +9529,32 @@
       }
 
       function renderScta() {
-        const sb         = sctaBadge();
-        const sc         = sctaSizeClass();
-        const ovlClass   = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
-        const ovlLabel   = currentOverlay === 'dark' ? 'Dark overlay' : 'Light overlay';
-        const ovlSub     = currentOverlay === 'dark' ? 'Dark photography only' : 'Light photography only';
-        const badgeClass = currentOverlay === 'dark' ? 'dark-ovl' : 'light-ovl';
+        const sb = sctaBadge();
+        const sc = sctaSizeClass();
 
-        colSctaDefault.innerHTML =
-          `<span class="btn-preview-col-label">Default</span>` +
-          `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta btn-scta-fill', sb, sc)}</div>`;
+        if (currentSctaReversed) {
+          // Reversed: contrast bg + btn-scta-reversed | twilight photo + btn-scta-overlay
+          colSctaDefault.className = 'btn-preview-col btn-preview-col--contrast';
+          colSctaDefault.innerHTML =
+            `<span class="btn-preview-col-label">Reversed</span>` +
+            `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta btn-scta-reversed', sb, sc)}</div>`;
 
-        colSctaOverlay.className = `btn-preview-col ${currentOverlay === 'dark' ? 'btn-preview-col--photo' : 'btn-preview-col--dunes'}`;
-        colSctaOverlay.innerHTML =
-          `<span class="btn-pcol-badge btn-pcol-badge--${badgeClass}">${ovlLabel}</span>` +
-          `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta ' + ovlClass, sb, sc)}</div>`;
+          colSctaOverlay.className = 'btn-preview-col btn-preview-col--photo';
+          colSctaOverlay.innerHTML =
+            `<span class="btn-pcol-badge btn-pcol-badge--dark-ovl">Dark overlay</span>` +
+            `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta btn-scta-overlay', sb, sc)}</div>`;
+        } else {
+          // Default: page bg + btn-scta-fill | dunes photo + btn-scta-overlay-light
+          colSctaDefault.className = 'btn-preview-col';
+          colSctaDefault.innerHTML =
+            `<span class="btn-preview-col-label">Default</span>` +
+            `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta btn-scta-fill', sb, sc)}</div>`;
+
+          colSctaOverlay.className = 'btn-preview-col btn-preview-col--dunes';
+          colSctaOverlay.innerHTML =
+            `<span class="btn-pcol-badge btn-pcol-badge--light-ovl">Light overlay</span>` +
+            `<div class="scta-btn-center">${mkSctaBtn('btn-super-cta btn-scta-overlay-light', sb, sc)}</div>`;
+        }
 
         if (sctaCodeReveal && !sctaCodeReveal.hidden) updateSctaCode();
       }
@@ -9569,8 +9595,10 @@
         const sctaSz      = sctaSizeClass();
         const strokeAttrs = `stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"`;
         const arrowPath   = `M5 12H19M19 12L13 6M19 12L13 18`;
-        const ovlClass    = currentOverlay === 'dark' ? 'btn-scta-overlay' : 'btn-scta-overlay-light';
-        const ovlLabel    = currentOverlay === 'dark' ? 'Overlay dark — dark photography' : 'Overlay light — light photography';
+        const fillClass   = currentSctaReversed ? 'btn-scta-reversed' : 'btn-scta-fill';
+        const ovlClass    = currentSctaReversed ? 'btn-scta-overlay'  : 'btn-scta-overlay-light';
+        const fillComment = currentSctaReversed ? 'Reversed — use on color-background-contrast surfaces' : 'Default';
+        const ovlComment  = currentSctaReversed ? 'Overlay dark — dark photography' : 'Overlay light — light photography';
 
         const badge = `  <span class="btn-scta-label">Label</span>
   <span class="btn-scta-badge" aria-hidden="true">
@@ -9579,18 +9607,18 @@
     </svg>
   </span>`;
 
-        return `<!-- Default -->
-<button class="btn btn-super-cta btn-scta-fill ${sctaSz}">
+        return `<!-- ${fillComment} -->
+<button class="btn btn-super-cta ${fillClass} ${sctaSz}">
 ${badge}
 </button>
 
-<!-- ${ovlLabel} -->
+<!-- ${ovlComment} -->
 <button class="btn btn-super-cta ${ovlClass} ${sctaSz}">
 ${badge}
 </button>
 
 <!-- Disabled: add disabled to either variant -->
-<button class="btn btn-super-cta btn-scta-fill ${sctaSz}" disabled>
+<button class="btn btn-super-cta ${fillClass} ${sctaSz}" disabled>
 ${badge}
 </button>`;
       }
@@ -9684,11 +9712,13 @@ ${badge}
         renderScta();
       });
 
-      // SCTA overlay seg control
-      initSegControl(sctaOverlayControl, value => {
-        currentOverlay = value;
-        renderScta();
-      });
+      // SCTA reversed toggle
+      if (sctaReversedToggle) {
+        sctaReversedToggle.addEventListener('change', () => {
+          currentSctaReversed = sctaReversedToggle.checked;
+          renderScta();
+        });
+      }
 
       updateShapePickerVisibility();
       renderStd();

@@ -151,7 +151,7 @@
   --color-background-ui:               var(--primitive-ink-100);
   --color-background-inverse:          var(--primitive-ink-900);
   --color-background-inverse-selection: var(--primitive-ink-800);
-  --color-background-inverse-disabled: rgba(255, 255, 255, 0.2);
+  --color-background-inverse-disabled: var(--primitive-ink-800);
 
   /* --- Brand --- */
   --color-brand-berry:       var(--primitive-berry-400);
