@@ -3904,7 +3904,6 @@
       align-items: center;
       justify-content: center;
       padding: var(--space-700);
-      background: var(--color-background-section);
       border-radius: var(--corner-radius-s);
       flex-wrap: wrap;
       gap: var(--space-500);
@@ -3921,11 +3920,10 @@
     }
 
     /* Size variants */
-    .card-colorblock--hero { width: 343px; min-height: 343px; }
-    .card-colorblock--card { width: 343px; min-height: 270px; }
+    .card-colorblock--hero { width: 343px; }
+    .card-colorblock--inline { width: 343px; }
     .card-colorblock--tile {
       width: 164px;
-      min-height: 216px;
       padding: var(--space-400);
       gap: var(--space-400);
     }
@@ -7565,9 +7563,9 @@
           <!-- Size seg-control -->
           <div class="seg-control" id="card-cb-size" role="group" aria-label="Card size">
             <span class="seg-control-slider" aria-hidden="true"></span>
-            <button class="seg-control-btn" data-value="hero"  aria-pressed="false">Hero</button>
-            <button class="seg-control-btn" data-value="card"  aria-pressed="true">Card</button>
-            <button class="seg-control-btn" data-value="tile"  aria-pressed="false">Tile</button>
+            <button class="seg-control-btn" data-value="hero"   aria-pressed="false">Hero</button>
+            <button class="seg-control-btn" data-value="inline" aria-pressed="true">Inline</button>
+            <button class="seg-control-btn" data-value="tile"   aria-pressed="false">Tile</button>
           </div>
 
           <!-- Color dropdown -->
@@ -7670,9 +7668,9 @@
           <!-- Size seg-control -->
           <div class="seg-control" id="card-media-size" role="group" aria-label="Card size">
             <span class="seg-control-slider" aria-hidden="true"></span>
-            <button class="seg-control-btn" data-value="hero"  aria-pressed="false">Hero</button>
-            <button class="seg-control-btn" data-value="card"  aria-pressed="true">Card</button>
-            <button class="seg-control-btn" data-value="tile"  aria-pressed="false">Tile</button>
+            <button class="seg-control-btn" data-value="hero"   aria-pressed="false">Hero</button>
+            <button class="seg-control-btn" data-value="inline" aria-pressed="true">Inline</button>
+            <button class="seg-control-btn" data-value="tile"   aria-pressed="false">Tile</button>
           </div>
 
           <!-- Feature toggles -->
@@ -7812,7 +7810,7 @@
           <!-- White -->
           <div class="card-colorblock card-colorblock--tile card-colorblock--white">
             <div class="icon-bullet icon-bullet--xlarge icon-bullet--ink" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
             </div>
             <div class="card-colorblock-inner">
               <div class="card-colorblock-text">
@@ -7825,7 +7823,7 @@
           <!-- Ink -->
           <div class="card-colorblock card-colorblock--tile card-colorblock--ink">
             <div class="icon-bullet icon-bullet--xlarge icon-bullet--white" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
             </div>
             <div class="card-colorblock-inner">
               <div class="card-colorblock-text">
@@ -7838,7 +7836,7 @@
           <!-- Violet -->
           <div class="card-colorblock card-colorblock--tile card-colorblock--violet">
             <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
             </div>
             <div class="card-colorblock-inner">
               <div class="card-colorblock-text">
@@ -7851,7 +7849,7 @@
           <!-- Berry -->
           <div class="card-colorblock card-colorblock--tile card-colorblock--berry">
             <div class="icon-bullet icon-bullet--xlarge icon-bullet--berry" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
             </div>
             <div class="card-colorblock-inner">
               <div class="card-colorblock-text">
@@ -7864,7 +7862,7 @@
           <!-- Apricot -->
           <div class="card-colorblock card-colorblock--tile card-colorblock--apricot">
             <div class="icon-bullet icon-bullet--xlarge icon-bullet--apricot" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
             </div>
             <div class="card-colorblock-inner">
               <div class="card-colorblock-text">
@@ -7877,7 +7875,7 @@
           <!-- Mint -->
           <div class="card-colorblock card-colorblock--tile card-colorblock--mint">
             <div class="icon-bullet icon-bullet--xlarge icon-bullet--mint" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
             </div>
             <div class="card-colorblock-inner">
               <div class="card-colorblock-text">
@@ -7890,7 +7888,7 @@
           <!-- Pool -->
           <div class="card-colorblock card-colorblock--tile card-colorblock--pool">
             <div class="icon-bullet icon-bullet--xlarge icon-bullet--pool" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
             </div>
             <div class="card-colorblock-inner">
               <div class="card-colorblock-text">
@@ -7903,7 +7901,7 @@
           <!-- Citron -->
           <div class="card-colorblock card-colorblock--tile card-colorblock--citron">
             <div class="icon-bullet icon-bullet--xlarge icon-bullet--citron" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
             </div>
             <div class="card-colorblock-inner">
               <div class="card-colorblock-text">
@@ -7921,9 +7919,9 @@
 
           <div class="card-type-item">
             <span class="card-type-label">Color Block</span>
-            <div class="card-colorblock card-colorblock--card card-colorblock--violet">
+            <div class="card-colorblock card-colorblock--inline card-colorblock--violet">
               <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
               </div>
               <div class="card-colorblock-inner">
                 <div class="card-colorblock-text">
@@ -7931,9 +7929,8 @@
                   <p class="card-colorblock-body">Manage color, type, and spacing from a single source of truth.</p>
                 </div>
                 <div class="card-colorblock-actions">
-                  <button class="btn btn-super-cta btn-scta-fill btn--large" type="button">
-                    <span class="btn-scta-label">Explore</span>
-                    <span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  <button class="btn btn-filled btn--medium btn--icon-only" type="button" aria-label="Explore">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
                 </div>
               </div>
@@ -7971,7 +7968,7 @@
             <div class="card-multi">
               <div class="card-multi-header">
                 <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
                 </div>
                 <div class="card-multi-text-block">
                   <p class="card-multi-overline">Feature</p>
@@ -8015,8 +8012,8 @@
               <tr>
                 <td class="td-mono">size</td>
                 <td class="td-type">enum</td>
-                <td class="td-subtle">card</td>
-                <td>One of <code>hero</code> (343×343) · <code>card</code> (343×270) · <code>tile</code> (164×216). Tile uses smaller typography and tighter padding.</td>
+                <td class="td-subtle">inline</td>
+                <td>One of <code>hero</code> (343×343) · <code>inline</code> (343, hugged height) · <code>tile</code> (164×216). Tile uses smaller typography and tighter padding.</td>
               </tr>
               <tr>
                 <td class="td-mono">icon</td>
@@ -10240,7 +10237,7 @@ ${accessoryMarkup}
     ══════════════════════════════════════════════════════════════════ */
 
     /* ── Shared SVGs ──────────────────────────────────────────────── */
-    const CARD_FIRE_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 14.5 6 14.5 9C14.5 10.38 13.38 11.5 12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 9 7 11 7 14C7 17.31 9.69 20 13 20C16.31 20 19 17.31 19 14C19 9.5 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const CARD_FIRE_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>`;
     const CARD_ARROW_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     const CARD_HEART_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     const CARD_CHEVRON_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -10257,7 +10254,7 @@ ${accessoryMarkup}
       const codeReveal = document.getElementById('card-cb-code-reveal');
       if (!preview) return;
 
-      const state = { size: 'card', color: 'ink', showIcon: true, showBody: true, showAction: true };
+      const state = { size: 'inline', color: 'ink', showIcon: true, showBody: true, showAction: true };
 
       // Map color → icon-bullet modifier
       const iconBulletColor = {
@@ -10288,14 +10285,25 @@ ${accessoryMarkup}
         }
         innerParts.push(`<div class="card-colorblock-text">${textParts.join('\n')}</div>`);
         if (showAction) {
-          innerParts.push(`<div class="card-colorblock-actions"><button class="${sctaClass(color)}" type="button"><span class="btn-scta-label">Explore</span><span class="btn-scta-badge" aria-hidden="true">${CARD_ARROW_SVG}</span></button></div>`);
+          const isHero = size === 'hero';
+          const inkCard = color === 'ink';
+          const actionHTML = isHero
+            ? `<div class="card-colorblock-actions"><button class="${sctaClass(color)}" type="button"><span class="btn-scta-label">Explore</span><span class="btn-scta-badge" aria-hidden="true">${CARD_ARROW_SVG}</span></button></div>`
+            : `<div class="card-colorblock-actions"><button class="btn ${inkCard ? 'btn-filled-reversed' : 'btn-filled'} btn--medium btn--icon-only" type="button" aria-label="Explore">${CARD_ARROW_SVG}</button></div>`;
+          innerParts.push(actionHTML);
         }
         parts.push(`<div class="card-colorblock-inner">${innerParts.join('\n')}</div>`);
         return `<div class="card-colorblock card-colorblock--${size} card-colorblock--${color}">${parts.join('\n')}</div>`;
       }
 
       function render() {
-        preview.innerHTML = buildCardHTML(false);
+        if (state.size === 'tile') {
+          const card1 = buildCardHTML(false);
+          const card2 = buildCardHTML(false);
+          preview.innerHTML = `<div style="display:flex;gap:var(--space-400);">${card1}${card2}</div>`;
+        } else {
+          preview.innerHTML = buildCardHTML(false);
+        }
         if (codeReveal && !codeReveal.hidden && codeSnippet) {
           codeSnippet.textContent = buildCardHTML(true);
           if (window.Prism) Prism.highlightElement(codeSnippet);
