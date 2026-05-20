@@ -3877,6 +3877,36 @@
       .bs-variants-grid { grid-template-columns: 1fr; }
     }
 
+    /* ─────────────────────────────────────────
+       DIVIDER
+    ───────────────────────────────────────── */
+    .divider {
+      display: block;
+      border: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;          /* fill container by default */
+      flex-shrink: 0;
+      background: var(--color-border-default);
+    }
+    .divider--thin   { height: 1px; background: var(--color-border-default); }
+    .divider--medium { height: 4px; background: var(--color-border-subtle); border-radius: var(--corner-radius-round); }
+    .divider--thick  { height: 8px; background: var(--color-border-subtle); border-radius: var(--corner-radius-round); }
+
+    /* Doc-page preview helpers */
+    .divider-preview-row {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-700);
+      width: 100%;
+      max-width: 480px;
+    }
+    .divider-preview-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-300);
+    }
+
   </style>
 </head>
 <body>
@@ -7413,7 +7443,170 @@
 
 
     </div>
-    <div class="page-panel" id="page-divider"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">Divider</h2><p class="section-description">Horizontal rule for separating content regions.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-divider">
+
+      <!-- ── Component header ── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Layout</p>
+        <h1 class="comp-title">Divider</h1>
+        <p class="comp-description">A horizontal rule for separating content regions. Three stroke weights let you tune visual weight — from a hairline separator between list items to a bold accent block between major sections.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=65-362" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── 1. Preview ── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description" style="margin-bottom:var(--space-600);">The divider fills the width of its container by default. Apply a fixed width inline when a specific measure is required.</p>
+
+        <div class="preview-canvas" style="padding: var(--space-800) var(--space-700); justify-content: flex-start;">
+          <div class="divider-preview-row">
+
+            <div class="divider-preview-item">
+              <p class="avatar-group-label">Thin</p>
+              <hr class="divider divider--thin" aria-hidden="true">
+            </div>
+
+            <div class="divider-preview-item">
+              <p class="avatar-group-label">Medium</p>
+              <hr class="divider divider--medium" aria-hidden="true">
+            </div>
+
+            <div class="divider-preview-item">
+              <p class="avatar-group-label">Thick</p>
+              <hr class="divider divider--thick" aria-hidden="true">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Code reveal ── -->
+      <button class="code-reveal-btn" id="divider-code-toggle" aria-expanded="false" aria-controls="divider-code-reveal" onclick="toggleCodeReveal(this,'divider-code-reveal')">
+        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+        <span class="code-reveal-btn-label">Show code</span>
+      </button>
+      <div class="code-reveal" id="divider-code-reveal" hidden>
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+          <pre><code class="language-html">&lt;!-- Thin — between list items or inline content --&gt;
+&lt;hr class="divider divider--thin" aria-hidden="true"&gt;
+
+&lt;!-- Medium — between subsections --&gt;
+&lt;hr class="divider divider--medium" aria-hidden="true"&gt;
+
+&lt;!-- Thick — major section break or accent --&gt;
+&lt;hr class="divider divider--thick" aria-hidden="true"&gt;
+
+&lt;!-- Fixed width --&gt;
+&lt;hr class="divider divider--thin" style="width: 240px;" aria-hidden="true"&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- ── 2. Variants ── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="variants-table">
+            <thead>
+              <tr>
+                <th>Variant</th>
+                <th>Height</th>
+                <th>Token</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Thin</td>
+                <td>1px</td>
+                <td><code style="font-family:monospace;font-size:.9em;">color-border-default</code></td>
+                <td style="width:40%;vertical-align:middle;"><hr class="divider divider--thin" aria-hidden="true"></td>
+              </tr>
+              <tr>
+                <td>Medium</td>
+                <td>4px</td>
+                <td><code style="font-family:monospace;font-size:.9em;">color-border-subtle</code></td>
+                <td style="width:40%;vertical-align:middle;"><hr class="divider divider--medium" aria-hidden="true"></td>
+              </tr>
+              <tr>
+                <td>Thick</td>
+                <td>8px</td>
+                <td><code style="font-family:monospace;font-size:.9em;">color-border-subtle</code></td>
+                <td style="width:40%;vertical-align:middle;"><hr class="divider divider--thick" aria-hidden="true"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 3. Accessibility ── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body" style="margin-bottom:var(--space-500);">Dividers are almost always decorative. Use <code style="font-family:monospace;font-size:.9em;">aria-hidden="true"</code> on the <code style="font-family:monospace;font-size:.9em;">&lt;hr&gt;</code> element to remove it from the accessibility tree — screen readers communicate section structure through headings and landmarks, not visual rules.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Pattern</th><th>Guidance</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Decorative use (most cases)</td>
+                <td>Add <code style="font-family:monospace;font-size:.9em;">aria-hidden="true"</code>. The divider is a visual aid; heading hierarchy and landmark regions convey document structure to assistive technology.</td>
+              </tr>
+              <tr>
+                <td>Semantic separator</td>
+                <td>If the divider genuinely separates two distinct content regions with no heading present, omit <code style="font-family:monospace;font-size:.9em;">aria-hidden</code>. The native <code style="font-family:monospace;font-size:.9em;">&lt;hr&gt;</code> element carries an implicit <code style="font-family:monospace;font-size:.9em;">role="separator"</code>.</td>
+              </tr>
+              <tr>
+                <td>Non-semantic element</td>
+                <td>If you use a <code style="font-family:monospace;font-size:.9em;">&lt;div&gt;</code> instead of <code style="font-family:monospace;font-size:.9em;">&lt;hr&gt;</code>, add <code style="font-family:monospace;font-size:.9em;">role="separator"</code> explicitly — or <code style="font-family:monospace;font-size:.9em;">aria-hidden="true"</code> if decorative.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── 4. Properties ── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Class</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">divider</td>
+                <td>Base class. Sets <code style="font-family:monospace;font-size:.9em;">width: 100%</code>, removes default <code style="font-family:monospace;font-size:.9em;">&lt;hr&gt;</code> border. Apply a weight modifier below.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">divider--thin</td>
+                <td>1px height. Uses <code style="font-family:monospace;font-size:.9em;">color-border-default</code>. For separating items within a list or between tightly related content.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">divider--medium</td>
+                <td>4px height, rounded ends. Uses <code style="font-family:monospace;font-size:.9em;">color-border-subtle</code>. For subsection breaks or grouped content.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">divider--thick</td>
+                <td>8px height, rounded ends. Uses <code style="font-family:monospace;font-size:.9em;">color-border-subtle</code>. For major section breaks or tonal accent blocks.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /page-divider -->
     <div class="page-panel" id="page-icon-bullet">
 
       <!-- ── Component header ─────────────────── -->
