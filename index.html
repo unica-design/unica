@@ -2595,7 +2595,7 @@
     .btn-filled-reversed:disabled {
       background: var(--color-background-inverse-disabled);
       color: var(--color-content-inverse-disabled);
-      border: 1.5px solid var(--color-border-inverse-subtle);
+      border: 1.5px solid var(--color-border-disabled-inverse);
     }
 
     /* ── Outlined ──────────────────────────────────────────────── */
@@ -2642,7 +2642,7 @@
     }
     .btn-outlined-reversed:disabled {
       background: var(--color-background-inverse-disabled);
-      border-color: var(--color-border-inverse-subtle);
+      border-color: var(--color-border-disabled-inverse);
       color: var(--color-content-inverse-disabled);
     }
 
@@ -3011,7 +3011,7 @@
     }
     .choice-btn--reversed:disabled {
       background: var(--color-background-inverse-disabled);
-      border-color: var(--color-border-inverse-subtle);
+      border-color: var(--color-border-disabled-inverse);
       color: var(--color-content-inverse-disabled);
     }
     .choice-btn--reversed:disabled .choice-btn-label,
@@ -7551,7 +7551,9 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
-        <p class="doc-body" style="margin-bottom:var(--space-500);">Dividers are almost always decorative. Use <code style="font-family:monospace;font-size:.9em;">aria-hidden="true"</code> on the <code style="font-family:monospace;font-size:.9em;">&lt;hr&gt;</code> element to remove it from the accessibility tree — screen readers communicate section structure through headings and landmarks, not visual rules.</p>
+        <p class="doc-section-description">Dividers are almost always decorative. Use <code>aria-hidden="true"</code> on the <code>&lt;hr&gt;</code> element to remove it from the accessibility tree — screen readers communicate section structure through headings and landmarks, not visual rules.</p>
+
+        <h3 class="doc-subsection-title">Usage patterns</h3>
         <div class="table-wrap">
           <table class="doc-table">
             <thead>
@@ -7559,16 +7561,16 @@
             </thead>
             <tbody>
               <tr>
-                <td>Decorative use (most cases)</td>
-                <td>Add <code style="font-family:monospace;font-size:.9em;">aria-hidden="true"</code>. The divider is a visual aid; heading hierarchy and landmark regions convey document structure to assistive technology.</td>
+                <td class="td-mono">Decorative (most cases)</td>
+                <td>Add <code style="font-family:monospace;font-size:0.9em;">aria-hidden="true"</code>. The divider is a visual aid; heading hierarchy and landmark regions convey document structure to assistive technology.</td>
               </tr>
               <tr>
-                <td>Semantic separator</td>
-                <td>If the divider genuinely separates two distinct content regions with no heading present, omit <code style="font-family:monospace;font-size:.9em;">aria-hidden</code>. The native <code style="font-family:monospace;font-size:.9em;">&lt;hr&gt;</code> element carries an implicit <code style="font-family:monospace;font-size:.9em;">role="separator"</code>.</td>
+                <td class="td-mono">Semantic separator</td>
+                <td>If the divider genuinely separates two distinct content regions with no heading present, omit <code style="font-family:monospace;font-size:0.9em;">aria-hidden</code>. The native <code style="font-family:monospace;font-size:0.9em;">&lt;hr&gt;</code> element carries an implicit <code style="font-family:monospace;font-size:0.9em;">role="separator"</code>.</td>
               </tr>
               <tr>
-                <td>Non-semantic element</td>
-                <td>If you use a <code style="font-family:monospace;font-size:.9em;">&lt;div&gt;</code> instead of <code style="font-family:monospace;font-size:.9em;">&lt;hr&gt;</code>, add <code style="font-family:monospace;font-size:.9em;">role="separator"</code> explicitly — or <code style="font-family:monospace;font-size:.9em;">aria-hidden="true"</code> if decorative.</td>
+                <td class="td-mono">Non-semantic element</td>
+                <td>If you use a <code style="font-family:monospace;font-size:0.9em;">&lt;div&gt;</code> instead of <code style="font-family:monospace;font-size:0.9em;">&lt;hr&gt;</code>, add <code style="font-family:monospace;font-size:0.9em;">role="separator"</code> explicitly — or <code style="font-family:monospace;font-size:0.9em;">aria-hidden="true"</code> if decorative.</td>
               </tr>
             </tbody>
           </table>

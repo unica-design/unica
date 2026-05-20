@@ -169,9 +169,10 @@
   --color-border-strong:         var(--primitive-ink-900);
   --color-border-interactive:    var(--primitive-violet-600);
   --color-border-disabled:       var(--primitive-cafe-300);
-  --color-border-inverse:        var(--primitive-cafe-0);
-  --color-border-inverse-default: var(--primitive-ink-700);
-  --color-border-inverse-subtle: var(--primitive-ink-500);
+  --color-border-inverse:           var(--primitive-cafe-0);
+  --color-border-inverse-default:   var(--primitive-ink-700);
+  --color-border-inverse-subtle:    var(--primitive-ink-800);
+  --color-border-disabled-inverse:  var(--primitive-ink-700);
 
   /* --- Content (text & icons) --- */
   --color-content-default:          var(--primitive-ink-900);
@@ -245,9 +246,10 @@
   --color-border-strong:         var(--primitive-cafe-0);
   --color-border-interactive:    var(--primitive-violet-500);
   --color-border-disabled:       var(--primitive-ink-700);
-  --color-border-inverse:        var(--primitive-ink-900);
-  --color-border-inverse-default: var(--primitive-cafe-300);
-  --color-border-inverse-subtle: var(--primitive-cafe-200);
+  --color-border-inverse:           var(--primitive-ink-900);
+  --color-border-inverse-default:   var(--primitive-cafe-300);
+  --color-border-inverse-subtle:    var(--primitive-cafe-200);
+  --color-border-disabled-inverse:  var(--primitive-cafe-300);
 
   /* --- Content (text & icons) --- */
   --color-content-default:          var(--primitive-ink-100);
