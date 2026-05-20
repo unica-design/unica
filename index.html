@@ -2785,6 +2785,38 @@
       color: var(--color-content-disabled);
     }
 
+    /* ── Super CTA Reversed — for dark/ink surfaces ─────────────── */
+    .btn-scta-reversed {
+      background: var(--color-action-inverse-default);
+      color: var(--color-content-default);
+    }
+    .btn-scta-reversed .btn-scta-badge {
+      background: var(--color-background-contrast);
+      color: var(--primitive-cafe-0);
+    }
+    .btn-scta-reversed:hover:not(:disabled) {
+      background: var(--color-action-inverse-hover);
+      border-radius: var(--corner-radius-m);
+    }
+    .btn-scta-reversed:hover:not(:disabled) .btn-scta-badge {
+      border-radius: 12px;
+      transform: scale(0.875);
+    }
+    .btn-scta-reversed:active:not(:disabled) {
+      background: var(--color-action-inverse-active);
+      border-radius: var(--corner-radius-round);
+      transform: scale(0.96);
+      transition: transform 80ms ease-in, border-radius 80ms ease-in, background 80ms ease-in;
+    }
+    .btn-scta-reversed:active:not(:disabled) .btn-scta-badge {
+      border-radius: 50%;
+      transform: none;
+    }
+    .btn-scta-reversed:focus-visible {
+      outline: 2px solid var(--color-border-inverse);
+      outline-offset: 2px;
+    }
+
     /* ── Super CTA Overlay — Dark (my dark-surface version) ──────── */
     /* Dark semi-transparent fill, white label — works on dark photography */
     .btn-scta-overlay {
@@ -10296,13 +10328,14 @@ ${accessoryMarkup}
         innerParts.push(`<div class="card-colorblock-text">${textParts.join('\n')}</div>`);
         if (showAction) {
           let actionHTML;
-          if (isHero && !inkCard) {
-            // Hero non-ink: signature Super CTA
-            actionHTML = `<div class="card-colorblock-actions"><button class="btn btn-super-cta btn-scta-fill btn--large" type="button"><span class="btn-scta-label">Explore</span><span class="btn-scta-badge" aria-hidden="true">${CARD_ARROW_SVG}</span></button></div>`;
+          if (isHero) {
+            // Hero: always Super CTA — reversed variant for ink, fill for all others
+            const sctaVariant = inkCard ? 'btn-scta-reversed' : 'btn-scta-fill';
+            actionHTML = `<div class="card-colorblock-actions"><button class="btn btn-super-cta ${sctaVariant} btn--large" type="button"><span class="btn-scta-label">Explore</span><span class="btn-scta-badge" aria-hidden="true">${CARD_ARROW_SVG}</span></button></div>`;
           } else {
-            // Hero ink OR inline/tile: icon-only reversed/filled button
+            // Inline/tile: icon-only button — reversed for ink, filled for others
             const btnClass = inkCard ? 'btn-filled-reversed' : 'btn-filled';
-            const btnSize  = isHero ? 'btn--large' : 'btn--medium';
+            const btnSize  = isTile ? 'btn--small' : 'btn--medium';
             actionHTML = `<div class="card-colorblock-actions"><button class="btn ${btnClass} ${btnSize} btn--icon-only" type="button" aria-label="Explore">${CARD_ARROW_SVG}</button></div>`;
           }
           innerParts.push(actionHTML);
