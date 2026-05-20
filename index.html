@@ -10321,9 +10321,15 @@ ${accessoryMarkup}
           parts.push(`<div class="icon-bullet icon-bullet--${ibSize} icon-bullet--${ibColor}" aria-hidden="true">${CARD_FIRE_SVG}</div>`);
         }
         let innerParts = [];
-        let textParts = [`<p class="card-colorblock-title">Design focused</p>`];
+        const titleText = isTile ? 'Design focused' : 'Design focused';
+        const bodyText  = isTile
+          ? 'Precision crafted.'
+          : isHero
+            ? 'A system built on consistency, clarity, and considered craft.'
+            : 'Built on consistency and craft.';
+        let textParts = [`<p class="card-colorblock-title">${titleText}</p>`];
         if (showBody) {
-          textParts.push(`<p class="card-colorblock-body">A system built on consistency, clarity, and considered craft.</p>`);
+          textParts.push(`<p class="card-colorblock-body">${bodyText}</p>`);
         }
         innerParts.push(`<div class="card-colorblock-text">${textParts.join('\n')}</div>`);
         if (showAction) {
