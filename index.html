@@ -4276,6 +4276,148 @@
       display: block;
     }
 
+    /* ── Card page type tabs ─────────────────────────────────────── */
+    .card-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--color-border-default);
+      margin-bottom: var(--space-700);
+      overflow-x: auto;
+    }
+    .card-tab {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-l);
+      font-weight: 500;
+      color: var(--color-content-subtle);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: var(--space-300) var(--space-500);
+      cursor: pointer;
+      margin-bottom: -2px;
+      transition: color 150ms ease, border-color 150ms ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .card-tab:hover { color: var(--color-content-default); }
+    .card-tab.active {
+      color: var(--color-content-default);
+      border-bottom-color: var(--color-content-default);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* ── Card type panels ─────────────────────────────────────────── */
+    .card-type-panel { display: none; }
+    .card-type-panel.active { display: block; }
+
+    /* ── Compact property bar (below preview) ─────────────────────── */
+    .card-prop-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-400);
+      padding: var(--space-200) var(--space-400);
+      background: var(--color-background-subtle);
+      border-radius: var(--corner-radius-s);
+      margin-bottom: var(--space-500);
+      flex-wrap: wrap;
+    }
+    .card-prop-bar-label {
+      font-family: var(--font-family-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+      margin-right: var(--space-100);
+    }
+
+    /* ── Small toggle modifier ─────────────────────────────────────── */
+    .toggle-switch--small {
+      width: 44px;
+      height: 32px;
+      min-width: 44px;
+      min-height: 32px;
+    }
+    .toggle-switch--small .toggle-track {
+      width: 36px;
+      height: 22px;
+      min-width: 36px;
+      min-height: 22px;
+    }
+    .toggle-switch--small .toggle-handle {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      min-height: 18px;
+      left: 2px;
+    }
+    .toggle-switch--small input:checked ~ .toggle-track .toggle-handle { left: 16px; }
+
+    /* ── Sidebar children ─────────────────────────────────────────── */
+    .sidebar-children {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2px;
+    }
+    .sidebar-child-link {
+      display: block;
+      padding: 5px var(--space-400) 5px var(--space-500);
+      margin: 1px var(--space-300) 1px calc(var(--space-300) + 12px);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--color-content-subtle);
+      text-decoration: none;
+      border-radius: 180px;
+      transition: background 0.15s ease, color 0.15s ease;
+      cursor: pointer;
+    }
+    .sidebar-child-link:hover {
+      background: var(--color-action-hover-subtle);
+      color: var(--color-content-default);
+    }
+    .sidebar-child-link.active {
+      background: var(--color-action-hover-subtle);
+      color: var(--color-content-default);
+      font-weight: 500;
+    }
+
+    /* ── Card sizes variant row ───────────────────────────────────── */
+    .card-sizes-row {
+      display: flex;
+      flex-direction: row;
+      gap: var(--space-500);
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin-bottom: var(--space-700);
+    }
+    .card-size-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-300);
+    }
+    .card-size-label {
+      font-family: var(--font-family-sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+    }
+
+    /* ── Patterns layout ──────────────────────────────────────────── */
+    .card-pattern {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-300);
+      margin-bottom: var(--space-700);
+    }
+    .card-pattern-row {
+      display: flex;
+      flex-direction: row;
+      gap: var(--space-400);
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
     /* ── Variants grid & types row ───────────────────────────────── */
     .card-color-grid {
       display: grid;
@@ -4507,6 +4649,12 @@
         <a class="sidebar-link" href="#" data-page="bottom-sheet">Bottom Sheet</a>
         <a class="sidebar-link" href="#" data-page="button">Button</a>
         <a class="sidebar-link" href="#" data-page="card">Card</a>
+        <div class="sidebar-children" id="sidebar-card-children">
+          <a class="sidebar-child-link active" href="#" data-card-type="color-block">Color Block</a>
+          <a class="sidebar-child-link" href="#" data-card-type="media">Media</a>
+          <a class="sidebar-child-link" href="#" data-card-type="multi">Multifunctional</a>
+          <a class="sidebar-child-link" href="#" data-card-type="patterns">Patterns</a>
+        </div>
         <a class="sidebar-link" href="#" data-page="checkbox">Check Box</a>
         <a class="sidebar-link" href="#" data-page="chips">Chips</a>
         <a class="sidebar-link" href="#" data-page="choice-button">Choice Button</a>
@@ -7596,7 +7744,7 @@
       <div class="comp-header">
         <p class="comp-eyebrow">Components · Content</p>
         <h1 class="comp-title">Card</h1>
-        <p class="comp-description">Versatile content containers in three distinct formats: color block for editorial impact, media for photo-forward content, and multifunctional for structured information with actions.</p>
+        <p class="comp-description">Three card formats — Color Block, Media, and Multifunctional — each designed for a distinct content context. Mix formats within layouts to build editorial depth and functional hierarchy.</p>
         <div class="comp-badges">
           <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
           <span class="comp-badge">v1.0</span>
@@ -7606,573 +7754,608 @@
         </div>
       </div>
 
-      <!-- ══════════════════════════════════════════
-           1. COLOR BLOCK
-           ══════════════════════════════════════════ -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Color Block</h2>
-        <hr class="doc-rule">
-        <p class="doc-section-description">Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.</p>
-
-        <h3 class="doc-subsection-title">Live Preview</h3>
-
-        <!-- Controls -->
-        <div class="btn-controls">
-
-          <!-- Size seg-control -->
-          <div class="seg-control" id="card-cb-size" role="group" aria-label="Card size">
-            <span class="seg-control-slider" aria-hidden="true"></span>
-            <button class="seg-control-btn" data-value="hero"   aria-pressed="false">Hero</button>
-            <button class="seg-control-btn" data-value="inline" aria-pressed="true">Inline</button>
-            <button class="seg-control-btn" data-value="tile"   aria-pressed="false">Tile</button>
-          </div>
-
-          <!-- Color dropdown -->
-          <div class="dropdown" id="card-cb-color">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="card-cb-color-label"><span class="cb-color-dot" style="background:var(--primitive-ink-900)"></span>Ink</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Card color">
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="white"   tabindex="0"><span class="cb-color-dot cb-color-dot--white" style="background:var(--primitive-cafe-0)"></span>White</li>
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="ink"     tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-ink-900)"></span>Ink</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="violet"  tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-violet-100)"></span>Violet</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="berry"   tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-berry-100)"></span>Berry</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot" tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-apricot-100)"></span>Apricot</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="mint"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-mint-100)"></span>Mint</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="pool"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-pool-100)"></span>Pool</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="citron"  tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-citron-100)"></span>Citron</li>
-            </ul>
-          </div>
-
-          <!-- Feature toggles -->
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="card-cb-icon-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="switch-item-text">Icon</span>
-          </label>
-
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="card-cb-body-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="switch-item-text">Body</span>
-          </label>
-
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="card-cb-action-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="switch-item-text">Action</span>
-          </label>
-
-        </div><!-- /btn-controls -->
-
-        <!-- Live preview -->
-        <div class="card-preview">
-          <div id="card-colorblock-preview"></div>
-        </div>
-
-      </div><!-- /doc-section color block -->
-
-      <button class="code-reveal-btn" id="card-cb-code-toggle" aria-expanded="false" aria-controls="card-cb-code-reveal" onclick="toggleCodeReveal(this,'card-cb-code-reveal')">
-        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-        <span class="code-reveal-btn-label">Show code</span>
-      </button>
-      <div class="code-reveal" id="card-cb-code-reveal" hidden>
-        <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('card-cb-code-snippet').textContent)">Copy</button>
-          <pre><code id="card-cb-code-snippet" class="language-html"></code></pre>
-        </div>
+      <!-- ── Card type tabs ──────────────────────── -->
+      <div class="card-tabs" role="tablist" aria-label="Card type">
+        <button class="card-tab active" role="tab" aria-selected="true"  data-card-type="color-block" aria-controls="card-panel-color-block">Color Block</button>
+        <button class="card-tab"        role="tab" aria-selected="false" data-card-type="media"        aria-controls="card-panel-media">Media</button>
+        <button class="card-tab"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
+        <button class="card-tab"        role="tab" aria-selected="false" data-card-type="patterns"     aria-controls="card-panel-patterns">Patterns</button>
       </div>
 
-      <!-- ══════════════════════════════════════════
-           2. MEDIA CARD
-           ══════════════════════════════════════════ -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Media Card</h2>
-        <hr class="doc-rule">
-        <p class="doc-section-description">Photo-forward card with an optional frosted-glass navigation overlay, a title, body text, and a toggleable favorite action. Available in hero, card, and tile sizes.</p>
+      <!-- ════════════════════════════════════════
+           PANEL 1 — COLOR BLOCK
+      ════════════════════════════════════════ -->
+      <div class="card-type-panel active" id="card-panel-color-block" role="tabpanel">
 
-        <h3 class="doc-subsection-title">Live Preview</h3>
+        <div class="doc-section">
+          <h2 class="doc-section-title">Live Preview</h2>
+          <hr class="doc-rule">
+          <p class="doc-section-description">Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.</p>
 
-        <!-- Controls -->
-        <div class="btn-controls">
-
-          <!-- Size seg-control -->
-          <div class="seg-control" id="card-media-size" role="group" aria-label="Card size">
-            <span class="seg-control-slider" aria-hidden="true"></span>
-            <button class="seg-control-btn" data-value="hero"   aria-pressed="false">Hero</button>
-            <button class="seg-control-btn" data-value="inline" aria-pressed="true">Inline</button>
-            <button class="seg-control-btn" data-value="tile"   aria-pressed="false">Tile</button>
+          <!-- Primary controls -->
+          <div class="btn-controls">
+            <div class="seg-control" id="card-cb-size" role="group" aria-label="Card size">
+              <span class="seg-control-slider" aria-hidden="true"></span>
+              <button class="seg-control-btn" data-value="hero"   aria-pressed="false">Hero</button>
+              <button class="seg-control-btn" data-value="inline" aria-pressed="true">Inline</button>
+              <button class="seg-control-btn" data-value="tile"   aria-pressed="false">Tile</button>
+            </div>
+            <div class="dropdown" id="card-cb-color">
+              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span id="card-cb-color-label"><span class="cb-color-dot" style="background:var(--primitive-ink-900)"></span>Ink</span>
+                <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="dropdown-menu" role="listbox" aria-label="Card color">
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="white"   tabindex="0"><span class="cb-color-dot cb-color-dot--white" style="background:var(--primitive-cafe-0)"></span>White</li>
+                <li class="dropdown-option" role="option" aria-selected="true"  data-value="ink"     tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-ink-900)"></span>Ink</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="violet"  tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-violet-100)"></span>Violet</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="berry"   tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-berry-100)"></span>Berry</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot" tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-apricot-100)"></span>Apricot</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="mint"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-mint-100)"></span>Mint</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="pool"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-pool-100)"></span>Pool</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="citron"  tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-citron-100)"></span>Citron</li>
+              </ul>
+            </div>
           </div>
 
-          <!-- Feature toggles -->
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="card-media-nav-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <!-- Preview -->
+          <div class="card-preview">
+            <div id="card-colorblock-preview"></div>
+          </div>
+
+          <!-- Compact property toggles -->
+          <div class="card-prop-bar">
+            <span class="card-prop-bar-label">Show</span>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="card-cb-icon-toggle" checked>
+                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div></div></div>
+              </div>
+              <span class="switch-item-text">Icon</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="card-cb-body-toggle" checked>
+                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div></div></div>
+              </div>
+              <span class="switch-item-text">Body</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="card-cb-action-toggle" checked>
+                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div></div></div>
+              </div>
+              <span class="switch-item-text">Action</span>
+            </label>
+          </div>
+        </div><!-- /doc-section live preview -->
+
+        <button class="code-reveal-btn" id="card-cb-code-toggle" aria-expanded="false" aria-controls="card-cb-code-reveal" onclick="toggleCodeReveal(this,'card-cb-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="card-cb-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('card-cb-code-snippet').textContent)">Copy</button>
+            <pre><code id="card-cb-code-snippet" class="language-html"></code></pre>
+          </div>
+        </div>
+
+        <!-- Variants -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Variants</h2>
+          <hr class="doc-rule">
+
+          <h3 class="doc-subsection-title">Color palette</h3>
+          <p class="doc-section-description">All eight color options at tile size.</p>
+          <div class="card-color-grid" style="margin-bottom:var(--space-700);">
+            <div class="card-colorblock card-colorblock--tile card-colorblock--white">
+              <div class="icon-bullet icon-bullet--large icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+              <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">White</p><p class="card-colorblock-body">Clean surface with border.</p></div></div>
+            </div>
+            <div class="card-colorblock card-colorblock--tile card-colorblock--ink">
+              <div class="icon-bullet icon-bullet--large icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+              <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Ink</p><p class="card-colorblock-body">Dark surface, inverse text.</p></div></div>
+            </div>
+            <div class="card-colorblock card-colorblock--tile card-colorblock--violet">
+              <div class="icon-bullet icon-bullet--large icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+              <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Violet</p><p class="card-colorblock-body">Subtle brand tint.</p></div></div>
+            </div>
+            <div class="card-colorblock card-colorblock--tile card-colorblock--berry">
+              <div class="icon-bullet icon-bullet--large icon-bullet--berry" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+              <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Berry</p><p class="card-colorblock-body">Warm accent.</p></div></div>
+            </div>
+            <div class="card-colorblock card-colorblock--tile card-colorblock--apricot">
+              <div class="icon-bullet icon-bullet--large icon-bullet--apricot" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+              <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Apricot</p><p class="card-colorblock-body">Soft orange.</p></div></div>
+            </div>
+            <div class="card-colorblock card-colorblock--tile card-colorblock--mint">
+              <div class="icon-bullet icon-bullet--large icon-bullet--mint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+              <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Mint</p><p class="card-colorblock-body">Fresh green tint.</p></div></div>
+            </div>
+            <div class="card-colorblock card-colorblock--tile card-colorblock--pool">
+              <div class="icon-bullet icon-bullet--large icon-bullet--pool" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+              <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Pool</p><p class="card-colorblock-body">Cool blue accent.</p></div></div>
+            </div>
+            <div class="card-colorblock card-colorblock--tile card-colorblock--citron">
+              <div class="icon-bullet icon-bullet--large icon-bullet--citron" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+              <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Citron</p><p class="card-colorblock-body">Bright yellow-green.</p></div></div>
+            </div>
+          </div>
+
+          <h3 class="doc-subsection-title">Sizes</h3>
+          <p class="doc-section-description">Tile, inline, and hero — each with icon, body, and action.</p>
+          <div class="card-sizes-row">
+            <div class="card-size-item">
+              <span class="card-size-label">Tile</span>
+              <div class="card-colorblock card-colorblock--tile card-colorblock--violet">
+                <div class="icon-bullet icon-bullet--large icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                <div class="card-colorblock-inner">
+                  <div class="card-colorblock-text">
+                    <p class="card-colorblock-title">Design tokens</p>
+                    <p class="card-colorblock-body">Single source of truth.</p>
                   </div>
                 </div>
               </div>
             </div>
-            <span class="switch-item-text">Top Nav</span>
-          </label>
-
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="card-media-fav-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="card-size-item">
+              <span class="card-size-label">Inline</span>
+              <div class="card-colorblock card-colorblock--inline card-colorblock--violet">
+                <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                <div class="card-colorblock-inner">
+                  <div class="card-colorblock-text">
+                    <p class="card-colorblock-title">Design tokens</p>
+                    <p class="card-colorblock-body">Manage color, type, and spacing from a single source of truth.</p>
+                  </div>
+                  <div class="card-colorblock-actions">
+                    <button class="btn btn-filled btn--medium btn--icon-only" type="button" aria-label="Explore">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-            <span class="switch-item-text">Favorite</span>
-          </label>
-
-        </div><!-- /btn-controls -->
-
-        <!-- Live preview -->
-        <div class="card-preview">
-          <div id="card-media-preview"></div>
-        </div>
-
-      </div><!-- /doc-section media card -->
-
-      <button class="code-reveal-btn" id="card-media-code-toggle" aria-expanded="false" aria-controls="card-media-code-reveal" onclick="toggleCodeReveal(this,'card-media-code-reveal')">
-        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-        <span class="code-reveal-btn-label">Show code</span>
-      </button>
-      <div class="code-reveal" id="card-media-code-reveal" hidden>
-        <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('card-media-code-snippet').textContent)">Copy</button>
-          <pre><code id="card-media-code-snippet" class="language-html"></code></pre>
-        </div>
-      </div>
-
-      <!-- ══════════════════════════════════════════
-           3. MULTIFUNCTIONAL CARD
-           ══════════════════════════════════════════ -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Multifunctional</h2>
-        <hr class="doc-rule">
-        <p class="doc-section-description">Structured card with a swappable media slot (icon bullet, avatar, or photograph), a header overline and title, optional body copy, and a footer action pair. Ideal for settings, profiles, and feature lists.</p>
-
-        <h3 class="doc-subsection-title">Live Preview</h3>
-
-        <!-- Controls -->
-        <div class="btn-controls">
-
-          <!-- Media type seg-control -->
-          <div class="seg-control" id="card-multi-media" role="group" aria-label="Media type">
-            <span class="seg-control-slider" aria-hidden="true"></span>
-            <button class="seg-control-btn" data-value="icon-bullet" aria-pressed="true">Icon Bullet</button>
-            <button class="seg-control-btn" data-value="avatar"      aria-pressed="false">Avatar</button>
-            <button class="seg-control-btn" data-value="photo"       aria-pressed="false">Photo</button>
-          </div>
-
-          <!-- Feature toggles -->
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="card-multi-body-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="card-size-item">
+              <span class="card-size-label">Hero</span>
+              <div class="card-colorblock card-colorblock--hero card-colorblock--violet">
+                <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                <div class="card-colorblock-inner">
+                  <div class="card-colorblock-text">
+                    <p class="card-colorblock-title">Design tokens</p>
+                    <p class="card-colorblock-body">Manage color, type, and spacing from a single source of truth across your entire product.</p>
+                  </div>
+                  <div class="card-colorblock-actions">
+                    <button class="btn btn-filled btn--medium btn--icon-only" type="button" aria-label="Explore">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-            <span class="switch-item-text">Body</span>
-          </label>
+          </div>
+        </div><!-- /variants -->
 
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="card-multi-actions-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Properties -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Properties</h2>
+          <hr class="doc-rule">
+          <div class="table-wrap">
+            <table class="doc-table">
+              <thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td class="td-mono">color</td><td class="td-type">enum</td><td class="td-subtle">ink</td><td>One of <code>white</code> · <code>ink</code> · <code>violet</code> · <code>berry</code> · <code>apricot</code> · <code>mint</code> · <code>pool</code> · <code>citron</code>. Applied as a BEM modifier: <code>card-colorblock--{color}</code>.</td></tr>
+                <tr><td class="td-mono">size</td><td class="td-type">enum</td><td class="td-subtle">inline</td><td>One of <code>hero</code> (343×343 fixed) · <code>inline</code> (343px wide, hugged height) · <code>tile</code> (164×216). Tile uses smaller typography and tighter padding.</td></tr>
+                <tr><td class="td-mono">icon</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Renders an <code>.icon-bullet.icon-bullet--xlarge</code> in the card's color. Ink card uses white bullet; white card uses ink bullet.</td></tr>
+                <tr><td class="td-mono">body</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Shows or hides the body paragraph below the title.</td></tr>
+                <tr><td class="td-mono">action</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Shows or hides the Super CTA button in the card footer.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- /#card-panel-color-block -->
+
+      <!-- ════════════════════════════════════════
+           PANEL 2 — MEDIA
+      ════════════════════════════════════════ -->
+      <div class="card-type-panel" id="card-panel-media" role="tabpanel">
+
+        <div class="doc-section">
+          <h2 class="doc-section-title">Live Preview</h2>
+          <hr class="doc-rule">
+          <p class="doc-section-description">Photo-forward card with an optional frosted-glass navigation overlay, a title, body text, and a toggleable favorite action. Available in hero, inline, and tile sizes.</p>
+
+          <!-- Primary controls -->
+          <div class="btn-controls">
+            <div class="seg-control" id="card-media-size" role="group" aria-label="Card size">
+              <span class="seg-control-slider" aria-hidden="true"></span>
+              <button class="seg-control-btn" data-value="hero"   aria-pressed="false">Hero</button>
+              <button class="seg-control-btn" data-value="inline" aria-pressed="true">Inline</button>
+              <button class="seg-control-btn" data-value="tile"   aria-pressed="false">Tile</button>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="card-preview">
+            <div id="card-media-preview"></div>
+          </div>
+
+          <!-- Compact property toggles -->
+          <div class="card-prop-bar">
+            <span class="card-prop-bar-label">Show</span>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="card-media-nav-toggle" checked>
+                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div></div></div>
+              </div>
+              <span class="switch-item-text">Top Nav</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="card-media-fav-toggle" checked>
+                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div></div></div>
+              </div>
+              <span class="switch-item-text">Favorite</span>
+            </label>
+          </div>
+        </div><!-- /doc-section live preview -->
+
+        <button class="code-reveal-btn" id="card-media-code-toggle" aria-expanded="false" aria-controls="card-media-code-reveal" onclick="toggleCodeReveal(this,'card-media-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="card-media-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('card-media-code-snippet').textContent)">Copy</button>
+            <pre><code id="card-media-code-snippet" class="language-html"></code></pre>
+          </div>
+        </div>
+
+        <!-- Variants -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Variants</h2>
+          <hr class="doc-rule">
+          <h3 class="doc-subsection-title">Sizes</h3>
+          <p class="doc-section-description">Tile, inline, and hero — showing how photo height and content layout adapt at each size.</p>
+          <div class="card-sizes-row">
+            <div class="card-size-item">
+              <span class="card-size-label">Tile</span>
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/arch-house.png" alt="Architectural photograph">
+                  <div class="card-media-nav" aria-label="Photo navigation">
+                    <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button class="card-media-nav-btn" aria-label="Favourite"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  </div>
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Coastal</p>
+                    <p class="card-media-body">Light and form.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Favourite" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+            </div>
+            <div class="card-size-item">
+              <span class="card-size-label">Inline</span>
+              <div class="card-media card-media--inline">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/arch-house.png" alt="Architectural photograph">
+                  <div class="card-media-nav" aria-label="Photo navigation">
+                    <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button class="card-media-nav-btn" aria-label="Favourite"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  </div>
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Casa Mínima</p>
+                    <p class="card-media-body">Minimalist architecture in coastal light.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Favourite" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+            </div>
+            <div class="card-size-item">
+              <span class="card-size-label">Hero</span>
+              <div class="card-media card-media--hero">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/arch-house.png" alt="Architectural photograph">
+                  <div class="card-media-nav" aria-label="Photo navigation">
+                    <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button class="card-media-nav-btn" aria-label="Favourite"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  </div>
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Casa Mínima</p>
+                    <p class="card-media-body">Minimalist architecture at the edge of the coast, where light becomes the primary material.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Favourite" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /variants -->
+
+        <!-- Properties -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Properties</h2>
+          <hr class="doc-rule">
+          <div class="table-wrap">
+            <table class="doc-table">
+              <thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td class="td-mono">size</td><td class="td-type">enum</td><td class="td-subtle">inline</td><td>One of <code>hero</code> · <code>inline</code> · <code>tile</code>. Controls photo height and layout direction of the content area.</td></tr>
+                <tr><td class="td-mono">show-nav</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Displays the frosted-glass top navigation bar with back and favourite buttons overlaid on the photo.</td></tr>
+                <tr><td class="td-mono">show-fav</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Shows the standalone favourite button in the content area. Toggles between default and <code>card-media-fav--active</code> on click.</td></tr>
+                <tr><td class="td-mono">src</td><td class="td-type">string</td><td class="td-subtle">—</td><td>Image path for the photo. Use any aspect ratio — the card clips to the defined height with <code>object-fit: cover</code>.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- /#card-panel-media -->
+
+      <!-- ════════════════════════════════════════
+           PANEL 3 — MULTIFUNCTIONAL
+      ════════════════════════════════════════ -->
+      <div class="card-type-panel" id="card-panel-multi" role="tabpanel">
+
+        <div class="doc-section">
+          <h2 class="doc-section-title">Live Preview</h2>
+          <hr class="doc-rule">
+          <p class="doc-section-description">Structured card with a swappable media slot (icon bullet, avatar, or photograph), a header overline and title, optional body copy, and a footer action pair. Ideal for settings, profiles, and feature lists.</p>
+
+          <!-- Primary controls -->
+          <div class="btn-controls">
+            <div class="seg-control" id="card-multi-media" role="group" aria-label="Media type">
+              <span class="seg-control-slider" aria-hidden="true"></span>
+              <button class="seg-control-btn" data-value="icon-bullet" aria-pressed="true">Icon Bullet</button>
+              <button class="seg-control-btn" data-value="avatar"      aria-pressed="false">Avatar</button>
+              <button class="seg-control-btn" data-value="photo"       aria-pressed="false">Photo</button>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="card-preview">
+            <div id="card-multi-preview"></div>
+          </div>
+
+          <!-- Compact property toggles -->
+          <div class="card-prop-bar">
+            <span class="card-prop-bar-label">Show</span>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="card-multi-body-toggle" checked>
+                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div></div></div>
+              </div>
+              <span class="switch-item-text">Body</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="card-multi-actions-toggle" checked>
+                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div></div></div>
+              </div>
+              <span class="switch-item-text">Actions</span>
+            </label>
+          </div>
+        </div><!-- /doc-section live preview -->
+
+        <button class="code-reveal-btn" id="card-multi-code-toggle" aria-expanded="false" aria-controls="card-multi-code-reveal" onclick="toggleCodeReveal(this,'card-multi-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="card-multi-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('card-multi-code-snippet').textContent)">Copy</button>
+            <pre><code id="card-multi-code-snippet" class="language-html"></code></pre>
+          </div>
+        </div>
+
+        <!-- Variants -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Variants</h2>
+          <hr class="doc-rule">
+          <h3 class="doc-subsection-title">Media slots</h3>
+          <p class="doc-section-description">Icon bullet, avatar, and photo — each with body and actions visible.</p>
+          <div class="card-sizes-row">
+            <div class="card-size-item">
+              <span class="card-size-label">Icon Bullet</span>
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Feature</p><p class="card-multi-title">Smart Notifications</p></div>
+                </div>
+                <div class="card-multi-body-wrap"><p class="card-multi-body">Get timely updates across all your devices without the noise.</p></div>
+                <div class="card-multi-footer">
+                  <div class="divider divider--thin" role="separator"></div>
+                  <div class="card-multi-actions">
+                    <button class="btn btn-outlined btn--medium" type="button">Learn more</button>
+                    <button class="btn btn-filled btn--medium" type="button">Enable</button>
                   </div>
                 </div>
               </div>
             </div>
-            <span class="switch-item-text">Actions</span>
-          </label>
+            <div class="card-size-item">
+              <span class="card-size-label">Avatar</span>
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="card-multi-avatar"><img src="assets/avatars/avatar-1.png" alt=""></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Team member</p><p class="card-multi-title">Sofia Esposito</p></div>
+                </div>
+                <div class="card-multi-body-wrap"><p class="card-multi-body">Senior product designer. Specialises in design systems and motion.</p></div>
+                <div class="card-multi-footer">
+                  <div class="divider divider--thin" role="separator"></div>
+                  <div class="card-multi-actions">
+                    <button class="btn btn-outlined btn--medium" type="button">Profile</button>
+                    <button class="btn btn-filled btn--medium" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-size-item">
+              <span class="card-size-label">Photo</span>
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="card-multi-photo"><img src="assets/avatars/avatar-2.png" alt=""></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Project</p><p class="card-multi-title">Casa Mínima</p></div>
+                </div>
+                <div class="card-multi-body-wrap"><p class="card-multi-body">Minimalist residential project on the Algarve coast. Phase one complete.</p></div>
+                <div class="card-multi-footer">
+                  <div class="divider divider--thin" role="separator"></div>
+                  <div class="card-multi-actions">
+                    <button class="btn btn-outlined btn--medium" type="button">Details</button>
+                    <button class="btn btn-filled btn--medium" type="button">Open</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /variants -->
 
-        </div><!-- /btn-controls -->
-
-        <!-- Live preview -->
-        <div class="card-preview">
-          <div id="card-multi-preview"></div>
+        <!-- Properties -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Properties</h2>
+          <hr class="doc-rule">
+          <div class="table-wrap">
+            <table class="doc-table">
+              <thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td class="td-mono">media</td><td class="td-type">enum</td><td class="td-subtle">icon-bullet</td><td>One of <code>icon-bullet</code> · <code>avatar</code> · <code>photo</code>. Swaps the left media slot in the header row.</td></tr>
+                <tr><td class="td-mono">overline</td><td class="td-type">string</td><td class="td-subtle">—</td><td>Small uppercase label above the title. Communicates category or type.</td></tr>
+                <tr><td class="td-mono">title</td><td class="td-type">string</td><td class="td-subtle">—</td><td>Primary heading in the header text block. Uses sans semibold 16px.</td></tr>
+                <tr><td class="td-mono">body</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Shows or hides the body text section with <code>space-400</code> top and bottom padding.</td></tr>
+                <tr><td class="td-mono">actions</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Shows or hides the footer divider and outlined + filled button pair.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-      </div><!-- /doc-section multifunctional -->
+      </div><!-- /#card-panel-multi -->
 
-      <button class="code-reveal-btn" id="card-multi-code-toggle" aria-expanded="false" aria-controls="card-multi-code-reveal" onclick="toggleCodeReveal(this,'card-multi-code-reveal')">
-        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
-        <span class="code-reveal-btn-label">Show code</span>
-      </button>
-      <div class="code-reveal" id="card-multi-code-reveal" hidden>
-        <div class="code-block">
-          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('card-multi-code-snippet').textContent)">Copy</button>
-          <pre><code id="card-multi-code-snippet" class="language-html"></code></pre>
-        </div>
-      </div>
+      <!-- ════════════════════════════════════════
+           PANEL 4 — PATTERNS
+      ════════════════════════════════════════ -->
+      <div class="card-type-panel" id="card-panel-patterns" role="tabpanel">
 
-      <!-- ══════════════════════════════════════════
-           4. VARIANTS
-           ══════════════════════════════════════════ -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Variants</h2>
-        <hr class="doc-rule">
+        <div class="doc-section">
+          <h2 class="doc-section-title">Patterns</h2>
+          <hr class="doc-rule">
+          <p class="doc-section-description">Common layout compositions combining the three card formats. Use these as a reference when building feature sections, content feeds, and browsing grids.</p>
 
-        <h3 class="doc-subsection-title">Color Block — Palette</h3>
-        <p class="doc-section-description">All eight color options at tile size.</p>
-        <div class="card-color-grid" style="margin-bottom:var(--space-700);">
-
-          <!-- White -->
-          <div class="card-colorblock card-colorblock--tile card-colorblock--white">
-            <div class="icon-bullet icon-bullet--large icon-bullet--ink" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-            </div>
-            <div class="card-colorblock-inner">
-              <div class="card-colorblock-text">
-                <p class="card-colorblock-title">White</p>
-                <p class="card-colorblock-body">Clean surface with border.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ink -->
-          <div class="card-colorblock card-colorblock--tile card-colorblock--ink">
-            <div class="icon-bullet icon-bullet--large icon-bullet--white" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-            </div>
-            <div class="card-colorblock-inner">
-              <div class="card-colorblock-text">
-                <p class="card-colorblock-title">Ink</p>
-                <p class="card-colorblock-body">Dark surface, inverse text.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Violet -->
-          <div class="card-colorblock card-colorblock--tile card-colorblock--violet">
-            <div class="icon-bullet icon-bullet--large icon-bullet--violet" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-            </div>
-            <div class="card-colorblock-inner">
-              <div class="card-colorblock-text">
-                <p class="card-colorblock-title">Violet</p>
-                <p class="card-colorblock-body">Subtle brand tint.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Berry -->
-          <div class="card-colorblock card-colorblock--tile card-colorblock--berry">
-            <div class="icon-bullet icon-bullet--large icon-bullet--berry" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-            </div>
-            <div class="card-colorblock-inner">
-              <div class="card-colorblock-text">
-                <p class="card-colorblock-title">Berry</p>
-                <p class="card-colorblock-body">Warm accent.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Apricot -->
-          <div class="card-colorblock card-colorblock--tile card-colorblock--apricot">
-            <div class="icon-bullet icon-bullet--large icon-bullet--apricot" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-            </div>
-            <div class="card-colorblock-inner">
-              <div class="card-colorblock-text">
-                <p class="card-colorblock-title">Apricot</p>
-                <p class="card-colorblock-body">Soft orange.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mint -->
-          <div class="card-colorblock card-colorblock--tile card-colorblock--mint">
-            <div class="icon-bullet icon-bullet--large icon-bullet--mint" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-            </div>
-            <div class="card-colorblock-inner">
-              <div class="card-colorblock-text">
-                <p class="card-colorblock-title">Mint</p>
-                <p class="card-colorblock-body">Fresh green tint.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pool -->
-          <div class="card-colorblock card-colorblock--tile card-colorblock--pool">
-            <div class="icon-bullet icon-bullet--large icon-bullet--pool" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-            </div>
-            <div class="card-colorblock-inner">
-              <div class="card-colorblock-text">
-                <p class="card-colorblock-title">Pool</p>
-                <p class="card-colorblock-body">Cool blue accent.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Citron -->
-          <div class="card-colorblock card-colorblock--tile card-colorblock--citron">
-            <div class="icon-bullet icon-bullet--large icon-bullet--citron" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-            </div>
-            <div class="card-colorblock-inner">
-              <div class="card-colorblock-text">
-                <p class="card-colorblock-title">Citron</p>
-                <p class="card-colorblock-body">Bright yellow-green.</p>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /card-color-grid -->
-
-        <h3 class="doc-subsection-title">Card Types</h3>
-        <p class="doc-section-description">One of each type, at card size, side by side.</p>
-        <div class="card-types-row">
-
-          <div class="card-type-item">
-            <span class="card-type-label">Color Block</span>
-            <div class="card-colorblock card-colorblock--inline card-colorblock--violet">
-              <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
-              </div>
-              <div class="card-colorblock-inner">
-                <div class="card-colorblock-text">
-                  <p class="card-colorblock-title">Design tokens</p>
-                  <p class="card-colorblock-body">Manage color, type, and spacing from a single source of truth.</p>
+          <h3 class="doc-subsection-title">Feature highlight</h3>
+          <p class="doc-section-description">A color block inline anchors editorial content beside a media card for browse-and-explore layouts.</p>
+          <div class="card-pattern">
+            <div class="card-pattern-row">
+              <div class="card-colorblock card-colorblock--inline card-colorblock--ink">
+                <div class="icon-bullet icon-bullet--xlarge icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                <div class="card-colorblock-inner">
+                  <div class="card-colorblock-text">
+                    <p class="card-colorblock-title">Design tokens</p>
+                    <p class="card-colorblock-body">Manage color, type, and spacing from a single source of truth.</p>
+                  </div>
+                  <div class="card-colorblock-actions">
+                    <button class="btn btn-filled-reversed btn--medium btn--icon-only" type="button" aria-label="Explore">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                  </div>
                 </div>
-                <div class="card-colorblock-actions">
-                  <button class="btn btn-filled btn--medium btn--icon-only" type="button" aria-label="Explore">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </button>
+              </div>
+              <div class="card-media card-media--inline">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/arch-house.png" alt="Architectural photograph">
+                  <div class="card-media-nav" aria-label="Photo navigation">
+                    <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button class="card-media-nav-btn" aria-label="Favourite"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  </div>
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text"><p class="card-media-title">Casa Mínima</p><p class="card-media-body">Minimalist architecture in coastal light.</p></div>
+                  <button class="card-media-fav" aria-label="Favourite" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="card-type-item">
-            <span class="card-type-label">Media</span>
-            <div class="card-media card-media--inline">
-              <div class="card-media-photo-wrap">
-                <img src="assets/arch-house.png" alt="Architectural photograph of a modern house">
-                <div class="card-media-nav" aria-label="Photo navigation">
-                  <button class="card-media-nav-btn" aria-label="Go back">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </button>
-                  <button class="card-media-nav-btn" aria-label="Add to favourites">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </button>
-                </div>
+          <h3 class="doc-subsection-title">Browsing grid</h3>
+          <p class="doc-section-description">Four media tiles in a 2×2 grid for photo-driven content collections.</p>
+          <div class="card-pattern">
+            <div style="display:grid;grid-template-columns:repeat(2,164px);gap:var(--space-400);width:fit-content;">
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap"><img src="assets/arch-house.png" alt="House"></div>
+                <div class="card-media-content"><div class="card-media-text"><p class="card-media-title">Casa Mínima</p><p class="card-media-body">Coastal light.</p></div></div>
               </div>
-              <div class="card-media-content">
-                <div class="card-media-text">
-                  <p class="card-media-title">Casa Mínima</p>
-                  <p class="card-media-body">Minimalist architecture in coastal light.</p>
-                </div>
-                <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false">
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap"><img src="assets/arch-house.png" alt="House"></div>
+                <div class="card-media-content"><div class="card-media-text"><p class="card-media-title">Villa Norte</p><p class="card-media-body">Mountain form.</p></div></div>
+              </div>
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap"><img src="assets/arch-house.png" alt="House"></div>
+                <div class="card-media-content"><div class="card-media-text"><p class="card-media-title">Atelier Sud</p><p class="card-media-body">Studio light.</p></div></div>
+              </div>
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap"><img src="assets/arch-house.png" alt="House"></div>
+                <div class="card-media-content"><div class="card-media-text"><p class="card-media-title">Résidence Est</p><p class="card-media-body">Urban quiet.</p></div></div>
               </div>
             </div>
           </div>
 
-          <div class="card-type-item">
-            <span class="card-type-label">Multifunctional</span>
-            <div class="card-multi">
-              <div class="card-multi-header">
-                <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>
+          <h3 class="doc-subsection-title">Feature list</h3>
+          <p class="doc-section-description">Three multifunctional cards stacked — the standard pattern for settings panels and feature lists.</p>
+          <div class="card-pattern">
+            <div style="display:flex;flex-direction:column;gap:var(--space-400);max-width:343px;">
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Notifications</p><p class="card-multi-title">Smart Alerts</p></div>
                 </div>
-                <div class="card-multi-text-block">
-                  <p class="card-multi-overline">Feature</p>
-                  <p class="card-multi-title">Smart Notifications</p>
-                </div>
+                <div class="card-multi-footer"><div class="divider divider--thin" role="separator"></div><div class="card-multi-actions"><button class="btn btn-outlined btn--medium" type="button">Learn more</button><button class="btn btn-filled btn--medium" type="button">Enable</button></div></div>
               </div>
-              <div class="card-multi-body-wrap">
-                <p class="card-multi-body">Get timely updates across all your devices without the noise. Customize what matters to you.</p>
-              </div>
-              <div class="card-multi-footer">
-                <div class="divider divider--thin" role="separator"></div>
-                <div class="card-multi-actions">
-                  <button class="btn btn-outlined btn--medium" type="button">Learn more</button>
-                  <button class="btn btn-filled btn--medium" type="button">Enable</button>
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="icon-bullet icon-bullet--xlarge icon-bullet--berry" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Privacy</p><p class="card-multi-title">Data Controls</p></div>
                 </div>
+                <div class="card-multi-footer"><div class="divider divider--thin" role="separator"></div><div class="card-multi-actions"><button class="btn btn-outlined btn--medium" type="button">Review</button><button class="btn btn-filled btn--medium" type="button">Manage</button></div></div>
+              </div>
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="icon-bullet icon-bullet--xlarge icon-bullet--mint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Sync</p><p class="card-multi-title">Connected Devices</p></div>
+                </div>
+                <div class="card-multi-footer"><div class="divider divider--thin" role="separator"></div><div class="card-multi-actions"><button class="btn btn-outlined btn--medium" type="button">Devices</button><button class="btn btn-filled btn--medium" type="button">Sync now</button></div></div>
               </div>
             </div>
           </div>
 
-        </div><!-- /card-types-row -->
-      </div><!-- /doc-section variants -->
+        </div><!-- /doc-section patterns -->
+      </div><!-- /#card-panel-patterns -->
 
-      <!-- ══════════════════════════════════════════
-           5. PROPERTIES
-           ══════════════════════════════════════════ -->
-      <div class="doc-section">
-        <h2 class="doc-section-title">Properties</h2>
-        <hr class="doc-rule">
-
-        <h3 class="doc-subsection-title">Color Block Card</h3>
-        <div class="table-wrap" style="margin-bottom:var(--space-600);">
-          <table class="doc-table">
-            <thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="td-mono">color</td>
-                <td class="td-type">enum</td>
-                <td class="td-subtle">ink</td>
-                <td>One of <code>white</code> · <code>ink</code> · <code>violet</code> · <code>berry</code> · <code>apricot</code> · <code>mint</code> · <code>pool</code> · <code>citron</code>. Applied as a BEM modifier: <code>card-colorblock--{color}</code>.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">size</td>
-                <td class="td-type">enum</td>
-                <td class="td-subtle">inline</td>
-                <td>One of <code>hero</code> (343×343) · <code>inline</code> (343, hugged height) · <code>tile</code> (164×216). Tile uses smaller typography and tighter padding.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">icon</td>
-                <td class="td-type">boolean</td>
-                <td class="td-subtle">true</td>
-                <td>Renders an <code>.icon-bullet.icon-bullet--xlarge</code> in the card's color. Ink card uses white bullet; white card uses ink bullet.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">body</td>
-                <td class="td-type">boolean</td>
-                <td class="td-subtle">true</td>
-                <td>Shows or hides the body paragraph below the title.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">action</td>
-                <td class="td-type">boolean</td>
-                <td class="td-subtle">true</td>
-                <td>Shows or hides the Super CTA button in the card footer.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3 class="doc-subsection-title">Media Card</h3>
-        <div class="table-wrap" style="margin-bottom:var(--space-600);">
-          <table class="doc-table">
-            <thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="td-mono">size</td>
-                <td class="td-type">enum</td>
-                <td class="td-subtle">card</td>
-                <td>One of <code>hero</code> · <code>card</code> · <code>tile</code>. Controls photo height and layout direction of the content area.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">show-nav</td>
-                <td class="td-type">boolean</td>
-                <td class="td-subtle">true</td>
-                <td>Displays the frosted-glass top navigation bar with back and favourite buttons overlaid on the photo.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">show-fav</td>
-                <td class="td-type">boolean</td>
-                <td class="td-subtle">true</td>
-                <td>Shows the standalone favourite button in the content area. Toggles between default and <code>card-media-fav--active</code> on click.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">src</td>
-                <td class="td-type">string</td>
-                <td class="td-subtle">—</td>
-                <td>Image path for the photo. Use any aspect ratio — the card clips to the defined height with <code>object-fit: cover</code>.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3 class="doc-subsection-title">Multifunctional Card</h3>
-        <div class="table-wrap" style="margin-bottom:var(--space-600);">
-          <table class="doc-table">
-            <thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="td-mono">media</td>
-                <td class="td-type">enum</td>
-                <td class="td-subtle">icon-bullet</td>
-                <td>One of <code>icon-bullet</code> · <code>avatar</code> · <code>photo</code>. Swaps the left media slot in the header row.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">overline</td>
-                <td class="td-type">string</td>
-                <td class="td-subtle">—</td>
-                <td>Small uppercase label above the title. Communicates category or type.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">title</td>
-                <td class="td-type">string</td>
-                <td class="td-subtle">—</td>
-                <td>Primary heading in the header text block. Uses sans semibold 16px.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">body</td>
-                <td class="td-type">boolean</td>
-                <td class="td-subtle">true</td>
-                <td>Shows or hides the body text section with <code>space-400</code> top and bottom padding.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">actions</td>
-                <td class="td-type">boolean</td>
-                <td class="td-subtle">true</td>
-                <td>Shows or hides the footer divider and outlined + filled button pair.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </div><!-- /doc-section properties -->
-
-      <!-- ══════════════════════════════════════════
-           6. ACCESSIBILITY
-           ══════════════════════════════════════════ -->
+      <!-- ════════════════════════════════════════
+           ACCESSIBILITY (shared)
+      ════════════════════════════════════════ -->
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
@@ -8195,31 +8378,15 @@
           <table class="doc-table">
             <thead><tr><th>Element</th><th>Guidance</th></tr></thead>
             <tbody>
-              <tr>
-                <td class="td-mono">article</td>
-                <td>Use <code>&lt;article&gt;</code> when the card represents a self-contained piece of content (e.g. a blog post card). Use a plain <code>&lt;div&gt;</code> for UI panels.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">img[alt]</td>
-                <td>Always provide meaningful <code>alt</code> text for content photos. Use <code>alt=""</code> for purely decorative images alongside visible text.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">button[aria-label]</td>
-                <td>Icon-only buttons (back, favourite) must have a descriptive <code>aria-label</code>. Avoid redundant labels that duplicate adjacent visible text.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">aria-pressed</td>
-                <td>The favourite button uses <code>aria-pressed</code> to communicate toggle state. Update this attribute whenever the visual state changes.</td>
-              </tr>
-              <tr>
-                <td class="td-mono">role="separator"</td>
-                <td>The <code>.divider</code> element in the Multifunctional card footer carries <code>role="separator"</code> to communicate the visual break to screen readers.</td>
-              </tr>
+              <tr><td class="td-mono">article</td><td>Use <code>&lt;article&gt;</code> when the card represents a self-contained piece of content (e.g. a blog post card). Use a plain <code>&lt;div&gt;</code> for UI panels.</td></tr>
+              <tr><td class="td-mono">img[alt]</td><td>Always provide meaningful <code>alt</code> text for content photos. Use <code>alt=""</code> for purely decorative images alongside visible text.</td></tr>
+              <tr><td class="td-mono">button[aria-label]</td><td>Icon-only buttons (back, favourite) must have a descriptive <code>aria-label</code>. Avoid redundant labels that duplicate adjacent visible text.</td></tr>
+              <tr><td class="td-mono">aria-pressed</td><td>The favourite button uses <code>aria-pressed</code> to communicate toggle state. Update this attribute whenever the visual state changes.</td></tr>
+              <tr><td class="td-mono">role="separator"</td><td>The <code>.divider</code> element in the Multifunctional card footer carries <code>role="separator"</code> to communicate the visual break to screen readers.</td></tr>
             </tbody>
           </table>
         </div>
-
-      </div><!-- /doc-section accessibility -->
+      </div><!-- /accessibility -->
 
     </div><!-- /#page-card -->
     <div class="page-panel" id="page-list"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List</h2><p class="section-description">Vertical list of items with optional icons, metadata, and actions.</p></div><span class="stub-pill">In progress</span></section></div>
@@ -10302,6 +10469,47 @@ ${accessoryMarkup}
           document.querySelectorAll(`[data-single-group="${group}"]`).forEach(b => {
             b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
           });
+        });
+      });
+    })();
+
+    /* ══════════════════════════════════════════════════════════════════
+       CARD COMPONENT — Type tabs + sidebar children
+    ══════════════════════════════════════════════════════════════════ */
+
+    /* ── Card type tab switching ─────────────────────────────────── */
+    (function initCardTabs() {
+      const tabs    = document.querySelectorAll('.card-tab[data-card-type]');
+      const panels  = document.querySelectorAll('.card-type-panel');
+      const children = document.querySelectorAll('.sidebar-child-link[data-card-type]');
+
+      function activateType(type) {
+        tabs.forEach(t => {
+          const active = t.dataset.cardType === type;
+          t.classList.toggle('active', active);
+          t.setAttribute('aria-selected', String(active));
+        });
+        panels.forEach(p => p.classList.toggle('active', p.id === 'card-panel-' + type));
+        children.forEach(c => c.classList.toggle('active', c.dataset.cardType === type));
+      }
+
+      tabs.forEach(tab => tab.addEventListener('click', () => activateType(tab.dataset.cardType)));
+
+      children.forEach(child => {
+        child.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Ensure the card page is active
+          document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+          const cardPanel = document.getElementById('page-card');
+          if (cardPanel) cardPanel.classList.add('active');
+          // Mark the Card sidebar link as active
+          document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+          const cardLink = document.querySelector('.sidebar-link[data-page="card"]');
+          if (cardLink) cardLink.classList.add('active');
+          // Activate the tab
+          activateType(this.dataset.cardType);
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          history.replaceState(null, '', '#card');
         });
       });
     })();
