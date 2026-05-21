@@ -4280,12 +4280,11 @@
     /* ── Card type selector — large page-level segment control ──────── */
     .card-seg {
       display: flex;
-      background: var(--primitive-cafe-200);
+      background: var(--color-background-ui);
       border-radius: var(--corner-radius-xl);
       padding: 4px;
       gap: 4px;
       margin-bottom: var(--space-700);
-      overflow-x: auto;
     }
     .card-seg-btn {
       flex: 1;
@@ -4312,6 +4311,15 @@
       font-weight: var(--font-weight-semibold);
       box-shadow: var(--shadow-elevation-s);
     }
+    /* Responsive — tablet: tighten padding */
+    @media (max-width: 860px) {
+      .card-seg-btn { font-size: var(--font-size-body-m); padding: 12px var(--space-400); }
+    }
+    /* Responsive — mobile: wrap to 2×2 grid */
+    @media (max-width: 640px) {
+      .card-seg { flex-wrap: wrap; }
+      .card-seg-btn { flex: 1 1 calc(50% - 4px); font-size: var(--font-size-body-m); padding: 12px var(--space-400); }
+    }
 
     /* ── Card eyebrow type suffix ─────────────────────────────────── */
     .card-eyebrow-type {
@@ -4321,9 +4329,6 @@
     .card-eyebrow-type.visible {
       opacity: 1;
     }
-
-    /* Dark mode — invert track to a dark ink tint */
-    [data-theme="dark"] .card-seg { background: var(--primitive-ink-800, rgba(255,255,255,0.08)); }
 
     /* ── Card type panels ─────────────────────────────────────────── */
     .card-type-panel { display: none; }
