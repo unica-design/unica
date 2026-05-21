@@ -4185,12 +4185,20 @@
       padding: var(--space-400) var(--space-400) var(--space-500);
       gap: var(--space-300);
     }
-    /* Tile: tightest layout */
+    /* Tile: column layout — title+fav row on top, body below */
     .card-media--tile .card-media-content {
+      flex-direction: column;
+      align-items: stretch;
       padding: var(--space-300);
-      gap: var(--space-200);
-      align-items: flex-start;
+      gap: 4px;
     }
+    .card-media-title-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-100);
+    }
+    .card-media-title-row .card-media-title { flex: 1; }
 
     .card-media-text {
       flex: 1;
@@ -4223,7 +4231,7 @@
       margin: 0;
     }
 
-    /* Favorite button */
+    /* Favorite button — inline style (with designed circle background) */
     .card-media-fav {
       -webkit-appearance: none;
       appearance: none;
@@ -4235,16 +4243,24 @@
       justify-content: center;
       border-radius: var(--corner-radius-round);
       border: none;
-      background: transparent;
+      background: rgba(31, 24, 46, 0.08);
       cursor: pointer;
       color: var(--color-content-subtle);
-      transition: color 150ms ease, transform 150ms ease;
+      transition: color 150ms ease, background 150ms ease, transform 150ms ease;
       padding: 0;
     }
-    .card-media-fav:hover { color: var(--primitive-berry-600); transform: scale(1.1); }
-    .card-media-fav.card-media-fav--active { color: var(--primitive-berry-600); }
+    .card-media-fav:hover { background: rgba(31, 24, 46, 0.12); color: var(--primitive-berry-600); }
+    .card-media-fav.card-media-fav--active { color: var(--primitive-berry-600); background: rgba(137, 85, 242, 0.12); }
     .card-media-fav svg { width: 20px; height: 20px; }
-    .card-media--tile .card-media-fav { width: 32px; height: 32px; }
+    /* Tile: compact — sits inline with title text, no circle */
+    .card-media--tile .card-media-fav {
+      width: 28px;
+      height: 28px;
+      background: transparent;
+      flex-shrink: 0;
+    }
+    .card-media--tile .card-media-fav:hover { background: rgba(31, 24, 46, 0.08); }
+    .card-media--tile .card-media-fav.card-media-fav--active { background: transparent; }
     .card-media--tile .card-media-fav svg { width: 16px; height: 16px; }
 
     /* Nav heart button (overlay style) active state */
@@ -8334,8 +8350,8 @@
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Casa Mínima</p>
-                    <p class="card-media-body">Minimal form in coastal light.</p>
+                    <p class="card-media-title">Respire</p>
+                    <p class="card-media-body">Space opens, and the body slows.</p>
                   </div>
                   <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
@@ -8364,11 +8380,11 @@
                   <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
                 </div>
                 <div class="card-media-content">
-                  <div class="card-media-text">
+                  <div class="card-media-title-row">
                     <p class="card-media-title">Bloom</p>
-                    <p class="card-media-body">Form and light.</p>
+                    <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                   </div>
-                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <p class="card-media-body">Form and light.</p>
                 </div>
               </div>
               <div class="card-media card-media--tile">
@@ -8376,11 +8392,11 @@
                   <img src="assets/shoulder.png" alt="Editorial photograph of a bare shoulder">
                 </div>
                 <div class="card-media-content">
-                  <div class="card-media-text">
+                  <div class="card-media-title-row">
                     <p class="card-media-title">Sueur</p>
-                    <p class="card-media-body">Effort in light.</p>
+                    <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                   </div>
-                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <p class="card-media-body">Effort in light.</p>
                 </div>
               </div>
               <div class="card-media card-media--tile">
@@ -8388,11 +8404,11 @@
                   <img src="assets/lips.png" alt="Editorial close-up of parted lips">
                 </div>
                 <div class="card-media-content">
-                  <div class="card-media-text">
-                    <p class="card-media-title">Souffle</p>
-                    <p class="card-media-body">Breath held still.</p>
+                  <div class="card-media-title-row">
+                    <p class="card-media-title">Haleine</p>
+                    <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                   </div>
-                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <p class="card-media-body">Warm and close, barely perceptible.</p>
                 </div>
               </div>
               <div class="card-media card-media--tile">
@@ -8400,11 +8416,11 @@
                   <img src="assets/hands.png" alt="Editorial close-up of hands in contact">
                 </div>
                 <div class="card-media-content">
-                  <div class="card-media-text">
+                  <div class="card-media-title-row">
                     <p class="card-media-title">Toucher</p>
-                    <p class="card-media-body">Quiet contact.</p>
+                    <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                   </div>
-                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <p class="card-media-body">Quiet contact.</p>
                 </div>
               </div>
             </div>
@@ -11142,27 +11158,57 @@ ${accessoryMarkup}
       <button class="card-media-nav-btn card-media-nav-btn--fav" aria-label="Add to favourites" aria-pressed="false">${CARD_HEART_SVG}</button>
     </div>` : '';
 
-        // Content-area fav: inline and tile only
-        const favHTML = (!isHero && showFav)
-          ? `\n      <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false">${CARD_HEART_SVG}</button>`
-          : '';
-
         const titleText = isTile ? 'Bloom' : 'Fleur';
         const bodyText  = isHero
           ? 'A close study in form, light, and the quiet geometry of petals.'
           : isTile ? 'Form and light.' : 'Quiet geometry, studied closely.';
 
-        return `<div class="card-media card-media--${size}">
-  <div class="card-media-photo-wrap">
-    ${MEDIA_SRC}
-    ${navHTML}
-  </div>
+        // Content area differs by size
+        let contentHTML;
+        if (isTile && showFav) {
+          // Tile: fav sits inline with title on its own row
+          contentHTML = `
+  <div class="card-media-content">
+    <div class="card-media-title-row">
+      <p class="card-media-title">${titleText}</p>
+      <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false">${CARD_HEART_SVG}</button>
+    </div>
+    <p class="card-media-body">${bodyText}</p>
+  </div>`;
+        } else if (isTile) {
+          contentHTML = `
+  <div class="card-media-content">
+    <div class="card-media-title-row">
+      <p class="card-media-title">${titleText}</p>
+    </div>
+    <p class="card-media-body">${bodyText}</p>
+  </div>`;
+        } else if (!isHero && showFav) {
+          // Inline: fav sits to the right of the text block (with circle bg)
+          contentHTML = `
   <div class="card-media-content">
     <div class="card-media-text">
       <p class="card-media-title">${titleText}</p>
       <p class="card-media-body">${bodyText}</p>
-    </div>${favHTML}
-  </div>
+    </div>
+    <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false">${CARD_HEART_SVG}</button>
+  </div>`;
+        } else {
+          // Hero or inline with no fav
+          contentHTML = `
+  <div class="card-media-content">
+    <div class="card-media-text">
+      <p class="card-media-title">${titleText}</p>
+      <p class="card-media-body">${bodyText}</p>
+    </div>
+  </div>`;
+        }
+
+        return `<div class="card-media card-media--${size}">
+  <div class="card-media-photo-wrap">
+    ${MEDIA_SRC}
+    ${navHTML}
+  </div>${contentHTML}
 </div>`;
       }
 
