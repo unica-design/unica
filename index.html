@@ -4350,6 +4350,7 @@
       height: 48px;
     }
     .card-multi-action-icons {
+      flex: 1;
       display: flex;
       flex-direction: row;
       gap: var(--space-100);
@@ -4360,7 +4361,6 @@
       flex-direction: row;
       gap: var(--space-400);
       align-items: center;
-      margin-left: auto;
     }
 
     /* Media variants inside multifunctional header */
@@ -11407,11 +11407,11 @@ ${accessoryMarkup}
             <p class="card-multi-body">Get timely updates across all your devices without the noise. Customize what matters to you.</p>
           </div>` : '';
 
-        const iconBtnsHTML = showIcons ? `
-              <div class="card-multi-action-icons">
+        const iconBtnsHTML = `
+              <div class="card-multi-action-icons">${showIcons ? `
                 <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Microphone">${ICON_MIC}</button>
-                <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Message">${ICON_MSG}</button>
-              </div>` : '';
+                <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Message">${ICON_MSG}</button>` : ''}
+              </div>`;
         const footerHTML = showActions ? `
           <div class="card-multi-footer">
             <div class="divider divider--thin" role="separator"></div>
