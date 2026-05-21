@@ -4277,33 +4277,53 @@
     }
 
     /* ── Card page type tabs ─────────────────────────────────────── */
-    .card-tabs {
+    /* ── Card type selector — large page-level segment control ──────── */
+    .card-seg {
       display: flex;
-      border-bottom: 2px solid var(--color-border-default);
+      background: var(--primitive-cafe-200);
+      border-radius: var(--corner-radius-xl);
+      padding: 4px;
+      gap: 4px;
       margin-bottom: var(--space-700);
       overflow-x: auto;
     }
-    .card-tab {
+    .card-seg-btn {
+      flex: 1;
+      min-width: 0;
       font-family: var(--font-family-sans);
       font-size: var(--font-size-body-l);
       font-weight: 500;
       color: var(--color-content-subtle);
       background: none;
       border: none;
-      border-bottom: 2px solid transparent;
-      padding: var(--space-300) var(--space-500);
+      border-radius: calc(var(--corner-radius-xl) - 4px);
+      padding: 14px var(--space-500);
       cursor: pointer;
-      margin-bottom: -2px;
-      transition: color 150ms ease, border-color 150ms ease;
       white-space: nowrap;
-      flex-shrink: 0;
+      transition: color 150ms ease, background 150ms ease, box-shadow 150ms ease;
     }
-    .card-tab:hover { color: var(--color-content-default); }
-    .card-tab.active {
+    .card-seg-btn:hover:not(.active) {
       color: var(--color-content-default);
-      border-bottom-color: var(--color-content-default);
-      font-weight: var(--font-weight-semibold);
+      background: var(--color-action-hover-subtle);
     }
+    .card-seg-btn.active {
+      background: var(--color-content-default);
+      color: var(--color-background-page);
+      font-weight: var(--font-weight-semibold);
+      box-shadow: var(--shadow-elevation-s);
+    }
+
+    /* ── Card eyebrow type suffix ─────────────────────────────────── */
+    .card-eyebrow-type {
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    .card-eyebrow-type.visible {
+      opacity: 1;
+    }
+
+    /* Dark mode — invert track to a dark ink tint */
+    [data-theme="dark"] .card-seg { background: var(--primitive-ink-800, rgba(255,255,255,0.08)); }
 
     /* ── Card type panels ─────────────────────────────────────────── */
     .card-type-panel { display: none; }
@@ -4315,7 +4335,7 @@
       align-items: center;
       gap: var(--space-400);
       padding: var(--space-200) var(--space-400);
-      background: var(--color-background-subtle);
+      background: var(--primitive-cafe-100);
       border-radius: var(--corner-radius-s);
       margin-bottom: var(--space-500);
       flex-wrap: wrap;
@@ -7742,9 +7762,9 @@
 
       <!-- ── Component header ─────────────────────── -->
       <div class="comp-header">
-        <p class="comp-eyebrow">Components · Content</p>
+        <p class="comp-eyebrow" id="card-comp-eyebrow">Components · Content <span class="card-eyebrow-type" id="card-eyebrow-type">· Color Block</span></p>
         <h1 class="comp-title">Card</h1>
-        <p class="comp-description">Three card formats — Color Block, Media, and Multifunctional — each designed for a distinct content context. Mix formats within layouts to build editorial depth and functional hierarchy.</p>
+        <p class="comp-description" id="card-comp-description">Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.</p>
         <div class="comp-badges">
           <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
           <span class="comp-badge">v1.0</span>
@@ -7754,12 +7774,12 @@
         </div>
       </div>
 
-      <!-- ── Card type tabs ──────────────────────── -->
-      <div class="card-tabs" role="tablist" aria-label="Card type">
-        <button class="card-tab active" role="tab" aria-selected="true"  data-card-type="color-block" aria-controls="card-panel-color-block">Color Block</button>
-        <button class="card-tab"        role="tab" aria-selected="false" data-card-type="media"        aria-controls="card-panel-media">Media</button>
-        <button class="card-tab"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
-        <button class="card-tab"        role="tab" aria-selected="false" data-card-type="patterns"     aria-controls="card-panel-patterns">Patterns</button>
+      <!-- ── Card type selector ─────────────────── -->
+      <div class="card-seg" role="tablist" aria-label="Card type">
+        <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-type="color-block" aria-controls="card-panel-color-block">Color Block</button>
+        <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="media"        aria-controls="card-panel-media">Media</button>
+        <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
+        <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="patterns"     aria-controls="card-panel-patterns">Patterns</button>
       </div>
 
       <!-- ════════════════════════════════════════
@@ -10477,41 +10497,85 @@ ${accessoryMarkup}
        CARD COMPONENT — Type tabs + sidebar children
     ══════════════════════════════════════════════════════════════════ */
 
-    /* ── Card type tab switching ─────────────────────────────────── */
+    /* ── Card type selector switching ───────────────────────────── */
     (function initCardTabs() {
-      const tabs    = document.querySelectorAll('.card-tab[data-card-type]');
-      const panels  = document.querySelectorAll('.card-type-panel');
+      const btns     = document.querySelectorAll('.card-seg-btn[data-card-type]');
+      const panels   = document.querySelectorAll('.card-type-panel');
       const children = document.querySelectorAll('.sidebar-child-link[data-card-type]');
+      const eyebrowType = document.getElementById('card-eyebrow-type');
+      const descEl      = document.getElementById('card-comp-description');
+
+      const CARD_META = {
+        'color-block': {
+          label: 'Color Block',
+          desc: 'Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.'
+        },
+        'media': {
+          label: 'Media',
+          desc: 'Photo-forward card with an optional frosted-glass navigation overlay, a title, body text, and a toggleable favorite action. Available in hero, inline, and tile sizes.'
+        },
+        'multi': {
+          label: 'Multifunctional',
+          desc: 'Structured card with a swappable media slot — icon bullet, avatar, or photograph — a header overline and title, optional body copy, and a footer action pair. Ideal for settings, profiles, and feature lists.'
+        },
+        'patterns': {
+          label: 'Patterns',
+          desc: 'Common layout compositions combining the three card formats. Use as a reference when building feature sections, content feeds, and browsing grids.'
+        }
+      };
 
       function activateType(type) {
-        tabs.forEach(t => {
-          const active = t.dataset.cardType === type;
-          t.classList.toggle('active', active);
-          t.setAttribute('aria-selected', String(active));
+        // Segment buttons
+        btns.forEach(b => {
+          const active = b.dataset.cardType === type;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-selected', String(active));
         });
+        // Panels
         panels.forEach(p => p.classList.toggle('active', p.id === 'card-panel-' + type));
+        // Sidebar children
         children.forEach(c => c.classList.toggle('active', c.dataset.cardType === type));
+        // Header — eyebrow type suffix
+        const meta = CARD_META[type];
+        if (eyebrowType && meta) {
+          eyebrowType.classList.remove('visible');
+          requestAnimationFrame(() => {
+            eyebrowType.textContent = '· ' + meta.label;
+            eyebrowType.classList.add('visible');
+          });
+        }
+        // Header — description cross-fade
+        if (descEl && meta) {
+          descEl.style.transition = 'opacity 150ms ease';
+          descEl.style.opacity = '0';
+          setTimeout(() => {
+            descEl.textContent = meta.desc;
+            descEl.style.opacity = '1';
+          }, 150);
+        }
       }
 
-      tabs.forEach(tab => tab.addEventListener('click', () => activateType(tab.dataset.cardType)));
+      btns.forEach(btn => btn.addEventListener('click', () => activateType(btn.dataset.cardType)));
 
       children.forEach(child => {
         child.addEventListener('click', function(e) {
           e.preventDefault();
-          // Ensure the card page is active
           document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
           const cardPanel = document.getElementById('page-card');
           if (cardPanel) cardPanel.classList.add('active');
-          // Mark the Card sidebar link as active
           document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
           const cardLink = document.querySelector('.sidebar-link[data-page="card"]');
           if (cardLink) cardLink.classList.add('active');
-          // Activate the tab
           activateType(this.dataset.cardType);
           window.scrollTo({ top: 0, behavior: 'instant' });
           history.replaceState(null, '', '#card');
         });
       });
+
+      // Init eyebrow on load
+      if (eyebrowType) {
+        setTimeout(() => eyebrowType.classList.add('visible'), 50);
+      }
     })();
 
     /* ══════════════════════════════════════════════════════════════════
