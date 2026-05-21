@@ -8281,40 +8281,12 @@
           <h2 class="doc-section-title">Variants</h2>
           <hr class="doc-rule">
           <h3 class="doc-subsection-title">Formats</h3>
-          <p class="doc-section-description">Tile, inline, and hero — photo height and content layout adapt at each size. The nav overlay is exclusive to hero.</p>
-          <div class="card-sizes-row">
-            <div class="card-size-item">
-              <span class="card-size-label">Tile</span>
-              <div class="card-media card-media--tile">
-                <div class="card-media-photo-wrap">
-                  <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
-                </div>
-                <div class="card-media-content">
-                  <div class="card-media-text">
-                    <p class="card-media-title">Bloom</p>
-                    <p class="card-media-body">Form and light.</p>
-                  </div>
-                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                </div>
-              </div>
-            </div>
-            <div class="card-size-item">
-              <span class="card-size-label">Inline</span>
-              <div class="card-media card-media--inline">
-                <div class="card-media-photo-wrap">
-                  <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
-                </div>
-                <div class="card-media-content">
-                  <div class="card-media-text">
-                    <p class="card-media-title">Fleur</p>
-                    <p class="card-media-body">Quiet geometry, studied closely.</p>
-                  </div>
-                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                </div>
-              </div>
-            </div>
-            <div class="card-size-item">
-              <span class="card-size-label">Hero</span>
+          <p class="doc-section-description">Hero, inline, and tile — photo height and content layout adapt at each size. The nav overlay is exclusive to hero.</p>
+
+          <!-- Hero -->
+          <div class="card-format-block">
+            <span class="card-size-label">Hero</span>
+            <div class="card-format-examples">
               <div class="card-media card-media--hero">
                 <div class="card-media-photo-wrap">
                   <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
@@ -8330,8 +8302,110 @@
                   </div>
                 </div>
               </div>
+              <div class="card-media card-media--hero">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/shoulder.png" alt="Editorial close-up of a shoulder">
+                  <div class="card-media-nav" aria-label="Photo navigation">
+                    <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button class="card-media-nav-btn" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  </div>
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Épaule</p>
+                    <p class="card-media-body">Light traced along the line of form.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- Inline -->
+          <div class="card-format-block">
+            <span class="card-size-label">Inline</span>
+            <div class="card-format-examples">
+              <div class="card-media card-media--inline">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/arch-house.png" alt="Architectural photograph of a modern house">
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Casa Mínima</p>
+                    <p class="card-media-body">Minimal form in coastal light.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+              <div class="card-media card-media--inline">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/hands.png" alt="Editorial close-up of hands">
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Mains</p>
+                    <p class="card-media-body">Gesture studied in stillness.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tile -->
+          <div class="card-format-block">
+            <span class="card-size-label">Tile</span>
+            <div class="card-format-examples card-format-examples--tile">
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Bloom</p>
+                    <p class="card-media-body">Form and light.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/shoulder.png" alt="Editorial close-up of a shoulder">
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Épaule</p>
+                    <p class="card-media-body">Line and shadow.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/lips.png" alt="Editorial close-up of lips">
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Lèvres</p>
+                    <p class="card-media-body">Still and precise.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+              <div class="card-media card-media--tile">
+                <div class="card-media-photo-wrap">
+                  <img src="assets/hands.png" alt="Editorial close-up of hands">
+                </div>
+                <div class="card-media-content">
+                  <div class="card-media-text">
+                    <p class="card-media-title">Mains</p>
+                    <p class="card-media-body">Touch and stillness.</p>
+                  </div>
+                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div><!-- /variants -->
 
         <!-- Properties -->
