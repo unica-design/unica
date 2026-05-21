@@ -4376,6 +4376,49 @@
       flex-shrink: 2;
     }
 
+    /* Sub-selector row (color / avatar / photo picker in preview) */
+    .card-multi-sub-row {
+      display: flex;
+      flex-direction: row;
+      gap: var(--space-100);
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: var(--space-300);
+    }
+    .card-multi-sub-label {
+      font-family: var(--font-family-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+      margin-right: var(--space-100);
+    }
+    .card-multi-sub-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 28px;
+      padding: 0 var(--space-300);
+      border-radius: var(--corner-radius-round);
+      border: 1px solid var(--color-border-default);
+      background: transparent;
+      font-family: var(--font-family-sans);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--color-content-subtle);
+      transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+    }
+    .card-multi-sub-btn:hover { border-color: var(--color-content-default); color: var(--color-content-default); }
+    .card-multi-sub-btn.is-active {
+      border-color: var(--color-action-default);
+      color: var(--color-action-default);
+      background: var(--color-action-hover-subtle);
+    }
+    .card-multi-sub-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .card-multi-sub-avatar { width: 18px; height: 18px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+
     /* Media variants inside multifunctional header */
     .card-multi-photo {
       width: 64px;
@@ -8501,6 +8544,9 @@
             </div>
           </div>
 
+          <!-- Sub-selector (color / avatar / photo) -->
+          <div class="card-multi-sub-row" id="card-multi-sub-row"></div>
+
           <!-- Preview -->
           <div class="card-preview">
             <div id="card-multi-preview"></div>
@@ -8564,11 +8610,13 @@
         <div class="doc-section">
           <h2 class="doc-section-title">Variants</h2>
           <hr class="doc-rule">
-          <h3 class="doc-subsection-title">Media slots</h3>
-          <p class="doc-section-description">Icon bullet, avatar, and photo — each with body and actions visible.</p>
+
+          <!-- Row 1: Icon Bullet -->
+          <h3 class="doc-subsection-title">Icon Bullet</h3>
+          <p class="doc-section-description">Two colorway examples — any of the seven palette colors is available.</p>
           <div class="card-sizes-row">
             <div class="card-size-item">
-              <span class="card-size-label">Icon Bullet</span>
+              <span class="card-size-label">Violet</span>
               <div class="card-multi">
                 <div class="card-multi-header">
                   <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
@@ -8577,18 +8625,32 @@
                 <div class="card-multi-body-wrap"><p class="card-multi-body">Get timely updates across all your devices without the noise.</p></div>
                 <div class="card-multi-footer">
                   <div class="divider divider--thin" role="separator"></div>
-                  <div class="card-multi-actions">
-                    <div class="card-multi-action-icons"></div>
-                    <div class="card-multi-action-btns">
-                      <button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Later</span></button>
-                      <button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Enable</span></button>
-                    </div>
-                  </div>
+                  <div class="card-multi-actions"><div class="card-multi-action-icons"></div><div class="card-multi-action-btns"><button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Later</span></button><button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Enable</span></button></div></div>
                 </div>
               </div>
             </div>
             <div class="card-size-item">
-              <span class="card-size-label">Avatar</span>
+              <span class="card-size-label">Berry</span>
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="icon-bullet icon-bullet--xlarge icon-bullet--berry" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Privacy</p><p class="card-multi-title">Data Controls</p></div>
+                </div>
+                <div class="card-multi-body-wrap"><p class="card-multi-body">Manage what you share and with whom. Your data, your rules.</p></div>
+                <div class="card-multi-footer">
+                  <div class="divider divider--thin" role="separator"></div>
+                  <div class="card-multi-actions"><div class="card-multi-action-icons"></div><div class="card-multi-action-btns"><button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Later</span></button><button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Review</span></button></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Avatar -->
+          <h3 class="doc-subsection-title">Avatar</h3>
+          <p class="doc-section-description">Person-centric cards for team, profile, and contact contexts.</p>
+          <div class="card-sizes-row">
+            <div class="card-size-item">
+              <span class="card-size-label">Avatar 1</span>
               <div class="card-multi">
                 <div class="card-multi-header">
                   <div class="card-multi-avatar"><img src="assets/avatars/avatar-1.png" alt=""></div>
@@ -8597,18 +8659,32 @@
                 <div class="card-multi-body-wrap"><p class="card-multi-body">Senior product designer. Specialises in design systems and motion.</p></div>
                 <div class="card-multi-footer">
                   <div class="divider divider--thin" role="separator"></div>
-                  <div class="card-multi-actions">
-                    <div class="card-multi-action-icons"></div>
-                    <div class="card-multi-action-btns">
-                      <button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Profile</span></button>
-                      <button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Message</span></button>
-                    </div>
-                  </div>
+                  <div class="card-multi-actions"><div class="card-multi-action-icons"></div><div class="card-multi-action-btns"><button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Profile</span></button><button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Message</span></button></div></div>
                 </div>
               </div>
             </div>
             <div class="card-size-item">
-              <span class="card-size-label">Photo</span>
+              <span class="card-size-label">Avatar 2</span>
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="card-multi-avatar"><img src="assets/avatars/avatar-2.png" alt=""></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Collaborator</p><p class="card-multi-title">Marcus Wei</p></div>
+                </div>
+                <div class="card-multi-body-wrap"><p class="card-multi-body">Frontend engineer with a focus on accessibility and component architecture.</p></div>
+                <div class="card-multi-footer">
+                  <div class="divider divider--thin" role="separator"></div>
+                  <div class="card-multi-actions"><div class="card-multi-action-icons"></div><div class="card-multi-action-btns"><button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Profile</span></button><button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Connect</span></button></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Photo -->
+          <h3 class="doc-subsection-title">Photo</h3>
+          <p class="doc-section-description">Rich media slot for editorial, project, and collection contexts.</p>
+          <div class="card-sizes-row">
+            <div class="card-size-item">
+              <span class="card-size-label">Architecture</span>
               <div class="card-multi">
                 <div class="card-multi-header">
                   <div class="card-multi-photo"><img src="assets/arch-house.png" alt="Architectural photograph"></div>
@@ -8617,13 +8693,21 @@
                 <div class="card-multi-body-wrap"><p class="card-multi-body">Minimalist residential project on the Algarve coast. Phase one complete.</p></div>
                 <div class="card-multi-footer">
                   <div class="divider divider--thin" role="separator"></div>
-                  <div class="card-multi-actions">
-                    <div class="card-multi-action-icons"></div>
-                    <div class="card-multi-action-btns">
-                      <button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Details</span></button>
-                      <button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Open</span></button>
-                    </div>
-                  </div>
+                  <div class="card-multi-actions"><div class="card-multi-action-icons"></div><div class="card-multi-action-btns"><button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Details</span></button><button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Open</span></button></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-size-item">
+              <span class="card-size-label">Floral</span>
+              <div class="card-multi">
+                <div class="card-multi-header">
+                  <div class="card-multi-photo"><img src="assets/flower.png" alt="Floral photograph"></div>
+                  <div class="card-multi-text-block"><p class="card-multi-overline">Collection</p><p class="card-multi-title">Bloom Series</p></div>
+                </div>
+                <div class="card-multi-body-wrap"><p class="card-multi-body">A curated series exploring light, texture, and seasonal colour through botanicals.</p></div>
+                <div class="card-multi-footer">
+                  <div class="divider divider--thin" role="separator"></div>
+                  <div class="card-multi-actions"><div class="card-multi-action-icons"></div><div class="card-multi-action-btns"><button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">View</span></button><button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Save</span></button></div></div>
                 </div>
               </div>
             </div>
@@ -11383,6 +11467,7 @@ ${accessoryMarkup}
     (function initMultiCardDemo() {
       const preview          = document.getElementById('card-multi-preview');
       const mediaControl     = document.getElementById('card-multi-media');
+      const subRow           = document.getElementById('card-multi-sub-row');
       const overlineToggle   = document.getElementById('card-multi-overline-toggle');
       const underlineToggle  = document.getElementById('card-multi-underline-toggle');
       const bodyToggle       = document.getElementById('card-multi-body-toggle');
@@ -11394,6 +11479,9 @@ ${accessoryMarkup}
 
       const state = {
         media: 'icon-bullet',
+        iconColor: 'violet',
+        avatarSrc: 'avatar-1.png',
+        photoSrc:  'arch-house.png',
         showOverline: true,
         showUnderline: false,
         showBody: true,
@@ -11401,18 +11489,72 @@ ${accessoryMarkup}
         showIcons: true,
       };
 
+      const ICON_COLORS = [
+        { value: 'violet',  label: 'Violet',  dot: 'var(--primitive-violet-600)' },
+        { value: 'berry',   label: 'Berry',   dot: 'var(--primitive-berry-600)'  },
+        { value: 'mint',    label: 'Mint',    dot: 'var(--primitive-mint-600)'   },
+        { value: 'pool',    label: 'Pool',    dot: 'var(--primitive-pool-600)'   },
+        { value: 'apricot', label: 'Apricot', dot: 'var(--primitive-apricot-600)'},
+        { value: 'citron',  label: 'Citron',  dot: 'var(--primitive-citron-600)' },
+        { value: 'ink',     label: 'Ink',     dot: 'var(--primitive-ink-800)'    },
+      ];
+      const AVATARS = [
+        { value: 'avatar-1.png', label: '1' },
+        { value: 'avatar-2.png', label: '2' },
+        { value: 'avatar-3.png', label: '3' },
+        { value: 'avatar-4.png', label: '4' },
+      ];
+      const PHOTOS = [
+        { value: 'arch-house.png', label: 'Architecture' },
+        { value: 'flower.png',     label: 'Flower'       },
+        { value: 'hands.png',      label: 'Toucher'      },
+        { value: 'shoulder.png',   label: 'Sueur'        },
+        { value: 'lips.png',       label: 'Respire'      },
+      ];
+
       const ICON_MIC  = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,15a4,4,0,0,0,4-4V5A4,4,0,0,0,8,5v6A4,4,0,0,0,12,15ZM10,5a2,2,0,0,1,4,0v6a2,2,0,0,1-4,0Zm10,6a1,1,0,0,0-2,0A6,6,0,0,1,6,11a1,1,0,0,0-2,0,8,8,0,0,0,7,7.93V21H9a1,1,0,0,0,0,2h6a1,1,0,0,0,0-2H13V18.93A8,8,0,0,0,20,11Z"/></svg>`;
-      const ICON_MSG  = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.34,9.32l-14-7a3,3,0,0,0-4.08,3.9l2.4,5.37h0a1.06,1.06,0,0,1,0,.82l-2.4,5.37A3,3,0,0,0,5,22a3.14,3.14,0,0,0,1.35-.32l14-7a3,3,0,0,0,0-5.36Zm-.89,3.57-14,7a1,1,0,0,1-1.35-1.3l2.39-5.37A2,2,0,0,0,6.57,13h6.89a1,1,0,0,0,0-2H6.57a2,2,0,0,0-.08-.22L4.1,5.41a1,1,0,0,1,1.35-1.3l14,7a1,1,0,0,1,0,1.78Z"/></svg>`;
-      const ICON_CHECK = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>`;
+      const ICON_CHAT = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18,2H6A3,3,0,0,0,3,5V16a3,3,0,0,0,3,3H8.59l2.7,2.71A1,1,0,0,0,12,22a1,1,0,0,0,.65-.24L15.87,19H18a3,3,0,0,0,3-3V5A3,3,0,0,0,18,2Zm1,14a1,1,0,0,1-1,1H15.5a1,1,0,0,0-.65.24l-2.8,2.4L9.71,17.29A1,1,0,0,0,9,17H6a1,1,0,0,1-1-1V5A1,1,0,0,1,6,4H18a1,1,0,0,1,1,1Z"/></svg>`;
+      const ICON_ARROW_RIGHT = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>`;
+
+      function updateSubRow() {
+        if (!subRow) return;
+        let items, currentVal, onPick;
+        if (state.media === 'icon-bullet') {
+          items = ICON_COLORS.map(c =>
+            `<button class="card-multi-sub-btn${state.iconColor === c.value ? ' is-active' : ''}" data-sub="${c.value}" type="button">` +
+            `<span class="card-multi-sub-dot" style="background:${c.dot}"></span>${c.label}</button>`
+          );
+          onPick = val => { state.iconColor = val; };
+        } else if (state.media === 'avatar') {
+          items = AVATARS.map(a =>
+            `<button class="card-multi-sub-btn${state.avatarSrc === a.value ? ' is-active' : ''}" data-sub="${a.value}" type="button">` +
+            `<img class="card-multi-sub-avatar" src="assets/avatars/${a.value}" alt=""><span>Avatar ${a.label}</span></button>`
+          );
+          onPick = val => { state.avatarSrc = val; };
+        } else {
+          items = PHOTOS.map(p =>
+            `<button class="card-multi-sub-btn${state.photoSrc === p.value ? ' is-active' : ''}" data-sub="${p.value}" type="button">${p.label}</button>`
+          );
+          onPick = val => { state.photoSrc = val; };
+        }
+        subRow.innerHTML = items.join('');
+        subRow.querySelectorAll('.card-multi-sub-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            onPick(btn.dataset.sub);
+            updateSubRow();
+            render();
+          });
+        });
+      }
 
       function buildMediaHTML(type) {
         if (type === 'icon-bullet') {
-          return `<div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true">${CARD_FIRE_SVG}</div>`;
+          return `<div class="icon-bullet icon-bullet--xlarge icon-bullet--${state.iconColor}" aria-hidden="true">${CARD_FIRE_SVG}</div>`;
         }
         if (type === 'avatar') {
-          return `<div class="card-multi-avatar"><img src="assets/avatars/avatar-1.png" alt=""></div>`;
+          return `<div class="card-multi-avatar"><img src="assets/avatars/${state.avatarSrc}" alt=""></div>`;
         }
-        return `<div class="card-multi-photo"><img src="assets/arch-house.png" alt="Architectural photograph"></div>`;
+        return `<div class="card-multi-photo"><img src="assets/${state.photoSrc}" alt=""></div>`;
       }
 
       function buildCardHTML() {
@@ -11433,7 +11575,7 @@ ${accessoryMarkup}
         const iconBtnsHTML = `
               <div class="card-multi-action-icons">${showIcons ? `
                 <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Microphone">${ICON_MIC}</button>
-                <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Message">${ICON_MSG}</button>` : ''}
+                <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Chat">${ICON_CHAT}</button>` : ''}
               </div>`;
         const footerHTML = showActions ? `
           <div class="card-multi-footer">
@@ -11441,7 +11583,7 @@ ${accessoryMarkup}
             <div class="card-multi-actions">${iconBtnsHTML}
               <div class="card-multi-action-btns">
                 <button class="btn btn-outlined btn--medium" type="button"><span class="btn-label">Later</span></button>
-                <button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Enable</span>${ICON_CHECK}</button>
+                <button class="btn btn-filled btn--medium" type="button"><span class="btn-label">Enable</span>${ICON_ARROW_RIGHT}</button>
               </div>
             </div>
           </div>` : '';
@@ -11466,7 +11608,7 @@ ${accessoryMarkup}
         syncPropBar(preview, multiPropBarEl);
       }
 
-      if (mediaControl)    initSegControl(mediaControl, val => { state.media = val; render(); });
+      if (mediaControl)    initSegControl(mediaControl, val => { state.media = val; updateSubRow(); render(); });
 
       // Overline / Underline: mutually exclusive
       if (overlineToggle) overlineToggle.addEventListener('change', () => {
@@ -11500,6 +11642,7 @@ ${accessoryMarkup}
         });
       }
 
+      updateSubRow();
       render();
     })();
 
