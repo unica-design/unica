@@ -4053,6 +4053,23 @@
       color: var(--primitive-cafe-0);
     }
 
+    /* Tinted cards — backgrounds are fixed primitives that don't flip in dark mode,
+       so text must always be ink regardless of the active theme */
+    .card-colorblock--violet .card-colorblock-title,
+    .card-colorblock--violet .card-colorblock-body,
+    .card-colorblock--berry  .card-colorblock-title,
+    .card-colorblock--berry  .card-colorblock-body,
+    .card-colorblock--apricot .card-colorblock-title,
+    .card-colorblock--apricot .card-colorblock-body,
+    .card-colorblock--mint   .card-colorblock-title,
+    .card-colorblock--mint   .card-colorblock-body,
+    .card-colorblock--pool   .card-colorblock-title,
+    .card-colorblock--pool   .card-colorblock-body,
+    .card-colorblock--citron .card-colorblock-title,
+    .card-colorblock--citron .card-colorblock-body {
+      color: var(--primitive-ink-900);
+    }
+
     /* ── Media Card ──────────────────────────────────────────────── */
     .card-media {
       width: 343px;
@@ -4494,6 +4511,23 @@
       letter-spacing: 0.07em;
       text-transform: uppercase;
       color: var(--color-content-subtle);
+    }
+
+    /* Format rows — stacked layout with multiple examples per format */
+    .card-format-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-400);
+      margin-bottom: var(--space-700);
+    }
+    .card-format-examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-400);
+      align-items: flex-start;
+    }
+    @media (max-width: 640px) {
+      .card-format-examples { flex-direction: column; }
     }
 
     /* ── Patterns layout ──────────────────────────────────────────── */
@@ -7980,9 +8014,11 @@
 
           <h3 class="doc-subsection-title">Formats</h3>
           <p class="doc-section-description">Hero, inline, and tile — each includes an optional icon, body text, and action.</p>
-          <div class="card-sizes-row">
-            <div class="card-size-item">
-              <span class="card-size-label">Hero</span>
+
+          <!-- Hero -->
+          <div class="card-format-block">
+            <span class="card-size-label">Hero</span>
+            <div class="card-format-examples">
               <div class="card-colorblock card-colorblock--hero card-colorblock--white">
                 <div class="icon-bullet icon-bullet--xlarge icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
                 <div class="card-colorblock-inner">
@@ -7998,11 +8034,44 @@
                   </div>
                 </div>
               </div>
+              <div class="card-colorblock card-colorblock--hero card-colorblock--ink">
+                <div class="icon-bullet icon-bullet--xlarge icon-bullet--white" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
+                <div class="card-colorblock-inner">
+                  <div class="card-colorblock-text">
+                    <p class="card-colorblock-title">Design tokens</p>
+                    <p class="card-colorblock-body">Manage color, type, and spacing from a single source of truth across your entire product.</p>
+                  </div>
+                  <div class="card-colorblock-actions">
+                    <button class="btn btn-super-cta btn-scta-reversed btn--large" type="button">
+                      <span class="btn-scta-label">Explore</span>
+                      <span class="btn-scta-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="card-size-item">
-              <span class="card-size-label">Inline</span>
-              <div class="card-colorblock card-colorblock--inline card-colorblock--white">
-                <div class="icon-bullet icon-bullet--xlarge icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
+          </div>
+
+          <!-- Inline -->
+          <div class="card-format-block">
+            <span class="card-size-label">Inline</span>
+            <div class="card-format-examples">
+              <div class="card-colorblock card-colorblock--inline card-colorblock--violet">
+                <div class="icon-bullet icon-bullet--xlarge icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
+                <div class="card-colorblock-inner">
+                  <div class="card-colorblock-text">
+                    <p class="card-colorblock-title">Design tokens</p>
+                    <p class="card-colorblock-body">Manage color, type, and spacing from a single source of truth.</p>
+                  </div>
+                  <div class="card-colorblock-actions">
+                    <button class="btn btn-filled btn--medium btn--icon-only" type="button" aria-label="Explore">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-colorblock card-colorblock--inline card-colorblock--berry">
+                <div class="icon-bullet icon-bullet--xlarge icon-bullet--berry" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
                 <div class="card-colorblock-inner">
                   <div class="card-colorblock-text">
                     <p class="card-colorblock-title">Design tokens</p>
@@ -8016,16 +8085,27 @@
                 </div>
               </div>
             </div>
-            <div class="card-size-item">
-              <span class="card-size-label">Tile</span>
-              <div class="card-colorblock card-colorblock--tile card-colorblock--white">
-                <div class="icon-bullet icon-bullet--large icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
-                <div class="card-colorblock-inner">
-                  <div class="card-colorblock-text">
-                    <p class="card-colorblock-title">Design tokens</p>
-                    <p class="card-colorblock-body">Single source of truth.</p>
-                  </div>
-                </div>
+          </div>
+
+          <!-- Tile -->
+          <div class="card-format-block">
+            <span class="card-size-label">Tile</span>
+            <div class="card-format-examples">
+              <div class="card-colorblock card-colorblock--tile card-colorblock--apricot">
+                <div class="icon-bullet icon-bullet--large icon-bullet--apricot" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
+                <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Design tokens</p><p class="card-colorblock-body">Single source of truth.</p></div></div>
+              </div>
+              <div class="card-colorblock card-colorblock--tile card-colorblock--mint">
+                <div class="icon-bullet icon-bullet--large icon-bullet--mint" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
+                <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Design tokens</p><p class="card-colorblock-body">Single source of truth.</p></div></div>
+              </div>
+              <div class="card-colorblock card-colorblock--tile card-colorblock--pool">
+                <div class="icon-bullet icon-bullet--large icon-bullet--pool" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
+                <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Design tokens</p><p class="card-colorblock-body">Single source of truth.</p></div></div>
+              </div>
+              <div class="card-colorblock card-colorblock--tile card-colorblock--citron">
+                <div class="icon-bullet icon-bullet--large icon-bullet--citron" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
+                <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Design tokens</p><p class="card-colorblock-body">Single source of truth.</p></div></div>
               </div>
             </div>
           </div>
