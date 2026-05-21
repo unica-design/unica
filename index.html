@@ -4279,10 +4279,14 @@
     /* ── Card page type tabs ─────────────────────────────────────── */
     /* ── Card type selector — large page-level segment control ──────── */
     .card-seg-wrap {
-      position: relative;
+      display: flex;
+      align-items: center;
+      gap: var(--space-300);
       margin-bottom: var(--space-700);
     }
     .card-seg {
+      flex: 1;
+      min-width: 0;
       display: flex;
       background: var(--color-background-ui);
       border-radius: var(--corner-radius-xl);
@@ -4314,42 +4318,26 @@
       font-weight: var(--font-weight-semibold);
       box-shadow: var(--shadow-elevation-s);
     }
-    /* Scroll arrow buttons */
+    /* Arrow buttons — hidden by default, shown only on mobile */
     .card-seg-arrow {
       display: none;
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      width: 44px;
-      border: none;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-      color: var(--color-content-default);
-      transition: opacity 150ms ease;
+      flex-shrink: 0;
     }
-    .card-seg-arrow--prev {
-      left: 0;
-      border-radius: calc(var(--corner-radius-xl) - 4px) 0 0 calc(var(--corner-radius-xl) - 4px);
-      background: linear-gradient(to right, var(--color-background-ui) 55%, transparent);
-    }
-    .card-seg-arrow--next {
-      right: 0;
-      border-radius: 0 calc(var(--corner-radius-xl) - 4px) calc(var(--corner-radius-xl) - 4px) 0;
-      background: linear-gradient(to left, var(--color-background-ui) 55%, transparent);
-    }
-    .card-seg-arrow svg { width: 18px; height: 18px; flex-shrink: 0; }
     /* Responsive — tablet: tighten padding */
     @media (max-width: 860px) {
       .card-seg-btn { font-size: var(--font-size-body-m); padding: 12px var(--space-400); }
     }
-    /* Responsive — mobile: horizontal scroll + arrows */
+    /* Responsive — mobile: scrollable strip with flanking arrows */
     @media (max-width: 640px) {
-      .card-seg { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; }
+      .card-seg {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-behavior: smooth;
+      }
       .card-seg::-webkit-scrollbar { display: none; }
       .card-seg-btn { flex: 0 0 auto; font-size: var(--font-size-body-m); padding: 12px var(--space-400); }
-      .card-seg-arrow { display: flex; }
+      .card-seg-arrow { display: inline-flex; }
       .card-seg-arrow[hidden] { display: none !important; }
     }
 
@@ -7813,8 +7801,8 @@
 
       <!-- ── Card type selector ─────────────────── -->
       <div class="card-seg-wrap" id="card-seg-wrap">
-        <button class="card-seg-arrow card-seg-arrow--prev" aria-label="Scroll left" hidden>
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button class="card-seg-arrow card-seg-arrow--prev btn btn--small btn-outlined btn--icon-only" aria-label="Scroll left" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="card-seg" role="tablist" aria-label="Card type">
           <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-type="color-block" aria-controls="card-panel-color-block">Color Block</button>
@@ -7822,8 +7810,8 @@
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="patterns"     aria-controls="card-panel-patterns">Patterns</button>
         </div>
-        <button class="card-seg-arrow card-seg-arrow--next" aria-label="Scroll right">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button class="card-seg-arrow card-seg-arrow--next btn btn--small btn-outlined btn--icon-only" aria-label="Scroll right">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
 
