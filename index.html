@@ -3975,7 +3975,7 @@
     /* Color variants */
     .card-colorblock--white {
       background: var(--color-background-page);
-      border: 1px solid var(--color-border-default);
+      box-shadow: inset 0 0 0 1px var(--color-border-default);
     }
     .card-colorblock--ink    { background: var(--color-background-contrast); }
     .card-colorblock--violet { background: var(--primitive-violet-100); }
@@ -4070,12 +4070,37 @@
       color: var(--primitive-ink-900);
     }
 
-    /* White card in dark mode — page bg flips to ink-900, making the card merge
-       with the page. Use the section surface (ink-800) instead so it reads as
-       an elevated card, and let the semantic text token handle legibility. */
+    /* ── Dark mode card overrides ──────────────────────────────────
+       Hardcoded primitive tokens avoid any semantic-token resolution
+       ambiguity. Icon bullet colors are always fixed primitives
+       (never mode-aware), so they need explicit overrides here.    */
+
+    /* White card: page bg and card bg both flip to ink-900 — identical.
+       Use the elevated section surface so the card reads as distinct,
+       then pin text to light and flip the ink bullet to cream. */
     [data-theme="dark"] .card-colorblock--white {
-      background: var(--color-background-section);
-      border-color: var(--color-border-default);
+      background: var(--primitive-ink-800);
+      box-shadow: inset 0 0 0 1px var(--primitive-ink-700);
+    }
+    [data-theme="dark"] .card-colorblock--white .card-colorblock-title,
+    [data-theme="dark"] .card-colorblock--white .card-colorblock-body {
+      color: var(--primitive-ink-100);
+    }
+    [data-theme="dark"] .card-colorblock--white .icon-bullet--ink {
+      background: var(--primitive-cafe-200);
+      color: var(--primitive-ink-900);
+    }
+
+    /* Ink card: --color-background-contrast flips to cafe-0 (light) in dark mode.
+       Text is hardcoded cafe-0 so it becomes invisible on the light surface.
+       Pin text to ink and flip the white bullet dark. */
+    [data-theme="dark"] .card-colorblock--ink .card-colorblock-title,
+    [data-theme="dark"] .card-colorblock--ink .card-colorblock-body {
+      color: var(--primitive-ink-900);
+    }
+    [data-theme="dark"] .card-colorblock--ink .icon-bullet--white {
+      background: var(--primitive-ink-900);
+      color: var(--primitive-cafe-0);
     }
 
     /* ── Media Card ──────────────────────────────────────────────── */
