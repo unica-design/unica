@@ -4279,14 +4279,9 @@
     /* ── Card page type tabs ─────────────────────────────────────── */
     /* ── Card type selector — large page-level segment control ──────── */
     .card-seg-wrap {
-      display: flex;
-      align-items: center;
-      gap: var(--space-300);
       margin-bottom: var(--space-700);
     }
     .card-seg {
-      flex: 1;
-      min-width: 0;
       display: flex;
       background: var(--color-background-ui);
       border-radius: var(--corner-radius-xl);
@@ -4318,27 +4313,13 @@
       font-weight: var(--font-weight-semibold);
       box-shadow: var(--shadow-elevation-s);
     }
-    /* Arrow buttons — hidden by default, shown only on mobile */
-    .card-seg-arrow {
-      display: none;
-      flex-shrink: 0;
-    }
     /* Responsive — tablet: tighten padding */
     @media (max-width: 860px) {
       .card-seg-btn { font-size: var(--font-size-body-m); padding: 12px var(--space-400); }
     }
-    /* Responsive — mobile: scrollable strip with flanking arrows */
+    /* Responsive — mobile: compress further so all four fit on one row */
     @media (max-width: 640px) {
-      .card-seg {
-        overflow-x: auto;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        scroll-behavior: smooth;
-      }
-      .card-seg::-webkit-scrollbar { display: none; }
-      .card-seg-btn { flex: 0 0 auto; font-size: var(--font-size-body-m); padding: 12px var(--space-400); }
-      .card-seg-arrow { display: inline-flex; }
-      .card-seg-arrow[hidden] { display: none !important; }
+      .card-seg-btn { font-size: 11px; padding: 9px var(--space-200); }
     }
 
     /* ── Card eyebrow type suffix ─────────────────────────────────── */
@@ -7801,18 +7782,12 @@
 
       <!-- ── Card type selector ─────────────────── -->
       <div class="card-seg-wrap" id="card-seg-wrap">
-        <button class="card-seg-arrow card-seg-arrow--prev btn btn--small btn-outlined btn--icon-only" aria-label="Scroll left" hidden>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
         <div class="card-seg" role="tablist" aria-label="Card type">
           <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-type="color-block" aria-controls="card-panel-color-block">Color Block</button>
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="media"        aria-controls="card-panel-media">Media</button>
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="patterns"     aria-controls="card-panel-patterns">Patterns</button>
         </div>
-        <button class="card-seg-arrow card-seg-arrow--next btn btn--small btn-outlined btn--icon-only" aria-label="Scroll right">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
       </div>
 
       <!-- ════════════════════════════════════════
@@ -10610,29 +10585,6 @@ ${accessoryMarkup}
         setTimeout(() => eyebrowType.classList.add('visible'), 50);
       }
 
-      // Arrow scroll logic (mobile)
-      const seg      = document.querySelector('.card-seg');
-      const prevArrow = document.querySelector('.card-seg-arrow--prev');
-      const nextArrow = document.querySelector('.card-seg-arrow--next');
-
-      function updateArrows() {
-        if (!seg || !prevArrow || !nextArrow) return;
-        if (window.innerWidth > 640) {
-          prevArrow.hidden = true;
-          nextArrow.hidden = true;
-          return;
-        }
-        const scrollLeft = seg.scrollLeft;
-        const maxScroll  = seg.scrollWidth - seg.clientWidth;
-        prevArrow.hidden = scrollLeft <= 2;
-        nextArrow.hidden = scrollLeft >= maxScroll - 2;
-      }
-
-      if (prevArrow) prevArrow.addEventListener('click', () => seg.scrollBy({ left: -160, behavior: 'smooth' }));
-      if (nextArrow) nextArrow.addEventListener('click', () => seg.scrollBy({ left: 160,  behavior: 'smooth' }));
-      if (seg)       seg.addEventListener('scroll', updateArrows);
-      window.addEventListener('resize', updateArrows);
-      updateArrows();
     })();
 
     /* ══════════════════════════════════════════════════════════════════
