@@ -4323,31 +4323,32 @@
       position: relative;
       width: 100%;
     }
-    /* Large trigger — matches seg control height/weight, no fill */
+    /* Large trigger — matches seg control height/weight */
     .card-type-dropdown .dropdown-trigger {
       width: 100%;
       justify-content: space-between;
       padding: 14px var(--space-500);
-      background: transparent;
-      border: 1.5px solid var(--color-border-default);
+      background: var(--color-background-page);
+      border: var(--border-width-default) solid var(--doc-rule-default);
       border-radius: var(--corner-radius-xl);
       font-size: var(--font-size-body-l);
       font-weight: 500;
       letter-spacing: 0;
-      transition: background 150ms ease, border-color 150ms ease;
+      transition: background 150ms ease;
       -webkit-tap-highlight-color: transparent;
     }
     .card-type-dropdown .dropdown-trigger:hover {
       background: var(--color-action-hover-subtle);
     }
-    /* Click-only focus: suppress ring on mousedown, keep for keyboard */
+    /* Focus ring on keyboard only */
     .card-type-dropdown .dropdown-trigger:focus { outline: none; }
     .card-type-dropdown .dropdown-trigger:focus-visible {
       outline: 2px solid var(--color-border-strong);
       outline-offset: 2px;
     }
+    /* Caret matches system size exactly */
     .card-type-dropdown .dropdown-trigger-caret {
-      width: 16px; height: 16px;
+      width: 9px; height: 9px;
     }
     /* Full-width menu */
     .card-type-dropdown .dropdown-menu {
@@ -7832,9 +7833,7 @@
         <div class="dropdown card-type-dropdown" id="card-type-dropdown">
           <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
             <span>Color Block</span>
-            <svg class="dropdown-trigger-caret" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <ul class="dropdown-menu" role="listbox" aria-label="Card type">
             <li class="dropdown-option" role="option" data-value="color-block" aria-selected="true">Color Block</li>
