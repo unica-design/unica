@@ -4317,50 +4317,52 @@
     @media (max-width: 860px) {
       .card-seg-btn { font-size: var(--font-size-body-m); padding: 12px var(--space-400); }
     }
-    /* Responsive — mobile: hide seg, show styled dropdown */
-    .card-type-select-wrap {
+    /* Responsive — mobile: hide seg, show custom dropdown */
+    .card-type-dropdown {
       display: none;
       position: relative;
-    }
-    .card-type-select-wrap::after {
-      content: '';
-      position: absolute;
-      right: var(--space-400);
-      top: 50%;
-      transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
-      background-color: var(--color-content-subtle);
-      pointer-events: none;
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      -webkit-mask-size: contain;
-      mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-    }
-    .card-type-select {
       width: 100%;
-      appearance: none;
-      -webkit-appearance: none;
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-m);
-      font-weight: 500;
-      color: var(--color-content-default);
-      background: var(--color-background-ui);
+    }
+    /* Large trigger — matches seg control height/weight, no fill */
+    .card-type-dropdown .dropdown-trigger {
+      width: 100%;
+      justify-content: space-between;
+      padding: 14px var(--space-500);
+      background: transparent;
       border: 1.5px solid var(--color-border-default);
       border-radius: var(--corner-radius-xl);
-      padding: 12px var(--space-600) 12px var(--space-400);
-      cursor: pointer;
+      font-size: var(--font-size-body-l);
+      font-weight: 500;
+      letter-spacing: 0;
+      transition: background 150ms ease, border-color 150ms ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .card-type-select:focus {
+    .card-type-dropdown .dropdown-trigger:hover {
+      background: var(--color-action-hover-subtle);
+    }
+    /* Click-only focus: suppress ring on mousedown, keep for keyboard */
+    .card-type-dropdown .dropdown-trigger:focus { outline: none; }
+    .card-type-dropdown .dropdown-trigger:focus-visible {
       outline: 2px solid var(--color-border-strong);
       outline-offset: 2px;
-      border-color: var(--color-border-strong);
+    }
+    .card-type-dropdown .dropdown-trigger-caret {
+      width: 16px; height: 16px;
+    }
+    /* Full-width menu */
+    .card-type-dropdown .dropdown-menu {
+      width: 100%;
+      top: calc(100% + 8px);
+      left: 0;
+    }
+    /* Larger options to match the trigger scale */
+    .card-type-dropdown .dropdown-option {
+      font-size: var(--font-size-body-m);
+      padding: 10px var(--space-400);
     }
     @media (max-width: 640px) {
       .card-seg { display: none; }
-      .card-type-select-wrap { display: block; }
+      .card-type-dropdown { display: block; }
     }
 
     /* ── Card eyebrow type suffix ─────────────────────────────────── */
@@ -7827,12 +7829,18 @@
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="media"        aria-controls="card-panel-media">Media</button>
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
         </div>
-        <div class="card-type-select-wrap">
-          <select class="card-type-select" id="card-type-select" aria-label="Card type">
-            <option value="color-block">Color Block</option>
-            <option value="media">Media</option>
-            <option value="multi">Multifunctional</option>
-          </select>
+        <div class="dropdown card-type-dropdown" id="card-type-dropdown">
+          <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span>Color Block</span>
+            <svg class="dropdown-trigger-caret" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu" role="listbox" aria-label="Card type">
+            <li class="dropdown-option" role="option" data-value="color-block" aria-selected="true">Color Block</li>
+            <li class="dropdown-option" role="option" data-value="media"       aria-selected="false">Media</li>
+            <li class="dropdown-option" role="option" data-value="multi"       aria-selected="false">Multifunctional</li>
+          </ul>
         </div>
       </div>
 
@@ -10581,9 +10589,17 @@ ${accessoryMarkup}
           b.classList.toggle('active', active);
           b.setAttribute('aria-selected', String(active));
         });
-        // Mobile dropdown
-        const sel = document.getElementById('card-type-select');
-        if (sel) sel.value = type;
+        // Mobile dropdown — sync label + selected state
+        const dd = document.getElementById('card-type-dropdown');
+        if (dd) {
+          const labelEl = dd.querySelector('.dropdown-trigger span');
+          const opts = dd.querySelectorAll('.dropdown-option');
+          opts.forEach(o => {
+            const isSelected = o.dataset.value === type;
+            o.setAttribute('aria-selected', String(isSelected));
+            if (isSelected && labelEl) labelEl.textContent = o.textContent.trim();
+          });
+        }
         // Panels
         panels.forEach(p => p.classList.toggle('active', p.id === 'card-panel-' + type));
         // Sidebar children
@@ -10610,9 +10626,8 @@ ${accessoryMarkup}
 
       btns.forEach(btn => btn.addEventListener('click', () => activateType(btn.dataset.cardType)));
 
-      // Mobile dropdown — fires activateType and stays in sync
-      const selectEl = document.getElementById('card-type-select');
-      if (selectEl) selectEl.addEventListener('change', () => activateType(selectEl.value));
+      // Mobile dropdown — custom dropdown, wired via initDropdown
+      initDropdown(document.getElementById('card-type-dropdown'), value => activateType(value));
 
       children.forEach(child => {
         child.addEventListener('click', function(e) {
