@@ -4679,7 +4679,6 @@
           <a class="sidebar-child-link active" href="#" data-card-type="color-block">Color Block</a>
           <a class="sidebar-child-link" href="#" data-card-type="media">Media</a>
           <a class="sidebar-child-link" href="#" data-card-type="multi">Multifunctional</a>
-          <a class="sidebar-child-link" href="#" data-card-type="patterns">Patterns</a>
         </div>
         <a class="sidebar-link" href="#" data-page="checkbox">Check Box</a>
         <a class="sidebar-link" href="#" data-page="chips">Chips</a>
@@ -7786,7 +7785,6 @@
           <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-type="color-block" aria-controls="card-panel-color-block">Color Block</button>
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="media"        aria-controls="card-panel-media">Media</button>
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
-          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="patterns"     aria-controls="card-panel-patterns">Patterns</button>
         </div>
       </div>
 
@@ -8286,7 +8284,7 @@
       <!-- ════════════════════════════════════════
            PANEL 4 — PATTERNS
       ════════════════════════════════════════ -->
-      <div class="card-type-panel" id="card-panel-patterns" role="tabpanel">
+      <div class="card-type-panel" id="card-panel-patterns" role="tabpanel" style="display:none!important">
 
         <div class="doc-section">
           <h2 class="doc-section-title">Patterns</h2>
@@ -10526,10 +10524,6 @@ ${accessoryMarkup}
           label: 'Multifunctional',
           desc: 'Structured card with a swappable media slot — icon bullet, avatar, or photograph — a header overline and title, optional body copy, and a footer action pair. Ideal for settings, profiles, and feature lists.'
         },
-        'patterns': {
-          label: 'Patterns',
-          desc: 'Common layout compositions combining the three card formats. Use as a reference when building feature sections, content feeds, and browsing grids.'
-        }
       };
 
       function activateType(type) {
