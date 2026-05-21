@@ -9356,6 +9356,23 @@
     });
   });
 
+  /* ── Shared helper: reposition all seg-control sliders inside a container ── */
+  function repositionSegControls(container) {
+    if (!container) return;
+    requestAnimationFrame(() => {
+      container.querySelectorAll('.seg-control').forEach(seg => {
+        const btns   = Array.from(seg.querySelectorAll('.seg-control-btn'));
+        const slider = seg.querySelector('.seg-control-slider');
+        const idx    = Math.max(0, btns.findIndex(b => b.getAttribute('aria-pressed') === 'true'));
+        if (!slider || !btns[idx]) return;
+        let x = 0;
+        for (let i = 0; i < idx; i++) x += btns[i].offsetWidth;
+        slider.style.width     = btns[idx].offsetWidth + 'px';
+        slider.style.transform = `translateX(${x}px)`;
+      });
+    });
+  }
+
   /* ── Sidebar link navigation ── */
   document.querySelectorAll('.sidebar-link').forEach(link => {
     link.addEventListener('click', function(e) {
@@ -9373,19 +9390,19 @@
       if (panel) panel.classList.add('active');
 
       // Re-position seg-control sliders (they read offsetWidth=0 when hidden)
-      if (panel) {
-        requestAnimationFrame(() => {
-          panel.querySelectorAll('.seg-control').forEach(seg => {
-            const btns = Array.from(seg.querySelectorAll('.seg-control-btn'));
-            const slider = seg.querySelector('.seg-control-slider');
-            const idx = Math.max(0, btns.findIndex(b => b.getAttribute('aria-pressed') === 'true'));
-            if (!slider || !btns[idx]) return;
-            let x = 0;
-            for (let i = 0; i < idx; i++) x += btns[i].offsetWidth;
-            slider.style.width  = btns[idx].offsetWidth + 'px';
-            slider.style.transform = `translateX(${x}px)`;
-          });
-        });
+      repositionSegControls(panel);
+
+      // Restore saved card sub-type when navigating to the card page
+      if (page === 'card') {
+        const savedType = sessionStorage.getItem('unica-card-type');
+        if (savedType) {
+          // activateType lives inside the card IIFE — exposed via window._unicaActivateCardType
+          setTimeout(() => {
+            if (typeof window._unicaActivateCardType === 'function') {
+              window._unicaActivateCardType(savedType);
+            }
+          }, 0);
+        }
       }
 
       // Scroll to top
@@ -10755,6 +10772,8 @@ ${accessoryMarkup}
       };
 
       function activateType(type) {
+        // Persist sub-type so hard reload restores position
+        sessionStorage.setItem('unica-card-type', type);
         // Segment buttons
         btns.forEach(b => {
           const active = b.dataset.cardType === type;
@@ -10774,6 +10793,8 @@ ${accessoryMarkup}
         }
         // Panels
         panels.forEach(p => p.classList.toggle('active', p.id === 'card-panel-' + type));
+        // Reposition seg-control sliders in the newly visible panel
+        repositionSegControls(document.getElementById('card-panel-' + type));
         // Sidebar children
         children.forEach(c => c.classList.toggle('active', c.dataset.cardType === type));
         // Header — eyebrow type suffix
@@ -10796,6 +10817,9 @@ ${accessoryMarkup}
         }
       }
 
+      // Expose for sidebar restore logic (activateType lives inside this IIFE)
+      window._unicaActivateCardType = activateType;
+
       btns.forEach(btn => btn.addEventListener('click', () => activateType(btn.dataset.cardType)));
 
       // Mobile dropdown — custom dropdown, wired via initDropdown
@@ -10813,6 +10837,7 @@ ${accessoryMarkup}
           activateType(this.dataset.cardType);
           window.scrollTo({ top: 0, behavior: 'instant' });
           history.replaceState(null, '', '#card');
+          // Note: activateType already saved type to sessionStorage — restore happens on next #card navigation
         });
       });
 
