@@ -4175,7 +4175,7 @@
       padding: var(--space-300) var(--space-400) var(--space-400);
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
       gap: var(--space-200);
     }
     /* Hero: full column layout */
@@ -4189,6 +4189,7 @@
     .card-media--tile .card-media-content {
       padding: var(--space-300);
       gap: var(--space-200);
+      align-items: flex-start;
     }
 
     .card-media-text {
@@ -4200,7 +4201,7 @@
 
     .card-media-title {
       font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-l);
+      font-size: var(--font-size-body-m);
       font-weight: 600;
       line-height: 1.3;
       color: var(--color-content-default);
@@ -4224,6 +4225,8 @@
 
     /* Favorite button */
     .card-media-fav {
+      -webkit-appearance: none;
+      appearance: none;
       width: 40px;
       height: 40px;
       flex-shrink: 0;
@@ -4236,10 +4239,11 @@
       cursor: pointer;
       color: var(--color-content-subtle);
       transition: color 150ms ease, transform 150ms ease;
+      padding: 0;
     }
     .card-media-fav:hover { color: var(--primitive-berry-600); transform: scale(1.1); }
     .card-media-fav.card-media-fav--active { color: var(--primitive-berry-600); }
-    .card-media-fav svg { width: 18px; height: 18px; }
+    .card-media-fav svg { width: 20px; height: 20px; }
     .card-media--tile .card-media-fav { width: 32px; height: 32px; }
     .card-media--tile .card-media-fav svg { width: 16px; height: 16px; }
 
@@ -8232,8 +8236,8 @@
           <div class="btn-controls">
             <div class="seg-control" id="card-media-size" role="group" aria-label="Card size">
               <span class="seg-control-slider" aria-hidden="true"></span>
-              <button class="seg-control-btn" data-value="hero"   aria-pressed="false">Hero</button>
-              <button class="seg-control-btn" data-value="inline" aria-pressed="true">Inline</button>
+              <button class="seg-control-btn" data-value="hero"   aria-pressed="true">Hero</button>
+              <button class="seg-control-btn" data-value="inline" aria-pressed="false">Inline</button>
               <button class="seg-control-btn" data-value="tile"   aria-pressed="false">Tile</button>
             </div>
           </div>
@@ -8292,7 +8296,7 @@
                   <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
                   <div class="card-media-nav" aria-label="Photo navigation">
                     <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                    <button class="card-media-nav-btn" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button class="card-media-nav-btn card-media-nav-btn--fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                   </div>
                 </div>
                 <div class="card-media-content">
@@ -8304,16 +8308,16 @@
               </div>
               <div class="card-media card-media--hero">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/shoulder.png" alt="Editorial close-up of a shoulder">
+                  <img src="assets/shoulder.png" alt="Editorial photograph of a bare shoulder">
                   <div class="card-media-nav" aria-label="Photo navigation">
                     <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                    <button class="card-media-nav-btn" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button class="card-media-nav-btn card-media-nav-btn--fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                   </div>
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Épaule</p>
-                    <p class="card-media-body">Light traced along the line of form.</p>
+                    <p class="card-media-title">Sueur</p>
+                    <p class="card-media-body">The body at its limit — effort made visible in light and skin.</p>
                   </div>
                 </div>
               </div>
@@ -8338,12 +8342,12 @@
               </div>
               <div class="card-media card-media--inline">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/hands.png" alt="Editorial close-up of hands">
+                  <img src="assets/hands.png" alt="Editorial close-up of hands in contact">
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Mains</p>
-                    <p class="card-media-body">Gesture studied in stillness.</p>
+                    <p class="card-media-title">Toucher</p>
+                    <p class="card-media-body">Contact reduced to its quietest form.</p>
                   </div>
                   <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
@@ -8369,36 +8373,36 @@
               </div>
               <div class="card-media card-media--tile">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/shoulder.png" alt="Editorial close-up of a shoulder">
+                  <img src="assets/shoulder.png" alt="Editorial photograph of a bare shoulder">
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Épaule</p>
-                    <p class="card-media-body">Line and shadow.</p>
+                    <p class="card-media-title">Sueur</p>
+                    <p class="card-media-body">Effort in light.</p>
                   </div>
                   <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
               </div>
               <div class="card-media card-media--tile">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/lips.png" alt="Editorial close-up of lips">
+                  <img src="assets/lips.png" alt="Editorial close-up of parted lips">
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Lèvres</p>
-                    <p class="card-media-body">Still and precise.</p>
+                    <p class="card-media-title">Souffle</p>
+                    <p class="card-media-body">Breath held still.</p>
                   </div>
                   <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
               </div>
               <div class="card-media card-media--tile">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/hands.png" alt="Editorial close-up of hands">
+                  <img src="assets/hands.png" alt="Editorial close-up of hands in contact">
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Mains</p>
-                    <p class="card-media-body">Touch and stillness.</p>
+                    <p class="card-media-title">Toucher</p>
+                    <p class="card-media-body">Quiet contact.</p>
                   </div>
                   <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
@@ -8416,7 +8420,7 @@
             <table class="doc-table">
               <thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td class="td-mono">size</td><td class="td-type">enum</td><td class="td-subtle">inline</td><td>One of <code>hero</code> · <code>inline</code> · <code>tile</code>. Controls photo height and layout direction of the content area.</td></tr>
+                <tr><td class="td-mono">size</td><td class="td-type">enum</td><td class="td-subtle">hero</td><td>One of <code>hero</code> · <code>inline</code> · <code>tile</code>. Controls photo height and layout direction of the content area.</td></tr>
                 <tr><td class="td-mono">show-nav</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Displays the frosted-glass top navigation bar with back and favourite buttons overlaid on the photo.</td></tr>
                 <tr><td class="td-mono">show-fav</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Shows the standalone favourite button in the content area. Toggles between default and <code>card-media-fav--active</code> on click.</td></tr>
                 <tr><td class="td-mono">src</td><td class="td-type">string</td><td class="td-subtle">—</td><td>Image path for the photo. Use any aspect ratio — the card clips to the defined height with <code>object-fit: cover</code>.</td></tr>
@@ -11118,7 +11122,7 @@ ${accessoryMarkup}
       const codeReveal   = document.getElementById('card-media-code-reveal');
       if (!preview) return;
 
-      const state = { size: 'inline', showNav: true, showFav: true };
+      const state = { size: 'hero', showNav: true, showFav: false };
 
       const favToggleItem = document.getElementById('card-media-fav-item');
 
@@ -11226,6 +11230,30 @@ ${accessoryMarkup}
 
       syncToggles();
       render();
+    })();
+
+    /* ── 2b. Media Variant Hearts (static examples) ──────────────── */
+    (function initVariantHearts() {
+      const HEART_STROKE = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      const HEART_FILLED = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+
+      // Content-area fav buttons (inline + tile) — variants + patterns panels
+      document.querySelectorAll('.card-format-block .card-media-fav, .card-pattern .card-media-fav').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const active = btn.classList.toggle('card-media-fav--active');
+          btn.setAttribute('aria-pressed', String(active));
+          btn.innerHTML = active ? HEART_FILLED : HEART_STROKE;
+        });
+      });
+
+      // Nav overlay fav buttons (hero) — variants panel
+      document.querySelectorAll('.card-format-block .card-media-nav-btn--fav').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const active = btn.classList.toggle('card-media-nav-btn--active');
+          btn.setAttribute('aria-pressed', String(active));
+          btn.innerHTML = active ? HEART_FILLED : HEART_STROKE;
+        });
+      });
     })();
 
     /* ── 3. Multifunctional Card Demo ─────────────────────────────── */
