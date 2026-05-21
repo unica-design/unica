@@ -9359,7 +9359,8 @@
   /* ── Shared helper: reposition all seg-control sliders inside a container ── */
   function repositionSegControls(container) {
     if (!container) return;
-    requestAnimationFrame(() => {
+    // Double RAF: first frame commits the display change, second frame reads correct offsetWidth
+    requestAnimationFrame(() => requestAnimationFrame(() => {
       container.querySelectorAll('.seg-control').forEach(seg => {
         const btns   = Array.from(seg.querySelectorAll('.seg-control-btn'));
         const slider = seg.querySelector('.seg-control-slider');
@@ -9370,7 +9371,7 @@
         slider.style.width     = btns[idx].offsetWidth + 'px';
         slider.style.transform = `translateX(${x}px)`;
       });
-    });
+    }));
   }
 
   /* ── Sidebar link navigation ── */
@@ -10845,6 +10846,16 @@ ${accessoryMarkup}
       if (eyebrowType) {
         setTimeout(() => eyebrowType.classList.add('visible'), 50);
       }
+
+      // Restore saved sub-type synchronously — navigateToHash runs before this IIFE,
+      // so page-card is already active when we get here (if the URL hash was #card).
+      (function restoreCardType() {
+        const cardPage = document.getElementById('page-card');
+        if (cardPage && cardPage.classList.contains('active')) {
+          const saved = sessionStorage.getItem('unica-card-type');
+          if (saved) activateType(saved);
+        }
+      })();
 
     })();
 
