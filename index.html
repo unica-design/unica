@@ -4172,11 +4172,11 @@
 
     /* Content area below photo */
     .card-media-content {
-      padding: var(--space-300) var(--space-400) var(--space-400);
+      padding: var(--space-400) var(--space-400) var(--space-400);
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      gap: var(--space-200);
+      gap: 24px;
     }
     /* Hero: full column layout */
     .card-media--hero .card-media-content {
@@ -4208,18 +4208,19 @@
     }
 
     .card-media-title {
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-m);
-      font-weight: 600;
-      line-height: 1.3;
-      color: var(--color-content-default);
-      margin: 0;
-    }
-    .card-media--hero .card-media-title {
       font-family: var(--font-family-serif);
       font-size: var(--font-size-display-s);
       font-weight: 600;
       line-height: 1.25;
+      color: var(--color-content-default);
+      margin: 0;
+    }
+    /* Tile: compact — sans semibold body-m */
+    .card-media--tile .card-media-title {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-m);
+      font-weight: 600;
+      line-height: 1.3;
     }
 
     .card-media-body {
