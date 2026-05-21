@@ -2822,6 +2822,13 @@
       outline: 2px solid var(--color-border-inverse);
       outline-offset: 2px;
     }
+    /* In dark mode the contrast surface flips to light, so the reversed badge
+       (bg = --color-background-contrast, icon = hardcoded cafe-0) becomes
+       white-on-white. Pin badge to ink bg + cafe icon so it stays readable. */
+    [data-theme="dark"] .btn-scta-reversed .btn-scta-badge {
+      background: var(--primitive-ink-900);
+      color: var(--primitive-cafe-0);
+    }
 
     /* ── Super CTA Overlay — Dark (my dark-surface version) ──────── */
     /* Dark semi-transparent fill, white label — works on dark photography */
@@ -4561,6 +4568,7 @@
     }
     @media (max-width: 640px) {
       .card-format-examples { flex-direction: column; }
+      .card-format-examples--tile { flex-direction: row; flex-wrap: wrap; }
     }
 
     /* ── Patterns layout ──────────────────────────────────────────── */
@@ -8123,7 +8131,7 @@
           <!-- Tile -->
           <div class="card-format-block">
             <span class="card-size-label">Tile</span>
-            <div class="card-format-examples">
+            <div class="card-format-examples card-format-examples--tile">
               <div class="card-colorblock card-colorblock--tile card-colorblock--white">
                 <div class="icon-bullet icon-bullet--large icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-unica"/></svg></div>
                 <div class="card-colorblock-inner"><div class="card-colorblock-text"><p class="card-colorblock-title">Design focused</p><p class="card-colorblock-body">Precision crafted.</p></div></div>
