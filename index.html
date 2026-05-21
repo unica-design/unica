@@ -4128,7 +4128,8 @@
       position: relative;
       flex-shrink: 0;
     }
-    .card-media-photo-wrap img {
+    .card-media-photo-wrap img,
+    .card-media-photo-wrap video {
       display: block;
       width: 100%;
       height: 100%;
@@ -4171,16 +4172,23 @@
 
     /* Content area below photo */
     .card-media-content {
-      padding: var(--space-400) var(--space-500) var(--space-500);
+      padding: var(--space-300) var(--space-400) var(--space-400);
       display: flex;
       flex-direction: row;
-      align-items: flex-start;
-      gap: var(--space-300);
+      align-items: center;
+      gap: var(--space-200);
     }
     /* Hero: full column layout */
     .card-media--hero .card-media-content {
       flex-direction: column;
-      padding: var(--space-500);
+      align-items: flex-start;
+      padding: var(--space-400) var(--space-400) var(--space-500);
+      gap: var(--space-300);
+    }
+    /* Tile: tightest layout */
+    .card-media--tile .card-media-content {
+      padding: var(--space-300);
+      gap: var(--space-200);
     }
 
     .card-media-text {
@@ -4216,8 +4224,8 @@
 
     /* Favorite button */
     .card-media-fav {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -4231,7 +4239,9 @@
     }
     .card-media-fav:hover { color: var(--primitive-berry-600); transform: scale(1.1); }
     .card-media-fav.card-media-fav--active { color: var(--primitive-berry-600); }
-    .card-media-fav svg { width: 20px; height: 20px; }
+    .card-media-fav svg { width: 18px; height: 18px; }
+    .card-media--tile .card-media-fav { width: 32px; height: 32px; }
+    .card-media--tile .card-media-fav svg { width: 16px; height: 16px; }
 
     /* Nav heart button (overlay style) active state */
     .card-media-nav-btn--fav.card-media-nav-btn--active {
@@ -8244,7 +8254,7 @@
                 </div>
                 <span class="switch-item-text">Top Nav</span>
               </label>
-              <label class="switch-item">
+              <label class="switch-item" id="card-media-fav-item">
                 <div class="toggle-switch toggle-switch--small">
                   <input type="checkbox" id="card-media-fav-toggle" checked>
                   <div class="toggle-track"><div class="toggle-handle"></div></div>
@@ -10783,8 +10793,15 @@ ${accessoryMarkup}
         }
         // Panels
         panels.forEach(p => p.classList.toggle('active', p.id === 'card-panel-' + type));
-        // Reposition seg-control sliders in the newly visible panel
+        // Reposition seg-control sliders + prop bars in the newly visible panel
         repositionSegControls(document.getElementById('card-panel-' + type));
+        [
+          ['card-colorblock-preview', '#card-panel-color-block .card-prop-bar'],
+          ['card-media-preview',      '#card-panel-media .card-prop-bar'],
+          ['card-multi-preview',      '#card-panel-multi .card-prop-bar'],
+        ].forEach(function(pair) {
+          syncPropBar(document.getElementById(pair[0]), document.querySelector(pair[1]));
+        });
         // Sidebar children
         children.forEach(c => c.classList.toggle('active', c.dataset.cardType === type));
         // Header — eyebrow type suffix
@@ -11029,10 +11046,16 @@ ${accessoryMarkup}
 
       const state = { size: 'inline', showNav: true, showFav: true };
 
-      function buildCardHTML(forCode) {
+      const favToggleItem = document.getElementById('card-media-fav-item');
+
+      const MEDIA_SRC = `<video class="card-media-video" autoplay muted loop playsinline>
+    <source src="assets/flower.mp4" type="video/mp4">
+  </video>`;
+
+      function buildCardHTML() {
         const { size, showNav, showFav } = state;
-        const isHero   = size === 'hero';
-        const isTile   = size === 'tile';
+        const isHero = size === 'hero';
+        const isTile = size === 'tile';
 
         // Nav overlay: hero only
         const navHTML = (isHero && showNav) ? `
@@ -11053,7 +11076,7 @@ ${accessoryMarkup}
 
         return `<div class="card-media card-media--${size}">
   <div class="card-media-photo-wrap">
-    <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
+    ${MEDIA_SRC}
     ${navHTML}
   </div>
   <div class="card-media-content">
@@ -11067,12 +11090,16 @@ ${accessoryMarkup}
 
       const mediaPropBarEl = document.querySelector('#card-panel-media .card-prop-bar');
 
-      function syncNavToggleVisibility() {
+      function syncToggles() {
         const isHero = state.size === 'hero';
+        // Top Nav toggle: hero only
         if (navToggleItem) navToggleItem.style.display = isHero ? '' : 'none';
-        // Force showNav off when not hero so HTML is clean
         if (!isHero) state.showNav = false;
         else if (navToggle) state.showNav = navToggle.checked;
+        // Favorite toggle: inline + tile only (hero has no content-area fav)
+        if (favToggleItem) favToggleItem.style.display = isHero ? 'none' : '';
+        if (isHero) state.showFav = false;
+        else if (favToggle) state.showFav = favToggle.checked;
       }
 
       function render() {
@@ -11107,7 +11134,7 @@ ${accessoryMarkup}
 
       if (sizeControl) initSegControl(sizeControl, val => {
         state.size = val;
-        syncNavToggleVisibility();
+        syncToggles();
         render();
       });
       if (navToggle) navToggle.addEventListener('change', () => { state.showNav = navToggle.checked; render(); });
@@ -11123,7 +11150,7 @@ ${accessoryMarkup}
         });
       }
 
-      syncNavToggleVisibility();
+      syncToggles();
       render();
     })();
 
