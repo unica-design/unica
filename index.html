@@ -3933,7 +3933,7 @@
 
     /* ══════════════════════════════════════════════════════════════════
        CARD COMPONENT
-       Three formats: Color Block · Media · Standard
+       Three formats: Color Block · Media · Multifunctional
     ══════════════════════════════════════════════════════════════════ */
 
     /* ── Shared card preview canvas ───────────────────────────────── */
@@ -4317,9 +4317,50 @@
     @media (max-width: 860px) {
       .card-seg-btn { font-size: var(--font-size-body-m); padding: 12px var(--space-400); }
     }
-    /* Responsive — mobile: compress further so all four fit on one row */
+    /* Responsive — mobile: hide seg, show styled dropdown */
+    .card-type-select-wrap {
+      display: none;
+      position: relative;
+    }
+    .card-type-select-wrap::after {
+      content: '';
+      position: absolute;
+      right: var(--space-400);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background-color: var(--color-content-subtle);
+      pointer-events: none;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+    }
+    .card-type-select {
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-m);
+      font-weight: 500;
+      color: var(--color-content-default);
+      background: var(--color-background-ui);
+      border: 1.5px solid var(--color-border-default);
+      border-radius: var(--corner-radius-xl);
+      padding: 12px var(--space-600) 12px var(--space-400);
+      cursor: pointer;
+    }
+    .card-type-select:focus {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
+      border-color: var(--color-border-strong);
+    }
     @media (max-width: 640px) {
-      .card-seg-btn { font-size: 11px; padding: 9px var(--space-200); }
+      .card-seg { display: none; }
+      .card-type-select-wrap { display: block; }
     }
 
     /* ── Card eyebrow type suffix ─────────────────────────────────── */
@@ -4678,7 +4719,7 @@
         <div class="sidebar-children" id="sidebar-card-children">
           <a class="sidebar-child-link active" href="#" data-card-type="color-block">Color Block</a>
           <a class="sidebar-child-link" href="#" data-card-type="media">Media</a>
-          <a class="sidebar-child-link" href="#" data-card-type="multi">Standard</a>
+          <a class="sidebar-child-link" href="#" data-card-type="multi">Multifunctional</a>
         </div>
         <a class="sidebar-link" href="#" data-page="checkbox">Check Box</a>
         <a class="sidebar-link" href="#" data-page="chips">Chips</a>
@@ -7784,7 +7825,14 @@
         <div class="card-seg" role="tablist" aria-label="Card type">
           <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-type="color-block" aria-controls="card-panel-color-block">Color Block</button>
           <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="media"        aria-controls="card-panel-media">Media</button>
-          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Standard</button>
+          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
+        </div>
+        <div class="card-type-select-wrap">
+          <select class="card-type-select" id="card-type-select" aria-label="Card type">
+            <option value="color-block">Color Block</option>
+            <option value="media">Media</option>
+            <option value="multi">Multifunctional</option>
+          </select>
         </div>
       </div>
 
@@ -10521,7 +10569,7 @@ ${accessoryMarkup}
           desc: 'Photo-forward card with an optional frosted-glass navigation overlay, a title, body text, and a toggleable favorite action. Available in hero, inline, and tile sizes.'
         },
         'multi': {
-          label: 'Standard',
+          label: 'Multifunctional',
           desc: 'Structured card with a swappable media slot — icon bullet, avatar, or photograph — a header overline and title, optional body copy, and a footer action pair. Ideal for settings, profiles, and feature lists.'
         },
       };
@@ -10533,6 +10581,9 @@ ${accessoryMarkup}
           b.classList.toggle('active', active);
           b.setAttribute('aria-selected', String(active));
         });
+        // Mobile dropdown
+        const sel = document.getElementById('card-type-select');
+        if (sel) sel.value = type;
         // Panels
         panels.forEach(p => p.classList.toggle('active', p.id === 'card-panel-' + type));
         // Sidebar children
@@ -10558,6 +10609,10 @@ ${accessoryMarkup}
       }
 
       btns.forEach(btn => btn.addEventListener('click', () => activateType(btn.dataset.cardType)));
+
+      // Mobile dropdown — fires activateType and stays in sync
+      const selectEl = document.getElementById('card-type-select');
+      if (selectEl) selectEl.addEventListener('change', () => activateType(selectEl.value));
 
       children.forEach(child => {
         child.addEventListener('click', function(e) {
