@@ -4114,7 +4114,6 @@
     .card-media {
       width: 343px;
       background: var(--color-background-page);
-      border: 1px solid var(--color-border-default);
       border-radius: var(--corner-radius-xl);
       display: flex;
       flex-direction: column;
@@ -4232,10 +4231,12 @@
     }
     .card-media-fav:hover { color: var(--primitive-berry-600); transform: scale(1.1); }
     .card-media-fav.card-media-fav--active { color: var(--primitive-berry-600); }
-    .card-media-fav.card-media-fav--active svg path { fill: var(--primitive-berry-600); stroke: var(--primitive-berry-600); }
     .card-media-fav svg { width: 20px; height: 20px; }
-    /* In hero mode fav goes in its own row aligned right */
-    .card-media--hero .card-media-fav { align-self: flex-end; margin-top: var(--space-200); }
+
+    /* Nav heart button (overlay style) active state */
+    .card-media-nav-btn--fav.card-media-nav-btn--active {
+      color: var(--primitive-berry-600);
+    }
 
     /* ── Multifunctional Card ─────────────────────────────────────── */
     .card-multi {
@@ -7953,7 +7954,6 @@
         <div class="doc-section">
           <h2 class="doc-section-title">Live Preview</h2>
           <hr class="doc-rule">
-          <p class="doc-section-description">Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.</p>
 
           <!-- Primary controls -->
           <div class="btn-controls">
@@ -8217,7 +8217,6 @@
         <div class="doc-section">
           <h2 class="doc-section-title">Live Preview</h2>
           <hr class="doc-rule">
-          <p class="doc-section-description">Photo-forward card with an optional frosted-glass navigation overlay, a title, body text, and a toggleable favorite action. Available in hero, inline, and tile sizes.</p>
 
           <!-- Primary controls -->
           <div class="btn-controls">
@@ -8238,7 +8237,7 @@
           <div class="card-prop-bar">
             <p class="card-prop-bar-sub">Show and hide the available properties</p>
             <div class="card-prop-bar-toggles">
-              <label class="switch-item">
+              <label class="switch-item" id="card-media-nav-item" style="display:none">
                 <div class="toggle-switch toggle-switch--small">
                   <input type="checkbox" id="card-media-nav-toggle" checked>
                   <div class="toggle-track"><div class="toggle-handle"></div></div>
@@ -8271,25 +8270,21 @@
         <div class="doc-section">
           <h2 class="doc-section-title">Variants</h2>
           <hr class="doc-rule">
-          <h3 class="doc-subsection-title">Sizes</h3>
-          <p class="doc-section-description">Tile, inline, and hero — showing how photo height and content layout adapt at each size.</p>
+          <h3 class="doc-subsection-title">Formats</h3>
+          <p class="doc-section-description">Tile, inline, and hero — photo height and content layout adapt at each size. The nav overlay is exclusive to hero.</p>
           <div class="card-sizes-row">
             <div class="card-size-item">
               <span class="card-size-label">Tile</span>
               <div class="card-media card-media--tile">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/arch-house.png" alt="Architectural photograph">
-                  <div class="card-media-nav" aria-label="Photo navigation">
-                    <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                    <button class="card-media-nav-btn" aria-label="Favourite"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                  </div>
+                  <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Coastal</p>
-                    <p class="card-media-body">Light and form.</p>
+                    <p class="card-media-title">Bloom</p>
+                    <p class="card-media-body">Form and light.</p>
                   </div>
-                  <button class="card-media-fav" aria-label="Favourite" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
               </div>
             </div>
@@ -8297,18 +8292,14 @@
               <span class="card-size-label">Inline</span>
               <div class="card-media card-media--inline">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/arch-house.png" alt="Architectural photograph">
-                  <div class="card-media-nav" aria-label="Photo navigation">
-                    <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                    <button class="card-media-nav-btn" aria-label="Favourite"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                  </div>
+                  <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Casa Mínima</p>
-                    <p class="card-media-body">Minimalist architecture in coastal light.</p>
+                    <p class="card-media-title">Fleur</p>
+                    <p class="card-media-body">Quiet geometry, studied closely.</p>
                   </div>
-                  <button class="card-media-fav" aria-label="Favourite" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
               </div>
             </div>
@@ -8316,18 +8307,17 @@
               <span class="card-size-label">Hero</span>
               <div class="card-media card-media--hero">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/arch-house.png" alt="Architectural photograph">
+                  <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
                   <div class="card-media-nav" aria-label="Photo navigation">
                     <button class="card-media-nav-btn" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                    <button class="card-media-nav-btn" aria-label="Favourite"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button class="card-media-nav-btn" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                   </div>
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
-                    <p class="card-media-title">Casa Mínima</p>
-                    <p class="card-media-body">Minimalist architecture at the edge of the coast, where light becomes the primary material.</p>
+                    <p class="card-media-title">Fleur</p>
+                    <p class="card-media-body">A close study in form, light, and the quiet geometry of petals.</p>
                   </div>
-                  <button class="card-media-fav" aria-label="Favourite" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
               </div>
             </div>
@@ -8361,7 +8351,6 @@
         <div class="doc-section">
           <h2 class="doc-section-title">Live Preview</h2>
           <hr class="doc-rule">
-          <p class="doc-section-description">Structured card with a swappable media slot (icon bullet, avatar, or photograph), a header overline and title, optional body copy, and a footer action pair. Ideal for settings, profiles, and feature lists.</p>
 
           <!-- Primary controls -->
           <div class="btn-controls">
@@ -10764,7 +10753,7 @@ ${accessoryMarkup}
         },
         'media': {
           label: 'Media',
-          desc: 'Photo-forward card with an optional frosted-glass navigation overlay, a title, body text, and a toggleable favorite action. Available in hero, inline, and tile sizes.'
+          desc: 'Media cards support full-bleed photography or video fill, available in hero, inline, and tile formats. Hero includes an optional overlay navigation bar.'
         },
         'multi': {
           label: 'Multifunctional',
@@ -10867,7 +10856,8 @@ ${accessoryMarkup}
         if (!card) return;
         const w = card.getBoundingClientRect().width;
         if (w > 0) {
-          propBarEl.style.maxWidth = w + 'px';
+          // 300px floor prevents toggles from wrapping on narrow tile cards
+          propBarEl.style.maxWidth = Math.max(w, 300) + 'px';
           propBarEl.style.marginLeft = 'auto';
           propBarEl.style.marginRight = 'auto';
         }
@@ -10891,8 +10881,9 @@ ${accessoryMarkup}
     const CARD_FIRE_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg>`;
     function cardIconSVG(id) { return `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-${id}"/></svg>`; }
     const CARD_ARROW_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-    const CARD_HEART_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-    const CARD_CHEVRON_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const CARD_HEART_SVG        = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const CARD_HEART_FILLED_SVG = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+    const CARD_CHEVRON_SVG      = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
     /* ── 1. Color Block Demo ──────────────────────────────────────── */
     (function initColorBlockDemo() {
@@ -11027,62 +11018,86 @@ ${accessoryMarkup}
 
     /* ── 2. Media Card Demo ───────────────────────────────────────── */
     (function initMediaCardDemo() {
-      const preview = document.getElementById('card-media-preview');
-      const sizeControl = document.getElementById('card-media-size');
-      const navToggle = document.getElementById('card-media-nav-toggle');
-      const favToggle = document.getElementById('card-media-fav-toggle');
-      const codeSnippet = document.getElementById('card-media-code-snippet');
-      const codeReveal = document.getElementById('card-media-code-reveal');
+      const preview      = document.getElementById('card-media-preview');
+      const sizeControl  = document.getElementById('card-media-size');
+      const navToggle    = document.getElementById('card-media-nav-toggle');
+      const navToggleItem = document.getElementById('card-media-nav-item');
+      const favToggle    = document.getElementById('card-media-fav-toggle');
+      const codeSnippet  = document.getElementById('card-media-code-snippet');
+      const codeReveal   = document.getElementById('card-media-code-reveal');
       if (!preview) return;
 
-      const state = { size: 'card', showNav: true, showFav: true };
+      const state = { size: 'inline', showNav: true, showFav: true };
 
-      function buildCardHTML() {
+      function buildCardHTML(forCode) {
         const { size, showNav, showFav } = state;
-        const isTile = size === 'tile';
-        const isHero = size === 'hero';
+        const isHero   = size === 'hero';
+        const isTile   = size === 'tile';
 
-        const navHTML = showNav ? `
-          <div class="card-media-nav" aria-label="Photo navigation">
-            <button class="card-media-nav-btn" aria-label="Go back">${CARD_CHEVRON_SVG}</button>
-            <button class="card-media-nav-btn" aria-label="Add to favourites">${CARD_HEART_SVG}</button>
-          </div>` : '';
+        // Nav overlay: hero only
+        const navHTML = (isHero && showNav) ? `
+    <div class="card-media-nav" aria-label="Photo navigation">
+      <button class="card-media-nav-btn" aria-label="Go back">${CARD_CHEVRON_SVG}</button>
+      <button class="card-media-nav-btn card-media-nav-btn--fav" aria-label="Add to favourites" aria-pressed="false">${CARD_HEART_SVG}</button>
+    </div>` : '';
 
-        const favHTML = showFav ? `<button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false">${CARD_HEART_SVG}</button>` : '';
+        // Content-area fav: inline and tile only
+        const favHTML = (!isHero && showFav)
+          ? `\n      <button class="card-media-fav" aria-label="Add to favourites" aria-pressed="false">${CARD_HEART_SVG}</button>`
+          : '';
 
-        const titleText = isHero ? 'Casa Mínima' : (isTile ? 'Coastal' : 'Casa Mínima');
-        const bodyText = isHero
-          ? 'Minimalist architecture at the edge of the coast, where light becomes the primary material.'
-          : 'Minimalist architecture in coastal light.';
-
-        const contentHTML = `
-          <div class="card-media-content">
-            <div class="card-media-text">
-              <p class="card-media-title">${titleText}</p>
-              <p class="card-media-body">${bodyText}</p>
-            </div>
-            ${favHTML}
-          </div>`;
+        const titleText = isTile ? 'Bloom' : 'Fleur';
+        const bodyText  = isHero
+          ? 'A close study in form, light, and the quiet geometry of petals.'
+          : isTile ? 'Form and light.' : 'Quiet geometry, studied closely.';
 
         return `<div class="card-media card-media--${size}">
   <div class="card-media-photo-wrap">
-    <img src="assets/arch-house.png" alt="Architectural photograph of a modern house">
+    <img src="assets/flower.png" alt="Close-up macro photograph of a flower">
     ${navHTML}
-  </div>${contentHTML}
+  </div>
+  <div class="card-media-content">
+    <div class="card-media-text">
+      <p class="card-media-title">${titleText}</p>
+      <p class="card-media-body">${bodyText}</p>
+    </div>${favHTML}
+  </div>
 </div>`;
       }
 
       const mediaPropBarEl = document.querySelector('#card-panel-media .card-prop-bar');
+
+      function syncNavToggleVisibility() {
+        const isHero = state.size === 'hero';
+        if (navToggleItem) navToggleItem.style.display = isHero ? '' : 'none';
+        // Force showNav off when not hero so HTML is clean
+        if (!isHero) state.showNav = false;
+        else if (navToggle) state.showNav = navToggle.checked;
+      }
+
       function render() {
         preview.innerHTML = buildCardHTML();
-        // Wire interactive favourite button in the rendered card
+
+        // Wire interactive nav heart (overlay style — filled on active)
+        const navFavBtn = preview.querySelector('.card-media-nav-btn--fav');
+        if (navFavBtn) {
+          navFavBtn.addEventListener('click', () => {
+            const isActive = navFavBtn.classList.toggle('card-media-nav-btn--active');
+            navFavBtn.setAttribute('aria-pressed', String(isActive));
+            navFavBtn.innerHTML = isActive ? CARD_HEART_FILLED_SVG : CARD_HEART_SVG;
+          });
+        }
+
+        // Wire content-area favourite button
         const favBtn = preview.querySelector('.card-media-fav');
         if (favBtn) {
           favBtn.addEventListener('click', () => {
             const isActive = favBtn.classList.toggle('card-media-fav--active');
             favBtn.setAttribute('aria-pressed', String(isActive));
+            favBtn.innerHTML = isActive ? CARD_HEART_FILLED_SVG : CARD_HEART_SVG;
           });
         }
+
         if (codeReveal && !codeReveal.hidden && codeSnippet) {
           codeSnippet.textContent = buildCardHTML();
           if (window.Prism) Prism.highlightElement(codeSnippet);
@@ -11090,9 +11105,13 @@ ${accessoryMarkup}
         syncPropBar(preview, mediaPropBarEl);
       }
 
-      if (sizeControl) initSegControl(sizeControl, val => { state.size = val; render(); });
-      if (navToggle)   navToggle.addEventListener('change', () => { state.showNav = navToggle.checked; render(); });
-      if (favToggle)   favToggle.addEventListener('change', () => { state.showFav = favToggle.checked; render(); });
+      if (sizeControl) initSegControl(sizeControl, val => {
+        state.size = val;
+        syncNavToggleVisibility();
+        render();
+      });
+      if (navToggle) navToggle.addEventListener('change', () => { state.showNav = navToggle.checked; render(); });
+      if (favToggle) favToggle.addEventListener('change', () => { state.showFav = favToggle.checked; render(); });
 
       const codeToggle = document.getElementById('card-media-code-toggle');
       if (codeToggle && codeReveal) {
@@ -11104,6 +11123,7 @@ ${accessoryMarkup}
         });
       }
 
+      syncNavToggleVisibility();
       render();
     })();
 
