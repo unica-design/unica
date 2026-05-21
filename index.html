@@ -4382,45 +4382,65 @@
     /* ── Compact property bar (below preview) ─────────────────────── */
     .card-prop-bar {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: var(--space-400);
-      padding: var(--space-200) var(--space-400);
-      background: var(--primitive-cafe-100);
-      border-radius: var(--corner-radius-s);
       margin-bottom: var(--space-500);
-      flex-wrap: wrap;
+      padding-top: var(--space-500);
     }
-    .card-prop-bar-label {
+    .card-prop-bar-heading {
       font-family: var(--font-family-sans);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-content-subtle);
-      margin-right: var(--space-100);
+      font-size: var(--font-size-body-s);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-default);
+      margin-bottom: var(--space-100);
     }
+    .card-prop-bar-sub {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      margin-bottom: var(--space-400);
+    }
+    .card-prop-bar-toggles {
+      display: flex;
+      align-items: center;
+      gap: var(--space-500);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    /* Switch items inside the prop bar — centred, compact text */
+    .card-prop-bar .switch-item {
+      align-items: center;
+      gap: var(--space-200);
+    }
+    .card-prop-bar .switch-item-text {
+      padding-top: 0;
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+    }
+    /* Suppress check/x icons — clean minimal toggle in this context */
+    .card-prop-bar .toggle-icon { display: none; }
 
     /* ── Small toggle modifier ─────────────────────────────────────── */
     .toggle-switch--small {
-      width: 44px;
-      height: 32px;
-      min-width: 44px;
-      min-height: 32px;
-    }
-    .toggle-switch--small .toggle-track {
       width: 36px;
       height: 22px;
       min-width: 36px;
       min-height: 22px;
     }
+    .toggle-switch--small .toggle-track {
+      width: 28px;
+      height: 16px;
+      min-width: 28px;
+      min-height: 16px;
+    }
     .toggle-switch--small .toggle-handle {
-      width: 18px;
-      height: 18px;
-      min-width: 18px;
-      min-height: 18px;
+      width: 12px;
+      height: 12px;
+      min-width: 12px;
+      min-height: 12px;
       left: 2px;
     }
-    .toggle-switch--small input:checked ~ .toggle-track .toggle-handle { left: 16px; }
+    .toggle-switch--small input:checked ~ .toggle-track .toggle-handle { left: 14px; }
 
     /* ── Sidebar children ─────────────────────────────────────────── */
     .sidebar-children {
@@ -7886,37 +7906,31 @@
 
           <!-- Compact property toggles -->
           <div class="card-prop-bar">
-            <span class="card-prop-bar-label">Show</span>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small">
-                <input type="checkbox" id="card-cb-icon-toggle" checked>
-                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
-                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div></div></div>
-              </div>
-              <span class="switch-item-text">Icon</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small">
-                <input type="checkbox" id="card-cb-body-toggle" checked>
-                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
-                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div></div></div>
-              </div>
-              <span class="switch-item-text">Body</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small">
-                <input type="checkbox" id="card-cb-action-toggle" checked>
-                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
-                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div></div></div>
-              </div>
-              <span class="switch-item-text">Action</span>
-            </label>
+            <p class="card-prop-bar-heading">Properties</p>
+            <p class="card-prop-bar-sub">Show and hide the available properties</p>
+            <div class="card-prop-bar-toggles">
+              <label class="switch-item">
+                <div class="toggle-switch toggle-switch--small">
+                  <input type="checkbox" id="card-cb-icon-toggle" checked>
+                  <div class="toggle-track"><div class="toggle-handle"></div></div>
+                </div>
+                <span class="switch-item-text">Icon</span>
+              </label>
+              <label class="switch-item">
+                <div class="toggle-switch toggle-switch--small">
+                  <input type="checkbox" id="card-cb-body-toggle" checked>
+                  <div class="toggle-track"><div class="toggle-handle"></div></div>
+                </div>
+                <span class="switch-item-text">Body</span>
+              </label>
+              <label class="switch-item">
+                <div class="toggle-switch toggle-switch--small">
+                  <input type="checkbox" id="card-cb-action-toggle" checked>
+                  <div class="toggle-track"><div class="toggle-handle"></div></div>
+                </div>
+                <span class="switch-item-text">Action</span>
+              </label>
+            </div>
           </div>
         </div><!-- /doc-section live preview -->
 
@@ -8072,27 +8086,24 @@
 
           <!-- Compact property toggles -->
           <div class="card-prop-bar">
-            <span class="card-prop-bar-label">Show</span>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small">
-                <input type="checkbox" id="card-media-nav-toggle" checked>
-                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
-                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div></div></div>
-              </div>
-              <span class="switch-item-text">Top Nav</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small">
-                <input type="checkbox" id="card-media-fav-toggle" checked>
-                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
-                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div></div></div>
-              </div>
-              <span class="switch-item-text">Favorite</span>
-            </label>
+            <p class="card-prop-bar-heading">Properties</p>
+            <p class="card-prop-bar-sub">Show and hide the available properties</p>
+            <div class="card-prop-bar-toggles">
+              <label class="switch-item">
+                <div class="toggle-switch toggle-switch--small">
+                  <input type="checkbox" id="card-media-nav-toggle" checked>
+                  <div class="toggle-track"><div class="toggle-handle"></div></div>
+                </div>
+                <span class="switch-item-text">Top Nav</span>
+              </label>
+              <label class="switch-item">
+                <div class="toggle-switch toggle-switch--small">
+                  <input type="checkbox" id="card-media-fav-toggle" checked>
+                  <div class="toggle-track"><div class="toggle-handle"></div></div>
+                </div>
+                <span class="switch-item-text">Favorite</span>
+              </label>
+            </div>
           </div>
         </div><!-- /doc-section live preview -->
 
@@ -8220,27 +8231,24 @@
 
           <!-- Compact property toggles -->
           <div class="card-prop-bar">
-            <span class="card-prop-bar-label">Show</span>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small">
-                <input type="checkbox" id="card-multi-body-toggle" checked>
-                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
-                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div></div></div>
-              </div>
-              <span class="switch-item-text">Body</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small">
-                <input type="checkbox" id="card-multi-actions-toggle" checked>
-                <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
-                  <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div></div></div>
-              </div>
-              <span class="switch-item-text">Actions</span>
-            </label>
+            <p class="card-prop-bar-heading">Properties</p>
+            <p class="card-prop-bar-sub">Show and hide the available properties</p>
+            <div class="card-prop-bar-toggles">
+              <label class="switch-item">
+                <div class="toggle-switch toggle-switch--small">
+                  <input type="checkbox" id="card-multi-body-toggle" checked>
+                  <div class="toggle-track"><div class="toggle-handle"></div></div>
+                </div>
+                <span class="switch-item-text">Body</span>
+              </label>
+              <label class="switch-item">
+                <div class="toggle-switch toggle-switch--small">
+                  <input type="checkbox" id="card-multi-actions-toggle" checked>
+                  <div class="toggle-track"><div class="toggle-handle"></div></div>
+                </div>
+                <span class="switch-item-text">Actions</span>
+              </label>
+            </div>
           </div>
         </div><!-- /doc-section live preview -->
 
