@@ -7946,7 +7946,7 @@
       <!-- ── Component header ─────────────────────── -->
       <div class="comp-header">
         <p class="comp-eyebrow" id="card-comp-eyebrow">Components · Content <span class="card-eyebrow-type" id="card-eyebrow-type">· Color Block</span></p>
-        <h1 class="comp-title">Card</h1>
+        <h1 class="comp-title" id="card-comp-title">Colorblock Card</h1>
         <p class="comp-description" id="card-comp-description">Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.</p>
         <div class="comp-badges">
           <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
@@ -10849,18 +10849,22 @@ ${accessoryMarkup}
       const panels   = document.querySelectorAll('.card-type-panel');
       const children = document.querySelectorAll('.sidebar-child-link[data-card-type]');
       const eyebrowType = document.getElementById('card-eyebrow-type');
+      const titleEl     = document.getElementById('card-comp-title');
       const descEl      = document.getElementById('card-comp-description');
 
       const CARD_META = {
         'color-block': {
+          title: 'Colorblock Card',
           label: 'Color Block',
           desc: 'Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.'
         },
         'media': {
+          title: 'Media fill card',
           label: 'Media',
           desc: 'Media cards support full-bleed photography or video fill, available in hero, inline, and tile formats. Hero includes an optional overlay navigation bar.'
         },
         'multi': {
+          title: 'Multi-functional card',
           label: 'Multifunctional',
           desc: 'Structured card with a swappable media slot — icon bullet, avatar, or photograph — a header overline and title, optional body copy, and a footer action pair. Ideal for settings, profiles, and feature lists.'
         },
@@ -10908,7 +10912,15 @@ ${accessoryMarkup}
             eyebrowType.classList.add('visible');
           });
         }
-        // Header — description cross-fade
+        // Header — title + description cross-fade
+        if (titleEl && meta) {
+          titleEl.style.transition = 'opacity 150ms ease';
+          titleEl.style.opacity = '0';
+          setTimeout(() => {
+            titleEl.textContent = meta.title;
+            titleEl.style.opacity = '1';
+          }, 150);
+        }
         if (descEl && meta) {
           descEl.style.transition = 'opacity 150ms ease';
           descEl.style.opacity = '0';
