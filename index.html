@@ -8384,7 +8384,7 @@
             <div class="card-format-examples">
               <div class="card-media card-media--inline">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/lips.png" alt="Editorial close-up of parted lips">
+                  <img src="assets/lips.png" alt="Editorial close-up of parted lips" style="object-position: center top">
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-text">
@@ -8439,7 +8439,7 @@
               </div>
               <div class="card-media card-media--tile">
                 <div class="card-media-photo-wrap">
-                  <img src="assets/lips.png" alt="Editorial close-up of parted lips">
+                  <img src="assets/lips.png" alt="Editorial close-up of parted lips" style="object-position: center top">
                 </div>
                 <div class="card-media-content">
                   <div class="card-media-title-row">
@@ -11380,6 +11380,7 @@ ${accessoryMarkup}
 
       function buildTileCardHTML(imgSrc, title, body) {
         const showFav = state.showFav;
+        const objPos = imgSrc === 'lips.png' ? ' style="object-position:center top"' : '';
         const contentHTML = showFav ? `
   <div class="card-media-content">
     <div class="card-media-title-row">
@@ -11393,14 +11394,14 @@ ${accessoryMarkup}
     <p class="card-media-body">${body}</p>
   </div>`;
         return `<div class="card-media card-media--tile">
-  <div class="card-media-photo-wrap"><img src="assets/${imgSrc}" alt=""></div>${contentHTML}
+  <div class="card-media-photo-wrap"><img src="assets/${imgSrc}" alt=""${objPos}></div>${contentHTML}
 </div>`;
       }
 
       function render() {
         if (state.size === 'tile') {
           const card1 = buildCardHTML();   // video tile (existing)
-          const card2 = buildTileCardHTML('arch-house.png', 'Casa', 'Algarve coast.');
+          const card2 = buildTileCardHTML('lips.png', 'Respire', 'Space opens, and the body slows.');
           preview.innerHTML = `<div style="display:flex;gap:var(--space-400);">${card1}${card2}</div>`;
         } else {
           preview.innerHTML = buildCardHTML();
@@ -11564,7 +11565,8 @@ ${accessoryMarkup}
         if (type === 'avatar') {
           return `<div class="card-multi-avatar"><img src="assets/avatars/${state.avatarSrc}" alt=""></div>`;
         }
-        return `<div class="card-multi-photo"><img src="assets/${state.photoSrc}" alt=""></div>`;
+        const photoPos = state.photoSrc === 'lips.png' ? ' style="object-position:center top"' : '';
+        return `<div class="card-multi-photo"><img src="assets/${state.photoSrc}" alt=""${photoPos}></div>`;
       }
 
       function buildCardHTML() {
