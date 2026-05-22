@@ -4554,16 +4554,22 @@
       .remix-info { padding-top: var(--space-200); }
     }
 
+    /* ── Card landing page — full-width layout override ────────── */
+    #page-card {
+      max-width: none;
+    }
+    #page-card .comp-header {
+      max-width: 760px;
+    }
+
     /* ── Card landing page — type tiles ─────────────────────────── */
     .card-type-tiles {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--space-400);
       margin-top: var(--space-700);
-    }
-    /* Third tile spans full width */
-    .card-type-tile:last-child {
-      grid-column: 1 / -1;
+      margin-left: var(--space-800);
+      margin-right: var(--space-800);
     }
     .card-type-tile {
       display: flex;
@@ -4635,9 +4641,8 @@
       color: var(--color-content-primary);
       transform: translateX(3px);
     }
-    @media (max-width: 640px) {
-      .card-type-tiles { grid-template-columns: 1fr; }
-      .card-type-tile:last-child { grid-column: auto; }
+    @media (max-width: 800px) {
+      .card-type-tiles { grid-template-columns: 1fr; margin-left: 0; margin-right: 0; }
     }
 
     /* ── Card page type tabs ─────────────────────────────────────── */
@@ -10002,6 +10007,11 @@
       // Update active link
       document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
       this.classList.add('active');
+      // If this is a child link, also activate the parent section link (black pill)
+      if (this.classList.contains('sidebar-child-link')) {
+        const parentLink = this.closest('.sidebar-children')?.previousElementSibling;
+        if (parentLink?.classList.contains('sidebar-link')) parentLink.classList.add('active');
+      }
 
       // Swap page panels
       document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
