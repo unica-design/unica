@@ -11417,15 +11417,14 @@ ${accessoryMarkup}
           });
         }
 
-        // Wire content-area favourite button
-        const favBtn = preview.querySelector('.card-media-fav');
-        if (favBtn) {
+        // Wire content-area favourite buttons (tile two-up has two)
+        preview.querySelectorAll('.card-media-fav').forEach(favBtn => {
           favBtn.addEventListener('click', () => {
             const isActive = favBtn.classList.toggle('card-media-fav--active');
             favBtn.setAttribute('aria-pressed', String(isActive));
             favBtn.innerHTML = isActive ? CARD_HEART_FILLED_SVG : CARD_HEART_SVG;
           });
-        }
+        });
 
         if (codeReveal && !codeReveal.hidden && codeSnippet) {
           codeSnippet.textContent = buildCardHTML();
