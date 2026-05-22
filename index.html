@@ -4377,7 +4377,11 @@
     }
 
     /* Avatar thumbnail inside dropdown trigger + options */
-    .card-multi-sub-avatar { display: inline-block; width: 20px; height: 20px; border-radius: 50%; object-fit: cover; flex-shrink: 0; vertical-align: middle; margin-right: 6px; }
+    .card-multi-sub-avatar { display: block; width: 20px; height: 20px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    /* Avatar picker: flex row so thumbnail + name always sit on one line */
+    #card-multi-avatar-picker .dropdown-trigger,
+    #card-multi-avatar-picker #card-multi-avatar-label { display: inline-flex; align-items: center; gap: 6px; }
+    #card-multi-avatar-picker .dropdown-option { display: flex; align-items: center; gap: 6px; }
 
     /* Media variants inside multifunctional header */
     .card-multi-photo {
