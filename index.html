@@ -4572,6 +4572,62 @@
       }
     }
 
+    /* ── Card landing page — type tiles ─────────────────────────── */
+    .card-type-tiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-300);
+      margin-top: var(--space-600);
+    }
+    .card-type-tile {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-300);
+      padding: var(--space-400);
+      background: var(--color-background-secondary);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--corner-radius-l);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 150ms, box-shadow 150ms;
+      cursor: pointer;
+    }
+    .card-type-tile:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .card-type-tile-thumb {
+      width: 100%;
+      height: 120px;
+      border-radius: var(--corner-radius-m);
+      background: var(--color-background-tertiary);
+    }
+    .card-type-tile-thumb--colorblock { background: linear-gradient(135deg, var(--color-brand-ink) 50%, var(--primitive-violet-500) 100%); }
+    .card-type-tile-thumb--media { background: linear-gradient(135deg, var(--primitive-cafe-400) 0%, var(--primitive-cafe-200) 100%); }
+    .card-type-tile-thumb--multi { background: linear-gradient(135deg, var(--primitive-mint-300) 0%, var(--primitive-pool-400) 100%); }
+    .card-type-tile-body { flex: 1; display: flex; flex-direction: column; gap: var(--space-100); }
+    .card-type-tile-name {
+      font-family: var(--font-sans);
+      font-size: var(--text-body-m-size);
+      font-weight: 600;
+      color: var(--color-content-primary);
+    }
+    .card-type-tile-desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-body-s-size);
+      color: var(--color-content-secondary);
+      line-height: 1.5;
+    }
+    .card-type-tile-arrow {
+      color: var(--color-content-tertiary);
+      align-self: flex-end;
+      flex-shrink: 0;
+    }
+    .card-type-tile:hover .card-type-tile-arrow { color: var(--color-content-primary); }
+    @media (max-width: 640px) {
+      .card-type-tiles { grid-template-columns: 1fr; }
+    }
+
     /* ── Card page type tabs ─────────────────────────────────────── */
     /* ── Card type selector — large page-level segment control ──────── */
     .card-seg-wrap {
@@ -5055,9 +5111,9 @@
         <a class="sidebar-link" href="#" data-page="button">Button</a>
         <a class="sidebar-link" href="#" data-page="card">Card</a>
         <div class="sidebar-children" id="sidebar-card-children">
-          <a class="sidebar-child-link active" href="#" data-card-type="color-block">Color Block</a>
-          <a class="sidebar-child-link" href="#" data-card-type="media">Media</a>
-          <a class="sidebar-child-link" href="#" data-card-type="multi">Multifunctional</a>
+          <a class="sidebar-link sidebar-child-link" href="#" data-page="card-color-block">Color Block</a>
+          <a class="sidebar-link sidebar-child-link" href="#" data-page="card-media">Media</a>
+          <a class="sidebar-link sidebar-child-link" href="#" data-page="card-multi">Multifunctional</a>
         </div>
         <a class="sidebar-link" href="#" data-page="checkbox">Check Box</a>
         <a class="sidebar-link" href="#" data-page="chips">Chips</a>
@@ -8146,9 +8202,9 @@
 
       <!-- ── Component header ─────────────────────── -->
       <div class="comp-header">
-        <p class="comp-eyebrow" id="card-comp-eyebrow">Components · Content <span class="card-eyebrow-type" id="card-eyebrow-type">· Color Block</span></p>
-        <h1 class="comp-title" id="card-comp-title">Colorblock Card</h1>
-        <p class="comp-description" id="card-comp-description">Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.</p>
+        <p class="comp-eyebrow">Components · Content</p>
+        <h1 class="comp-title">Card</h1>
+        <p class="comp-description">Cards are surfaces that contain related content and actions. ůnica's card system covers three formats — Color Block, Media, and Multifunctional — each built for different content densities and contexts.</p>
         <div class="comp-badges">
           <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
           <span class="comp-badge">v1.0</span>
@@ -8191,28 +8247,55 @@
         </div>
       </div>
 
-      <!-- ── Card type selector ─────────────────── -->
-      <div class="card-seg-wrap" id="card-seg-wrap">
-        <div class="card-seg" role="tablist" aria-label="Card type">
-          <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-type="color-block" aria-controls="card-panel-color-block">Color Block</button>
-          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="media"        aria-controls="card-panel-media">Media</button>
-          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-type="multi"        aria-controls="card-panel-multi">Multifunctional</button>
-        </div>
-        <div class="dropdown card-type-dropdown" id="card-type-dropdown">
-          <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-            <span>Color Block</span>
-            <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <ul class="dropdown-menu" role="listbox" aria-label="Card type">
-            <li class="dropdown-option" role="option" data-value="color-block" aria-selected="true">Color Block</li>
-            <li class="dropdown-option" role="option" data-value="media"       aria-selected="false">Media</li>
-            <li class="dropdown-option" role="option" data-value="multi"       aria-selected="false">Multifunctional</li>
-          </ul>
+      <!-- ── Card type tiles ─────────────────── -->
+      <div class="card-type-tiles">
+        <a class="card-type-tile" data-nav-target="card-color-block" href="#">
+          <div class="card-type-tile-thumb card-type-tile-thumb--colorblock"></div>
+          <div class="card-type-tile-body">
+            <p class="card-type-tile-name">Color Block</p>
+            <p class="card-type-tile-desc">Bold colorfields with icon, headline, body, and CTA. Available in hero, inline, and tile formats.</p>
+          </div>
+          <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+        </a>
+        <a class="card-type-tile" data-nav-target="card-media" href="#">
+          <div class="card-type-tile-thumb card-type-tile-thumb--media"></div>
+          <div class="card-type-tile-body">
+            <p class="card-type-tile-name">Media</p>
+            <p class="card-type-tile-desc">Full-bleed photography or video fill. Hero, inline, and tile formats with optional overlay nav.</p>
+          </div>
+          <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+        </a>
+        <a class="card-type-tile" data-nav-target="card-multi" href="#">
+          <div class="card-type-tile-thumb card-type-tile-thumb--multi"></div>
+          <div class="card-type-tile-body">
+            <p class="card-type-tile-name">Multifunctional</p>
+            <p class="card-type-tile-desc">Rich content cards with avatar, media, overline, actions, and icon buttons. The most flexible format.</p>
+          </div>
+          <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+        </a>
+      </div>
+
+    </div><!-- /#page-card -->
+
+    <!-- ── Card sub-page: Color Block ───────────────── -->
+    <div class="page-panel" id="page-card-color-block">
+
+      <!-- ── Component header ─────────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Content · Color Block</p>
+        <h1 class="comp-title">Card</h1>
+        <p class="comp-description">Color block cards pair bold colorfields with typographic hierarchy. Available in hero, inline, and tile formats with icon bullet, headline, body text, and CTA.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=1520-44803" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
         </div>
       </div>
 
       <!-- ════════════════════════════════════════
-           PANEL 1 — COLOR BLOCK
+           COLOR BLOCK CONTENT
       ════════════════════════════════════════ -->
       <div class="card-type-panel active" id="card-panel-color-block" role="tabpanel">
 
@@ -8474,10 +8557,29 @@
 
       </div><!-- /#card-panel-color-block -->
 
+    </div><!-- /#page-card-color-block -->
+
+    <!-- ── Card sub-page: Media ───────────────────── -->
+    <div class="page-panel" id="page-card-media">
+
+      <!-- ── Component header ─────────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Content · Media</p>
+        <h1 class="comp-title">Card</h1>
+        <p class="comp-description">Media cards support full-bleed photography or video fill, available in hero, inline, and tile formats. Hero includes an optional overlay navigation bar.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=1520-44803" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
       <!-- ════════════════════════════════════════
-           PANEL 2 — MEDIA
+           MEDIA CONTENT
       ════════════════════════════════════════ -->
-      <div class="card-type-panel" id="card-panel-media" role="tabpanel">
+      <div class="card-type-panel active" id="card-panel-media" role="tabpanel">
 
         <div class="doc-section">
           <h2 class="doc-section-title">Live Preview</h2>
@@ -8682,10 +8784,29 @@
 
       </div><!-- /#card-panel-media -->
 
+    </div><!-- /#page-card-media -->
+
+    <!-- ── Card sub-page: Multifunctional ────────── -->
+    <div class="page-panel" id="page-card-multi">
+
+      <!-- ── Component header ─────────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Content · Multifunctional</p>
+        <h1 class="comp-title">Card</h1>
+        <p class="comp-description">Multifunctional cards combine avatar or media with overline, title, body, and action rows. The most compositionally flexible card in the system.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=1520-44803" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
       <!-- ════════════════════════════════════════
-           PANEL 3 — MULTIFUNCTIONAL
+           MULTIFUNCTIONAL CONTENT
       ════════════════════════════════════════ -->
-      <div class="card-type-panel" id="card-panel-multi" role="tabpanel">
+      <div class="card-type-panel active" id="card-panel-multi" role="tabpanel">
 
         <div class="doc-section">
           <h2 class="doc-section-title">Live Preview</h2>
@@ -9041,7 +9162,7 @@
         </div>
       </div><!-- /accessibility -->
 
-    </div><!-- /#page-card -->
+    </div><!-- /#page-card-multi -->
     <div class="page-panel" id="page-list"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List</h2><p class="section-description">Vertical list of items with optional icons, metadata, and actions.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-list-accordion"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List Accordion</h2><p class="section-description">Expandable list rows for progressive disclosure.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-avatar">
@@ -9808,19 +9929,6 @@
 
       // Re-position seg-control sliders (they read offsetWidth=0 when hidden)
       repositionSegControls(panel);
-
-      // Restore saved card sub-type when navigating to the card page
-      if (page === 'card') {
-        const savedType = sessionStorage.getItem('unica-card-type');
-        if (savedType) {
-          // activateType lives inside the card IIFE — exposed via window._unicaActivateCardType
-          setTimeout(() => {
-            if (typeof window._unicaActivateCardType === 'function') {
-              window._unicaActivateCardType(savedType);
-            }
-          }, 0);
-        }
-      }
 
       // Scroll to top
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -11162,136 +11270,31 @@ ${accessoryMarkup}
     })();
 
     /* ══════════════════════════════════════════════════════════════════
-       CARD COMPONENT — Type tabs + sidebar children
+       CARD COMPONENT — Landing tile navigation
     ══════════════════════════════════════════════════════════════════ */
 
-    /* ── Card type selector switching ───────────────────────────── */
-    (function initCardTabs() {
-      const btns     = document.querySelectorAll('.card-seg-btn[data-card-type]');
-      const panels   = document.querySelectorAll('.card-type-panel');
-      const children = document.querySelectorAll('.sidebar-child-link[data-card-type]');
-      const eyebrowType = document.getElementById('card-eyebrow-type');
-      const titleEl     = document.getElementById('card-comp-title');
-      const descEl      = document.getElementById('card-comp-description');
-
-      const CARD_META = {
-        'color-block': {
-          title: 'Colorblock Card',
-          label: 'Color Block',
-          desc: 'Editorial surface combining a bold color palette with typography and an icon bullet. Eight color options and three sizes let it adapt from compact tile to full hero format.'
-        },
-        'media': {
-          title: 'Media fill card',
-          label: 'Media',
-          desc: 'Media cards support full-bleed photography or video fill, available in hero, inline, and tile formats. Hero includes an optional overlay navigation bar.'
-        },
-        'multi': {
-          title: 'Multi-functional card',
-          label: 'Multifunctional',
-          desc: 'Structured card with a swappable media slot — icon bullet, avatar, or photograph — a header overline and title, optional body copy, and a footer action pair. Ideal for settings, profiles, and feature lists.'
-        },
-      };
-
-      function activateType(type) {
-        // Persist sub-type so hard reload restores position
-        sessionStorage.setItem('unica-card-type', type);
-        // Segment buttons
-        btns.forEach(b => {
-          const active = b.dataset.cardType === type;
-          b.classList.toggle('active', active);
-          b.setAttribute('aria-selected', String(active));
-        });
-        // Mobile dropdown — sync label + selected state
-        const dd = document.getElementById('card-type-dropdown');
-        if (dd) {
-          const labelEl = dd.querySelector('.dropdown-trigger span');
-          const opts = dd.querySelectorAll('.dropdown-option');
-          opts.forEach(o => {
-            const isSelected = o.dataset.value === type;
-            o.setAttribute('aria-selected', String(isSelected));
-            if (isSelected && labelEl) labelEl.textContent = o.textContent.trim();
-          });
-        }
-        // Panels
-        panels.forEach(p => p.classList.toggle('active', p.id === 'card-panel-' + type));
-        // Reposition seg-control sliders + prop bars in the newly visible panel
-        repositionSegControls(document.getElementById('card-panel-' + type));
-        [
-          ['card-colorblock-preview', '#card-panel-color-block .card-prop-bar'],
-          ['card-media-preview',      '#card-panel-media .card-prop-bar'],
-          ['card-multi-preview',      '#card-panel-multi .card-prop-bar'],
-        ].forEach(function(pair) {
-          syncPropBar(document.getElementById(pair[0]), document.querySelector(pair[1]));
-        });
-        // Sidebar children
-        children.forEach(c => c.classList.toggle('active', c.dataset.cardType === type));
-        // Header — eyebrow type suffix
-        const meta = CARD_META[type];
-        if (eyebrowType && meta) {
-          eyebrowType.classList.remove('visible');
-          requestAnimationFrame(() => {
-            eyebrowType.textContent = '· ' + meta.label;
-            eyebrowType.classList.add('visible');
-          });
-        }
-        // Header — title + description cross-fade
-        if (titleEl && meta) {
-          titleEl.style.transition = 'opacity 150ms ease';
-          titleEl.style.opacity = '0';
-          setTimeout(() => {
-            titleEl.textContent = meta.title;
-            titleEl.style.opacity = '1';
-          }, 150);
-        }
-        if (descEl && meta) {
-          descEl.style.transition = 'opacity 150ms ease';
-          descEl.style.opacity = '0';
-          setTimeout(() => {
-            descEl.textContent = meta.desc;
-            descEl.style.opacity = '1';
-          }, 150);
-        }
-      }
-
-      // Expose for sidebar restore logic (activateType lives inside this IIFE)
-      window._unicaActivateCardType = activateType;
-
-      btns.forEach(btn => btn.addEventListener('click', () => activateType(btn.dataset.cardType)));
-
-      // Mobile dropdown — custom dropdown, wired via initDropdown
-      initDropdown(document.getElementById('card-type-dropdown'), value => activateType(value));
-
-      children.forEach(child => {
-        child.addEventListener('click', function(e) {
+    /* ── Card type tile clicks → navigate to sub-page ───────────── */
+    (function initCardTiles() {
+      document.querySelectorAll('.card-type-tile[data-nav-target]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
           e.preventDefault();
-          document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
-          const cardPanel = document.getElementById('page-card');
-          if (cardPanel) cardPanel.classList.add('active');
-          document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-          const cardLink = document.querySelector('.sidebar-link[data-page="card"]');
-          if (cardLink) cardLink.classList.add('active');
-          activateType(this.dataset.cardType);
-          window.scrollTo({ top: 0, behavior: 'instant' });
-          history.replaceState(null, '', '#card');
-          // Note: activateType already saved type to sessionStorage — restore happens on next #card navigation
+          const targetPage = this.dataset.navTarget; // e.g. "card-color-block"
+          const link = document.querySelector(`.sidebar-link[data-page="${targetPage}"]`);
+          if (link) {
+            link.click();
+          } else {
+            // Fallback: show the page directly
+            document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+            const panel = document.getElementById('page-' + targetPage);
+            if (panel) {
+              panel.classList.add('active');
+              repositionSegControls(panel);
+            }
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            history.replaceState(null, '', '#' + targetPage);
+          }
         });
       });
-
-      // Init eyebrow on load
-      if (eyebrowType) {
-        setTimeout(() => eyebrowType.classList.add('visible'), 50);
-      }
-
-      // Restore saved sub-type synchronously — navigateToHash runs before this IIFE,
-      // so page-card is already active when we get here (if the URL hash was #card).
-      (function restoreCardType() {
-        const cardPage = document.getElementById('page-card');
-        if (cardPage && cardPage.classList.contains('active')) {
-          const saved = sessionStorage.getItem('unica-card-type');
-          if (saved) activateType(saved);
-        }
-      })();
-
     })();
 
     /* ── Prop bar width sync — aligns toggle row with rendered card ──── */
