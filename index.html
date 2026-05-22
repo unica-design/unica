@@ -4419,8 +4419,6 @@
     ═══════════════════════════════════════════ */
     .remix-section {
       background: var(--color-brand-ink);
-      margin-left: calc(-1 * var(--space-800));
-      margin-right: calc(-1 * var(--space-800));
       margin-top: var(--space-800);
       margin-bottom: var(--space-800);
       padding: var(--space-1000) var(--space-800);
@@ -4550,82 +4548,96 @@
       to   { transform: rotate(180deg); }
     }
     /* Responsive */
-    @media (max-width: 960px) {
-      .remix-section {
-        margin-left: calc(-1 * var(--space-700));
-        margin-right: calc(-1 * var(--space-700));
-        padding-left: var(--space-700);
-        padding-right: var(--space-700);
-      }
-    }
     @media (max-width: 800px) {
       .remix-grid { grid-template-columns: 1fr; }
       .remix-phone { height: 680px; }
       .remix-info { padding-top: var(--space-200); }
     }
-    @media (max-width: 640px) {
-      .remix-section {
-        margin-left: calc(-1 * var(--space-500));
-        margin-right: calc(-1 * var(--space-500));
-        padding-left: var(--space-500);
-        padding-right: var(--space-500);
-      }
-    }
 
     /* ── Card landing page — type tiles ─────────────────────────── */
     .card-type-tiles {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-300);
-      margin-top: var(--space-600);
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-400);
+      margin-top: var(--space-700);
+    }
+    /* Third tile spans full width */
+    .card-type-tile:last-child {
+      grid-column: 1 / -1;
     }
     .card-type-tile {
       display: flex;
       flex-direction: column;
-      gap: var(--space-300);
-      padding: var(--space-400);
+      gap: 0;
       background: var(--color-background-secondary);
       border: 1px solid var(--color-border-default);
       border-radius: var(--corner-radius-l);
       text-decoration: none;
       color: inherit;
+      overflow: hidden;
       transition: border-color 150ms, box-shadow 150ms;
       cursor: pointer;
     }
     .card-type-tile:hover {
       border-color: var(--color-border-strong);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
     }
     .card-type-tile-thumb {
       width: 100%;
-      height: 120px;
-      border-radius: var(--corner-radius-m);
+      height: 200px;
       background: var(--color-background-tertiary);
     }
-    .card-type-tile-thumb--colorblock { background: linear-gradient(135deg, var(--color-brand-ink) 50%, var(--primitive-violet-500) 100%); }
-    .card-type-tile-thumb--media { background: linear-gradient(135deg, var(--primitive-cafe-400) 0%, var(--primitive-cafe-200) 100%); }
-    .card-type-tile-thumb--multi { background: linear-gradient(135deg, var(--primitive-mint-300) 0%, var(--primitive-pool-400) 100%); }
-    .card-type-tile-body { flex: 1; display: flex; flex-direction: column; gap: var(--space-100); }
+    .card-type-tile:last-child .card-type-tile-thumb {
+      height: 240px;
+    }
+    .card-type-tile-thumb--colorblock { background: linear-gradient(140deg, var(--color-brand-ink) 40%, var(--primitive-violet-500) 100%); }
+    .card-type-tile-thumb--media { background: linear-gradient(140deg, var(--primitive-cafe-500) 0%, var(--primitive-cafe-300) 60%, var(--primitive-apricot-300) 100%); }
+    .card-type-tile-thumb--multi { background: linear-gradient(140deg, var(--primitive-mint-400) 0%, var(--primitive-pool-500) 100%); }
+    .card-type-tile-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-100);
+      padding: var(--space-500) var(--space-500) var(--space-400);
+    }
     .card-type-tile-name {
-      font-family: var(--font-sans);
-      font-size: var(--text-body-m-size);
-      font-weight: 600;
+      font-family: var(--font-serif);
+      font-size: var(--text-heading-s-size, 1.125rem);
+      font-weight: 400;
       color: var(--color-content-primary);
     }
     .card-type-tile-desc {
       font-family: var(--font-sans);
       font-size: var(--text-body-s-size);
       color: var(--color-content-secondary);
-      line-height: 1.5;
+      line-height: 1.6;
+    }
+    .card-type-tile-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-300) var(--space-500) var(--space-400);
+    }
+    .card-type-tile-tag {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-content-tertiary);
     }
     .card-type-tile-arrow {
       color: var(--color-content-tertiary);
-      align-self: flex-end;
       flex-shrink: 0;
+      transition: color 150ms, transform 150ms;
     }
-    .card-type-tile:hover .card-type-tile-arrow { color: var(--color-content-primary); }
+    .card-type-tile:hover .card-type-tile-arrow {
+      color: var(--color-content-primary);
+      transform: translateX(3px);
+    }
     @media (max-width: 640px) {
       .card-type-tiles { grid-template-columns: 1fr; }
+      .card-type-tile:last-child { grid-column: auto; }
     }
 
     /* ── Card page type tabs ─────────────────────────────────────── */
@@ -8253,25 +8265,34 @@
           <div class="card-type-tile-thumb card-type-tile-thumb--colorblock"></div>
           <div class="card-type-tile-body">
             <p class="card-type-tile-name">Color Block</p>
-            <p class="card-type-tile-desc">Bold colorfields with icon, headline, body, and CTA. Available in hero, inline, and tile formats.</p>
+            <p class="card-type-tile-desc">Bold colorfields with icon bullet, headline, body, and CTA. Available in hero, inline, and tile formats.</p>
           </div>
-          <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+          <div class="card-type-tile-footer">
+            <span class="card-type-tile-tag">3 formats</span>
+            <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+          </div>
         </a>
         <a class="card-type-tile" data-nav-target="card-media" href="#">
           <div class="card-type-tile-thumb card-type-tile-thumb--media"></div>
           <div class="card-type-tile-body">
             <p class="card-type-tile-name">Media</p>
-            <p class="card-type-tile-desc">Full-bleed photography or video fill. Hero, inline, and tile formats with optional overlay nav.</p>
+            <p class="card-type-tile-desc">Full-bleed photography or video fill. Hero, inline, and tile formats with optional overlay navigation bar.</p>
           </div>
-          <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+          <div class="card-type-tile-footer">
+            <span class="card-type-tile-tag">3 formats</span>
+            <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+          </div>
         </a>
         <a class="card-type-tile" data-nav-target="card-multi" href="#">
           <div class="card-type-tile-thumb card-type-tile-thumb--multi"></div>
           <div class="card-type-tile-body">
             <p class="card-type-tile-name">Multifunctional</p>
-            <p class="card-type-tile-desc">Rich content cards with avatar, media, overline, actions, and icon buttons. The most flexible format.</p>
+            <p class="card-type-tile-desc">Rich content cards with avatar, media, overline, actions, and icon buttons. The most compositionally flexible format in the system.</p>
           </div>
-          <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+          <div class="card-type-tile-footer">
+            <span class="card-type-tile-tag">Most flexible</span>
+            <svg class="card-type-tile-arrow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg>
+          </div>
         </a>
       </div>
 
@@ -8291,6 +8312,26 @@
           <span class="comp-badge">Web</span>
           <span class="comp-badge">Mobile</span>
           <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=1520-44803" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── Card type selector ─────────────────────────────────── -->
+      <div class="card-seg-wrap">
+        <div class="card-seg" role="tablist" aria-label="Card type">
+          <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-nav="card-color-block">Color Block</button>
+          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-nav="card-media">Media</button>
+          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-nav="card-multi">Multifunctional</button>
+        </div>
+        <div class="dropdown card-type-dropdown card-subpage-nav-dropdown">
+          <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span>Color Block</span>
+            <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="dropdown-menu" role="listbox" aria-label="Card type">
+            <li class="dropdown-option" role="option" data-value="color-block" aria-selected="true">Color Block</li>
+            <li class="dropdown-option" role="option" data-value="media"       aria-selected="false">Media</li>
+            <li class="dropdown-option" role="option" data-value="multi"       aria-selected="false">Multifunctional</li>
+          </ul>
         </div>
       </div>
 
@@ -8576,6 +8617,26 @@
         </div>
       </div>
 
+      <!-- ── Card type selector ─────────────────────────────────── -->
+      <div class="card-seg-wrap">
+        <div class="card-seg" role="tablist" aria-label="Card type">
+          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-nav="card-color-block">Color Block</button>
+          <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-nav="card-media">Media</button>
+          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-nav="card-multi">Multifunctional</button>
+        </div>
+        <div class="dropdown card-type-dropdown card-subpage-nav-dropdown">
+          <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span>Media</span>
+            <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="dropdown-menu" role="listbox" aria-label="Card type">
+            <li class="dropdown-option" role="option" data-value="color-block" aria-selected="false">Color Block</li>
+            <li class="dropdown-option" role="option" data-value="media"       aria-selected="true">Media</li>
+            <li class="dropdown-option" role="option" data-value="multi"       aria-selected="false">Multifunctional</li>
+          </ul>
+        </div>
+      </div>
+
       <!-- ════════════════════════════════════════
            MEDIA CONTENT
       ════════════════════════════════════════ -->
@@ -8800,6 +8861,26 @@
           <span class="comp-badge">Web</span>
           <span class="comp-badge">Mobile</span>
           <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=1520-44803" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── Card type selector ─────────────────────────────────── -->
+      <div class="card-seg-wrap">
+        <div class="card-seg" role="tablist" aria-label="Card type">
+          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-nav="card-color-block">Color Block</button>
+          <button class="card-seg-btn"        role="tab" aria-selected="false" data-card-nav="card-media">Media</button>
+          <button class="card-seg-btn active" role="tab" aria-selected="true"  data-card-nav="card-multi">Multifunctional</button>
+        </div>
+        <div class="dropdown card-type-dropdown card-subpage-nav-dropdown">
+          <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span>Multifunctional</span>
+            <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="dropdown-menu" role="listbox" aria-label="Card type">
+            <li class="dropdown-option" role="option" data-value="color-block" aria-selected="false">Color Block</li>
+            <li class="dropdown-option" role="option" data-value="media"       aria-selected="false">Media</li>
+            <li class="dropdown-option" role="option" data-value="multi"       aria-selected="true">Multifunctional</li>
+          </ul>
         </div>
       </div>
 
@@ -11275,24 +11356,30 @@ ${accessoryMarkup}
 
     /* ── Card type tile clicks → navigate to sub-page ───────────── */
     (function initCardTiles() {
+      // Landing page tiles → navigate to sub-page
       document.querySelectorAll('.card-type-tile[data-nav-target]').forEach(tile => {
         tile.addEventListener('click', function(e) {
           e.preventDefault();
-          const targetPage = this.dataset.navTarget; // e.g. "card-color-block"
+          const targetPage = this.dataset.navTarget;
           const link = document.querySelector(`.sidebar-link[data-page="${targetPage}"]`);
-          if (link) {
-            link.click();
-          } else {
-            // Fallback: show the page directly
-            document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
-            const panel = document.getElementById('page-' + targetPage);
-            if (panel) {
-              panel.classList.add('active');
-              repositionSegControls(panel);
-            }
-            window.scrollTo({ top: 0, behavior: 'instant' });
-            history.replaceState(null, '', '#' + targetPage);
-          }
+          if (link) link.click();
+        });
+      });
+
+      // Sub-page seg control buttons → navigate between card sub-pages
+      document.querySelectorAll('.card-seg-btn[data-card-nav]').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetPage = this.dataset.cardNav;
+          const link = document.querySelector(`.sidebar-link[data-page="${targetPage}"]`);
+          if (link) link.click();
+        });
+      });
+
+      // Sub-page nav dropdowns → navigate between card sub-pages
+      document.querySelectorAll('.card-subpage-nav-dropdown').forEach(dd => {
+        initDropdown(dd, value => {
+          const link = document.querySelector(`.sidebar-link[data-page="card-${value}"]`);
+          if (link) link.click();
         });
       });
     })();
