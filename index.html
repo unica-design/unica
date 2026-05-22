@@ -8571,13 +8571,6 @@
               </label>
               <label class="switch-item">
                 <div class="toggle-switch toggle-switch--small">
-                  <input type="checkbox" id="card-multi-underline-toggle">
-                  <div class="toggle-track"><div class="toggle-handle"></div></div>
-                </div>
-                <span class="switch-item-text">Underline</span>
-              </label>
-              <label class="switch-item">
-                <div class="toggle-switch toggle-switch--small">
                   <input type="checkbox" id="card-multi-body-toggle" checked>
                   <div class="toggle-track"><div class="toggle-handle"></div></div>
                 </div>
@@ -8589,13 +8582,6 @@
                   <div class="toggle-track"><div class="toggle-handle"></div></div>
                 </div>
                 <span class="switch-item-text">Actions</span>
-              </label>
-              <label class="switch-item">
-                <div class="toggle-switch toggle-switch--small">
-                  <input type="checkbox" id="card-multi-icons-toggle" checked>
-                  <div class="toggle-track"><div class="toggle-handle"></div></div>
-                </div>
-                <span class="switch-item-text">Icons</span>
               </label>
             </div>
           </div>
@@ -8713,11 +8699,17 @@
             <table class="doc-table">
               <thead><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td class="td-mono">media</td><td class="td-type">enum</td><td class="td-subtle">icon-bullet</td><td>One of <code>icon-bullet</code> · <code>avatar</code> · <code>photo</code>. Swaps the left media slot in the header row.</td></tr>
-                <tr><td class="td-mono">overline</td><td class="td-type">string</td><td class="td-subtle">—</td><td>Small uppercase label above the title. Communicates category or type.</td></tr>
-                <tr><td class="td-mono">title</td><td class="td-type">string</td><td class="td-subtle">—</td><td>Primary heading in the header text block. Uses sans semibold 16px.</td></tr>
-                <tr><td class="td-mono">body</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Shows or hides the body text section with <code>space-400</code> top and bottom padding.</td></tr>
-                <tr><td class="td-mono">actions</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Shows or hides the footer divider and outlined + filled button pair.</td></tr>
+                <tr><td class="td-mono">media</td><td class="td-type">enum</td><td class="td-subtle">icon-bullet</td><td>Leading media type: <code>icon-bullet</code> · <code>avatar</code> · <code>photo</code>. Swaps the media slot in the header row.</td></tr>
+                <tr><td class="td-mono">leading-media</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Show or hide the media element (icon bullet, avatar, or photo thumbnail) in the header.</td></tr>
+                <tr><td class="td-mono">overline</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Show the small label above the title. Communicates category or context. Mutually exclusive with <code>underline</code>.</td></tr>
+                <tr><td class="td-mono">title</td><td class="td-type">string</td><td class="td-subtle">—</td><td>Primary heading in the header text block. Rendered as semibold body-large.</td></tr>
+                <tr><td class="td-mono">underline</td><td class="td-type">boolean</td><td class="td-subtle">false</td><td>Show a subtitle line below the title. Mutually exclusive with <code>overline</code> — enabling one disables the other.</td></tr>
+                <tr><td class="td-mono">body</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Show or hide the body paragraph below the header content area.</td></tr>
+                <tr><td class="td-mono">actions</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Show or hide the entire footer: divider, icon buttons, and CTA button pair.</td></tr>
+                <tr><td class="td-mono">icon-1</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Show or hide the first icon button (microphone) in the action bar. Has no effect when <code>actions</code> is false.</td></tr>
+                <tr><td class="td-mono">icon-2</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Show or hide the second icon button (message) in the action bar. Has no effect when <code>actions</code> is false.</td></tr>
+                <tr><td class="td-mono">button-outlined</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Show or hide the secondary outlined button. Useful when a single primary CTA is sufficient.</td></tr>
+                <tr><td class="td-mono">button-filled</td><td class="td-type">boolean</td><td class="td-subtle">true</td><td>Show or hide the primary filled button. Always pair with a clear action label.</td></tr>
               </tbody>
             </table>
           </div>
@@ -11484,10 +11476,8 @@ ${accessoryMarkup}
       const preview          = document.getElementById('card-multi-preview');
       const mediaControl     = document.getElementById('card-multi-media');
       const overlineToggle   = document.getElementById('card-multi-overline-toggle');
-      const underlineToggle  = document.getElementById('card-multi-underline-toggle');
       const bodyToggle       = document.getElementById('card-multi-body-toggle');
       const actionsToggle    = document.getElementById('card-multi-actions-toggle');
-      const iconsToggle      = document.getElementById('card-multi-icons-toggle');
       const codeSnippet      = document.getElementById('card-multi-code-snippet');
       const codeReveal       = document.getElementById('card-multi-code-reveal');
       if (!preview) return;
@@ -11498,10 +11488,8 @@ ${accessoryMarkup}
         avatarSrc: 'avatar-1.png',
         photoSrc:  'arch-house.png',
         showOverline: true,
-        showUnderline: false,
         showBody: true,
         showActions: true,
-        showIcons: true,
       };
 
       const colorDots = {
@@ -11569,14 +11557,12 @@ ${accessoryMarkup}
       }
 
       function buildCardHTML() {
-        const { media, showOverline, showUnderline, showBody, showActions, showIcons } = state;
+        const { media, showOverline, showBody, showActions } = state;
         const mediaHTML = buildMediaHTML(media);
 
         const labelHTML = showOverline
           ? `\n      <p class="card-multi-overline">Feature</p>`
-          : showUnderline
-            ? `\n      <p class="card-multi-underline">Design system tool</p>`
-            : '';
+          : '';
 
         const bodyHTML = showBody ? `
           <div class="card-multi-body-wrap">
@@ -11584,9 +11570,9 @@ ${accessoryMarkup}
           </div>` : '';
 
         const iconBtnsHTML = `
-              <div class="card-multi-action-icons">${showIcons ? `
+              <div class="card-multi-action-icons">
                 <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Microphone">${ICON_MIC}</button>
-                <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Chat">${ICON_CHAT}</button>` : ''}
+                <button class="btn btn-clear btn--medium btn--icon-only" type="button" aria-label="Chat">${ICON_CHAT}</button>
               </div>`;
         const footerHTML = showActions ? `
           <div class="card-multi-footer">
@@ -11621,27 +11607,9 @@ ${accessoryMarkup}
 
       if (mediaControl) initSegControl(mediaControl, val => { state.media = val; syncSubPickers(); render(); });
 
-      // Overline / Underline: mutually exclusive
-      if (overlineToggle) overlineToggle.addEventListener('change', () => {
-        state.showOverline = overlineToggle.checked;
-        if (overlineToggle.checked && underlineToggle) {
-          underlineToggle.checked = false;
-          state.showUnderline = false;
-        }
-        render();
-      });
-      if (underlineToggle) underlineToggle.addEventListener('change', () => {
-        state.showUnderline = underlineToggle.checked;
-        if (underlineToggle.checked && overlineToggle) {
-          overlineToggle.checked = false;
-          state.showOverline = false;
-        }
-        render();
-      });
-
-      if (bodyToggle)    bodyToggle.addEventListener('change',    () => { state.showBody    = bodyToggle.checked;    render(); });
-      if (actionsToggle) actionsToggle.addEventListener('change', () => { state.showActions = actionsToggle.checked; render(); });
-      if (iconsToggle)   iconsToggle.addEventListener('change',   () => { state.showIcons   = iconsToggle.checked;   render(); });
+      if (overlineToggle) overlineToggle.addEventListener('change', () => { state.showOverline = overlineToggle.checked; render(); });
+      if (bodyToggle)     bodyToggle.addEventListener('change',     () => { state.showBody     = bodyToggle.checked;    render(); });
+      if (actionsToggle)  actionsToggle.addEventListener('change',  () => { state.showActions  = actionsToggle.checked; render(); });
 
       const codeToggle = document.getElementById('card-multi-code-toggle');
       if (codeToggle && codeReveal) {
