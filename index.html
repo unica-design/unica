@@ -4377,7 +4377,7 @@
     }
 
     /* Avatar thumbnail inside dropdown trigger + options */
-    .card-multi-sub-avatar { width: 16px; height: 16px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .card-multi-sub-avatar { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; flex-shrink: 0; vertical-align: middle; margin-right: 6px; }
 
     /* Media variants inside multifunctional header */
     .card-multi-photo {
@@ -8521,14 +8521,14 @@
             <!-- Avatar picker (hidden until avatar mode) -->
             <div class="dropdown" id="card-multi-avatar-picker" style="display:none">
               <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-                <span id="card-multi-avatar-label"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt=""> Avatar 1</span>
+                <span id="card-multi-avatar-label"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt="">Sofia</span>
                 <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <ul class="dropdown-menu" role="listbox" aria-label="Avatar">
-                <li class="dropdown-option" role="option" aria-selected="true"  data-value="avatar-1.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt=""> Avatar 1</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-2.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-2.png" alt=""> Avatar 2</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-3.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-3.png" alt=""> Avatar 3</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-4.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-4.png" alt=""> Avatar 4</li>
+                <li class="dropdown-option" role="option" aria-selected="true"  data-value="avatar-1.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt="">Sofia</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-2.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-2.png" alt="">Marcus</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-3.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-3.png" alt="">Andre</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-4.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-4.png" alt="">Kai</li>
               </ul>
             </div>
             <!-- Photo picker (hidden until photo mode) -->
@@ -11514,10 +11514,10 @@ ${accessoryMarkup}
         ink:     `<span class="cb-color-dot" style="background:var(--primitive-ink-900)"></span>Ink`,
       };
       const avatarLabels = {
-        'avatar-1.png': `<img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt=""> Avatar 1`,
-        'avatar-2.png': `<img class="card-multi-sub-avatar" src="assets/avatars/avatar-2.png" alt=""> Avatar 2`,
-        'avatar-3.png': `<img class="card-multi-sub-avatar" src="assets/avatars/avatar-3.png" alt=""> Avatar 3`,
-        'avatar-4.png': `<img class="card-multi-sub-avatar" src="assets/avatars/avatar-4.png" alt=""> Avatar 4`,
+        'avatar-1.png': `<img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt="">Sofia`,
+        'avatar-2.png': `<img class="card-multi-sub-avatar" src="assets/avatars/avatar-2.png" alt="">Marcus`,
+        'avatar-3.png': `<img class="card-multi-sub-avatar" src="assets/avatars/avatar-3.png" alt="">Andre`,
+        'avatar-4.png': `<img class="card-multi-sub-avatar" src="assets/avatars/avatar-4.png" alt="">Kai`,
       };
       const photoLabels = {
         'arch-house.png': 'Architecture', 'flower.png': 'Flower',
