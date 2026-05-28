@@ -4622,18 +4622,22 @@
     }
     /* Colorblock: citron palette */
     .ctt-scene--colorblock { background: var(--primitive-citron-100); }
-    /* Multi: pool palette */
-    .ctt-scene--multi { background: var(--primitive-pool-100); }
-    /* Media: woman photo + apricot tint */
-    .ctt-scene--media {
-      background-image: url('assets/woman-portrait.png');
-      background-size: cover;
-      background-position: center top;
-    }
-    .ctt-apricot-overlay {
+    /* Multi: apricot palette */
+    .ctt-scene--multi { background: var(--primitive-apricot-100); }
+    /* Media: flower video + pool tint */
+    .ctt-media-video {
       position: absolute;
       inset: 0;
-      background: rgba(252, 196, 164, 0.50);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+    .ctt-tint-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(121, 242, 236, 0.42); /* pool-300 tint */
     }
     /* Background ůnica shapes — large, partially off-edge for depth */
     .ctt-bg-shape {
@@ -4644,7 +4648,7 @@
     .ctt-bg-shape--1 { width: 182px; height: 182px; top: -62px; right: -52px; }
     .ctt-bg-shape--2 { width: 110px; height: 110px; bottom: -32px; left: -26px; }
     .ctt-scene--colorblock .ctt-bg-shape path { fill: var(--primitive-citron-200); }
-    .ctt-scene--multi      .ctt-bg-shape path { fill: var(--primitive-pool-200); }
+    .ctt-scene--multi      .ctt-bg-shape path { fill: var(--primitive-apricot-200); }
     /* Center ůnica shape — breathing animation, no icon */
     .ctt-center-shape {
       position: relative;
@@ -4655,7 +4659,7 @@
       animation: ctt-breathe 9s ease-in-out infinite;
     }
     .ctt-scene--colorblock .ctt-center-shape path { fill: var(--primitive-citron-400); }
-    .ctt-scene--multi      .ctt-center-shape path { fill: var(--primitive-pool-500); }
+    .ctt-scene--multi      .ctt-center-shape path { fill: var(--primitive-apricot-400); }
     .ctt-scene--multi .ctt-center-shape { animation-delay: -4.5s; }
     /* Cushion photo shape for media tile */
     .ctt-cushion-photo {
@@ -8379,16 +8383,20 @@
         <a class="card-type-tile" data-nav-target="card-media" href="#">
           <div class="card-type-tile-thumb card-type-tile-thumb--media">
             <div class="ctt-scene ctt-scene--media" aria-hidden="true">
-              <!-- Semi-transparent apricot overlay over photo -->
-              <div class="ctt-apricot-overlay"></div>
-              <!-- Cushion shape with photo fill, breathing -->
+              <!-- Flower video background -->
+              <video class="ctt-media-video" autoplay loop muted playsinline>
+                <source src="assets/flower.mp4" type="video/mp4">
+              </video>
+              <!-- Pool-tinted overlay -->
+              <div class="ctt-tint-overlay"></div>
+              <!-- Cushion shape with static flower image fill, breathing -->
               <svg class="ctt-cushion-photo" viewBox="0 0 240 240" width="88" height="88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
                   <clipPath id="cushion-clip">
                     <path d="M224.715 104.033C219.772 114.082 219.772 125.918 224.715 135.967C243.409 173.974 245.753 208.862 227.308 227.308C208.862 245.753 173.974 243.409 135.967 224.715C125.918 219.772 114.082 219.772 104.033 224.715C66.0257 243.409 31.1378 245.753 12.6922 227.308C-5.7534 208.862 -3.40878 173.974 15.2852 135.967C20.228 125.918 20.228 114.082 15.2852 104.033C-3.40878 66.0257 -5.7534 31.1379 12.6922 12.6922C31.1379 -5.75339 66.0257 -3.40876 104.033 15.2852C114.082 20.228 125.918 20.228 135.967 15.2852C173.974 -3.40876 208.862 -5.75338 227.308 12.6922C245.753 31.1379 243.409 66.0257 224.715 104.033Z"/>
                   </clipPath>
                 </defs>
-                <image href="assets/woman-portrait.png" width="240" height="240" clip-path="url(#cushion-clip)" preserveAspectRatio="xMidYMin slice"/>
+                <image href="assets/flower.png" width="240" height="240" clip-path="url(#cushion-clip)" preserveAspectRatio="xMidYMid slice"/>
               </svg>
             </div>
           </div>
