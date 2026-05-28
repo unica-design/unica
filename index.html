@@ -4660,14 +4660,8 @@
     }
     .ctt-scene--colorblock .ctt-center-shape path { fill: var(--primitive-citron-400); }
     .ctt-scene--multi      .ctt-center-shape path { fill: var(--primitive-apricot-400); }
+    .ctt-scene--media      .ctt-center-shape path { fill: var(--primitive-pool-400); }
     .ctt-scene--multi .ctt-center-shape { animation-delay: -4.5s; }
-    /* Cushion photo shape for media tile */
-    .ctt-cushion-photo {
-      position: relative;
-      z-index: 1;
-      flex-shrink: 0;
-      animation: ctt-breathe 9s ease-in-out infinite;
-    }
     /* Organic breathing animation — scale + subtle rotation */
     @keyframes ctt-breathe {
       0%, 100% { transform: scale(1)    rotate(0deg); }
@@ -8389,15 +8383,9 @@
               </video>
               <!-- Pool-tinted overlay -->
               <div class="ctt-tint-overlay"></div>
-              <!-- Cushion shape with static flower image fill, breathing -->
-              <svg class="ctt-cushion-photo" viewBox="0 0 240 240" width="88" height="88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <clipPath id="cushion-clip">
-                    <path d="M224.715 104.033C219.772 114.082 219.772 125.918 224.715 135.967C243.409 173.974 245.753 208.862 227.308 227.308C208.862 245.753 173.974 243.409 135.967 224.715C125.918 219.772 114.082 219.772 104.033 224.715C66.0257 243.409 31.1378 245.753 12.6922 227.308C-5.7534 208.862 -3.40878 173.974 15.2852 135.967C20.228 125.918 20.228 114.082 15.2852 104.033C-3.40878 66.0257 -5.7534 31.1379 12.6922 12.6922C31.1379 -5.75339 66.0257 -3.40876 104.033 15.2852C114.082 20.228 125.918 20.228 135.967 15.2852C173.974 -3.40876 208.862 -5.75338 227.308 12.6922C245.753 31.1379 243.409 66.0257 224.715 104.033Z"/>
-                  </clipPath>
-                </defs>
-                <image href="assets/flower.png" width="240" height="240" clip-path="url(#cushion-clip)" preserveAspectRatio="xMidYMid slice"/>
-                <rect width="240" height="240" fill="rgba(121, 242, 236, 0.52)" clip-path="url(#cushion-clip)"/>
+              <!-- Solid cushion shape in pool-400, breathing -->
+              <svg class="ctt-center-shape" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M224.715 104.033C219.772 114.082 219.772 125.918 224.715 135.967C243.409 173.974 245.753 208.862 227.308 227.308C208.862 245.753 173.974 243.409 135.967 224.715C125.918 219.772 114.082 219.772 104.033 224.715C66.0257 243.409 31.1378 245.753 12.6922 227.308C-5.7534 208.862 -3.40878 173.974 15.2852 135.967C20.228 125.918 20.228 114.082 15.2852 104.033C-3.40878 66.0257 -5.7534 31.1379 12.6922 12.6922C31.1379 -5.75339 66.0257 -3.40876 104.033 15.2852C114.082 20.228 125.918 20.228 135.967 15.2852C173.974 -3.40876 208.862 -5.75338 227.308 12.6922C245.753 31.1379 243.409 66.0257 224.715 104.033Z"/>
               </svg>
             </div>
           </div>
