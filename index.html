@@ -6772,32 +6772,28 @@
           badgeCtrl.style.display = currentType === 'toggle' ? '' : 'none';
         }
 
-        // Type dropdown wiring
+        // Type dropdown — data-open attribute pattern (matches global CSS)
         var typePicker = document.getElementById('chip-type-picker');
         if (typePicker) {
           var trigger = typePicker.querySelector('.dropdown-trigger');
-          var menu    = typePicker.querySelector('.dropdown-menu');
-          var label   = document.getElementById('chip-type-label');
+          var opts    = typePicker.querySelectorAll('.dropdown-option');
+
+          function openPicker()  { typePicker.setAttribute('data-open', ''); trigger.setAttribute('aria-expanded', 'true'); }
+          function closePicker() { typePicker.removeAttribute('data-open');  trigger.setAttribute('aria-expanded', 'false'); }
 
           trigger.addEventListener('click', function(e) {
             e.stopPropagation();
-            var open = trigger.getAttribute('aria-expanded') === 'true';
-            trigger.setAttribute('aria-expanded', String(!open));
-            menu.classList.toggle('is-open', !open);
+            typePicker.hasAttribute('data-open') ? closePicker() : openPicker();
           });
-          document.addEventListener('click', function() {
-            trigger.setAttribute('aria-expanded', 'false');
-            menu.classList.remove('is-open');
-          });
-          menu.querySelectorAll('.dropdown-option').forEach(function(opt) {
+          document.addEventListener('click', closePicker);
+          opts.forEach(function(opt) {
             opt.addEventListener('click', function(e) {
               e.stopPropagation();
-              menu.querySelectorAll('.dropdown-option').forEach(function(o) { o.setAttribute('aria-selected', 'false'); });
+              opts.forEach(function(o) { o.setAttribute('aria-selected', 'false'); });
               opt.setAttribute('aria-selected', 'true');
+              trigger.querySelector('span').textContent = opt.textContent.trim();
               currentType = opt.dataset.value;
-              label.textContent = opt.textContent.trim();
-              trigger.setAttribute('aria-expanded', 'false');
-              menu.classList.remove('is-open');
+              closePicker();
               updateBadgeVisibility();
               renderPreview();
             });
