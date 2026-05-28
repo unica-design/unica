@@ -2383,6 +2383,7 @@
       justify-content: center;
       border-radius: var(--corner-radius-round);
       flex-shrink: 0;
+      overflow: hidden; /* clip leaf icon's rotated overflow */
     }
     .icon-bullet svg {
       display: block;
@@ -2396,8 +2397,10 @@
     .icon-bullet--medium { width: 40px; height: 40px; padding: 8px;  } /* space-200, icon ≈ 16×17px */
     .icon-bullet--small  { width: 32px; height: 32px; padding: 4px;  } /* space-100, icon ≈ 16×17px */
 
-    /* Icon frame: xlarge = 32px (56−2×12), all others = 24px (48/40/32 − 2×padding) */
-    .icon-bullet--xlarge svg { width: 32px; height: 32px; }
+    /* Icon canvas is always 24×24 (native Figma icon size).
+       xlarge slot = 32px inner space; icon sits centered with ~4px margin each side.
+       Matches Figma's inset-[14.82%_16.65%] on the icon layer within the bullet. */
+    .icon-bullet--xlarge svg,
     .icon-bullet--large  svg,
     .icon-bullet--medium svg { width: 24px; height: 24px; }
     .icon-bullet--small  svg { width: 16px; height: 16px; }
@@ -4207,11 +4210,13 @@
       gap: 4px;
     }
 
+    /* Hero: Figma spec — Display/S serif semibold, leading-display-s (40px) */
     .card-media-title {
       font-family: var(--font-family-serif);
       font-size: var(--font-size-display-s);
       font-weight: 600;
-      line-height: 1.25;
+      line-height: var(--font-leading-display-s);
+      letter-spacing: 0;
       color: var(--color-content-default);
       margin: 0;
     }
@@ -4220,16 +4225,25 @@
       font-family: var(--font-family-sans);
       font-size: var(--font-size-body-m);
       font-weight: 600;
-      line-height: 1.3;
+      line-height: var(--font-leading-body-m);
+      letter-spacing: 0;
     }
 
+    /* Hero body: Body/L sans regular, Figma spec */
     .card-media-body {
       font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-s);
+      font-size: var(--font-size-body-l);
       font-weight: 400;
-      line-height: 1.45;
-      color: var(--color-content-subtle);
+      line-height: var(--font-leading-body-l);
+      letter-spacing: 0;
+      color: var(--color-content-default);
       margin: 0;
+    }
+    /* Tile body: compact — Body/S */
+    .card-media--tile .card-media-body {
+      font-size: var(--font-size-body-s);
+      line-height: var(--font-leading-body-s);
+      color: var(--color-content-subtle);
     }
 
     /* Favorite button — inline style (with designed circle background) */
@@ -11926,14 +11940,18 @@ ${accessoryMarkup}
       // Icon SVGs (ůnica set, fill=currentColor)
       // All icons sourced from Unicons line set (Iconscout/unicons), viewBox 0 0 24 24
       const ICO_FIRE  = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8.468 8.395-.002.001-.003.002Zm9.954-.187a1.237 1.237 0 0 0-.23-.175 1 1 0 0 0-1.4.411 5.782 5.782 0 0 1-1.398 1.778 8.664 8.664 0 0 0 .134-1.51 8.714 8.714 0 0 0-4.4-7.582 1 1 0 0 0-1.492.806 7.017 7.017 0 0 1-2.471 4.942l-.23.187a8.513 8.513 0 0 0-1.988 1.863 8.983 8.983 0 0 0 3.656 13.908 1 1 0 0 0 1.377-.926 1.05 1.05 0 0 0-.05-.312 6.977 6.977 0 0 1-.19-2.581 9.004 9.004 0 0 0 4.313 4.016.997.997 0 0 0 .715.038 8.995 8.995 0 0 0 3.654-14.863Zm-3.905 12.831a6.964 6.964 0 0 1-3.577-4.402 8.908 8.908 0 0 1-.18-.964 1 1 0 0 0-.799-.845.982.982 0 0 0-.191-.018 1 1 0 0 0-.867.5 8.959 8.959 0 0 0-1.205 4.718 6.985 6.985 0 0 1-1.176-9.868 6.555 6.555 0 0 1 1.562-1.458.745.745 0 0 0 .075-.055s.296-.245.306-.25a8.968 8.968 0 0 0 2.9-4.633 6.736 6.736 0 0 1 1.385 8.088 1 1 0 0 0 1.184 1.418 7.856 7.856 0 0 0 3.862-2.688 7 7 0 0 1-3.279 10.457Z"/></svg>`;
-      const ICO_TREES = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5,5A4.86,4.86,0,0,0,14,5.69,6,6,0,0,0,2.5,8v4a6,6,0,0,0,5,5.91V21a1,1,0,0,0,2,0V17.91a6.08,6.08,0,0,0,2.78-1.26A5,5,0,0,0,15.5,18.9V21a1,1,0,0,0,2,0V18.9a5,5,0,0,0,4-4.9V10A5,5,0,0,0,16.5,5Zm-5,5v4a5.23,5.23,0,0,0,.06.57,4,4,0,0,1-2.06,1.3V13a1,1,0,0,0-2,0v2.86A4,4,0,0,1,4.5,12V8a4,4,0,0,1,6.83-2.84,3.94,3.94,0,0,1,1.06,2A5,5,0,0,0,11.5,10Zm8,4a3,3,0,0,1-2,2.82V13a1,1,0,0,0-2,0v3.82a3,3,0,0,1-2-2.82V10a3,3,0,0,1,6,0Z"/></svg>`;
+      // Leaf icon — custom path from ůnica Figma icon set (Symbol=leaf, 472:4889).
+      // Not in Unicons. Rotated 45° to match Figma's presentation (rotate(45) around icon center).
+      const ICO_LEAF   = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" overflow="hidden"><g transform="translate(12,12) rotate(45) scale(0.75) translate(-8.748,-13.285)"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.9619 5.40234C14.1156 8.01529 15.9971 11.1801 15.9971 14.0732C15.9969 16.9191 14.1625 19.6774 12.0449 21.8672C11.1417 22.8012 10.2339 23.5827 9.49855 24.1662L9.49855 17.275L13.3609 13.4126C13.6538 13.1197 13.6538 12.6448 13.3609 12.3519C13.068 12.059 12.5932 12.059 12.3003 12.3519L9.49855 15.1536L9.49856 7.57058C9.49856 7.15637 9.16277 6.82058 8.74856 6.82058C8.33434 6.82058 7.99855 7.15637 7.99855 7.57058L7.99855 15.1537L5.19627 12.3514C4.90336 12.0587 4.42844 12.0586 4.13561 12.3514C3.84278 12.6442 3.84289 13.1191 4.13561 13.4121L7.99855 17.275L7.99855 24.1663C7.26315 23.5827 6.35536 22.8012 5.45215 21.8672C3.33459 19.6774 1.5002 16.9191 1.5 14.0732C1.5 11.0731 2.46715 9.40075 3.96387 7.70117C4.4682 7.12852 4.993 6.59535 5.57498 6.00409C5.93789 5.6354 6.32301 5.24414 6.73926 4.80664C7.462 4.047 8.21824 3.20192 8.97754 2.22266C9.04078 2.28135 9.07715 2.31543 9.86675 3.06588C10.9161 4.13358 11.9619 5.40234ZM8.74805 26.5703C8.74805 26.5703 17.2252 21.1487 17.4902 14.3955L17.4971 14.0732C17.4971 7.17918 8.76327 0.0172749 8.74219 0C7.3425 2.06553 5.87603 3.55736 4.55273 4.90355C2.01259 7.48764 0 9.53504 0 14.0732L0.00585938 14.3955C0.269704 21.1188 8.6734 26.5224 8.74805 26.5703Z"/></g></svg>`;
       const ICO_MOON  = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/></svg>`;
       const ICO_SUN   = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/></svg>`;
       const ICO_BULB  = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.09,2.82a8,8,0,0,0-6.68-1.66A8,8,0,0,0,4.14,7.48a8.07,8.07,0,0,0,1.72,6.65A4.54,4.54,0,0,1,7,17v3a3,3,0,0,0,3,3h4a3,3,0,0,0,3-3V17.19A5.17,5.17,0,0,1,18.22,14a8,8,0,0,0-1.13-11.2ZM15,20a1,1,0,0,1-1,1H10a1,1,0,0,1-1-1V19h6Zm1.67-7.24A7.13,7.13,0,0,0,15,17H13V14a1,1,0,0,0-2,0v3H9a6.5,6.5,0,0,0-1.6-4.16,6,6,0,0,1,3.39-9.72A6,6,0,0,1,18,9,5.89,5.89,0,0,1,16.67,12.76Z"/></svg>`;
       const ICO_HEART = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg>`;
       const ICO_CLOCK = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.09814,12.63379,13,11.42285V7a1,1,0,0,0-2,0v5a.99985.99985,0,0,0,.5.86621l2.59814,1.5a1.00016,1.00016,0,1,0,1-1.73242ZM12,2A10,10,0,1,0,22,12,10.01114,10.01114,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.00917,8.00917,0,0,1,12,20Z"/></svg>`;
       const ICO_COMPASS = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm1,17.93V19a1,1,0,0,0-2,0v.93A8,8,0,0,1,4.07,13H5a1,1,0,0,0,0-2H4.07A8,8,0,0,1,11,4.07V5a1,1,0,0,0,2,0V4.07A8,8,0,0,1,19.93,11H19a1,1,0,0,0,0,2h.93A8,8,0,0,1,13,19.93ZM15.14,7.55l-5,2.12a1,1,0,0,0-.52.52l-2.12,5a1,1,0,0,0,.21,1.1,1,1,0,0,0,.7.3.93.93,0,0,0,.4-.09l5-2.12a1,1,0,0,0,.52-.52l2.12-5a1,1,0,0,0-1.31-1.31Zm-2.49,5.1-2.28,1,1-2.28,2.28-1Z"/></svg>`;
-      const ICO_UNICA = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C7.03 3 3 7.03 3 12v4.5a4.5 4.5 0 0 0 9 0V12a1.5 1.5 0 0 1 3 0v4.5a4.5 4.5 0 0 0 9 0V12c0-4.97-4.03-9-9-9z" fill-rule="evenodd" clip-rule="evenodd"/></svg>`;
+      // ůnica brand mark — exact path from Figma (Symbol=ůnica, 352:2012).
+      // Natural size 16.007×16.886; centered in 24×24 with ~4px inset each side.
+      const ICO_UNICA = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path transform="translate(3.996,3.557)" d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg>`;
       // Nav button icons (Unicons)
       const ICO_CHEVRON_LEFT = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.29,12l3.54-3.54a1,1,0,0,0,0-1.41,1,1,0,0,0-1.42,0L9.17,11.29a1,1,0,0,0,0,1.42L13.41,17a1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41Z"/></svg>`;
       const ICO_HEART_OUTLINE = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg>`;
@@ -12006,7 +12024,7 @@ ${accessoryMarkup}
   </div>
   <div class="card-media-content">
     <div class="card-media-text">
-      <p class="card-media-title" style="font-family:var(--font-family-serif);font-size:var(--font-size-display-xs);line-height:1.1;letter-spacing:-0.01em">${s.title}</p>
+      <p class="card-media-title">${s.title}</p>
       <p class="card-media-body">${s.body}</p>
     </div>
   </div>
@@ -12064,7 +12082,7 @@ ${accessoryMarkup}
           render() {
             return buildColorblockHero({ color:'ink', iconColor:'white', icon: ICO_UNICA, title:'One Signal', body:'A system that speaks in one voice.', cta:'Get started' })
               + buildColorblockInline({ color:'white', iconColor:'ink', icon: ICO_UNICA, title:'Components', body:'Everything in its right place.', cta:'View all' })
-              + `<div class="remix-tiles">${buildColorblockTile({color:'mint',icon:ICO_TREES,title:'Tokens'})}${buildColorblockTile({color:'ink',icon:ICO_MOON,title:'Motion'})}</div>`;
+              + `<div class="remix-tiles">${buildColorblockTile({color:'mint',icon:ICO_LEAF,title:'Tokens'})}${buildColorblockTile({color:'ink',icon:ICO_MOON,title:'Motion'})}</div>`;
           }
         },
         {
@@ -12072,8 +12090,8 @@ ${accessoryMarkup}
           desc: 'Cards hold anything. Even a whale breaching at dawn over Mt. Fuji.',
           render() {
             return buildMediaHero({ photo:'whale.png', title:'Naturalis', body:'The world in motion.' })
-              + buildColorblockInline({ color:'white', iconColor:'ink', icon: ICO_TREES, title:'Migration', body:'Follow where the season leads.', cta:'Explore' })
-              + `<div class="remix-tiles">${buildColorblockTile({color:'mint',icon:ICO_TREES,title:'Journey'})}${buildColorblockTile({color:'ink',icon:ICO_MOON,title:'Depth'})}</div>`;
+              + buildColorblockInline({ color:'white', iconColor:'ink', icon: ICO_LEAF, title:'Migration', body:'Follow where the season leads.', cta:'Explore' })
+              + `<div class="remix-tiles">${buildColorblockTile({color:'mint',icon:ICO_LEAF,title:'Journey'})}${buildColorblockTile({color:'ink',icon:ICO_MOON,title:'Depth'})}</div>`;
           }
         },
         {
@@ -12100,7 +12118,7 @@ ${accessoryMarkup}
           render() {
             return buildMediaHero({ photo:'flower.png', title:'Fleur', body:'A close study in form and light.' })
               + buildColorblockInline({ color:'violet', iconColor:'white', icon: ICO_FIRE, title:'Studio', body:'Where growth begins.', cta:'Explore' })
-              + `<div class="remix-tiles">${buildColorblockTile({color:'mint',icon:ICO_TREES,title:'Bloom'})}${buildColorblockTile({color:'apricot',icon:ICO_SUN,title:'Light'})}</div>`;
+              + `<div class="remix-tiles">${buildColorblockTile({color:'mint',icon:ICO_LEAF,title:'Bloom'})}${buildColorblockTile({color:'apricot',icon:ICO_SUN,title:'Light'})}</div>`;
           }
         },
         {
