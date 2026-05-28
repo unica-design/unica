@@ -4609,9 +4609,23 @@
     .card-type-tile:hover .card-type-tile-thumb {
       border-radius: 40px; /* 48px card − 8px gap = concentric */
     }
-    .card-type-tile-thumb--colorblock { background: linear-gradient(140deg, var(--color-brand-ink) 40%, var(--primitive-violet-500) 100%); }
-    .card-type-tile-thumb--media { background: linear-gradient(140deg, var(--primitive-cafe-500) 0%, var(--primitive-cafe-300) 60%, var(--primitive-apricot-300) 100%); }
-    .card-type-tile-thumb--multi { background: linear-gradient(140deg, var(--primitive-mint-400) 0%, var(--primitive-pool-500) 100%); }
+    /* Canvas thumbs — JS paints these, no CSS background needed */
+    canvas.card-type-tile-thumb {
+      display: block;
+      width: 100%;
+    }
+    /* Media thumb: contains a video */
+    .card-type-tile-thumb--media {
+      overflow: hidden;
+      background: #0F1726;
+    }
+    .card-type-tile-thumb--media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
     .card-type-tile-body {
       flex: 1;
       display: flex;
@@ -8290,7 +8304,7 @@
       <!-- ── Card type tiles ─────────────────── -->
       <div class="card-type-tiles">
         <a class="card-type-tile" data-nav-target="card-color-block" href="#">
-          <div class="card-type-tile-thumb card-type-tile-thumb--colorblock"></div>
+          <canvas class="card-type-tile-thumb card-type-tile-thumb--colorblock" id="ctt-colorblock" aria-hidden="true"></canvas>
           <div class="card-type-tile-body">
             <p class="card-type-tile-name">Color Block</p>
             <p class="card-type-tile-desc">Bold colorfields anchored by icon bullet, headline, and CTA. Three formats — hero, inline, and tile — each purposefully sized.</p>
@@ -8301,7 +8315,9 @@
           </div>
         </a>
         <a class="card-type-tile" data-nav-target="card-media" href="#">
-          <div class="card-type-tile-thumb card-type-tile-thumb--media"></div>
+          <div class="card-type-tile-thumb card-type-tile-thumb--media">
+            <video autoplay loop muted playsinline src="assets/flower.mp4"></video>
+          </div>
           <div class="card-type-tile-body">
             <p class="card-type-tile-name">Media</p>
             <p class="card-type-tile-desc">Full-bleed photography with optional overlay navigation. Hero, inline, and tile formats with fave toggle and content slots.</p>
@@ -8312,7 +8328,7 @@
           </div>
         </a>
         <a class="card-type-tile" data-nav-target="card-multi" href="#">
-          <div class="card-type-tile-thumb card-type-tile-thumb--multi"></div>
+          <canvas class="card-type-tile-thumb card-type-tile-thumb--multi" id="ctt-multi" aria-hidden="true"></canvas>
           <div class="card-type-tile-body">
             <p class="card-type-tile-name">Multifunctional</p>
             <p class="card-type-tile-desc">The system's most expressive card — avatar, media, overline, and icon actions in one adaptable container.</p>
@@ -12188,6 +12204,99 @@ ${accessoryMarkup}
 
       // Initial render
       show(0);
+    })();
+
+    // ── Card-type tile canvas thumbnails ──────────────────────────────
+    (function() {
+      // Each blob: { cx, cy, r, sx, sy, px, py, ax, ay, c0, c1, op }
+      // cx/cy = normalized center, r = normalized radius
+      // sx/sy = animation speed on x/y, px/py = phase offset
+      // ax/ay = normalized amplitude, c0/c1 = gradient colors, op = composite op
+      const configs = {
+        'ctt-colorblock': {
+          bg: '#0F1726',
+          blobs: [
+            // Large violet bloom — upper right
+            { cx:.72, cy:.22, r:.62, sx:.38, sy:.30, px:0,    py:0,   ax:.13, ay:.10, c0:'#9973E5', c1:'#6C3DCC00', op:'source-over' },
+            // Secondary violet — lower left
+            { cx:.28, cy:.78, r:.50, sx:.45, sy:.40, px:1.6,  py:.9,  ax:.11, ay:.13, c0:'#B291F2AA', c1:'#B291F200', op:'screen' },
+            // Tiny cream highlight — center
+            { cx:.52, cy:.40, r:.22, sx:.28, sy:.55, px:2.9,  py:1.8, ax:.09, ay:.08, c0:'#F2EFED33', c1:'#F2EFED00', op:'screen' },
+            // Deep bloom edge — bottom right
+            { cx:.85, cy:.88, r:.42, sx:.20, sy:.25, px:4.1,  py:2.3, ax:.07, ay:.10, c0:'#4D21A677', c1:'#4D21A600', op:'screen' },
+          ]
+        },
+        'ctt-multi': {
+          bg: '#050E1A',
+          blobs: [
+            // Teal pool bloom — upper right
+            { cx:.70, cy:.25, r:.58, sx:.40, sy:.32, px:0,    py:0,   ax:.12, ay:.10, c0:'#0ACCC2CC', c1:'#0ACCC200', op:'source-over' },
+            // Mint bloom — lower left
+            { cx:.25, cy:.72, r:.52, sx:.50, sy:.42, px:1.4,  py:1.1, ax:.13, ay:.14, c0:'#2FEDB1AA', c1:'#2FEDB100', op:'screen' },
+            // Apricot warmth — mid
+            { cx:.55, cy:.48, r:.28, sx:.30, sy:.50, px:3.0,  py:1.5, ax:.10, ay:.09, c0:'#FCC4A444', c1:'#FCC4A400', op:'screen' },
+            // Deep pool shadow — top left
+            { cx:.15, cy:.18, r:.38, sx:.22, sy:.28, px:5.0,  py:2.8, ax:.08, ay:.08, c0:'#006661AA', c1:'#00666100', op:'screen' },
+          ]
+        }
+      };
+
+      function initCanvas(id, cfg) {
+        const canvas = document.getElementById(id);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let W = 0, H = 0, dpr = 1;
+
+        function resize() {
+          dpr = window.devicePixelRatio || 1;
+          W = canvas.offsetWidth;
+          H = canvas.offsetHeight;
+          if (W === 0 || H === 0) return;
+          canvas.width  = Math.round(W * dpr);
+          canvas.height = Math.round(H * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resize();
+        const ro = new ResizeObserver(resize);
+        ro.observe(canvas);
+
+        // Stagger start phase so tiles don't move in sync
+        let t = Math.random() * 50;
+
+        function frame() {
+          if (W === 0 || H === 0) { resize(); }
+          t += 0.005;
+
+          // Background
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = cfg.bg;
+          ctx.fillRect(0, 0, W, H);
+
+          cfg.blobs.forEach(b => {
+            const bx = (b.cx + Math.sin(t * b.sx + b.px) * b.ax) * W;
+            const by = (b.cy + Math.cos(t * b.sy + b.py) * b.ay) * H;
+            const br = b.r * Math.min(W, H);
+
+            const grad = ctx.createRadialGradient(bx, by, 0, bx, by, br);
+            grad.addColorStop(0,   b.c0);
+            grad.addColorStop(0.5, b.c0.slice(0,-2) + '55');
+            grad.addColorStop(1,   b.c1);
+
+            ctx.globalCompositeOperation = b.op;
+            ctx.globalAlpha = 1;
+            ctx.beginPath();
+            ctx.arc(bx, by, br, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.fill();
+          });
+
+          requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      Object.entries(configs).forEach(([id, cfg]) => initCanvas(id, cfg));
     })();
 
 </script>
