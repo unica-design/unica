@@ -2229,6 +2229,93 @@
     }
 
     /* ─────────────────────────────────────────
+       CHIPS
+    ───────────────────────────────────────── */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 32px;
+      padding: 0 14px;
+      border-radius: var(--corner-radius-round);
+      border: 1.5px solid var(--color-border-default);
+      background: var(--color-background-page);
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      font-weight: 500;
+      color: var(--color-content-default);
+      cursor: pointer;
+      user-select: none;
+      line-height: 1;
+      transition: background 140ms ease, border-color 140ms ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .chip:hover:not([disabled]):not(.chip--disabled) {
+      background: var(--color-background-ui);
+    }
+    .chip:active:not([disabled]):not(.chip--disabled) {
+      background: var(--color-background-secondary);
+    }
+    .chip--selected, .chip[aria-pressed="true"] {
+      border-width: 2px;
+      border-color: var(--color-content-default);
+      background: var(--color-background-secondary);
+    }
+    .chip--selected:hover, .chip[aria-pressed="true"]:hover {
+      background: var(--color-background-secondary);
+    }
+    .chip[disabled], .chip--disabled {
+      background: var(--color-background-ui);
+      color: var(--color-content-subtle);
+      border-color: var(--color-border-subtle);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    /* Toggle-strong: taller, same pill radius, bolder */
+    .chip--strong {
+      height: 40px;
+      padding: 0 18px;
+      font-weight: 600;
+    }
+    /* Count badge inside chip */
+    .chip-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 9px;
+      background: var(--color-background-ui);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-content-subtle);
+      line-height: 1;
+    }
+    .chip--selected .chip-badge, .chip[aria-pressed="true"] .chip-badge {
+      background: var(--color-content-default);
+      color: var(--color-background-page);
+    }
+    /* Dropdown chevron */
+    .chip-chevron { width: 12px; height: 12px; flex-shrink: 0; color: var(--color-content-subtle); }
+    /* Dismiss × */
+    .chip-dismiss { width: 14px; height: 14px; flex-shrink: 0; color: var(--color-content-subtle); margin-right: -2px; }
+    /* Chip group */
+    .chip-group { display: flex; flex-wrap: wrap; gap: var(--space-200); align-items: center; }
+    /* Preview rows for chip doc */
+    .chip-preview-row { display: flex; flex-direction: column; gap: var(--space-300); width: 100%; }
+    .chip-preview-row + .chip-preview-row { margin-top: var(--space-600); }
+    .chip-preview-row-label {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-xs);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+    }
+
+    /* ─────────────────────────────────────────
        RADIO
     ───────────────────────────────────────── */
 
@@ -5218,7 +5305,6 @@
         <a class="sidebar-link" href="#" data-page="date-tabs">Date Tabs</a>
         <a class="sidebar-link" href="#" data-page="divider">Divider</a>
         <a class="sidebar-link" href="#" data-page="icon-bullet">Icon Bullet</a>
-        <a class="sidebar-link" href="#" data-page="important-message">Important Message</a>
         <a class="sidebar-link" href="#" data-page="link">Link Standalone</a>
         <a class="sidebar-link" href="#" data-page="list">List</a>
         <a class="sidebar-link" href="#" data-page="list-accordion">List Accordion</a>
@@ -6249,7 +6335,349 @@
       </div>
 
     </div><!-- /#page-choice-button -->
-    <div class="page-panel" id="page-chips"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Chips</h2><p class="section-description">Compact interactive elements for filtering and multi-select.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-chips">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Actions</p>
+        <h1 class="comp-title">Chip</h1>
+        <p class="comp-description">Compact interactive elements for filtering, sorting, and tagging. Four types — toggle, toggle-strong, dropdown, and dismissible — share a unified pill shape. Chips sit inline with content and are designed to be grouped.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=339-3394" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Click chips to toggle. Dismissible chips can be removed. Sort chips are single-select.</p>
+
+        <div class="preview-canvas" style="flex-direction: column; align-items: flex-start; gap: var(--space-700); padding: var(--space-700);">
+
+          <!-- Filter — multi-select toggle chips -->
+          <div class="chip-preview-row">
+            <span class="chip-preview-row-label">Filter</span>
+            <div class="chip-group" id="chip-filter-group">
+              <button class="chip chip--selected" aria-pressed="true"  type="button" data-chip-toggle>All</button>
+              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Photography <span class="chip-badge">12</span></button>
+              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Motion <span class="chip-badge">5</span></button>
+              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Color</button>
+              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Type</button>
+              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Space</button>
+              <button class="chip chip--disabled" type="button" disabled>Archive</button>
+            </div>
+          </div>
+
+          <!-- Sort — single-select toggle-strong chips -->
+          <div class="chip-preview-row">
+            <span class="chip-preview-row-label">Sort · toggle-strong</span>
+            <div class="chip-group" id="chip-sort-group">
+              <button class="chip chip--strong chip--selected" aria-pressed="true"  type="button" data-chip-radio>Latest</button>
+              <button class="chip chip--strong" aria-pressed="false" type="button" data-chip-radio>Popular</button>
+              <button class="chip chip--strong" aria-pressed="false" type="button" data-chip-radio>A–Z</button>
+            </div>
+          </div>
+
+          <!-- Active filters — dismissible chips -->
+          <div class="chip-preview-row">
+            <span class="chip-preview-row-label">Active filters · dismissible</span>
+            <div class="chip-group" id="chip-active-group">
+              <button class="chip chip--dismissible chip--selected" aria-pressed="true" type="button" data-chip-dismiss>
+                Design System
+                <svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+              <button class="chip chip--dismissible chip--selected" aria-pressed="true" type="button" data-chip-dismiss>
+                Cards
+                <svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+              <button class="chip chip--dismissible chip--selected" aria-pressed="true" type="button" data-chip-dismiss>
+                Buttons
+                <svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Show code ───────────────────────── -->
+      <button class="code-reveal-btn" id="chip-code-toggle" aria-expanded="false" aria-controls="chip-code-reveal">
+        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+        <span class="code-reveal-btn-label">Show code</span>
+      </button>
+      <div class="code-reveal" id="chip-code-reveal" hidden>
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('chip-code-snippet').textContent)">Copy</button>
+          <pre><code id="chip-code-snippet" class="language-html">&lt;!-- Toggle chip --&gt;
+&lt;button class="chip" aria-pressed="false" type="button"&gt;Label&lt;/button&gt;
+
+&lt;!-- Toggle chip · selected --&gt;
+&lt;button class="chip chip--selected" aria-pressed="true" type="button"&gt;Label&lt;/button&gt;
+
+&lt;!-- Toggle chip · with badge --&gt;
+&lt;button class="chip" aria-pressed="false" type="button"&gt;
+  Label &lt;span class="chip-badge"&gt;4&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Toggle-strong --&gt;
+&lt;button class="chip chip--strong" aria-pressed="false" type="button"&gt;Label&lt;/button&gt;
+
+&lt;!-- Dropdown chip --&gt;
+&lt;button class="chip chip--dropdown" type="button"&gt;
+  Label
+  &lt;svg class="chip-chevron" viewBox="0 0 10 6" fill="none"&gt;
+    &lt;path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;!-- Dismissible chip --&gt;
+&lt;button class="chip chip--dismissible chip--selected" aria-pressed="true" type="button"&gt;
+  Label
+  &lt;svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-label="Remove"&gt;
+    &lt;path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;!-- Chip group --&gt;
+&lt;div class="chip-group"&gt;
+  &lt;button class="chip chip--selected" aria-pressed="true"  type="button"&gt;All&lt;/button&gt;
+  &lt;button class="chip" aria-pressed="false" type="button"&gt;Design&lt;/button&gt;
+  &lt;button class="chip" aria-pressed="false" type="button"&gt;Motion&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           2. VARIANTS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="variants-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Selected</th>
+                <th>With badge</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Toggle</td>
+                <td><button class="chip" tabindex="-1" aria-pressed="false">Label</button></td>
+                <td><button class="chip chip--selected" tabindex="-1" aria-pressed="true">Label</button></td>
+                <td><button class="chip" tabindex="-1" aria-pressed="false">Label <span class="chip-badge">8</span></button></td>
+              </tr>
+              <tr>
+                <td>Toggle-strong</td>
+                <td><button class="chip chip--strong" tabindex="-1" aria-pressed="false">Label</button></td>
+                <td><button class="chip chip--strong chip--selected" tabindex="-1" aria-pressed="true">Label</button></td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Dropdown</td>
+                <td><button class="chip chip--dropdown" tabindex="-1">Label <svg class="chip-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></td>
+                <td><button class="chip chip--dropdown chip--selected" tabindex="-1" aria-pressed="true">Label <svg class="chip-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Dismissible</td>
+                <td><button class="chip chip--dismissible" tabindex="-1">Label <svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></td>
+                <td><button class="chip chip--dismissible chip--selected" tabindex="-1" aria-pressed="true">Label <svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Disabled</td>
+                <td><button class="chip chip--disabled" tabindex="-1" disabled>Label</button></td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           3. STATES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">States</h2>
+        <hr class="doc-rule">
+        <div class="states-matrix">
+          <div class="states-matrix-head">
+            <div class="states-matrix-head-spacer"></div>
+            <div class="states-matrix-head-cell">Default</div>
+            <div class="states-matrix-head-cell">Hover</div>
+            <div class="states-matrix-head-cell">Pressed</div>
+            <div class="states-matrix-head-cell">Selected</div>
+            <div class="states-matrix-head-cell">Disabled</div>
+          </div>
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Toggle</div>
+            <div class="states-matrix-cell"><button class="chip" tabindex="-1">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip" style="background:var(--color-background-ui);" tabindex="-1">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip" style="background:var(--color-background-secondary);border-color:var(--color-border-strong);" tabindex="-1">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip chip--selected" tabindex="-1" aria-pressed="true">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip chip--disabled" tabindex="-1" disabled>Label</button></div>
+          </div>
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Toggle-strong</div>
+            <div class="states-matrix-cell"><button class="chip chip--strong" tabindex="-1">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip chip--strong" style="background:var(--color-background-ui);" tabindex="-1">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip chip--strong" style="background:var(--color-background-secondary);border-color:var(--color-border-strong);" tabindex="-1">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip chip--strong chip--selected" tabindex="-1" aria-pressed="true">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip chip--strong chip--disabled" tabindex="-1" disabled>Label</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           4. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-body">Chips are always rendered as <code class="inline-code">&lt;button&gt;</code> elements — never <code class="inline-code">&lt;div&gt;</code> or <code class="inline-code">&lt;span&gt;</code>. This preserves keyboard focus and native click semantics. Toggle selection state is communicated with <code class="inline-code">aria-pressed</code>.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Pattern</th><th>Guidance</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Filter / multi-select</td>
+                <td>Use <code class="inline-code">aria-pressed="true/false"</code> on each <code class="inline-code">&lt;button&gt;</code>. No role needed — button is already interactive.</td>
+              </tr>
+              <tr>
+                <td>Sort / single-select</td>
+                <td>Wrap toggle-strong chips in a <code class="inline-code">role="group"</code> container. Use <code class="inline-code">aria-pressed</code> per chip and enforce single-selection in JS.</td>
+              </tr>
+              <tr>
+                <td>Dismissible</td>
+                <td>Give the button an accessible name that includes "Remove": <code class="inline-code">aria-label="Remove Design System filter"</code>. The × icon should be <code class="inline-code">aria-hidden="true"</code>.</td>
+              </tr>
+              <tr>
+                <td>Dropdown</td>
+                <td>Use <code class="inline-code">aria-haspopup="listbox"</code> and <code class="inline-code">aria-expanded</code> on the chip button. The chevron is decorative (<code class="inline-code">aria-hidden</code>).</td>
+              </tr>
+              <tr>
+                <td>Disabled</td>
+                <td>Use the native <code class="inline-code">disabled</code> attribute rather than <code class="inline-code">aria-disabled</code> alone — it removes the chip from the tab order and prevents all interaction.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           5. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Class</th><th>Values</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">chip</td>
+                <td class="td-subtle">—</td>
+                <td>Base chip. 32px tall, full-pill radius, 1.5px border, 14px medium text.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">chip--selected</td>
+                <td class="td-subtle">—</td>
+                <td>Selected state. 2px ink border, secondary background. Pair with <code class="inline-code">aria-pressed="true"</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">chip--strong</td>
+                <td class="td-subtle">—</td>
+                <td>Toggle-strong variant. 40px tall, 600 font weight. For sort, view, or prominent filter contexts.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">chip--dropdown</td>
+                <td class="td-subtle">—</td>
+                <td>Indicates the chip opens a menu. Visually identical to toggle — add a <code class="inline-code">.chip-chevron</code> SVG inside to complete the pattern.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">chip--dismissible</td>
+                <td class="td-subtle">—</td>
+                <td>Chip can be removed. Add a <code class="inline-code">.chip-dismiss</code> SVG inside. JS removes the element on click.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">chip--disabled</td>
+                <td class="td-subtle">—</td>
+                <td>Disabled visual. Use with the native <code class="inline-code">disabled</code> attribute.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">chip-badge</td>
+                <td class="td-subtle">—</td>
+                <td>Count pill inside the chip. Inherits selected colour from parent <code class="inline-code">.chip--selected</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">chip-group</td>
+                <td class="td-subtle">—</td>
+                <td>Flex wrapping row container. Applies 8px gap between chips.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Chip JS ───────────────────────────── -->
+      <script>
+      (function() {
+        // Toggle chips — multi-select
+        document.querySelectorAll('[data-chip-toggle]').forEach(function(chip) {
+          chip.addEventListener('click', function() {
+            var pressed = chip.getAttribute('aria-pressed') === 'true';
+            chip.setAttribute('aria-pressed', String(!pressed));
+            chip.classList.toggle('chip--selected', !pressed);
+          });
+        });
+        // Radio chips — single-select (toggle-strong sort group)
+        document.querySelectorAll('[data-chip-radio]').forEach(function(chip) {
+          chip.addEventListener('click', function() {
+            var group = chip.closest('.chip-group');
+            group.querySelectorAll('[data-chip-radio]').forEach(function(c) {
+              c.setAttribute('aria-pressed', 'false');
+              c.classList.remove('chip--selected');
+            });
+            chip.setAttribute('aria-pressed', 'true');
+            chip.classList.add('chip--selected');
+          });
+        });
+        // Dismiss chips — remove on click
+        document.querySelectorAll('[data-chip-dismiss]').forEach(function(chip) {
+          chip.addEventListener('click', function() {
+            chip.style.transition = 'opacity 150ms, transform 150ms';
+            chip.style.opacity = '0';
+            chip.style.transform = 'scale(0.85)';
+            setTimeout(function() { chip.remove(); }, 160);
+          });
+        });
+        // Code reveal toggle
+        var codeBtn = document.getElementById('chip-code-toggle');
+        var codePanel = document.getElementById('chip-code-reveal');
+        if (codeBtn && codePanel) {
+          codeBtn.addEventListener('click', function() {
+            var open = codeBtn.getAttribute('aria-expanded') === 'true';
+            codeBtn.setAttribute('aria-expanded', String(!open));
+            codeBtn.querySelector('.code-reveal-btn-label').textContent = open ? 'Show code' : 'Hide code';
+            if (open) { codePanel.hidden = true; } else { codePanel.hidden = false; }
+          });
+        }
+      })();
+      </script>
+
+    </div><!-- /#page-chips -->
     <div class="page-panel" id="page-tags"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Tags</h2><p class="section-description">Label-style elements for categorization and metadata.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-link"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Link Standalone</h2><p class="section-description">A standalone text link with optional icon, used outside of body copy.</p></div><span class="stub-pill">In progress</span></section></div>
 
@@ -7650,7 +8078,6 @@
 
     <!-- Feedback -->
     <div class="page-panel" id="page-toast"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Toast</h2><p class="section-description">Transient notification appearing at the bottom of the screen.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-important-message"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Important Message</h2><p class="section-description">Inline alert for errors, warnings, info, and success states.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-badge">
 
       <!-- ── Component header ─────────────────── -->
