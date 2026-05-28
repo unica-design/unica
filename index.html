@@ -2330,6 +2330,14 @@
     .chip--strong .chip-dismiss { color: rgba(255,255,255,0.7); }
     /* Chip group */
     .chip-group { display: flex; flex-wrap: wrap; gap: var(--space-200); align-items: center; }
+    /* Contextual section label used in preview (matches chip-group Figma usage) */
+    .chip-ctx-label {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      font-weight: 500;
+      color: var(--color-content-default);
+      margin: 0;
+    }
 
     /* ─────────────────────────────────────────
        RADIO
@@ -6397,10 +6405,11 @@
             <div class="toggle-switch">
               <input type="checkbox" id="chip-badge-switch">
               <div class="toggle-track">
-                <div class="toggle-handle"></div>
-                <div class="toggle-icon">
-                  <svg class="icon-check" viewBox="0 0 10 8" fill="none" aria-hidden="true"><path d="M1 4L3.5 6.5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg class="icon-x"     viewBox="0 0 8 8"  fill="none" aria-hidden="true"><path d="M1 1L7 7M7 1L1 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -6409,8 +6418,8 @@
 
         </div>
 
-        <!-- Live chip preview -->
-        <div class="preview-canvas" id="chip-live-preview" style="min-height:96px;"></div>
+        <!-- Live chip preview — contextual chip-group view -->
+        <div class="preview-canvas" id="chip-live-preview" style="flex-direction:column; align-items:flex-start; padding: var(--space-700) var(--space-800); gap: var(--space-600); min-height: 120px;"></div>
 
       </div>
 
@@ -6651,67 +6660,95 @@
         var preview = document.getElementById('chip-live-preview');
         var badgeCtrl = document.getElementById('chip-badge-control');
 
+        function makeCtxLabel(text) {
+          var p = document.createElement('p');
+          p.className = 'chip-ctx-label';
+          p.textContent = text;
+          return p;
+        }
+
+        function makeChipGroup() {
+          var g = document.createElement('div');
+          g.className = 'chip-group';
+          return g;
+        }
+
         function renderPreview() {
-          var group = document.createElement('div');
-          group.className = 'chip-group';
+          preview.innerHTML = '';
 
           if (currentType === 'toggle') {
-            var items = [
-              { label: 'All',          selected: true,  badge: null },
-              { label: 'Photography',  selected: false, badge: 12   },
-              { label: 'Motion',       selected: false, badge: 5    },
-              { label: 'Color',        selected: false, badge: null },
-              { label: 'Type',         selected: false, badge: null },
-              { label: 'Space',        selected: false, badge: null },
-              { label: 'Archive',      selected: false, badge: null, disabled: true }
+            // Two labeled groups: Filter by + Categories
+            var filterItems = [
+              { label: 'All',         selected: true,  badge: null },
+              { label: 'Photography', selected: false, badge: 12   },
+              { label: 'Motion',      selected: false, badge: 5    },
+              { label: 'Color',       selected: false, badge: null },
+              { label: 'Type',        selected: false, badge: null },
+              { label: 'Space',       selected: false, badge: null },
             ];
-            items.forEach(function(item) {
-              var btn = document.createElement('button');
-              btn.className = 'chip' + (item.selected ? ' chip--selected' : '') + (item.disabled ? ' chip--disabled' : '');
-              btn.type = 'button';
-              if (!item.disabled) btn.setAttribute('aria-pressed', String(!!item.selected));
-              if (item.disabled)  btn.disabled = true;
-              var badgeHtml = (showBadge && item.badge != null) ? ' <span class="chip-badge">' + item.badge + '</span>' : '';
-              btn.innerHTML = item.label + badgeHtml;
-              if (!item.disabled) {
+            var catItems = [
+              { label: 'Editorial',   selected: false, badge: null },
+              { label: 'Campaign',    selected: true,  badge: null },
+              { label: 'Product',     selected: false, badge: null },
+              { label: 'Portrait',    selected: false, badge: null },
+            ];
+
+            [{ sectionLabel: 'Filter by', items: filterItems }, { sectionLabel: 'Categories', items: catItems }].forEach(function(section) {
+              preview.appendChild(makeCtxLabel(section.sectionLabel));
+              var group = makeChipGroup();
+              section.items.forEach(function(item) {
+                var btn = document.createElement('button');
+                btn.className = 'chip' + (item.selected ? ' chip--selected' : '');
+                btn.type = 'button';
+                btn.setAttribute('aria-pressed', String(!!item.selected));
+                var badgeHtml = (showBadge && item.badge != null) ? '<span class="chip-badge">' + item.badge + '</span>' : '';
+                btn.innerHTML = item.label + (badgeHtml ? ' ' + badgeHtml : '');
                 btn.addEventListener('click', function() {
                   var p = btn.getAttribute('aria-pressed') === 'true';
                   btn.setAttribute('aria-pressed', String(!p));
                   btn.classList.toggle('chip--selected', !p);
                 });
-              }
-              group.appendChild(btn);
+                group.appendChild(btn);
+              });
+              preview.appendChild(group);
             });
 
           } else if (currentType === 'toggle-strong') {
-            var sortItems = ['Latest', 'Popular', 'Trending', 'A–Z'];
-            sortItems.forEach(function(label, i) {
+            preview.appendChild(makeCtxLabel('Sort by'));
+            var sortGroup = makeChipGroup();
+            ['Latest', 'Popular', 'Trending', 'A–Z'].forEach(function(label, i) {
               var btn = document.createElement('button');
               btn.className = 'chip chip--strong' + (i === 0 ? ' chip--selected' : '');
               btn.type = 'button';
               btn.setAttribute('aria-pressed', String(i === 0));
               btn.textContent = label;
               btn.addEventListener('click', function() {
-                group.querySelectorAll('.chip--strong').forEach(function(c) {
+                sortGroup.querySelectorAll('.chip--strong').forEach(function(c) {
                   c.classList.remove('chip--selected');
                   c.setAttribute('aria-pressed', 'false');
                 });
                 btn.classList.add('chip--selected');
                 btn.setAttribute('aria-pressed', 'true');
               });
-              group.appendChild(btn);
+              sortGroup.appendChild(btn);
             });
+            preview.appendChild(sortGroup);
 
           } else if (currentType === 'dropdown') {
-            ['Category', 'Format', 'Date', 'Location'].forEach(function(label) {
+            preview.appendChild(makeCtxLabel('Refine'));
+            var dropGroup = makeChipGroup();
+            ['Category', 'Format', 'Date range', 'Location'].forEach(function(label) {
               var btn = document.createElement('button');
               btn.className = 'chip chip--dropdown';
               btn.type = 'button';
               btn.innerHTML = label + ' ' + CHEVRON_SVG;
-              group.appendChild(btn);
+              dropGroup.appendChild(btn);
             });
+            preview.appendChild(dropGroup);
 
           } else if (currentType === 'dismissible') {
+            preview.appendChild(makeCtxLabel('Active filters'));
+            var dimGroup = makeChipGroup();
             ['Design System', 'Cards', 'Typography', 'Motion'].forEach(function(label) {
               var btn = document.createElement('button');
               btn.className = 'chip chip--dismissible chip--selected';
@@ -6724,12 +6761,10 @@
                 btn.style.transform = 'scale(0.85)';
                 setTimeout(function() { btn.remove(); }, 160);
               });
-              group.appendChild(btn);
+              dimGroup.appendChild(btn);
             });
+            preview.appendChild(dimGroup);
           }
-
-          preview.innerHTML = '';
-          preview.appendChild(group);
         }
 
         // Badge control visibility
