@@ -1290,6 +1290,11 @@
     .doc-table th,
     .doc-table td { min-width: 80px; }
     .doc-table td:last-child { min-width: 160px; } /* description/guidance col */
+    /* First-column label cells in accessibility / pattern tables → violet */
+    .doc-table td:first-child:not([class]) {
+      color: var(--doc-token-color);
+      font-weight: 500;
+    }
 
     /* ─────────────────────────────────────────
        CODE SYNTAX — ůnica theme (Prism.js)
@@ -2257,6 +2262,7 @@
     .chip:active:not([disabled]):not(.chip--disabled) {
       background: var(--color-background-secondary);
     }
+    /* Toggle — selected: thick ink border + tinted bg */
     .chip--selected, .chip[aria-pressed="true"] {
       border-width: 2px;
       border-color: var(--color-content-default);
@@ -2264,6 +2270,18 @@
     }
     .chip--selected:hover, .chip[aria-pressed="true"]:hover {
       background: var(--color-background-secondary);
+    }
+    /* Toggle-strong — selected: dark-filled (ink bg, white text) */
+    .chip--strong.chip--selected,
+    .chip--strong[aria-pressed="true"] {
+      background: var(--color-content-default);
+      border-color: var(--color-content-default);
+      color: #fff;
+    }
+    .chip--strong.chip--selected:hover,
+    .chip--strong[aria-pressed="true"]:hover {
+      background: var(--color-content-default);
+      opacity: 0.88;
     }
     .chip[disabled], .chip--disabled {
       background: var(--color-background-ui);
@@ -2278,7 +2296,8 @@
       padding: 0 18px;
       font-weight: 600;
     }
-    /* Count badge inside chip */
+    /* Count badge inside chip — tightened right padding when badge present */
+    .chip:has(.chip-badge) { padding-right: 6px; }
     .chip-badge {
       display: inline-flex;
       align-items: center;
@@ -2293,27 +2312,24 @@
       color: var(--color-content-subtle);
       line-height: 1;
     }
-    .chip--selected .chip-badge, .chip[aria-pressed="true"] .chip-badge {
+    .chip--selected .chip-badge,
+    .chip[aria-pressed="true"] .chip-badge {
       background: var(--color-content-default);
       color: var(--color-background-page);
+    }
+    /* Toggle-strong selected badge — white-tinted */
+    .chip--strong.chip--selected .chip-badge,
+    .chip--strong[aria-pressed="true"] .chip-badge {
+      background: rgba(255,255,255,0.22);
+      color: #fff;
     }
     /* Dropdown chevron */
     .chip-chevron { width: 12px; height: 12px; flex-shrink: 0; color: var(--color-content-subtle); }
     /* Dismiss × */
     .chip-dismiss { width: 14px; height: 14px; flex-shrink: 0; color: var(--color-content-subtle); margin-right: -2px; }
+    .chip--strong .chip-dismiss { color: rgba(255,255,255,0.7); }
     /* Chip group */
     .chip-group { display: flex; flex-wrap: wrap; gap: var(--space-200); align-items: center; }
-    /* Preview rows for chip doc */
-    .chip-preview-row { display: flex; flex-direction: column; gap: var(--space-300); width: 100%; }
-    .chip-preview-row + .chip-preview-row { margin-top: var(--space-600); }
-    .chip-preview-row-label {
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-xs);
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-content-subtle);
-    }
 
     /* ─────────────────────────────────────────
        RADIO
@@ -6357,54 +6373,45 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
-        <p class="doc-section-description">Click chips to toggle. Dismissible chips can be removed. Sort chips are single-select.</p>
+        <p class="doc-section-description">Interact with the controls to explore chip types and badge variants.</p>
 
-        <div class="preview-canvas" style="flex-direction: column; align-items: flex-start; gap: var(--space-700); padding: var(--space-700);">
+        <!-- Controls -->
+        <div class="btn-controls">
 
-          <!-- Filter — multi-select toggle chips -->
-          <div class="chip-preview-row">
-            <span class="chip-preview-row-label">Filter</span>
-            <div class="chip-group" id="chip-filter-group">
-              <button class="chip chip--selected" aria-pressed="true"  type="button" data-chip-toggle>All</button>
-              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Photography <span class="chip-badge">12</span></button>
-              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Motion <span class="chip-badge">5</span></button>
-              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Color</button>
-              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Type</button>
-              <button class="chip" aria-pressed="false" type="button" data-chip-toggle>Space</button>
-              <button class="chip chip--disabled" type="button" disabled>Archive</button>
-            </div>
+          <!-- Type picker -->
+          <div class="dropdown" id="chip-type-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="chip-type-label">Toggle</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Chip type">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="toggle"         tabindex="0">Toggle</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="toggle-strong"  tabindex="0">Toggle-strong</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="dropdown"       tabindex="0">Dropdown</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="dismissible"    tabindex="0">Dismissible</li>
+            </ul>
           </div>
 
-          <!-- Sort — single-select toggle-strong chips -->
-          <div class="chip-preview-row">
-            <span class="chip-preview-row-label">Sort · toggle-strong</span>
-            <div class="chip-group" id="chip-sort-group">
-              <button class="chip chip--strong chip--selected" aria-pressed="true"  type="button" data-chip-radio>Latest</button>
-              <button class="chip chip--strong" aria-pressed="false" type="button" data-chip-radio>Popular</button>
-              <button class="chip chip--strong" aria-pressed="false" type="button" data-chip-radio>A–Z</button>
+          <!-- Badge toggle (toggle type only) -->
+          <label class="switch-item" id="chip-badge-control" style="flex-shrink:0;">
+            <div class="toggle-switch">
+              <input type="checkbox" id="chip-badge-switch">
+              <div class="toggle-track">
+                <div class="toggle-handle"></div>
+                <div class="toggle-icon">
+                  <svg class="icon-check" viewBox="0 0 10 8" fill="none" aria-hidden="true"><path d="M1 4L3.5 6.5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="icon-x"     viewBox="0 0 8 8"  fill="none" aria-hidden="true"><path d="M1 1L7 7M7 1L1 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <!-- Active filters — dismissible chips -->
-          <div class="chip-preview-row">
-            <span class="chip-preview-row-label">Active filters · dismissible</span>
-            <div class="chip-group" id="chip-active-group">
-              <button class="chip chip--dismissible chip--selected" aria-pressed="true" type="button" data-chip-dismiss>
-                Design System
-                <svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-              <button class="chip chip--dismissible chip--selected" aria-pressed="true" type="button" data-chip-dismiss>
-                Cards
-                <svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-              <button class="chip chip--dismissible chip--selected" aria-pressed="true" type="button" data-chip-dismiss>
-                Buttons
-                <svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-            </div>
-          </div>
+            <span class="switch-item-text">Badge</span>
+          </label>
 
         </div>
+
+        <!-- Live chip preview -->
+        <div class="preview-canvas" id="chip-live-preview" style="min-height:96px;"></div>
+
       </div>
 
       <!-- ── Show code ───────────────────────── -->
@@ -6634,7 +6641,148 @@
       <!-- ── Chip JS ───────────────────────────── -->
       <script>
       (function() {
-        // Toggle chips — multi-select
+        var DISMISS_SVG = '<svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+        var CHEVRON_SVG = '<svg class="chip-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+        // ── Live preview state ──────────────────────────────────────────
+        var currentType  = 'toggle';
+        var showBadge    = false;
+
+        var preview = document.getElementById('chip-live-preview');
+        var badgeCtrl = document.getElementById('chip-badge-control');
+
+        function renderPreview() {
+          var group = document.createElement('div');
+          group.className = 'chip-group';
+
+          if (currentType === 'toggle') {
+            var items = [
+              { label: 'All',          selected: true,  badge: null },
+              { label: 'Photography',  selected: false, badge: 12   },
+              { label: 'Motion',       selected: false, badge: 5    },
+              { label: 'Color',        selected: false, badge: null },
+              { label: 'Type',         selected: false, badge: null },
+              { label: 'Space',        selected: false, badge: null },
+              { label: 'Archive',      selected: false, badge: null, disabled: true }
+            ];
+            items.forEach(function(item) {
+              var btn = document.createElement('button');
+              btn.className = 'chip' + (item.selected ? ' chip--selected' : '') + (item.disabled ? ' chip--disabled' : '');
+              btn.type = 'button';
+              if (!item.disabled) btn.setAttribute('aria-pressed', String(!!item.selected));
+              if (item.disabled)  btn.disabled = true;
+              var badgeHtml = (showBadge && item.badge != null) ? ' <span class="chip-badge">' + item.badge + '</span>' : '';
+              btn.innerHTML = item.label + badgeHtml;
+              if (!item.disabled) {
+                btn.addEventListener('click', function() {
+                  var p = btn.getAttribute('aria-pressed') === 'true';
+                  btn.setAttribute('aria-pressed', String(!p));
+                  btn.classList.toggle('chip--selected', !p);
+                });
+              }
+              group.appendChild(btn);
+            });
+
+          } else if (currentType === 'toggle-strong') {
+            var sortItems = ['Latest', 'Popular', 'Trending', 'A–Z'];
+            sortItems.forEach(function(label, i) {
+              var btn = document.createElement('button');
+              btn.className = 'chip chip--strong' + (i === 0 ? ' chip--selected' : '');
+              btn.type = 'button';
+              btn.setAttribute('aria-pressed', String(i === 0));
+              btn.textContent = label;
+              btn.addEventListener('click', function() {
+                group.querySelectorAll('.chip--strong').forEach(function(c) {
+                  c.classList.remove('chip--selected');
+                  c.setAttribute('aria-pressed', 'false');
+                });
+                btn.classList.add('chip--selected');
+                btn.setAttribute('aria-pressed', 'true');
+              });
+              group.appendChild(btn);
+            });
+
+          } else if (currentType === 'dropdown') {
+            ['Category', 'Format', 'Date', 'Location'].forEach(function(label) {
+              var btn = document.createElement('button');
+              btn.className = 'chip chip--dropdown';
+              btn.type = 'button';
+              btn.innerHTML = label + ' ' + CHEVRON_SVG;
+              group.appendChild(btn);
+            });
+
+          } else if (currentType === 'dismissible') {
+            ['Design System', 'Cards', 'Typography', 'Motion'].forEach(function(label) {
+              var btn = document.createElement('button');
+              btn.className = 'chip chip--dismissible chip--selected';
+              btn.type = 'button';
+              btn.setAttribute('aria-pressed', 'true');
+              btn.innerHTML = label + ' ' + DISMISS_SVG;
+              btn.addEventListener('click', function() {
+                btn.style.transition = 'opacity 150ms, transform 150ms';
+                btn.style.opacity = '0';
+                btn.style.transform = 'scale(0.85)';
+                setTimeout(function() { btn.remove(); }, 160);
+              });
+              group.appendChild(btn);
+            });
+          }
+
+          preview.innerHTML = '';
+          preview.appendChild(group);
+        }
+
+        // Badge control visibility
+        function updateBadgeVisibility() {
+          badgeCtrl.style.display = currentType === 'toggle' ? '' : 'none';
+        }
+
+        // Type dropdown wiring
+        var typePicker = document.getElementById('chip-type-picker');
+        if (typePicker) {
+          var trigger = typePicker.querySelector('.dropdown-trigger');
+          var menu    = typePicker.querySelector('.dropdown-menu');
+          var label   = document.getElementById('chip-type-label');
+
+          trigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var open = trigger.getAttribute('aria-expanded') === 'true';
+            trigger.setAttribute('aria-expanded', String(!open));
+            menu.classList.toggle('is-open', !open);
+          });
+          document.addEventListener('click', function() {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('is-open');
+          });
+          menu.querySelectorAll('.dropdown-option').forEach(function(opt) {
+            opt.addEventListener('click', function(e) {
+              e.stopPropagation();
+              menu.querySelectorAll('.dropdown-option').forEach(function(o) { o.setAttribute('aria-selected', 'false'); });
+              opt.setAttribute('aria-selected', 'true');
+              currentType = opt.dataset.value;
+              label.textContent = opt.textContent.trim();
+              trigger.setAttribute('aria-expanded', 'false');
+              menu.classList.remove('is-open');
+              updateBadgeVisibility();
+              renderPreview();
+            });
+          });
+        }
+
+        // Badge switch wiring
+        var badgeSwitch = document.getElementById('chip-badge-switch');
+        if (badgeSwitch) {
+          badgeSwitch.addEventListener('change', function() {
+            showBadge = badgeSwitch.checked;
+            renderPreview();
+          });
+        }
+
+        updateBadgeVisibility();
+        renderPreview();
+
+        // ── Variants / States table chip interactions ───────────────────
+        // Toggle chips (in tables) — multi-select
         document.querySelectorAll('[data-chip-toggle]').forEach(function(chip) {
           chip.addEventListener('click', function() {
             var pressed = chip.getAttribute('aria-pressed') === 'true';
@@ -6642,11 +6790,11 @@
             chip.classList.toggle('chip--selected', !pressed);
           });
         });
-        // Radio chips — single-select (toggle-strong sort group)
+        // Radio chips — single-select
         document.querySelectorAll('[data-chip-radio]').forEach(function(chip) {
           chip.addEventListener('click', function() {
-            var group = chip.closest('.chip-group');
-            group.querySelectorAll('[data-chip-radio]').forEach(function(c) {
+            var grp = chip.closest('.chip-group');
+            grp.querySelectorAll('[data-chip-radio]').forEach(function(c) {
               c.setAttribute('aria-pressed', 'false');
               c.classList.remove('chip--selected');
             });
@@ -6654,7 +6802,7 @@
             chip.classList.add('chip--selected');
           });
         });
-        // Dismiss chips — remove on click
+        // Dismiss chips
         document.querySelectorAll('[data-chip-dismiss]').forEach(function(chip) {
           chip.addEventListener('click', function() {
             chip.style.transition = 'opacity 150ms, transform 150ms';
@@ -6663,15 +6811,16 @@
             setTimeout(function() { chip.remove(); }, 160);
           });
         });
-        // Code reveal toggle
-        var codeBtn = document.getElementById('chip-code-toggle');
+
+        // ── Code reveal ─────────────────────────────────────────────────
+        var codeBtn   = document.getElementById('chip-code-toggle');
         var codePanel = document.getElementById('chip-code-reveal');
         if (codeBtn && codePanel) {
           codeBtn.addEventListener('click', function() {
             var open = codeBtn.getAttribute('aria-expanded') === 'true';
             codeBtn.setAttribute('aria-expanded', String(!open));
             codeBtn.querySelector('.code-reveal-btn-label').textContent = open ? 'Show code' : 'Hide code';
-            if (open) { codePanel.hidden = true; } else { codePanel.hidden = false; }
+            codePanel.hidden = open;
           });
         }
       })();
