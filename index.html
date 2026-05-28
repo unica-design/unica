@@ -2281,7 +2281,7 @@
     .chip--strong.chip--selected:hover,
     .chip--strong[aria-pressed="true"]:hover {
       background: var(--color-content-default);
-      opacity: 0.88;
+      color: #fff;
     }
     .chip[disabled], .chip--disabled {
       background: var(--color-background-ui);
@@ -2330,6 +2330,16 @@
     .chip--strong .chip-dismiss { color: rgba(255,255,255,0.7); }
     /* Chip group */
     .chip-group { display: flex; flex-wrap: wrap; gap: var(--space-200); align-items: center; }
+    /* Leading icon inside chip */
+    .chip-icon { width: 14px; height: 14px; flex-shrink: 0; }
+    /* 6-state chip matrix — overrides the default 5-col grid */
+    .states-matrix--6col .states-matrix-head,
+    .states-matrix--6col .states-matrix-row {
+      grid-template-columns: 96px repeat(6, 1fr);
+      min-width: 640px;
+    }
+    /* Focus demo — mirrors :focus-visible outline used across all components */
+    .chip.is-demo-focused { outline: 2px solid var(--color-action-default); outline-offset: 2px; }
     /* Contextual section label used in preview (matches chip-group Figma usage) */
     .chip-ctx-label {
       font-family: var(--font-family-sans);
@@ -6400,6 +6410,22 @@
             </ul>
           </div>
 
+          <!-- Leading icon toggle -->
+          <label class="switch-item" id="chip-icon-control" style="flex-shrink:0;">
+            <div class="toggle-switch">
+              <input type="checkbox" id="chip-icon-switch">
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Leading icon</span>
+          </label>
+
           <!-- Badge toggle (toggle type only) -->
           <label class="switch-item" id="chip-badge-control" style="flex-shrink:0;">
             <div class="toggle-switch">
@@ -6528,12 +6554,13 @@
       <div class="doc-section">
         <h2 class="doc-section-title">States</h2>
         <hr class="doc-rule">
-        <div class="states-matrix">
+        <div class="states-matrix states-matrix--6col">
           <div class="states-matrix-head">
             <div class="states-matrix-head-spacer"></div>
             <div class="states-matrix-head-cell">Default</div>
             <div class="states-matrix-head-cell">Hover</div>
             <div class="states-matrix-head-cell">Pressed</div>
+            <div class="states-matrix-head-cell">Focused</div>
             <div class="states-matrix-head-cell">Selected</div>
             <div class="states-matrix-head-cell">Disabled</div>
           </div>
@@ -6542,6 +6569,7 @@
             <div class="states-matrix-cell"><button class="chip" tabindex="-1">Label</button></div>
             <div class="states-matrix-cell"><button class="chip" style="background:var(--color-background-ui);" tabindex="-1">Label</button></div>
             <div class="states-matrix-cell"><button class="chip" style="background:var(--color-background-secondary);border-color:var(--color-border-strong);" tabindex="-1">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip is-demo-focused" tabindex="-1">Label</button></div>
             <div class="states-matrix-cell"><button class="chip chip--selected" tabindex="-1" aria-pressed="true">Label</button></div>
             <div class="states-matrix-cell"><button class="chip chip--disabled" tabindex="-1" disabled>Label</button></div>
           </div>
@@ -6550,6 +6578,7 @@
             <div class="states-matrix-cell"><button class="chip chip--strong" tabindex="-1">Label</button></div>
             <div class="states-matrix-cell"><button class="chip chip--strong" style="background:var(--color-background-ui);" tabindex="-1">Label</button></div>
             <div class="states-matrix-cell"><button class="chip chip--strong" style="background:var(--color-background-secondary);border-color:var(--color-border-strong);" tabindex="-1">Label</button></div>
+            <div class="states-matrix-cell"><button class="chip chip--strong is-demo-focused" tabindex="-1">Label</button></div>
             <div class="states-matrix-cell"><button class="chip chip--strong chip--selected" tabindex="-1" aria-pressed="true">Label</button></div>
             <div class="states-matrix-cell"><button class="chip chip--strong chip--disabled" tabindex="-1" disabled>Label</button></div>
           </div>
@@ -6652,13 +6681,16 @@
       (function() {
         var DISMISS_SVG = '<svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
         var CHEVRON_SVG = '<svg class="chip-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        var ICON_SVG    = '<svg class="chip-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg>';
 
         // ── Live preview state ──────────────────────────────────────────
         var currentType  = 'toggle';
         var showBadge    = false;
+        var showIcon     = false;
 
-        var preview = document.getElementById('chip-live-preview');
+        var preview   = document.getElementById('chip-live-preview');
         var badgeCtrl = document.getElementById('chip-badge-control');
+        var iconCtrl  = document.getElementById('chip-icon-control');
 
         function makeCtxLabel(text) {
           var p = document.createElement('p');
@@ -6701,8 +6733,9 @@
                 btn.className = 'chip' + (item.selected ? ' chip--selected' : '');
                 btn.type = 'button';
                 btn.setAttribute('aria-pressed', String(!!item.selected));
+                var iconHtml  = showIcon ? ICON_SVG : '';
                 var badgeHtml = (showBadge && item.badge != null) ? '<span class="chip-badge">' + item.badge + '</span>' : '';
-                btn.innerHTML = item.label + (badgeHtml ? ' ' + badgeHtml : '');
+                btn.innerHTML = iconHtml + item.label + (badgeHtml ? ' ' + badgeHtml : '');
                 btn.addEventListener('click', function() {
                   var p = btn.getAttribute('aria-pressed') === 'true';
                   btn.setAttribute('aria-pressed', String(!p));
@@ -6721,7 +6754,7 @@
               btn.className = 'chip chip--strong' + (i === 0 ? ' chip--selected' : '');
               btn.type = 'button';
               btn.setAttribute('aria-pressed', String(i === 0));
-              btn.textContent = label;
+              btn.innerHTML = (showIcon ? ICON_SVG : '') + label;
               btn.addEventListener('click', function() {
                 sortGroup.querySelectorAll('.chip--strong').forEach(function(c) {
                   c.classList.remove('chip--selected');
@@ -6741,7 +6774,7 @@
               var btn = document.createElement('button');
               btn.className = 'chip chip--dropdown';
               btn.type = 'button';
-              btn.innerHTML = label + ' ' + CHEVRON_SVG;
+              btn.innerHTML = (showIcon ? ICON_SVG : '') + label + ' ' + CHEVRON_SVG;
               dropGroup.appendChild(btn);
             });
             preview.appendChild(dropGroup);
@@ -6754,7 +6787,7 @@
               btn.className = 'chip chip--dismissible chip--selected';
               btn.type = 'button';
               btn.setAttribute('aria-pressed', 'true');
-              btn.innerHTML = label + ' ' + DISMISS_SVG;
+              btn.innerHTML = (showIcon ? ICON_SVG : '') + label + ' ' + DISMISS_SVG;
               btn.addEventListener('click', function() {
                 btn.style.transition = 'opacity 150ms, transform 150ms';
                 btn.style.opacity = '0';
@@ -6767,7 +6800,7 @@
           }
         }
 
-        // Badge control visibility
+        // Control visibility — badge only makes sense for toggle
         function updateBadgeVisibility() {
           badgeCtrl.style.display = currentType === 'toggle' ? '' : 'none';
         }
@@ -6805,6 +6838,15 @@
         if (badgeSwitch) {
           badgeSwitch.addEventListener('change', function() {
             showBadge = badgeSwitch.checked;
+            renderPreview();
+          });
+        }
+
+        // Icon switch wiring
+        var iconSwitch = document.getElementById('chip-icon-switch');
+        if (iconSwitch) {
+          iconSwitch.addEventListener('change', function() {
+            showIcon = iconSwitch.checked;
             renderPreview();
           });
         }
