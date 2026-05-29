@@ -3676,7 +3676,7 @@
     .variants-table .choice-btn--vertical { width: 160px; }
     /* Reversed swatch — dark background for all cells */
     .variants-table--reversed th,
-    .variants-table--reversed td        { background: var(--color-background-contrast); border-bottom-color: var(--primitive-ink-700); }
+    .variants-table--reversed td        { background: var(--primitive-ink-900); border-bottom-color: var(--primitive-ink-700); }
     .variants-table--reversed th        { color: var(--primitive-ink-500); }
     .variants-table--reversed td:first-child { color: var(--primitive-ink-500); }
     /* Rounded container for any reversed variants swatch — universal */
@@ -4059,7 +4059,7 @@
     .states-matrix--reversed .states-matrix-head-cell,
     .states-matrix--reversed .states-matrix-label,
     .states-matrix--reversed .states-matrix-cell {
-      background: var(--color-background-contrast);
+      background: var(--primitive-ink-900);
     }
     .states-matrix--reversed .states-matrix-head-spacer,
     .states-matrix--reversed .states-matrix-head-cell,
@@ -5566,6 +5566,31 @@
       gap: var(--space-300);
     }
 
+    /* ─────────────────────────────────────────────────────────────
+       LIGHT-MODE LOCK — Force a subtree to always render light-mode
+       inverse tokens, regardless of the document's color scheme.
+       Used on reversed component previews so they always show
+       light-mode (white buttons on dark bg) in both themes.
+    ───────────────────────────────────────────────────────────── */
+    [data-theme="dark"] [data-theme="light"] {
+      --color-action-inverse-default:       var(--primitive-cafe-0);
+      --color-action-inverse-hover:         var(--primitive-ink-50);
+      --color-action-inverse-active:        var(--primitive-ink-200);
+      --color-action-inverse-hover-subtle:  rgba(255, 255, 255, 0.16);
+      --color-action-inverse-active-subtle: rgba(255, 255, 255, 0.24);
+      --color-inverse:                      var(--primitive-cafe-0);
+      --color-content-inverse:              var(--primitive-cafe-0);
+      --color-content-inverse-subtle:       var(--primitive-ink-600);
+      --color-content-inverse-disabled:     rgba(255, 255, 255, 0.5);
+      --color-background-contrast:          var(--primitive-ink-900);
+      --color-background-inverse:           var(--primitive-ink-900);
+      --color-background-inverse-selection: var(--primitive-ink-800);
+      --color-background-inverse-disabled:  var(--primitive-ink-800);
+      --color-border-inverse:               var(--primitive-cafe-0);
+      --color-border-inverse-default:       var(--primitive-ink-700);
+      --color-border-inverse-subtle:        var(--primitive-ink-800);
+    }
+
   </style>
 </head>
 <body>
@@ -6140,7 +6165,7 @@
         <!-- Standard + Reversed — 2-column preview (populated by JS) -->
         <div class="btn-preview-cols">
           <div class="btn-preview-col" id="btn-col-standard"></div>
-          <div class="btn-preview-col btn-preview-col--dark" id="btn-col-reversed"></div>
+          <div class="btn-preview-col btn-preview-col--dark" id="btn-col-reversed" data-theme="light"></div>
         </div>
 
         <!-- Show / hide code — standard buttons -->
@@ -6278,7 +6303,7 @@
         </div><!-- /#btn-states-standard -->
 
         <!-- Reversed states matrix (hidden until toggle is on) -->
-        <div id="btn-states-reversed" hidden>
+        <div id="btn-states-reversed" hidden data-theme="light">
           <div class="states-matrix states-matrix--reversed">
             <div class="states-matrix-head">
               <div class="states-matrix-head-spacer"></div>
@@ -6659,7 +6684,7 @@
         </div><!-- /#cb-states-standard -->
 
         <!-- Reversed variants table (hidden until toggle is on) -->
-        <div id="cb-states-reversed" hidden>
+        <div id="cb-states-reversed" hidden data-theme="light">
           <div class="table-wrap">
             <table class="variants-table variants-table--reversed">
               <thead>
@@ -9675,7 +9700,7 @@
           </div><!-- /#dp-states-standard -->
 
           <!-- Reversed states matrix (hidden until toggle is on) -->
-          <div id="dp-states-reversed" hidden>
+          <div id="dp-states-reversed" hidden data-theme="light">
             <div class="states-matrix states-matrix--reversed states-matrix--9col">
               <div class="states-matrix-head">
                 <div class="states-matrix-head-spacer"></div>
