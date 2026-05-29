@@ -9922,9 +9922,22 @@
         }
 
         function updateActionColors(rev) {
-          ['dp-fp-cancel','dp-fp-confirm','dp-cp-cancel','dp-cp-confirm'].forEach(function(id) {
-            var btn = document.getElementById(id);
-            if (btn) btn.classList.toggle('btn--inverse', rev);
+          var pairs = [
+            ['dp-fp-cancel',  'btn-outlined', 'btn-outlined-reversed'],
+            ['dp-fp-confirm', 'btn-filled',   'btn-filled-reversed'],
+            ['dp-cp-cancel',  'btn-outlined', 'btn-outlined-reversed'],
+            ['dp-cp-confirm', 'btn-filled',   'btn-filled-reversed'],
+          ];
+          pairs.forEach(function(p) {
+            var btn = document.getElementById(p[0]);
+            if (!btn) return;
+            if (rev) {
+              btn.classList.remove(p[1]);
+              btn.classList.add(p[2]);
+            } else {
+              btn.classList.remove(p[2]);
+              btn.classList.add(p[1]);
+            }
           });
         }
 
