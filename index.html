@@ -7758,10 +7758,10 @@
 
           <!-- Highlight color picker -->
           <div class="dropdown" id="link-color-picker">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span class="link-color-dot" id="link-color-dot-trigger" style="background:#E5E2E0;"></span>
-              <span id="link-color-label">Default</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" style="display:flex;align-items:center;gap:6px;">
+              <span id="link-color-label" style="order:2;">Default</span>
+              <span class="link-color-dot" id="link-color-dot-trigger" style="background:#E5E2E0;order:1;"></span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true" style="order:3;"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Highlight color">
               <li class="dropdown-option" role="option" aria-selected="true"  data-value="default"      data-color=""         tabindex="0"><span class="link-color-dot" style="background:#E5E2E0;"></span> Default</li>
