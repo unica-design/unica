@@ -5810,6 +5810,122 @@
       gap: var(--space-300);
     }
 
+    /* ─────────────────────────────────────────
+       LINK STANDALONE
+    ───────────────────────────────────────── */
+
+    /* Outer wrapper — carries the focus ring */
+    .link {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px;
+      border-radius: var(--corner-radius-xs);
+      color: var(--color-action-default);
+      font-family: var(--font-family-sans);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+      cursor: pointer;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: color 120ms ease;
+    }
+
+    /* Inner content area — receives the hover background */
+    .link-inner {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 4px;
+      border-radius: 2px;
+      transition: background 120ms ease;
+    }
+
+    /* Icon wrapper — size controlled by size modifier */
+    .link-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ── Sizes ── */
+    .link--large .link-inner  { height: 32px; font-size: var(--font-size-body-l); line-height: var(--font-leading-body-l); }
+    .link--medium .link-inner { height: 24px; font-size: var(--font-size-body-m); line-height: var(--font-leading-body-m); }
+    .link--small .link-inner  { height: 24px; font-size: var(--font-size-body-s); line-height: var(--font-leading-body-s); }
+
+    .link--large  .link-icon { width: 20px; height: 20px; }
+    .link--medium .link-icon { width: 18px; height: 18px; }
+    .link--small  .link-icon { width: 16px; height: 16px; }
+
+    /* ── Hover ── */
+    .link:hover .link-inner,
+    .link.is-demo-hover .link-inner {
+      background: var(--color-action-hover-subtle);
+    }
+    .link:hover,
+    .link.is-demo-hover {
+      color: var(--color-action-active);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ── Visited ── */
+    .link:visited,
+    .link.is-demo-visited {
+      color: var(--color-action-visited);
+    }
+    .link:visited:hover .link-inner,
+    .link.is-demo-visited.is-demo-hover .link-inner {
+      background: var(--color-action-hover-subtle);
+    }
+    .link:visited:hover,
+    .link.is-demo-visited.is-demo-hover {
+      color: var(--color-action-visited);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ── Focused ── */
+    .link:focus-visible,
+    .link.is-demo-focused {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 0;
+    }
+
+    /* ── Disabled ── */
+    .link[aria-disabled="true"],
+    .link.is-demo-disabled {
+      color: var(--color-content-disabled);
+      pointer-events: none;
+      cursor: default;
+    }
+
+    /* Preview canvas centering */
+    #link-preview-canvas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+    }
+
+    /* Variants layout */
+    .link-variants-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-900);
+      align-items: flex-start;
+    }
+    .link-variant-tile {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-400);
+    }
+    .link-variant-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-300);
+      align-items: flex-start;
+    }
+
 
   </style>
 </head>
@@ -7558,7 +7674,287 @@
 
     </div><!-- /#page-chips -->
     <div class="page-panel" id="page-tags"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Tags</h2><p class="section-description">Label-style elements for categorization and metadata.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-link"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Link Standalone</h2><p class="section-description">A standalone text link with optional icon, used outside of body copy.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-link">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Actions</p>
+        <h1 class="comp-title">Link Standalone</h1>
+        <p class="comp-description">A navigational text link used independently of body copy. Available in three sizes with optional leading or trailing icon. Distinct visited and disabled states communicate link history and availability at a glance.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=856-7802" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Adjust size and icon configuration. Hover the link to feel the state transitions.</p>
+
+        <!-- Controls -->
+        <div class="btn-controls">
+
+          <!-- Size picker -->
+          <div class="dropdown" id="link-size-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="link-size-label">Large</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Link size">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="large"  tabindex="0">Large</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="medium" tabindex="0">Medium</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="small"  tabindex="0">Small</li>
+            </ul>
+          </div>
+
+          <!-- Icon picker -->
+          <div class="dropdown" id="link-icon-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="link-icon-label">Label only</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Icon configuration">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="label-only"     tabindex="0">Label only</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="leading-icon"   tabindex="0">Leading icon</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="trailing-icon"  tabindex="0">Trailing icon</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="preview-canvas" id="link-preview-canvas"></div>
+
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           2. VARIANTS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <div class="link-variants-row">
+
+          <!-- Label only -->
+          <div class="link-variant-tile">
+            <p class="avatar-group-label">Label only</p>
+            <div class="link-variant-stack">
+              <a class="link link--large" href="#" tabindex="-1">
+                <span class="link-inner"><span class="link-text">Visit page</span></span>
+              </a>
+              <a class="link link--medium" href="#" tabindex="-1">
+                <span class="link-inner"><span class="link-text">Visit page</span></span>
+              </a>
+              <a class="link link--small" href="#" tabindex="-1">
+                <span class="link-inner"><span class="link-text">Visit page</span></span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Leading icon -->
+          <div class="link-variant-tile">
+            <p class="avatar-group-label">Leading icon</p>
+            <div class="link-variant-stack">
+              <a class="link link--large" href="#" tabindex="-1">
+                <span class="link-inner">
+                  <span class="link-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-unica"/></svg></span>
+                  <span class="link-text">Visit page</span>
+                </span>
+              </a>
+              <a class="link link--medium" href="#" tabindex="-1">
+                <span class="link-inner">
+                  <span class="link-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><use href="#ico-unica"/></svg></span>
+                  <span class="link-text">Visit page</span>
+                </span>
+              </a>
+              <a class="link link--small" href="#" tabindex="-1">
+                <span class="link-inner">
+                  <span class="link-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-unica"/></svg></span>
+                  <span class="link-text">Visit page</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Trailing icon -->
+          <div class="link-variant-tile">
+            <p class="avatar-group-label">Trailing icon</p>
+            <div class="link-variant-stack">
+              <a class="link link--large" href="#" tabindex="-1">
+                <span class="link-inner">
+                  <span class="link-text">Visit page</span>
+                  <span class="link-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span>
+                </span>
+              </a>
+              <a class="link link--medium" href="#" tabindex="-1">
+                <span class="link-inner">
+                  <span class="link-text">Visit page</span>
+                  <span class="link-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span>
+                </span>
+              </a>
+              <a class="link link--small" href="#" tabindex="-1">
+                <span class="link-inner">
+                  <span class="link-text">Visit page</span>
+                  <span class="link-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           3. STATES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">States</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <div class="states-matrix">
+            <div class="states-matrix-head">
+              <div class="states-matrix-head-spacer"></div>
+              <div class="states-matrix-head-cell">Default</div>
+              <div class="states-matrix-head-cell">Hover</div>
+              <div class="states-matrix-head-cell">Visited</div>
+              <div class="states-matrix-head-cell">Focused</div>
+              <div class="states-matrix-head-cell">Disabled</div>
+            </div>
+            <!-- Large -->
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Large</div>
+              <div class="states-matrix-cell">
+                <a class="link link--large" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--large is-demo-hover" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--large is-demo-visited" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--large is-demo-focused" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--large is-demo-disabled" href="#" aria-disabled="true" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+            </div>
+            <!-- Medium -->
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Medium</div>
+              <div class="states-matrix-cell">
+                <a class="link link--medium" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--medium is-demo-hover" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--medium is-demo-visited" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--medium is-demo-focused" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--medium is-demo-disabled" href="#" aria-disabled="true" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+            </div>
+            <!-- Small -->
+            <div class="states-matrix-row">
+              <div class="states-matrix-label">Small</div>
+              <div class="states-matrix-cell">
+                <a class="link link--small" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--small is-demo-hover" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--small is-demo-visited" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--small is-demo-focused" href="#" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+              <div class="states-matrix-cell">
+                <a class="link link--small is-demo-disabled" href="#" aria-disabled="true" tabindex="-1"><span class="link-inner"><span class="link-text">Link</span><span class="link-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           4. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <ul class="doc-list">
+          <li>Always use a native <code class="inline-code">&lt;a&gt;</code> with a valid <code class="inline-code">href</code> — never a <code class="inline-code">&lt;button&gt;</code> or <code class="inline-code">&lt;div&gt;</code> for navigation.</li>
+          <li>Write descriptive link text. Avoid "click here" or "read more" without surrounding context to differentiate.</li>
+          <li>Icons are decorative — mark them <code class="inline-code">aria-hidden="true"</code> and ensure the visible text label stands alone.</li>
+          <li>The focus ring uses <code class="inline-code">outline</code> rather than <code class="inline-code">box-shadow</code> so it remains visible in Windows High Contrast Mode.</li>
+          <li>Disabled links use <code class="inline-code">aria-disabled="true"</code> with <code class="inline-code">pointer-events: none</code>. The HTML <code class="inline-code">disabled</code> attribute is not valid on anchor elements.</li>
+        </ul>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           5. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Attribute</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">size</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">large</td>
+                <td>One of <code class="inline-code">large</code> · <code class="inline-code">medium</code> · <code class="inline-code">small</code>. Controls text size, container height, and icon display size.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">icon</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">none</td>
+                <td>One of <code class="inline-code">none</code> · <code class="inline-code">leading</code> · <code class="inline-code">trailing</code>. Always use icons from the ůnica icon set at <code class="inline-code">viewBox="0 0 24 24"</code>; size via width/height only.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">label</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Required visible text inside <code class="inline-code">.link-text</code>. Must be descriptive enough to make sense out of context.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">href</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Required navigation URL on the <code class="inline-code">&lt;a&gt;</code> element. The browser handles visited-state tracking automatically via this attribute.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">aria-disabled</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Communicates the disabled state to assistive technology. Pair with <code class="inline-code">pointer-events: none</code> and <code class="inline-code">tabindex="-1"</code> to fully suppress interaction.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+    </div><!-- /#page-link -->
 
     <!-- Forms -->
     <div class="page-panel" id="page-text-fields"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Text Fields &amp; Selects</h2><p class="section-description">Input, textarea, and select — all states and sizes.</p></div><span class="stub-pill">In progress</span></section></div>
@@ -12901,6 +13297,45 @@
 
     /* ── Button live preview ── */
     initButtonPreview();
+
+    /* ── Link Standalone preview ── */
+    (function initLinkPreview() {
+      const SIZE_CLASS  = { large: 'link--large', medium: 'link--medium', small: 'link--small' };
+      const SIZE_LABEL  = { large: 'Large', medium: 'Medium', small: 'Small' };
+      const ICON_SIZE   = { large: 20, medium: 18, small: 16 };
+      const ICON_LABELS = { 'label-only': 'Label only', 'leading-icon': 'Leading icon', 'trailing-icon': 'Trailing icon' };
+      let currentSize = 'large';
+      let currentIcon = 'label-only';
+
+      function buildLink(size, iconConfig) {
+        const sz      = ICON_SIZE[size];
+        const leading  = `<span class="link-icon" aria-hidden="true"><svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none"><use href="#ico-unica"/></svg></span>`;
+        const trailing = `<span class="link-icon" aria-hidden="true"><svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></span>`;
+        let inner;
+        if (iconConfig === 'leading-icon')       inner = leading  + '<span class="link-text">Visit page</span>';
+        else if (iconConfig === 'trailing-icon')  inner = '<span class="link-text">Visit page</span>' + trailing;
+        else                                      inner = '<span class="link-text">Visit page</span>';
+        return `<a class="link ${SIZE_CLASS[size]}" href="#"><span class="link-inner">${inner}</span></a>`;
+      }
+
+      function updatePreview() {
+        const canvas = document.getElementById('link-preview-canvas');
+        if (canvas) canvas.innerHTML = buildLink(currentSize, currentIcon);
+      }
+
+      initDropdown(document.getElementById('link-size-picker'), val => {
+        currentSize = val;
+        document.getElementById('link-size-label').textContent = SIZE_LABEL[val];
+        updatePreview();
+      });
+      initDropdown(document.getElementById('link-icon-picker'), val => {
+        currentIcon = val;
+        document.getElementById('link-icon-label').textContent = ICON_LABELS[val];
+        updatePreview();
+      });
+
+      updatePreview();
+    })();
 
     /* ── Bottom nav preview variant dropdown ── */
     initDropdown(document.getElementById('bnav-variant-dropdown'), value => {
