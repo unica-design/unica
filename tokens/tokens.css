@@ -179,6 +179,7 @@
   --color-content-subtle:           var(--primitive-ink-700);
   --color-content-disabled:         rgba(31, 24, 46, 0.5);
   --color-content-inverse-disabled: rgba(255, 255, 255, 0.5);
+  --color-content-inverse-subtle:   var(--primitive-ink-600);
 
   /* --- Contrast --- */
   --color-contrast: var(--primitive-ink-1000);
@@ -256,6 +257,7 @@
   --color-content-subtle:           var(--primitive-ink-400);
   --color-content-disabled:         rgba(255, 255, 255, 0.5);
   --color-content-inverse-disabled: rgba(3, 6, 13, 0.5);
+  --color-content-inverse-subtle:   var(--primitive-ink-700);
 
   /* --- Contrast --- */
   --color-contrast: var(--primitive-cafe-0);
