@@ -2234,102 +2234,124 @@
     }
 
     /* ─── Date Tabs ─────────────────────────── */
+    /*
+     * Pill atom: 48×78px portrait oval (cornerRadius 180).
+     * All items always render as the same oval shape:
+     *   Default   → border only (--color-border-default = cafe-400)
+     *   Today     → cream fill (--color-brand-cream) + border
+     *   Selected  → ink fill (--color-content-default), no border
+     * Circle atom: 40×40px circle.
+     *   Default   → no shape, just the number
+     *   Today     → cream fill + border
+     *   Selected  → ink fill
+     */
 
-    /* Pill strip */
+    /* ── Pill strip ── */
     .dtab-pill-strip {
       display: flex;
-      align-items: stretch;
-      width: 100%;
-      padding: var(--space-200) var(--space-300);
+      align-items: center;
+      padding: 16px 24px;
+      gap: 16px;
       background: var(--color-background-page);
-      border-bottom: 1px solid var(--color-border-subtle);
-      gap: var(--space-100);
       box-sizing: border-box;
     }
+    /* Scrollable variant used in live preview */
+    .dtab-pill-strip--scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .dtab-pill-strip--scroll::-webkit-scrollbar { display: none; }
+
+    /* Each pill item: fixed 48×78px portrait oval */
     .dtab-pill-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      flex: 1;
-      padding: 6px 4px 8px;
-      border-radius: 10px;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 48px;
+      height: 78px;
+      padding: 12px 12px 8px;
+      border-radius: 180px;
+      border: 1px solid var(--color-border-default);
+      background: transparent;
       cursor: pointer;
-      gap: 2px;
-      transition: background 140ms ease;
-      min-width: 0;
+      gap: 4px;
+      box-sizing: border-box;
+      transition: background 140ms ease, border-color 140ms ease;
     }
-    .dtab-pill-item:hover:not(.dtab-item--disabled) { background: var(--color-background-ui); }
-    .dtab-pill-item:active:not(.dtab-item--disabled) { background: var(--color-background-secondary); }
+    .dtab-pill-item:hover:not(.dtab-item--disabled) {
+      background: var(--color-background-ui);
+    }
+    .dtab-pill-item:active:not(.dtab-item--disabled) {
+      background: var(--color-background-secondary);
+    }
     .dtab-pill-item:focus-visible {
       outline: 2px solid var(--color-border-focus);
-      outline-offset: 1px;
+      outline-offset: 2px;
     }
     .dtab-pill-day {
       font-family: var(--font-family-sans);
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 500;
       color: var(--color-content-subtle);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
       line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      transition: color 140ms ease;
     }
     .dtab-pill-date {
       font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-m);
+      font-size: 20px;
       font-weight: 600;
       color: var(--color-content-default);
-      line-height: 1.25;
+      line-height: 1.1;
+      transition: color 140ms ease;
     }
-    .dtab-pill-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--color-content-default);
-      flex-shrink: 0;
-      opacity: 0;
-      transition: opacity 120ms ease;
+
+    /* Today (not selected): cream fill + same border */
+    .dtab-item--today {
+      background: var(--color-brand-cream);
+      border-color: var(--color-border-default);
     }
-    .dtab-item--today .dtab-pill-dot { opacity: 1; }
+    .dtab-item--today:hover:not(.dtab-item--selected):not(.dtab-item--disabled) {
+      background: var(--color-background-container);
+    }
+
+    /* Selected (with or without today): ink fill, border hidden */
     .dtab-item--selected {
       background: var(--color-content-default);
+      border-color: var(--color-content-default);
     }
-    .dtab-item--selected:hover { background: var(--color-content-default); }
+    .dtab-item--selected:hover:not(.dtab-item--disabled) {
+      background: var(--color-content-default);
+    }
     .dtab-item--selected .dtab-pill-day,
-    .dtab-item--selected .dtab-pill-date { color: var(--color-inverse); }
-    .dtab-item--selected.dtab-item--today .dtab-pill-dot { background: var(--color-inverse); }
-    .dtab-item--disabled { cursor: not-allowed; opacity: 0.4; }
-
-    /* Pill strip — reversed */
-    .dtab-pill-strip--reversed {
-      background: var(--color-background-contrast);
-      border-bottom-color: var(--color-border-inverse-subtle);
+    .dtab-item--selected .dtab-pill-date {
+      color: var(--color-inverse);
     }
-    .dtab-pill-strip--reversed .dtab-pill-day { color: var(--color-content-inverse-subtle); }
-    .dtab-pill-strip--reversed .dtab-pill-date { color: var(--color-inverse); }
-    .dtab-pill-strip--reversed .dtab-pill-dot { background: var(--color-inverse); }
-    .dtab-pill-strip--reversed .dtab-pill-item:hover:not(.dtab-item--disabled) { background: rgba(255,255,255,0.08); }
-    .dtab-pill-strip--reversed .dtab-item--selected { background: var(--color-background-page); }
-    .dtab-pill-strip--reversed .dtab-item--selected .dtab-pill-day,
-    .dtab-pill-strip--reversed .dtab-item--selected .dtab-pill-date { color: var(--color-content-default); }
-    .dtab-pill-strip--reversed .dtab-item--selected .dtab-pill-dot { background: var(--color-content-default); }
-    .dtab-pill-strip--reversed .dtab-item--selected:hover { background: var(--color-background-page); }
 
-    /* Circle strip */
+    /* Disabled */
+    .dtab-item--disabled {
+      cursor: not-allowed;
+      opacity: 0.35;
+    }
+
+    /* ── Circle strip ── */
     .dtab-circle-strip {
       display: flex;
       flex-direction: column;
       width: 100%;
+      padding: 16px 16px 20px;
+      gap: 8px;
       background: var(--color-background-page);
-      border-bottom: 1px solid var(--color-border-subtle);
-      padding: var(--space-200) var(--space-300) var(--space-300);
       box-sizing: border-box;
-      gap: var(--space-100);
     }
     .dtab-circle-days,
     .dtab-circle-dates {
       display: flex;
       align-items: center;
-      gap: var(--space-100);
     }
     .dtab-circle-day-label {
       flex: 1;
@@ -2337,70 +2359,69 @@
       align-items: center;
       justify-content: center;
       font-family: var(--font-family-sans);
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 500;
       color: var(--color-content-subtle);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      min-width: 0;
+      letter-spacing: 0.02em;
       height: 20px;
+      min-width: 0;
     }
     .dtab-circle-item {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
       min-width: 0;
+      cursor: pointer;
     }
     .dtab-circle-item:focus-visible { outline: none; }
     .dtab-circle-item:focus-visible .dtab-circle-inner {
       outline: 2px solid var(--color-border-focus);
       outline-offset: 2px;
     }
+    /* The circle shape itself */
     .dtab-circle-inner {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 180px;
+      border: 1px solid transparent;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-m);
+      font-size: 18px;
       font-weight: 600;
       color: var(--color-content-default);
-      transition: background 140ms ease;
+      background: transparent;
       flex-shrink: 0;
-      position: relative;
+      transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+      box-sizing: border-box;
     }
-    .dtab-circle-item:hover .dtab-circle-inner { background: var(--color-background-ui); }
-    .dtab-circle-item:active .dtab-circle-inner { background: var(--color-background-secondary); }
+    .dtab-circle-item:hover .dtab-circle-inner {
+      background: var(--color-background-ui);
+    }
+    .dtab-circle-item:active .dtab-circle-inner {
+      background: var(--color-background-secondary);
+    }
+    /* Circle today: cream fill + border */
     .dtab-item--today .dtab-circle-inner {
-      box-shadow: inset 0 0 0 2px var(--color-border-default);
+      background: var(--color-brand-cream);
+      border-color: var(--color-border-default);
     }
+    .dtab-item--today:hover .dtab-circle-inner {
+      background: var(--color-background-container);
+    }
+    /* Circle selected: ink fill */
     .dtab-item--selected .dtab-circle-inner {
       background: var(--color-content-default);
+      border-color: var(--color-content-default);
       color: var(--color-inverse);
-      box-shadow: none;
     }
-    .dtab-item--selected:hover .dtab-circle-inner { background: var(--color-content-default); }
-    .dtab-item--selected.dtab-item--today .dtab-circle-inner { box-shadow: none; }
-
-    /* Circle strip — reversed */
-    .dtab-circle-strip--reversed {
-      background: var(--color-background-contrast);
-      border-bottom-color: var(--color-border-inverse-subtle);
+    .dtab-item--selected:hover .dtab-circle-inner {
+      background: var(--color-content-default);
     }
-    .dtab-circle-strip--reversed .dtab-circle-day-label { color: var(--color-content-inverse-subtle); }
-    .dtab-circle-strip--reversed .dtab-circle-inner { color: var(--color-inverse); }
-    .dtab-circle-strip--reversed .dtab-circle-item:hover .dtab-circle-inner { background: rgba(255,255,255,0.1); }
-    .dtab-circle-strip--reversed .dtab-item--today .dtab-circle-inner { box-shadow: inset 0 0 0 2px var(--color-border-inverse-default); }
-    .dtab-circle-strip--reversed .dtab-item--selected .dtab-circle-inner {
-      background: var(--color-background-page);
-      color: var(--color-content-default);
-      box-shadow: none;
-    }
-    .dtab-circle-strip--reversed .dtab-item--selected:hover .dtab-circle-inner { background: var(--color-background-page); }
+    .dtab-item--disabled .dtab-circle-inner { opacity: 0.35; cursor: not-allowed; }
 
     /* Phone mock for date tabs (strip at top) */
     #dtab-phone-mock {
@@ -2408,13 +2429,20 @@
     }
     @media (min-width: 641px) {
       #dtab-phone-mock {
-        padding: 0 0 32px;
+        padding: 0;
         width: 375px;
         height: 375px;
       }
+      #dtab-phone-mock .dtab-phone-spacer {
+        height: 56px;   /* generous gap from top of device frame to strip */
+        flex-shrink: 0;
+      }
+    }
+    @media (max-width: 640px) {
+      #dtab-phone-mock .dtab-phone-spacer { height: 24px; flex-shrink: 0; }
     }
 
-    /* Variants grid */
+    /* Variants grid — 2 columns */
     .dtab-variants-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -2437,7 +2465,7 @@
       margin: 0;
     }
 
-    /* States display for date tabs — single items side by side */
+    /* States display for date tabs — individual atoms side by side */
     .dtab-states-row {
       display: flex;
       flex-wrap: wrap;
@@ -2456,19 +2484,6 @@
       color: var(--color-content-subtle);
       text-align: center;
       margin: 0;
-    }
-    .dtab-states-strip {
-      display: flex;
-      background: var(--color-background-page);
-      border: 1px solid var(--color-border-subtle);
-      border-radius: 12px;
-      overflow: hidden;
-      padding: 4px 8px;
-      gap: 4px;
-    }
-    .dtab-states-strip--reversed {
-      background: var(--color-background-contrast);
-      border-color: var(--color-border-inverse-subtle);
     }
 
     /* ─────────────────────────────────────────
@@ -8986,12 +9001,11 @@
           <ul class="dropdown-menu" role="listbox" aria-label="Select variant">
             <li class="dropdown-option" role="option" tabindex="-1" aria-selected="true"  data-value="pill">Pill</li>
             <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="circle">Circle</li>
-            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="pill-reversed">Pill · Reversed</li>
-            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="circle-reversed">Circle · Reversed</li>
           </ul>
         </div>
         <div class="preview-canvas" style="padding:var(--space-900) var(--space-600);">
           <div class="phone-mock" id="dtab-phone-mock">
+            <div class="dtab-phone-spacer"></div>
             <div id="dtab-demo-wrap" style="width:100%;">
               <!-- Date strip injected by JS -->
             </div>
@@ -9004,32 +9018,20 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
-        <p class="doc-section-description">Two visual styles for different contexts. Pill uses a rounded rectangle to group the day letter and date number together into a single interactive unit. Circle focuses the selection on the date number alone, pairing it with a fixed row of day labels above.</p>
+        <p class="doc-section-description">Two visual styles for different contexts. Pill uses a portrait oval to group the day letter and date number into a single interactive unit — every cell is always visible as an oval, with state conveyed through fill colour. Circle separates the concerns: a fixed row of day abbreviations sits above scrollable date circles, keeping the day context always readable.</p>
 
         <div class="dtab-variants-grid">
 
-          <!-- Standard · Pill -->
+          <!-- Pill -->
           <div class="dtab-variant-tile">
             <p class="dtab-variant-tile-label">Pill</p>
             <div id="dtab-var-pill" class="dtab-pill-strip"></div>
           </div>
 
-          <!-- Standard · Circle -->
+          <!-- Circle -->
           <div class="dtab-variant-tile">
             <p class="dtab-variant-tile-label">Circle</p>
             <div id="dtab-var-circle" class="dtab-circle-strip"></div>
-          </div>
-
-          <!-- Reversed · Pill -->
-          <div class="dtab-variant-tile">
-            <p class="dtab-variant-tile-label">Pill · Reversed</p>
-            <div id="dtab-var-pill-rev" class="dtab-pill-strip dtab-pill-strip--reversed"></div>
-          </div>
-
-          <!-- Reversed · Circle -->
-          <div class="dtab-variant-tile">
-            <p class="dtab-variant-tile-label">Circle · Reversed</p>
-            <div id="dtab-var-circle-rev" class="dtab-circle-strip dtab-circle-strip--reversed"></div>
           </div>
 
         </div>
@@ -9039,173 +9041,81 @@
       <div class="doc-section">
         <h2 class="doc-section-title">States</h2>
         <hr class="doc-rule">
+        <p class="doc-section-description" style="margin-bottom:var(--space-600);">Each atom carries one state from the set below. <code class="inline-code">dtab-item--today</code> and <code class="inline-code">dtab-item--selected</code> can combine — selected always wins visually.</p>
 
-        <!-- Toggle reversed -->
-        <div class="states-toggle-wrap" style="margin-bottom:var(--space-600);">
-          <label class="toggle-label" for="dtab-states-reversed-toggle">Reversed</label>
-          <label class="toggle">
-            <input type="checkbox" id="dtab-states-reversed-toggle" role="switch">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </label>
+        <!-- Pill states -->
+        <p class="avatar-group-label" style="margin:0 0 var(--space-400);">Pill</p>
+        <div class="dtab-states-row" style="margin-bottom:var(--space-700);">
+          <div class="dtab-states-cell">
+            <div class="dtab-pill-item"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
+            <p class="dtab-states-cell-label">Default</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-pill-item" style="background:var(--color-background-ui);"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
+            <p class="dtab-states-cell-label">Hover</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-pill-item" style="outline:2px solid var(--color-border-focus);outline-offset:2px;"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
+            <p class="dtab-states-cell-label">Focused</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-pill-item" style="background:var(--color-background-secondary);"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
+            <p class="dtab-states-cell-label">Pressed</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-pill-item dtab-item--selected"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
+            <p class="dtab-states-cell-label">Selected</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-pill-item dtab-item--today"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
+            <p class="dtab-states-cell-label">Today</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-pill-item dtab-item--selected dtab-item--today"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
+            <p class="dtab-states-cell-label">Today · Selected</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-pill-item dtab-item--disabled" style="pointer-events:none;"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
+            <p class="dtab-states-cell-label">Disabled</p>
+          </div>
         </div>
 
-        <!-- Standard states -->
-        <div id="dtab-states-standard">
-          <p class="doc-section-description" style="margin-bottom:var(--space-600);">Each tab can carry one or more modifiers from the state set below. States are applied with CSS modifier classes on the item element.</p>
-
-          <!-- Pill states -->
-          <p class="avatar-group-label" style="margin:0 0 var(--space-400);">Pill</p>
-          <div class="dtab-states-row" style="margin-bottom:var(--space-700);">
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-pill-item"><span class="dtab-pill-day">Wed</span><span class="dtab-pill-date">29</span><span class="dtab-pill-dot"></span></div></div>
-              <p class="dtab-states-cell-label">Default</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-pill-item" style="background:var(--color-background-ui);"><span class="dtab-pill-day">Wed</span><span class="dtab-pill-date">29</span><span class="dtab-pill-dot"></span></div></div>
-              <p class="dtab-states-cell-label">Hover</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-pill-item" style="outline:2px solid var(--color-border-focus);outline-offset:1px;"><span class="dtab-pill-day">Wed</span><span class="dtab-pill-date">29</span><span class="dtab-pill-dot"></span></div></div>
-              <p class="dtab-states-cell-label">Focused</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-pill-item" style="background:var(--color-background-secondary);"><span class="dtab-pill-day">Wed</span><span class="dtab-pill-date">29</span><span class="dtab-pill-dot"></span></div></div>
-              <p class="dtab-states-cell-label">Pressed</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-pill-item dtab-item--selected"><span class="dtab-pill-day">Wed</span><span class="dtab-pill-date">29</span><span class="dtab-pill-dot"></span></div></div>
-              <p class="dtab-states-cell-label">Selected</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-pill-item dtab-item--today"><span class="dtab-pill-day">Wed</span><span class="dtab-pill-date">29</span><span class="dtab-pill-dot"></span></div></div>
-              <p class="dtab-states-cell-label">Today</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-pill-item dtab-item--selected dtab-item--today"><span class="dtab-pill-day">Wed</span><span class="dtab-pill-date">29</span><span class="dtab-pill-dot"></span></div></div>
-              <p class="dtab-states-cell-label">Today · Selected</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-pill-item dtab-item--disabled" style="pointer-events:none;"><span class="dtab-pill-day">Wed</span><span class="dtab-pill-date">29</span><span class="dtab-pill-dot"></span></div></div>
-              <p class="dtab-states-cell-label">Disabled</p>
-            </div>
+        <!-- Circle states -->
+        <p class="avatar-group-label" style="margin:0 0 var(--space-400);">Circle</p>
+        <div class="dtab-states-row">
+          <div class="dtab-states-cell">
+            <div class="dtab-circle-item"><div class="dtab-circle-inner">1</div></div>
+            <p class="dtab-states-cell-label">Default</p>
           </div>
-
-          <!-- Circle states -->
-          <p class="avatar-group-label" style="margin:0 0 var(--space-400);">Circle</p>
-          <div class="dtab-states-row">
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-circle-item"><div class="dtab-circle-inner">29</div></div></div>
-              <p class="dtab-states-cell-label">Default</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-circle-item"><div class="dtab-circle-inner" style="background:var(--color-background-ui);">29</div></div></div>
-              <p class="dtab-states-cell-label">Hover</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-circle-item" style="outline:none;"><div class="dtab-circle-inner" style="outline:2px solid var(--color-border-focus);outline-offset:2px;">29</div></div></div>
-              <p class="dtab-states-cell-label">Focused</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-circle-item"><div class="dtab-circle-inner" style="background:var(--color-background-secondary);">29</div></div></div>
-              <p class="dtab-states-cell-label">Pressed</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-circle-item dtab-item--selected"><div class="dtab-circle-inner">29</div></div></div>
-              <p class="dtab-states-cell-label">Selected</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-circle-item dtab-item--today"><div class="dtab-circle-inner">29</div></div></div>
-              <p class="dtab-states-cell-label">Today</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-circle-item dtab-item--selected dtab-item--today"><div class="dtab-circle-inner">29</div></div></div>
-              <p class="dtab-states-cell-label">Today · Selected</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip"><div class="dtab-circle-item dtab-item--disabled" style="pointer-events:none;opacity:0.4;"><div class="dtab-circle-inner">29</div></div></div>
-              <p class="dtab-states-cell-label">Disabled</p>
-            </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-circle-item"><div class="dtab-circle-inner" style="background:var(--color-background-ui);">1</div></div>
+            <p class="dtab-states-cell-label">Hover</p>
           </div>
-        </div><!-- /standard states -->
-
-        <!-- Reversed states -->
-        <div id="dtab-states-reversed" hidden>
-          <p class="doc-section-description" style="margin-bottom:var(--space-600);">Reversed surface — same states, inverted colours for use on dark or high-contrast backgrounds.</p>
-
-          <!-- Pill reversed states -->
-          <p class="avatar-group-label" style="margin:0 0 var(--space-400);">Pill · Reversed</p>
-          <div class="dtab-states-row" style="margin-bottom:var(--space-700);">
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-pill-strip--reversed dtab-pill-item"><span class="dtab-pill-day" style="color:var(--color-content-inverse-subtle);">Wed</span><span class="dtab-pill-date" style="color:var(--color-inverse);">29</span><span class="dtab-pill-dot" style="background:var(--color-inverse);"></span></div></div>
-              <p class="dtab-states-cell-label">Default</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-pill-strip--reversed dtab-pill-item" style="background:rgba(255,255,255,0.08);"><span class="dtab-pill-day" style="color:var(--color-content-inverse-subtle);">Wed</span><span class="dtab-pill-date" style="color:var(--color-inverse);">29</span><span class="dtab-pill-dot" style="background:var(--color-inverse);"></span></div></div>
-              <p class="dtab-states-cell-label">Hover</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-pill-strip--reversed dtab-pill-item" style="outline:2px solid var(--color-border-focus);outline-offset:1px;"><span class="dtab-pill-day" style="color:var(--color-content-inverse-subtle);">Wed</span><span class="dtab-pill-date" style="color:var(--color-inverse);">29</span><span class="dtab-pill-dot" style="background:var(--color-inverse);"></span></div></div>
-              <p class="dtab-states-cell-label">Focused</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-pill-strip--reversed dtab-pill-item" style="background:rgba(255,255,255,0.16);"><span class="dtab-pill-day" style="color:var(--color-content-inverse-subtle);">Wed</span><span class="dtab-pill-date" style="color:var(--color-inverse);">29</span><span class="dtab-pill-dot" style="background:var(--color-inverse);"></span></div></div>
-              <p class="dtab-states-cell-label">Pressed</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-pill-item dtab-item--selected" style="background:var(--color-background-page);"><span class="dtab-pill-day" style="color:var(--color-content-subtle);">Wed</span><span class="dtab-pill-date" style="color:var(--color-content-default);">29</span><span class="dtab-pill-dot" style="background:var(--color-content-default);opacity:0;"></span></div></div>
-              <p class="dtab-states-cell-label">Selected</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-pill-strip--reversed dtab-pill-item dtab-item--today"><span class="dtab-pill-day" style="color:var(--color-content-inverse-subtle);">Wed</span><span class="dtab-pill-date" style="color:var(--color-inverse);">29</span><span class="dtab-pill-dot" style="background:var(--color-inverse);opacity:1;"></span></div></div>
-              <p class="dtab-states-cell-label">Today</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-pill-item dtab-item--selected dtab-item--today" style="background:var(--color-background-page);"><span class="dtab-pill-day" style="color:var(--color-content-subtle);">Wed</span><span class="dtab-pill-date" style="color:var(--color-content-default);">29</span><span class="dtab-pill-dot" style="background:var(--color-content-default);opacity:1;"></span></div></div>
-              <p class="dtab-states-cell-label">Today · Selected</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-pill-strip--reversed dtab-pill-item dtab-item--disabled" style="pointer-events:none;opacity:0.4;"><span class="dtab-pill-day" style="color:var(--color-content-inverse-subtle);">Wed</span><span class="dtab-pill-date" style="color:var(--color-inverse);">29</span><span class="dtab-pill-dot" style="background:var(--color-inverse);"></span></div></div>
-              <p class="dtab-states-cell-label">Disabled</p>
-            </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-circle-item"><div class="dtab-circle-inner" style="outline:2px solid var(--color-border-focus);outline-offset:2px;">1</div></div>
+            <p class="dtab-states-cell-label">Focused</p>
           </div>
-
-          <!-- Circle reversed states -->
-          <p class="avatar-group-label" style="margin:0 0 var(--space-400);">Circle · Reversed</p>
-          <div class="dtab-states-row">
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-circle-item"><div class="dtab-circle-inner" style="color:var(--color-inverse);">29</div></div></div>
-              <p class="dtab-states-cell-label">Default</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-circle-item"><div class="dtab-circle-inner" style="color:var(--color-inverse);background:rgba(255,255,255,0.1);">29</div></div></div>
-              <p class="dtab-states-cell-label">Hover</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-circle-item"><div class="dtab-circle-inner" style="color:var(--color-inverse);outline:2px solid var(--color-border-focus);outline-offset:2px;">29</div></div></div>
-              <p class="dtab-states-cell-label">Focused</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-circle-item"><div class="dtab-circle-inner" style="color:var(--color-inverse);background:rgba(255,255,255,0.18);">29</div></div></div>
-              <p class="dtab-states-cell-label">Pressed</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-circle-item dtab-item--selected"><div class="dtab-circle-inner" style="background:var(--color-background-page);color:var(--color-content-default);">29</div></div></div>
-              <p class="dtab-states-cell-label">Selected</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-circle-item dtab-item--today"><div class="dtab-circle-inner" style="color:var(--color-inverse);box-shadow:inset 0 0 0 2px var(--color-border-inverse-default);">29</div></div></div>
-              <p class="dtab-states-cell-label">Today</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-circle-item dtab-item--selected dtab-item--today"><div class="dtab-circle-inner" style="background:var(--color-background-page);color:var(--color-content-default);box-shadow:none;">29</div></div></div>
-              <p class="dtab-states-cell-label">Today · Selected</p>
-            </div>
-            <div class="dtab-states-cell">
-              <div class="dtab-states-strip dtab-states-strip--reversed"><div class="dtab-circle-item dtab-item--disabled" style="pointer-events:none;opacity:0.4;"><div class="dtab-circle-inner" style="color:var(--color-inverse);">29</div></div></div>
-              <p class="dtab-states-cell-label">Disabled</p>
-            </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-circle-item"><div class="dtab-circle-inner" style="background:var(--color-background-secondary);">1</div></div>
+            <p class="dtab-states-cell-label">Pressed</p>
           </div>
-        </div><!-- /reversed states -->
+          <div class="dtab-states-cell">
+            <div class="dtab-circle-item dtab-item--selected"><div class="dtab-circle-inner">1</div></div>
+            <p class="dtab-states-cell-label">Selected</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-circle-item dtab-item--today"><div class="dtab-circle-inner">1</div></div>
+            <p class="dtab-states-cell-label">Today</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-circle-item dtab-item--selected dtab-item--today"><div class="dtab-circle-inner">1</div></div>
+            <p class="dtab-states-cell-label">Today · Selected</p>
+          </div>
+          <div class="dtab-states-cell">
+            <div class="dtab-circle-item dtab-item--disabled" style="pointer-events:none;"><div class="dtab-circle-inner">1</div></div>
+            <p class="dtab-states-cell-label">Disabled</p>
+          </div>
+        </div>
 
       </div><!-- /states section -->
 
@@ -9213,7 +9123,7 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
-        <p class="doc-body">Each date item is a <code class="inline-code">button</code> with an accessible name including the full weekday and date — e.g. <em>"Wednesday, 29"</em>. The strip uses <code class="inline-code">role="tablist"</code> so screen readers announce the component as a date selection group, and <code class="inline-code">aria-selected</code> tracks the active date.</p>
+        <p class="doc-body">Each date item is a <code class="inline-code">button</code> with an accessible name including the full weekday and date — e.g. <em>"Wednesday, 1"</em>. The strip uses <code class="inline-code">role="tablist"</code> so screen readers announce the component as a date selection group, and <code class="inline-code">aria-selected</code> tracks the active date.</p>
         <div class="table-wrap">
           <table class="doc-table">
             <thead>
@@ -9238,7 +9148,7 @@
               </tr>
               <tr>
                 <td class="td-mono">aria-label on items</td>
-                <td>Each button carries a full label: <code class="inline-code">aria-label="Wednesday, 29"</code>. Avoids screen readers spelling out abbreviations.</td>
+                <td>Each button carries a full label: <code class="inline-code">aria-label="Wednesday, 1"</code>. Avoids screen readers spelling out abbreviations like "W".</td>
               </tr>
             </tbody>
           </table>
@@ -9253,20 +9163,19 @@
           <table class="doc-table">
             <thead><tr><th>Class</th><th>Values</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td class="td-mono">dtab-pill-strip</td><td class="td-subtle">—</td><td>Root container for the Pill variant. Full-width flex row.</td></tr>
-              <tr><td class="td-mono">dtab-pill-strip--reversed</td><td class="td-subtle">—</td><td>Modifier for use on dark/high-contrast backgrounds.</td></tr>
-              <tr><td class="td-mono">dtab-pill-item</td><td class="td-subtle">—</td><td>Individual day <code class="inline-code">button</code>. Stacks day letter and date number. Renders as a pill when <code class="inline-code">dtab-item--selected</code> is applied.</td></tr>
-              <tr><td class="td-mono">dtab-pill-day</td><td class="td-subtle">—</td><td>3-letter weekday abbreviation label on a <code class="inline-code">span</code>.</td></tr>
-              <tr><td class="td-mono">dtab-pill-date</td><td class="td-subtle">—</td><td>Date number on a <code class="inline-code">span</code>.</td></tr>
-              <tr><td class="td-mono">dtab-pill-dot</td><td class="td-subtle">—</td><td>Today indicator dot on a <code class="inline-code">span</code>. Visible only when <code class="inline-code">dtab-item--today</code> is also present.</td></tr>
-              <tr><td class="td-mono">dtab-circle-strip</td><td class="td-subtle">—</td><td>Root container for the Circle variant. Two-row layout: day labels above, date circles below.</td></tr>
-              <tr><td class="td-mono">dtab-circle-strip--reversed</td><td class="td-subtle">—</td><td>Modifier for dark/high-contrast surfaces.</td></tr>
-              <tr><td class="td-mono">dtab-circle-day-label</td><td class="td-subtle">—</td><td>Fixed weekday abbreviation in the top row.</td></tr>
-              <tr><td class="td-mono">dtab-circle-item</td><td class="td-subtle">—</td><td>Wrapper <code class="inline-code">button</code> for a date circle in the bottom row.</td></tr>
-              <tr><td class="td-mono">dtab-circle-inner</td><td class="td-subtle">—</td><td>The circle element itself. Receives the filled background when selected.</td></tr>
-              <tr><td class="td-mono">dtab-item--selected</td><td class="td-subtle">—</td><td>Active selection. Fills the pill or circle with the default ink colour and sets text to inverse.</td></tr>
-              <tr><td class="td-mono">dtab-item--today</td><td class="td-subtle">—</td><td>Marks today's date. Shows a dot (Pill) or inset ring (Circle). Can combine with <code class="inline-code">dtab-item--selected</code>.</td></tr>
-              <tr><td class="td-mono">dtab-item--disabled</td><td class="td-subtle">—</td><td>Non-interactive date. Reduces opacity and removes pointer events.</td></tr>
+              <tr><td class="td-mono">dtab-pill-strip</td><td class="td-subtle">—</td><td>Root container for the Pill variant. Flex row with 24 px side padding and 16 px item gap. Add <code class="inline-code">dtab-pill-strip--scroll</code> to enable horizontal overflow scrolling.</td></tr>
+              <tr><td class="td-mono">dtab-pill-strip--scroll</td><td class="td-subtle">—</td><td>Modifier enabling <code class="inline-code">overflow-x: auto</code> and hidden scrollbar for the live preview and real-app use.</td></tr>
+              <tr><td class="td-mono">dtab-pill-item</td><td class="td-subtle">—</td><td>Individual day <code class="inline-code">button</code>. Fixed 48 × 78 px portrait oval. Default = border only. Receives <code class="inline-code">dtab-item--today</code> or <code class="inline-code">dtab-item--selected</code> for fill states.</td></tr>
+              <tr><td class="td-mono">dtab-pill-day</td><td class="td-subtle">—</td><td>Single-letter weekday label on a <code class="inline-code">span</code>. Subtle colour by default, inverse when selected.</td></tr>
+              <tr><td class="td-mono">dtab-pill-date</td><td class="td-subtle">—</td><td>Date number on a <code class="inline-code">span</code>. Default ink colour, inverse when selected.</td></tr>
+              <tr><td class="td-mono">dtab-circle-strip</td><td class="td-subtle">—</td><td>Root container for the Circle variant. Vertical flex with 16 px side padding, 8 px row gap, and 20 px bottom padding.</td></tr>
+              <tr><td class="td-mono">dtab-circle-days</td><td class="td-subtle">—</td><td>Row of day-letter <code class="inline-code">span</code> elements. Each flex: 1 so columns align with the circle row below.</td></tr>
+              <tr><td class="td-mono">dtab-circle-dates</td><td class="td-subtle">—</td><td>Row of <code class="inline-code">dtab-circle-item</code> buttons. Horizontal, evenly distributed.</td></tr>
+              <tr><td class="td-mono">dtab-circle-item</td><td class="td-subtle">—</td><td>Wrapper <code class="inline-code">button</code>. Flex: 1 to fill the column. Contains a single <code class="inline-code">dtab-circle-inner</code>.</td></tr>
+              <tr><td class="td-mono">dtab-circle-inner</td><td class="td-subtle">—</td><td>The 40 × 40 px circle element. Default = transparent. Today = cream fill + border. Selected = ink fill.</td></tr>
+              <tr><td class="td-mono">dtab-item--selected</td><td class="td-subtle">—</td><td>Active selection modifier. Fills the pill or circle with ink and sets text to inverse. Always wins over <code class="inline-code">dtab-item--today</code>.</td></tr>
+              <tr><td class="td-mono">dtab-item--today</td><td class="td-subtle">—</td><td>Marks today's date. Cream fill + border in both pill and circle. Suppressed visually when <code class="inline-code">dtab-item--selected</code> is also present.</td></tr>
+              <tr><td class="td-mono">dtab-item--disabled</td><td class="td-subtle">—</td><td>Non-interactive date. Reduces opacity to 35 % and removes pointer events.</td></tr>
             </tbody>
           </table>
         </div>
@@ -13176,40 +13085,34 @@
       // Default selected = today if in view, else first day
       var defaultSelected = week.find(function(d) { return isToday(d); }) || week[0];
 
-      // Build all variant tiles
-      var varPill    = document.getElementById('dtab-var-pill');
-      var varCircle  = document.getElementById('dtab-var-circle');
-      var varPillRev = document.getElementById('dtab-var-pill-rev');
-      var varCircleRev = document.getElementById('dtab-var-circle-rev');
-      if (varPill)    buildPillStrip(varPill,    week, defaultSelected, false);
-      if (varCircle)  buildCircleStrip(varCircle, week, defaultSelected, false);
-      if (varPillRev) buildPillStrip(varPillRev,  week, defaultSelected, true);
-      if (varCircleRev) buildCircleStrip(varCircleRev, week, defaultSelected, true);
+      // Build variant tiles (pill + circle only, no reversed)
+      var varPill   = document.getElementById('dtab-var-pill');
+      var varCircle = document.getElementById('dtab-var-circle');
+      if (varPill)   buildPillStrip(varPill,   week, defaultSelected, false);
+      if (varCircle) buildCircleStrip(varCircle, week, defaultSelected, false);
 
       // Build preview phone demo
       var demoWrap = document.getElementById('dtab-demo-wrap');
-      var currentVariant = 'pill';
       function buildDemo(variant) {
-        currentVariant = variant;
         if (!demoWrap) return;
         demoWrap.innerHTML = '';
-        var isReversed = variant === 'pill-reversed' || variant === 'circle-reversed';
-        var isCircle   = variant === 'circle' || variant === 'circle-reversed';
+        var isCircle = variant === 'circle';
         if (isCircle) {
           var strip = document.createElement('div');
-          strip.className = 'dtab-circle-strip' + (isReversed ? ' dtab-circle-strip--reversed' : '');
+          strip.className = 'dtab-circle-strip';
           demoWrap.appendChild(strip);
-          buildCircleStrip(strip, week, defaultSelected, isReversed);
+          buildCircleStrip(strip, week, defaultSelected, false);
         } else {
           var strip = document.createElement('div');
-          strip.className = 'dtab-pill-strip' + (isReversed ? ' dtab-pill-strip--reversed' : '');
+          // Scrollable pill strip in the preview phone
+          strip.className = 'dtab-pill-strip dtab-pill-strip--scroll';
           demoWrap.appendChild(strip);
-          buildPillStrip(strip, week, defaultSelected, isReversed);
-        }
-        // Phone mock background adapts for reversed
-        var phoneMock = document.getElementById('dtab-phone-mock');
-        if (phoneMock) {
-          phoneMock.style.background = isReversed ? 'var(--color-background-contrast)' : '';
+          buildPillStrip(strip, week, defaultSelected, false);
+          // Scroll selected item into view
+          var selItem = strip.querySelector('.dtab-item--selected');
+          if (selItem) {
+            selItem.scrollIntoView({ inline: 'center', behavior: 'instant' });
+          }
         }
       }
       buildDemo('pill');
@@ -13218,17 +13121,6 @@
       initDropdown(document.getElementById('dtab-variant-dropdown'), function(value) {
         buildDemo(value);
       });
-
-      // States toggle
-      var dtabStatesToggle = document.getElementById('dtab-states-reversed-toggle');
-      var dtabStatesStd    = document.getElementById('dtab-states-standard');
-      var dtabStatesRev    = document.getElementById('dtab-states-reversed');
-      if (dtabStatesToggle) {
-        dtabStatesToggle.addEventListener('change', function() {
-          dtabStatesStd.hidden = dtabStatesToggle.checked;
-          dtabStatesRev.hidden = !dtabStatesToggle.checked;
-        });
-      }
     })();
 
   });
