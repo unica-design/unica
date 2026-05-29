@@ -2384,7 +2384,8 @@
     .dtab-circle-inner {
       width: 40px;
       height: 40px;
-      border-radius: 180px;
+      border-radius: 50%;
+      overflow: hidden;
       border: 1px solid transparent;
       display: flex;
       align-items: center;
@@ -2442,14 +2443,11 @@
       #dtab-phone-mock .dtab-phone-spacer { height: 24px; flex-shrink: 0; }
     }
 
-    /* Variants grid — 2 columns */
+    /* Variants grid — single column */
     .dtab-variants-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-700) var(--space-600);
-    }
-    @media (max-width: 640px) {
-      .dtab-variants-grid { grid-template-columns: 1fr; }
+      grid-template-columns: 1fr;
+      gap: var(--space-700);
     }
     .dtab-variant-tile {
       display: flex;
@@ -2457,33 +2455,15 @@
       gap: var(--space-300);
       min-width: 0;
     }
-    .dtab-variant-tile-label {
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-s);
-      font-weight: 500;
-      color: var(--color-content-subtle);
-      margin: 0;
-    }
 
-    /* States display for date tabs — individual atoms side by side */
-    .dtab-states-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-600) var(--space-700);
-      align-items: flex-start;
+    /* 8-state date-tabs matrix */
+    .states-matrix--8col .states-matrix-head,
+    .states-matrix--8col .states-matrix-row {
+      grid-template-columns: 88px repeat(8, 1fr);
+      min-width: 720px;
     }
-    .dtab-states-cell {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-300);
-    }
-    .dtab-states-cell-label {
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-s);
-      color: var(--color-content-subtle);
-      text-align: center;
-      margin: 0;
+    .states-matrix--8col .states-matrix-cell {
+      padding: var(--space-500) var(--space-200);
     }
 
     /* ─────────────────────────────────────────
@@ -9024,13 +9004,13 @@
 
           <!-- Pill -->
           <div class="dtab-variant-tile">
-            <p class="dtab-variant-tile-label">Pill</p>
+            <p class="avatar-group-label">Pill</p>
             <div id="dtab-var-pill" class="dtab-pill-strip"></div>
           </div>
 
           <!-- Circle -->
           <div class="dtab-variant-tile">
-            <p class="dtab-variant-tile-label">Circle</p>
+            <p class="avatar-group-label">Circle</p>
             <div id="dtab-var-circle" class="dtab-circle-strip"></div>
           </div>
 
@@ -9043,77 +9023,41 @@
         <hr class="doc-rule">
         <p class="doc-section-description" style="margin-bottom:var(--space-600);">Each atom carries one state from the set below. <code class="inline-code">dtab-item--today</code> and <code class="inline-code">dtab-item--selected</code> can combine — selected always wins visually.</p>
 
-        <!-- Pill states -->
-        <p class="avatar-group-label" style="margin:0 0 var(--space-400);">Pill</p>
-        <div class="dtab-states-row" style="margin-bottom:var(--space-700);">
-          <div class="dtab-states-cell">
-            <div class="dtab-pill-item"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
-            <p class="dtab-states-cell-label">Default</p>
+        <div class="states-matrix states-matrix--8col">
+          <div class="states-matrix-head">
+            <div class="states-matrix-head-spacer"></div>
+            <div class="states-matrix-head-cell">Default</div>
+            <div class="states-matrix-head-cell">Hover</div>
+            <div class="states-matrix-head-cell">Pressed</div>
+            <div class="states-matrix-head-cell">Focused</div>
+            <div class="states-matrix-head-cell">Today</div>
+            <div class="states-matrix-head-cell">Selected</div>
+            <div class="states-matrix-head-cell">Today + Selected</div>
+            <div class="states-matrix-head-cell">Disabled</div>
           </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-pill-item" style="background:var(--color-background-ui);"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
-            <p class="dtab-states-cell-label">Hover</p>
+          <!-- Pill row -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Pill</div>
+            <div class="states-matrix-cell"><div class="dtab-pill-item" tabindex="-1"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div></div>
+            <div class="states-matrix-cell"><div class="dtab-pill-item" style="background:var(--color-background-ui);" tabindex="-1"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div></div>
+            <div class="states-matrix-cell"><div class="dtab-pill-item" style="background:var(--color-background-secondary);" tabindex="-1"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div></div>
+            <div class="states-matrix-cell"><div class="dtab-pill-item" style="outline:2px solid var(--color-border-focus);outline-offset:2px;" tabindex="-1"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div></div>
+            <div class="states-matrix-cell"><div class="dtab-pill-item dtab-item--today" tabindex="-1"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div></div>
+            <div class="states-matrix-cell"><div class="dtab-pill-item dtab-item--selected" tabindex="-1"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div></div>
+            <div class="states-matrix-cell"><div class="dtab-pill-item dtab-item--selected dtab-item--today" tabindex="-1"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div></div>
+            <div class="states-matrix-cell"><div class="dtab-pill-item dtab-item--disabled" style="pointer-events:none;" tabindex="-1"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div></div>
           </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-pill-item" style="outline:2px solid var(--color-border-focus);outline-offset:2px;"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
-            <p class="dtab-states-cell-label">Focused</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-pill-item" style="background:var(--color-background-secondary);"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
-            <p class="dtab-states-cell-label">Pressed</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-pill-item dtab-item--selected"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
-            <p class="dtab-states-cell-label">Selected</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-pill-item dtab-item--today"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
-            <p class="dtab-states-cell-label">Today</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-pill-item dtab-item--selected dtab-item--today"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
-            <p class="dtab-states-cell-label">Today · Selected</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-pill-item dtab-item--disabled" style="pointer-events:none;"><span class="dtab-pill-day">W</span><span class="dtab-pill-date">1</span></div>
-            <p class="dtab-states-cell-label">Disabled</p>
-          </div>
-        </div>
-
-        <!-- Circle states -->
-        <p class="avatar-group-label" style="margin:0 0 var(--space-400);">Circle</p>
-        <div class="dtab-states-row">
-          <div class="dtab-states-cell">
-            <div class="dtab-circle-item"><div class="dtab-circle-inner">1</div></div>
-            <p class="dtab-states-cell-label">Default</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-circle-item"><div class="dtab-circle-inner" style="background:var(--color-background-ui);">1</div></div>
-            <p class="dtab-states-cell-label">Hover</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-circle-item"><div class="dtab-circle-inner" style="outline:2px solid var(--color-border-focus);outline-offset:2px;">1</div></div>
-            <p class="dtab-states-cell-label">Focused</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-circle-item"><div class="dtab-circle-inner" style="background:var(--color-background-secondary);">1</div></div>
-            <p class="dtab-states-cell-label">Pressed</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-circle-item dtab-item--selected"><div class="dtab-circle-inner">1</div></div>
-            <p class="dtab-states-cell-label">Selected</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-circle-item dtab-item--today"><div class="dtab-circle-inner">1</div></div>
-            <p class="dtab-states-cell-label">Today</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-circle-item dtab-item--selected dtab-item--today"><div class="dtab-circle-inner">1</div></div>
-            <p class="dtab-states-cell-label">Today · Selected</p>
-          </div>
-          <div class="dtab-states-cell">
-            <div class="dtab-circle-item dtab-item--disabled" style="pointer-events:none;"><div class="dtab-circle-inner">1</div></div>
-            <p class="dtab-states-cell-label">Disabled</p>
+          <!-- Circle row -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Circle</div>
+            <div class="states-matrix-cell"><div class="dtab-circle-item" tabindex="-1"><div class="dtab-circle-inner">1</div></div></div>
+            <div class="states-matrix-cell"><div class="dtab-circle-item" tabindex="-1"><div class="dtab-circle-inner" style="background:var(--color-background-ui);">1</div></div></div>
+            <div class="states-matrix-cell"><div class="dtab-circle-item" tabindex="-1"><div class="dtab-circle-inner" style="background:var(--color-background-secondary);">1</div></div></div>
+            <div class="states-matrix-cell"><div class="dtab-circle-item" tabindex="-1"><div class="dtab-circle-inner" style="outline:2px solid var(--color-border-focus);outline-offset:2px;">1</div></div></div>
+            <div class="states-matrix-cell"><div class="dtab-circle-item dtab-item--today" tabindex="-1"><div class="dtab-circle-inner">1</div></div></div>
+            <div class="states-matrix-cell"><div class="dtab-circle-item dtab-item--selected" tabindex="-1"><div class="dtab-circle-inner">1</div></div></div>
+            <div class="states-matrix-cell"><div class="dtab-circle-item dtab-item--selected dtab-item--today" tabindex="-1"><div class="dtab-circle-inner">1</div></div></div>
+            <div class="states-matrix-cell"><div class="dtab-circle-item dtab-item--disabled" style="pointer-events:none;" tabindex="-1"><div class="dtab-circle-inner">1</div></div></div>
           </div>
         </div>
 
@@ -9982,7 +9926,7 @@
 
             <!-- Full page · Standard -->
             <div class="dp-variant-tile">
-              <p class="comp-label">Full page</p>
+              <p class="avatar-group-label">Full page</p>
               <div class="dp-mini dp-mini--fullpage">
                 <div class="dp">
                   <div class="dp-header">
@@ -9999,7 +9943,7 @@
 
             <!-- Compact · Standard -->
             <div class="dp-variant-tile">
-              <p class="comp-label">Compact</p>
+              <p class="avatar-group-label">Compact</p>
               <div class="dp-compact-card">
                 <div class="dp-compact-card-sheet">
                   <div class="dp" style="padding:4px 10px 10px;">
@@ -10018,7 +9962,7 @@
 
             <!-- Full page · Reversed -->
             <div class="dp-variant-tile">
-              <p class="comp-label">Full page · Reversed</p>
+              <p class="avatar-group-label">Full page · Reversed</p>
               <div class="dp-mini dp-mini--reversed dp-mini--fullpage">
                 <div class="dp dp--reversed">
                   <div class="dp-header">
@@ -10035,7 +9979,7 @@
 
             <!-- Compact · Reversed -->
             <div class="dp-variant-tile">
-              <p class="comp-label">Compact · Reversed</p>
+              <p class="avatar-group-label">Compact · Reversed</p>
               <div class="dp-compact-card dp-compact-card--reversed">
                 <div class="dp-compact-card-sheet">
                   <div class="dp dp--reversed" style="padding:4px 10px 10px;">
