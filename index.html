@@ -2310,25 +2310,25 @@
       transition: color 140ms ease;
     }
 
-    /* Today (not selected): cream fill + same border */
-    .dtab-item--today {
-      background: var(--color-brand-cream);
+    /* Pill today (not selected): container fill + border */
+    .dtab-pill-item.dtab-item--today {
+      background: var(--color-background-container);
       border-color: var(--color-border-default);
     }
-    .dtab-item--today:hover:not(.dtab-item--selected):not(.dtab-item--disabled) {
-      background: var(--color-background-container);
+    .dtab-pill-item.dtab-item--today:hover:not(.dtab-item--selected):not(.dtab-item--disabled) {
+      background: var(--color-background-ui);
     }
 
-    /* Selected (with or without today): ink fill, border hidden */
-    .dtab-item--selected {
-      background: var(--color-content-default);
-      border-color: var(--color-content-default);
+    /* Pill selected: contrast fill */
+    .dtab-pill-item.dtab-item--selected {
+      background: var(--color-background-contrast);
+      border-color: var(--color-background-contrast);
     }
-    .dtab-item--selected:hover:not(.dtab-item--disabled) {
-      background: var(--color-content-default);
+    .dtab-pill-item.dtab-item--selected:hover:not(.dtab-item--disabled) {
+      background: var(--color-background-contrast);
     }
-    .dtab-item--selected .dtab-pill-day,
-    .dtab-item--selected .dtab-pill-date {
+    .dtab-pill-item.dtab-item--selected .dtab-pill-day,
+    .dtab-pill-item.dtab-item--selected .dtab-pill-date {
       color: var(--color-inverse);
     }
 
@@ -2385,7 +2385,6 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      overflow: hidden;
       border: 1px solid transparent;
       display: flex;
       align-items: center;
@@ -2405,22 +2404,22 @@
     .dtab-circle-item:active .dtab-circle-inner {
       background: var(--color-background-secondary);
     }
-    /* Circle today: cream fill + border */
+    /* Circle today: container fill + border */
     .dtab-item--today .dtab-circle-inner {
-      background: var(--color-brand-cream);
+      background: var(--color-background-container);
       border-color: var(--color-border-default);
     }
     .dtab-item--today:hover .dtab-circle-inner {
-      background: var(--color-background-container);
+      background: var(--color-background-ui);
     }
-    /* Circle selected: ink fill */
+    /* Circle selected: contrast fill */
     .dtab-item--selected .dtab-circle-inner {
-      background: var(--color-content-default);
-      border-color: var(--color-content-default);
+      background: var(--color-background-contrast);
+      border-color: var(--color-background-contrast);
       color: var(--color-inverse);
     }
     .dtab-item--selected:hover .dtab-circle-inner {
-      background: var(--color-content-default);
+      background: var(--color-background-contrast);
     }
     .dtab-item--disabled .dtab-circle-inner { opacity: 0.35; cursor: not-allowed; }
 
