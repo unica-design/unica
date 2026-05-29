@@ -2340,6 +2340,15 @@
       grid-template-columns: 96px repeat(6, 1fr);
       min-width: 640px;
     }
+    /* 9-state date-picker matrix */
+    .states-matrix--9col .states-matrix-head,
+    .states-matrix--9col .states-matrix-row {
+      grid-template-columns: 88px repeat(9, 1fr);
+      min-width: 760px;
+    }
+    .states-matrix--9col .states-matrix-cell {
+      padding: var(--space-500) var(--space-200);
+    }
     /* Focus demo — mirrors :focus-visible outline used across all components */
     .chip.is-demo-focused { outline: 2px solid var(--color-action-default); outline-offset: 2px; }
     /* Contextual section label used in preview (matches chip-group Figma usage) */
@@ -2702,6 +2711,37 @@
     .dp-compact-card-sheet {
       background: var(--color-background-page);
       border-top: 1px solid var(--color-border-subtle);
+    }
+    .dp-compact-card--reversed {
+      background: var(--color-background-contrast);
+      border-color: var(--color-border-inverse-subtle);
+    }
+    .dp-compact-card--reversed .dp-compact-card-app {
+      background: var(--color-background-inverse-selection);
+    }
+    .dp-compact-card--reversed .dp-compact-card-field {
+      background: var(--color-background-contrast);
+      border-color: var(--color-border-inverse-subtle);
+    }
+    .dp-compact-card--reversed .dp-compact-card-sheet {
+      background: var(--color-background-contrast);
+      border-top-color: var(--color-border-inverse-subtle);
+    }
+
+    /* Variants 2×2 grid */
+    .dp-variants-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-600);
+      margin-top: var(--space-600);
+    }
+    @media (max-width: 640px) {
+      .dp-variants-grid { grid-template-columns: 1fr; }
+    }
+    .dp-variant-tile {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-300);
     }
 
     /* Day-state grid (states section) */
@@ -9313,19 +9353,24 @@
 
     </div><!-- /page-bottom-sheet -->
     <div class="page-panel" id="page-date-picker">
-      <section class="section">
 
-        <div class="section-header">
-          <p class="section-eyebrow">Components · Overlays</p>
-          <h2 class="section-title">Date Picker Calendar</h2>
-          <p class="section-description">Full-page and compact calendar for single-date and range selection. Supports a reversed surface with a customizable accent colour for the selected state.</p>
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Overlays</p>
+        <h1 class="comp-title">Date Picker Calendar</h1>
+        <p class="comp-description">Full-page and compact calendar for single-date and range selection. Supports a reversed surface with a customisable accent colour for the selected state.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web</span>
+          <span class="comp-badge">Mobile</span>
         </div>
+      </div>
 
         <!-- ══════════════════════════════════════
              1. LIVE PREVIEW
         ══════════════════════════════════════ -->
         <div class="doc-section">
-          <h2 class="doc-section-title">Live Preview</h2>
+          <h2 class="doc-section-title">Preview</h2>
           <hr class="doc-rule">
           <p class="doc-section-description">Click a date to start a selection. Click a second date to complete a range. Use the controls to explore variants.</p>
 
@@ -9367,11 +9412,11 @@
               </button>
               <ul class="dropdown-menu" role="listbox" aria-label="Accent colour">
                 <li class="dropdown-option" role="option" aria-selected="true"  data-value="citron"  tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-citron-300);"></span> Citron</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="pool"    tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-pool-300);"></span> Pool</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="violet"  tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-violet-300);"></span> Violet</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="berry"   tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-berry-300);"></span> Berry</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot" tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-apricot-300);"></span> Apricot</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="mint"    tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-mint-300);"></span> Mint</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="pool"    tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-pool-200);"></span> Pool</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="violet"  tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-violet-200);"></span> Violet</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="berry"   tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-berry-200);"></span> Berry</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot" tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-apricot-200);"></span> Apricot</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="mint"    tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-mint-200);"></span> Mint</li>
               </ul>
             </div>
 
@@ -9457,13 +9502,13 @@
           <h2 class="doc-section-title">Variants</h2>
           <hr class="doc-rule">
 
-          <p class="comp-description">Two layout variants share the same underlying calendar component. The <strong>full-page</strong> calendar fills the screen — used as a standalone view or a full-screen overlay. The <strong>compact</strong> calendar sits inline as a card, embedded directly in the page context alongside other UI.</p>
+          <p class="doc-section-description">Two layout variants share the same underlying calendar component. The full-page calendar fills the screen — used as a standalone view or a full-screen overlay. The compact calendar sits inline as a card, embedded directly in the page context alongside other UI. Both variants support a reversed (dark-surface) mode.</p>
 
-          <div style="display:flex; flex-wrap:wrap; gap:var(--space-600); margin-top:var(--space-600); align-items:flex-start;">
+          <div class="dp-variants-grid">
 
-            <!-- Standard full-page mini -->
-            <div>
-              <p class="comp-label" style="margin-bottom:var(--space-300);">Full page</p>
+            <!-- Full page · Standard -->
+            <div class="dp-variant-tile">
+              <p class="comp-label">Full page</p>
               <div class="dp-mini">
                 <div class="dp">
                   <div class="dp-header">
@@ -9478,9 +9523,9 @@
               </div>
             </div>
 
-            <!-- Compact mini -->
-            <div>
-              <p class="comp-label" style="margin-bottom:var(--space-300);">Compact (inline card)</p>
+            <!-- Compact · Standard -->
+            <div class="dp-variant-tile">
+              <p class="comp-label">Compact</p>
               <div class="dp-compact-card">
                 <div class="dp-compact-card-app">
                   <div class="dp-compact-card-field"></div>
@@ -9501,9 +9546,9 @@
               </div>
             </div>
 
-            <!-- Reversed with citron accent -->
-            <div>
-              <p class="comp-label" style="margin-bottom:var(--space-300);">Reversed · citron accent</p>
+            <!-- Full page · Reversed -->
+            <div class="dp-variant-tile">
+              <p class="comp-label">Full page · Reversed</p>
               <div class="dp-mini dp-mini--reversed">
                 <div class="dp dp--reversed">
                   <div class="dp-header">
@@ -9516,7 +9561,29 @@
                   <div class="dp-grid" id="dp-mini-rev-grid"></div>
                 </div>
               </div>
-              <p class="doc-section-description" style="margin-top:var(--space-300); max-width:240px;">The accent colour on the selected state is customisable. All six brand colour families are supported at the <code class="inline-code">-300</code> ramp.</p>
+            </div>
+
+            <!-- Compact · Reversed -->
+            <div class="dp-variant-tile">
+              <p class="comp-label">Compact · Reversed</p>
+              <div class="dp-compact-card dp-compact-card--reversed">
+                <div class="dp-compact-card-app">
+                  <div class="dp-compact-card-field"></div>
+                  <div class="dp-compact-card-field"></div>
+                </div>
+                <div class="dp-compact-card-sheet">
+                  <div class="dp dp--reversed" style="padding:4px 10px 10px;">
+                    <div class="dp-header" style="padding:2px 0 6px;">
+                      <button class="dp-nav-btn" tabindex="-1" aria-hidden="true" style="width:22px;height:22px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-lt"/></svg></button>
+                      <span class="dp-month-title" style="font-size:12px;">May 2026</span>
+                      <button class="dp-nav-btn" tabindex="-1" aria-hidden="true" style="width:22px;height:22px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></button>
+                    </div>
+                    <div class="dp-weekdays"><span class="dp-weekday" style="height:22px;font-size:9px;">S</span><span class="dp-weekday" style="height:22px;font-size:9px;">M</span><span class="dp-weekday" style="height:22px;font-size:9px;">T</span><span class="dp-weekday" style="height:22px;font-size:9px;">W</span><span class="dp-weekday" style="height:22px;font-size:9px;">T</span><span class="dp-weekday" style="height:22px;font-size:9px;">F</span><span class="dp-weekday" style="height:22px;font-size:9px;">S</span></div>
+                    <div class="dp-divider" style="margin:0 -10px 1px;"></div>
+                    <div class="dp-grid" id="dp-mini-cmp-rev-grid"></div>
+                  </div>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -9530,122 +9597,139 @@
           <h2 class="doc-section-title">States</h2>
           <hr class="doc-rule">
 
-          <p class="comp-description">Day cells carry eight states. Range endpoints are always displayed as filled circles; in-range days show a tinted band spanning the full cell width.</p>
-
-          <!-- Standard states -->
-          <p class="comp-label" style="margin:var(--space-500) 0 var(--space-400);">Standard</p>
-          <div class="dp-states-grid">
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner">8</span>
-              </div>
-              <span class="dp-state-label">Default</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="background:var(--color-brand-cream);box-shadow:inset 0 0 0 1.5px var(--color-border-default);font-weight:600;">8</span>
-              </div>
-              <span class="dp-state-label">Today</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="background:var(--color-background-ui);">8</span>
-              </div>
-              <span class="dp-state-label">Hover</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner is-demo-focused" style="outline:2px solid var(--color-action-default);outline-offset:2px;">8</span>
-              </div>
-              <span class="dp-state-label">Focused</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span>
-              </div>
-              <span class="dp-state-label">Selected</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo is-range-start">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span>
-              </div>
-              <span class="dp-state-label">Range start</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo is-range">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner">8</span>
-              </div>
-              <span class="dp-state-label">In range</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo is-range-end">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span>
-              </div>
-              <span class="dp-state-label">Range end</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo" style="opacity:0.35;">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner">8</span>
-              </div>
-              <span class="dp-state-label">Disabled</span>
+          <div class="states-controls-row">
+            <p class="doc-section-description" style="margin-bottom:0;">Day cells carry nine states. Range endpoints are displayed as filled circles; in-range days show a tinted band spanning the full cell width.</p>
+            <div class="states-controls">
+              <label class="switch-item" style="flex-shrink:0;">
+                <div class="toggle-switch">
+                  <input type="checkbox" id="dp-states-reversed-toggle">
+                  <div class="toggle-track">
+                    <div class="toggle-handle">
+                      <div class="toggle-icon">
+                        <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <span class="switch-item-text">Reversed</span>
+              </label>
             </div>
           </div>
 
-          <!-- Reversed states -->
-          <p class="comp-label" style="margin:var(--space-600) 0 var(--space-400);">Reversed</p>
-          <div style="background:var(--color-background-contrast); border-radius:16px; padding:var(--space-500) var(--space-600); display:inline-flex; gap:var(--space-400); flex-wrap:wrap; border: 1px solid var(--color-border-inverse-subtle);">
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);">8</span>
+          <!-- Standard states matrix -->
+          <div id="dp-states-standard">
+            <div class="states-matrix states-matrix--9col">
+              <div class="states-matrix-head">
+                <div class="states-matrix-head-spacer"></div>
+                <div class="states-matrix-head-cell">Default</div>
+                <div class="states-matrix-head-cell">Today</div>
+                <div class="states-matrix-head-cell">Hover</div>
+                <div class="states-matrix-head-cell">Focused</div>
+                <div class="states-matrix-head-cell">Selected</div>
+                <div class="states-matrix-head-cell">Range start</div>
+                <div class="states-matrix-head-cell">In range</div>
+                <div class="states-matrix-head-cell">Range end</div>
+                <div class="states-matrix-head-cell">Disabled</div>
               </div>
-              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Default</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);background:var(--color-background-inverse-selection);box-shadow:inset 0 0 0 1.5px var(--color-border-inverse-default);font-weight:600;">8</span>
+              <div class="states-matrix-row">
+                <div class="states-matrix-label">Day cell</div>
+                <!-- Default -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner">8</span></div>
+                </div>
+                <!-- Today -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="background:var(--color-brand-cream);box-shadow:inset 0 0 0 1.5px var(--color-border-default);font-weight:600;">8</span></div>
+                </div>
+                <!-- Hover -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="background:var(--color-background-ui);">8</span></div>
+                </div>
+                <!-- Focused -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="outline:2px solid var(--color-action-default);outline-offset:2px;">8</span></div>
+                </div>
+                <!-- Selected -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span></div>
+                </div>
+                <!-- Range start -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo is-range-start"><span class="dp-day-rng"></span><span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span></div>
+                </div>
+                <!-- In range -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo is-range"><span class="dp-day-rng"></span><span class="dp-day-inner">8</span></div>
+                </div>
+                <!-- Range end -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo is-range-end"><span class="dp-day-rng"></span><span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span></div>
+                </div>
+                <!-- Disabled -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo" style="opacity:0.35;"><span class="dp-day-rng"></span><span class="dp-day-inner">8</span></div>
+                </div>
               </div>
-              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Today</span>
             </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);background:var(--color-background-inverse-selection);">8</span>
+          </div><!-- /#dp-states-standard -->
+
+          <!-- Reversed states matrix (hidden until toggle is on) -->
+          <div id="dp-states-reversed" hidden>
+            <div class="states-matrix states-matrix--reversed states-matrix--9col">
+              <div class="states-matrix-head">
+                <div class="states-matrix-head-spacer"></div>
+                <div class="states-matrix-head-cell">Default</div>
+                <div class="states-matrix-head-cell">Today</div>
+                <div class="states-matrix-head-cell">Hover</div>
+                <div class="states-matrix-head-cell">Focused</div>
+                <div class="states-matrix-head-cell">Selected</div>
+                <div class="states-matrix-head-cell">Range start</div>
+                <div class="states-matrix-head-cell">In range</div>
+                <div class="states-matrix-head-cell">Range end</div>
+                <div class="states-matrix-head-cell">Disabled</div>
               </div>
-              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Hover</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="color:var(--color-inverse);background:var(--primitive-citron-300);color:var(--primitive-ink-900);font-weight:600;">8</span>
+              <div class="states-matrix-row">
+                <div class="states-matrix-label">Day cell</div>
+                <!-- Default -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);">8</span></div>
+                </div>
+                <!-- Today -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);background:var(--color-background-inverse-selection);box-shadow:inset 0 0 0 1.5px var(--color-border-inverse-default);font-weight:600;">8</span></div>
+                </div>
+                <!-- Hover -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);background:var(--color-background-inverse-selection);">8</span></div>
+                </div>
+                <!-- Focused -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);outline:2px solid var(--color-border-inverse-default);outline-offset:2px;">8</span></div>
+                </div>
+                <!-- Selected -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo"><span class="dp-day-rng"></span><span class="dp-day-inner" style="background:var(--primitive-citron-300);color:var(--primitive-ink-900);font-weight:600;">8</span></div>
+                </div>
+                <!-- Range start -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo is-range-start"><span class="dp-day-rng"></span><span class="dp-day-inner" style="background:var(--primitive-citron-300);color:var(--primitive-ink-900);font-weight:600;">8</span></div>
+                </div>
+                <!-- In range -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo is-range"><span class="dp-day-rng" style="background:var(--color-background-inverse-selection);"></span><span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);">8</span></div>
+                </div>
+                <!-- Range end -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo is-range-end"><span class="dp-day-rng"></span><span class="dp-day-inner" style="background:var(--primitive-citron-300);color:var(--primitive-ink-900);font-weight:600;">8</span></div>
+                </div>
+                <!-- Disabled -->
+                <div class="states-matrix-cell">
+                  <div class="dp-state-demo" style="opacity:0.35;"><span class="dp-day-rng"></span><span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);">8</span></div>
+                </div>
               </div>
-              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Selected</span>
             </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo is-range" style="--bg:var(--color-background-inverse-selection);">
-                <span class="dp-day-rng" style="background:var(--color-background-inverse-selection);"></span>
-                <span class="dp-day-inner" style="color:var(--color-content-inverse-subtle);">8</span>
-              </div>
-              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">In range</span>
-            </div>
-            <div class="dp-state-cell">
-              <div class="dp-state-demo" style="opacity:0.35;">
-                <span class="dp-day-rng"></span>
-                <span class="dp-day-inner" style="color:var(--color-content-inverse-disabled);">8</span>
-              </div>
-              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Disabled</span>
-            </div>
-          </div>
+          </div><!-- /#dp-states-reversed -->
 
         </div><!-- /.doc-section states -->
 
@@ -9690,7 +9774,7 @@
                 </tr>
                 <tr>
                   <td>Colour contrast</td>
-                  <td>All six accent colours at the <code class="inline-code">-300</code> ramp achieve ≥ 4.5 : 1 contrast against <code class="inline-code">primitive-ink-900</code> label text on the reversed surface. The standard dark circle (<code class="inline-code">color-background-contrast</code>) achieves ≥ 7 : 1.</td>
+                  <td>Citron at <code class="inline-code">-300</code> and all other accent colours at <code class="inline-code">-200</code> achieve ≥ 4.5 : 1 contrast against <code class="inline-code">primitive-ink-900</code> label text on the reversed surface. The standard dark circle (<code class="inline-code">color-background-contrast</code>) achieves ≥ 7 : 1.</td>
                 </tr>
               </tbody>
             </table>
@@ -9710,7 +9794,7 @@
               <tbody>
                 <tr><td class="td-mono">.dp</td><td class="td-subtle">—</td><td>Calendar root. Sets the <code class="inline-code">--dp-accent</code> custom property to <code class="inline-code">primitive-citron-300</code> by default.</td></tr>
                 <tr><td class="td-mono">.dp--reversed</td><td class="td-subtle">—</td><td>Reversed surface variant. Switches all internal tokens to their <code class="inline-code">-inverse</code> counterparts and uses <code class="inline-code">--dp-accent</code> for the selected circle.</td></tr>
-                <tr><td class="td-mono">--dp-accent</td><td class="td-subtle">CSS custom property</td><td>Accent colour for the selected state on the reversed surface. Any <code class="inline-code">primitive-*-300</code> colour token. Only active when <code class="inline-code">.dp--reversed</code> is present.</td></tr>
+                <tr><td class="td-mono">--dp-accent</td><td class="td-subtle">CSS custom property</td><td>Accent colour for the selected state on the reversed surface. Citron uses <code class="inline-code">-300</code>; all other colour families use <code class="inline-code">-200</code> for softer contrast on the dark surface. Only active when <code class="inline-code">.dp--reversed</code> is present.</td></tr>
                 <tr><td class="td-mono">.dp-day</td><td class="td-subtle">—</td><td>Individual date cell. Interactive; fires click and keydown events.</td></tr>
                 <tr><td class="td-mono">.dp-day--today</td><td class="td-subtle">—</td><td>Marks the current date. Renders a <code class="inline-code">color-brand-cream</code> fill with a <code class="inline-code">color-border-default</code> inset ring.</td></tr>
                 <tr><td class="td-mono">.dp-day--selected</td><td class="td-subtle">—</td><td>Applied to range start and end endpoints. Renders a filled circle using <code class="inline-code">color-background-contrast</code> (standard) or <code class="inline-code">--dp-accent</code> (reversed).</td></tr>
@@ -9733,11 +9817,11 @@
         var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         var ACCENTS = {
           citron:  'var(--primitive-citron-300)',
-          pool:    'var(--primitive-pool-300)',
-          violet:  'var(--primitive-violet-300)',
-          berry:   'var(--primitive-berry-300)',
-          apricot: 'var(--primitive-apricot-300)',
-          mint:    'var(--primitive-mint-300)',
+          pool:    'var(--primitive-pool-200)',
+          violet:  'var(--primitive-violet-200)',
+          berry:   'var(--primitive-berry-200)',
+          apricot: 'var(--primitive-apricot-200)',
+          mint:    'var(--primitive-mint-200)',
         };
         var ACCENT_LABELS = { citron:'Citron', pool:'Pool', violet:'Violet', berry:'Berry', apricot:'Apricot', mint:'Mint' };
 
@@ -10057,12 +10141,18 @@
         }
 
         var miniY = today.getFullYear(), miniM = today.getMonth();
-        // Pre-select a range for demo: 9th to 17th of current month
-        var demoStart = dateOnly(miniY, miniM, 9);
-        var demoEnd   = dateOnly(miniY, miniM, 17);
-        buildMini('dp-mini-std-grid', miniY, miniM, false, 'citron', demoStart, demoEnd);
-        buildMini('dp-mini-cmp-grid', miniY, miniM, false, 'citron', demoStart, demoEnd);
-        buildMini('dp-mini-rev-grid', miniY, miniM, true,  'citron', demoStart, demoEnd);
+        // Pre-select a 3-day range guaranteed to fall on a single calendar row
+        // Find the Tuesday of the second full week of the month
+        var firstDow = new Date(miniY, miniM, 1).getDay(); // 0=Sun
+        var firstFullRowSun = (firstDow === 0) ? 1 : (8 - firstDow);
+        var row2Tue = firstFullRowSun + 7 + 2; // Tue of 2nd full row
+        var row2Thu = firstFullRowSun + 7 + 4; // Thu of 2nd full row
+        var demoStart = dateOnly(miniY, miniM, row2Tue);
+        var demoEnd   = dateOnly(miniY, miniM, row2Thu);
+        buildMini('dp-mini-std-grid',     miniY, miniM, false, 'citron', demoStart, demoEnd);
+        buildMini('dp-mini-cmp-grid',     miniY, miniM, false, 'citron', demoStart, demoEnd);
+        buildMini('dp-mini-rev-grid',     miniY, miniM, true,  'citron', demoStart, demoEnd);
+        buildMini('dp-mini-cmp-rev-grid', miniY, miniM, true,  'citron', demoStart, demoEnd);
 
         // ── Initial render ─────────────────────
         render();
@@ -12873,6 +12963,17 @@ ${badge}
       statesToggle.addEventListener('change', () => {
         statesStd.hidden = statesToggle.checked;
         statesRev.hidden = !statesToggle.checked;
+      });
+    }
+
+    // ── Date Picker States: Standard ↔ Reversed toggle ──────────
+    const dpStatesToggle = document.getElementById('dp-states-reversed-toggle');
+    const dpStatesStd    = document.getElementById('dp-states-standard');
+    const dpStatesRev    = document.getElementById('dp-states-reversed');
+    if (dpStatesToggle) {
+      dpStatesToggle.addEventListener('change', () => {
+        dpStatesStd.hidden = dpStatesToggle.checked;
+        dpStatesRev.hidden = !dpStatesToggle.checked;
       });
     }
 
