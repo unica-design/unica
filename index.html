@@ -2453,6 +2453,7 @@
       flex-direction: column;
       gap: var(--space-300);
       min-width: 0;
+      max-width: 375px;
     }
 
     /* 8-state date-tabs matrix */
@@ -8972,14 +8973,14 @@
         <hr class="doc-rule">
         <div class="dropdown" id="dtab-variant-dropdown" style="margin-bottom:var(--space-600);">
           <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Select variant">
-            <span>Pill</span>
+            <span>Circle</span>
             <svg class="dropdown-trigger-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true">
               <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <ul class="dropdown-menu" role="listbox" aria-label="Select variant">
-            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="true"  data-value="pill">Pill</li>
-            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="circle">Circle</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="true"  data-value="circle">Circle</li>
+            <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="pill">Pill</li>
           </ul>
         </div>
         <div class="preview-canvas" style="padding:var(--space-900) var(--space-600);">
@@ -9004,7 +9005,7 @@
           <!-- Pill -->
           <div class="dtab-variant-tile">
             <p class="avatar-group-label">Pill</p>
-            <div id="dtab-var-pill" class="dtab-pill-strip"></div>
+            <div id="dtab-var-pill" class="dtab-pill-strip dtab-pill-strip--scroll"></div>
           </div>
 
           <!-- Circle -->
@@ -12912,17 +12913,32 @@
 
     /* ── Date Tabs ─────────────────────────────── */
     (function initDateTabs() {
-      var DAYS_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-      var DAYS_FULL  = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      var DAYS_INITIAL = ['S','M','T','W','T','F','S'];
+      var DAYS_FULL    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-      // Build a 7-day week starting from Monday of the current week
+      // 7-day week starting from Monday of the current week
       function getWeekDates() {
         var today = new Date();
-        var dow   = today.getDay(); // 0=Sun
+        var dow   = today.getDay();
         var mon   = new Date(today);
-        mon.setDate(today.getDate() - ((dow + 6) % 7)); // rewind to Monday
+        mon.setDate(today.getDate() - ((dow + 6) % 7));
         var days = [];
         for (var i = 0; i < 7; i++) {
+          var d = new Date(mon);
+          d.setDate(mon.getDate() + i);
+          days.push(d);
+        }
+        return days;
+      }
+
+      // 14-day (two-week) range starting from Monday of the current week
+      function getTwoWeekDates() {
+        var today = new Date();
+        var dow   = today.getDay();
+        var mon   = new Date(today);
+        mon.setDate(today.getDate() - ((dow + 6) % 7));
+        var days = [];
+        for (var i = 0; i < 14; i++) {
           var d = new Date(mon);
           d.setDate(mon.getDate() + i);
           days.push(d);
@@ -12954,9 +12970,8 @@
           btn.setAttribute('aria-selected', sel ? 'true' : 'false');
           btn.setAttribute('tabindex', sel ? '0' : '-1');
           btn.innerHTML =
-            '<span class="dtab-pill-day">' + DAYS_SHORT[d.getDay()] + '</span>' +
-            '<span class="dtab-pill-date">' + d.getDate() + '</span>' +
-            '<span class="dtab-pill-dot"></span>';
+            '<span class="dtab-pill-day">' + DAYS_INITIAL[d.getDay()] + '</span>' +
+            '<span class="dtab-pill-date">' + d.getDate() + '</span>';
           // Click to select
           btn.addEventListener('click', function() {
             buildPillStrip(container, days, d, reversed);
@@ -12984,7 +12999,7 @@
         days.forEach(function(d) {
           var lbl = document.createElement('span');
           lbl.className = 'dtab-circle-day-label';
-          lbl.textContent = DAYS_SHORT[d.getDay()];
+          lbl.textContent = DAYS_INITIAL[d.getDay()];
           daysRow.appendChild(lbl);
         });
         container.appendChild(daysRow);
@@ -13023,15 +13038,15 @@
         };
       }
 
-      var week = getWeekDates();
-      var todayDate = new Date();
-      // Default selected = today if in view, else first day
-      var defaultSelected = week.find(function(d) { return isToday(d); }) || week[0];
+      var week     = getWeekDates();      // 7 days — used for circle
+      var twoWeeks = getTwoWeekDates();   // 14 days — used for pill
+      // Default selected = today if in range, else first day
+      var defaultSelected = twoWeeks.find(function(d) { return isToday(d); }) || twoWeeks[0];
 
-      // Build variant tiles (pill + circle only, no reversed)
+      // Build variant tiles — circle (7 days), pill (14 days, scrollable)
       var varPill   = document.getElementById('dtab-var-pill');
       var varCircle = document.getElementById('dtab-var-circle');
-      if (varPill)   buildPillStrip(varPill,   week, defaultSelected, false);
+      if (varPill)   buildPillStrip(varPill,   twoWeeks, defaultSelected, false);
       if (varCircle) buildCircleStrip(varCircle, week, defaultSelected, false);
 
       // Build preview phone demo
@@ -13039,26 +13054,22 @@
       function buildDemo(variant) {
         if (!demoWrap) return;
         demoWrap.innerHTML = '';
-        var isCircle = variant === 'circle';
-        if (isCircle) {
+        if (variant === 'circle') {
           var strip = document.createElement('div');
           strip.className = 'dtab-circle-strip';
           demoWrap.appendChild(strip);
           buildCircleStrip(strip, week, defaultSelected, false);
         } else {
           var strip = document.createElement('div');
-          // Scrollable pill strip in the preview phone
           strip.className = 'dtab-pill-strip dtab-pill-strip--scroll';
           demoWrap.appendChild(strip);
-          buildPillStrip(strip, week, defaultSelected, false);
-          // Scroll selected item into view
+          buildPillStrip(strip, twoWeeks, defaultSelected, false);
+          // Scroll selected into view
           var selItem = strip.querySelector('.dtab-item--selected');
-          if (selItem) {
-            selItem.scrollIntoView({ inline: 'center', behavior: 'instant' });
-          }
+          if (selItem) selItem.scrollIntoView({ inline: 'center', behavior: 'instant' });
         }
       }
-      buildDemo('pill');
+      buildDemo('circle'); // circle is the default preview
 
       // Preview dropdown
       initDropdown(document.getElementById('dtab-variant-dropdown'), function(value) {
