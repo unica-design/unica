@@ -2396,28 +2396,17 @@
       flex-direction: column;
     }
 
-    /* Fake app background (compact) */
-    .dp-app-bg {
+    /* Compact page context */
+    .dp-compact-page {
       position: absolute;
       inset: 0;
       background: var(--color-background-page);
-      padding: 28px 20px 0;
+      padding: 28px 16px 16px;
       display: flex;
       flex-direction: column;
-      gap: var(--space-400);
-      transition: background 220ms ease;
+      overflow: hidden;
     }
-    .dp-app-topbar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-    .dp-app-topbar-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--color-border-default);
-    }
-    .dp-app-eyebrow {
+    .dp-compact-eyebrow {
       font-family: var(--font-family-sans);
       font-size: 11px;
       font-weight: 600;
@@ -2425,67 +2414,69 @@
       text-transform: uppercase;
       color: var(--color-content-subtle);
     }
-    .dp-app-title {
+    .dp-compact-title {
       font-family: var(--font-family-serif);
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
-      line-height: 1.15;
+      line-height: 1.2;
       color: var(--color-content-default);
-      margin: 0;
+      margin: 5px 0 10px;
     }
-    .dp-app-field {
+    .dp-compact-fields {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 11px 14px;
-      background: var(--color-background-secondary);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .dp-compact-field {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 7px 11px;
       border-radius: 10px;
       border: 1.5px solid var(--color-border-subtle);
+      gap: 1px;
     }
-    .dp-app-field-label {
+    .dp-compact-field-label {
       font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-s);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--color-content-subtle);
     }
-    .dp-app-field-value {
+    .dp-compact-field-value {
       font-family: var(--font-family-sans);
       font-size: var(--font-size-body-s);
       font-weight: 500;
       color: var(--color-content-default);
     }
 
-    /* Compact scrim */
-    .dp-compact-scrim {
-      position: absolute;
-      inset: 0;
-      background: rgba(3,6,13,0.45);
-      z-index: 1;
-    }
-
-    /* Compact sheet */
-    .dp-compact-sheet {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      z-index: 2;
-      border-radius: 20px 20px 0 0;
+    /* Inline card widget */
+    .dp-compact-widget {
+      border-radius: 20px;
       background: var(--color-background-page);
-      padding-bottom: 28px;
-      transition: background 220ms ease;
+      box-shadow: 0 1px 16px 0 rgba(8,5,13,0.10);
+      border: 1px solid var(--color-border-subtle);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
-    .dp-compact-sheet--reversed {
+    .dp-compact-widget--reversed {
       background: var(--color-background-contrast);
+      border-color: var(--color-border-inverse-subtle);
+      box-shadow: none;
     }
-
-    /* Grabber */
-    .dp-grabber {
-      width: 40px; height: 4px;
-      border-radius: 2px;
-      background: var(--color-border-default);
-      margin: 10px auto 14px;
+    .dp-widget-actions {
+      display: flex;
+      gap: var(--space-300);
+      padding: 12px 16px 16px;
+      border-top: 1px solid var(--color-border-subtle);
     }
-    .dp-compact-sheet--reversed .dp-grabber {
-      background: var(--color-border-inverse-subtle);
+    .dp-compact-widget--reversed .dp-widget-actions {
+      border-top-color: var(--color-border-inverse-subtle);
     }
+    .dp-widget-actions .btn { flex: 1; }
 
     /* ── Calendar component ── */
     .dp {
@@ -2652,15 +2643,6 @@
     .dp-phone--contrast .dp-actions { border-top-color: var(--color-border-inverse-subtle); }
     .dp-actions .btn { flex: 1; }
 
-    /* Sheet action bar (compact) */
-    .dp-sheet-actions {
-      display: flex;
-      gap: var(--space-300);
-      padding: 12px 16px 0;
-      border-top: 1px solid var(--color-border-subtle);
-    }
-    .dp-compact-sheet--reversed .dp-sheet-actions { border-top-color: var(--color-border-inverse-subtle); }
-    .dp-sheet-actions .btn { flex: 1; }
 
     /* Accent color swatch */
     .dp-swatch {
@@ -9357,26 +9339,24 @@
                 <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <ul class="dropdown-menu" role="listbox" aria-label="Variant">
-                <li class="dropdown-option" role="option" aria-selected="true"  data-value="fullpage" tabindex="0">Full page</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="compact"  tabindex="0">Compact</li>
+                <li class="dropdown-option" role="option" aria-selected="true"  data-value="fullpage"     tabindex="0">Full page</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="fullpage-rev" tabindex="0">Full page · Reversed</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="compact"      tabindex="0">Compact</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="compact-rev"  tabindex="0">Compact · Reversed</li>
               </ul>
             </div>
 
-            <!-- Reversed toggle -->
-            <label class="switch-item" style="flex-shrink:0;">
-              <div class="toggle-switch">
-                <input type="checkbox" id="dp-reversed-switch">
-                <div class="toggle-track">
-                  <div class="toggle-handle">
-                    <div class="toggle-icon">
-                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <span class="switch-item-text">Reversed</span>
-            </label>
+            <!-- Mode picker -->
+            <div class="dropdown" id="dp-mode-picker">
+              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span id="dp-mode-label">Range</span>
+                <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="dropdown-menu" role="listbox" aria-label="Selection mode">
+                <li class="dropdown-option" role="option" aria-selected="true"  data-value="range"  tabindex="0">Range</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="single" tabindex="0">Single</li>
+              </ul>
+            </div>
 
             <!-- Accent colour picker (shown when reversed) -->
             <div class="dropdown" id="dp-color-picker" style="display:none;">
@@ -9427,43 +9407,40 @@
 
               <!-- Compact view -->
               <div class="dp-cp-view" id="dp-cp-view" style="display:none;">
-                <!-- Fake app background -->
-                <div class="dp-app-bg" id="dp-app-bg">
-                  <div class="dp-app-eyebrow">Booking</div>
-                  <p class="dp-app-title">Choose your<br>dates</p>
-                  <div class="dp-app-field">
-                    <span class="dp-app-field-label">Check-in</span>
-                    <span class="dp-app-field-value" id="dp-field-checkin">—</span>
-                  </div>
-                  <div class="dp-app-field">
-                    <span class="dp-app-field-label">Check-out</span>
-                    <span class="dp-app-field-value" id="dp-field-checkout">—</span>
-                  </div>
-                </div>
-                <!-- Scrim -->
-                <div class="dp-compact-scrim"></div>
-                <!-- Sheet -->
-                <div class="dp-compact-sheet" id="dp-cp-sheet">
-                  <div class="dp-grabber"></div>
-                  <div class="dp" id="dp-cp-cal">
-                    <div class="dp-header">
-                      <button class="dp-nav-btn" id="dp-cp-prev" aria-label="Previous month">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-lt"/></svg>
-                      </button>
-                      <span class="dp-month-title" id="dp-cp-title"></span>
-                      <button class="dp-nav-btn" id="dp-cp-next" aria-label="Next month">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-rt"/></svg>
-                      </button>
+                <div class="dp-compact-page" id="dp-compact-page">
+                  <span class="dp-compact-eyebrow">Booking</span>
+                  <p class="dp-compact-title">Choose your dates</p>
+                  <div class="dp-compact-fields">
+                    <div class="dp-compact-field">
+                      <span class="dp-compact-field-label">Check-in</span>
+                      <span class="dp-compact-field-value" id="dp-field-checkin">—</span>
                     </div>
-                    <div class="dp-weekdays">
-                      <span class="dp-weekday">S</span><span class="dp-weekday">M</span><span class="dp-weekday">T</span><span class="dp-weekday">W</span><span class="dp-weekday">T</span><span class="dp-weekday">F</span><span class="dp-weekday">S</span>
+                    <div class="dp-compact-field">
+                      <span class="dp-compact-field-label">Check-out</span>
+                      <span class="dp-compact-field-value" id="dp-field-checkout">—</span>
                     </div>
-                    <div class="dp-divider"></div>
-                    <div class="dp-grid" id="dp-cp-grid"></div>
                   </div>
-                  <div class="dp-sheet-actions">
-                    <button class="btn btn--medium btn-outlined" id="dp-cp-cancel">Cancel</button>
-                    <button class="btn btn--medium btn-filled"   id="dp-cp-confirm">Confirm</button>
+                  <div class="dp-compact-widget" id="dp-compact-widget">
+                    <div class="dp" id="dp-cp-cal">
+                      <div class="dp-header">
+                        <button class="dp-nav-btn" id="dp-cp-prev" aria-label="Previous month">
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-lt"/></svg>
+                        </button>
+                        <span class="dp-month-title" id="dp-cp-title"></span>
+                        <button class="dp-nav-btn" id="dp-cp-next" aria-label="Next month">
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-rt"/></svg>
+                        </button>
+                      </div>
+                      <div class="dp-weekdays">
+                        <span class="dp-weekday">S</span><span class="dp-weekday">M</span><span class="dp-weekday">T</span><span class="dp-weekday">W</span><span class="dp-weekday">T</span><span class="dp-weekday">F</span><span class="dp-weekday">S</span>
+                      </div>
+                      <div class="dp-divider"></div>
+                      <div class="dp-grid" id="dp-cp-grid"></div>
+                    </div>
+                    <div class="dp-widget-actions">
+                      <button class="btn btn--medium btn-outlined" id="dp-cp-cancel">Cancel</button>
+                      <button class="btn btn--medium btn-filled"   id="dp-cp-confirm">Confirm</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -9480,7 +9457,7 @@
           <h2 class="doc-section-title">Variants</h2>
           <hr class="doc-rule">
 
-          <p class="comp-description">Two layout variants share the same underlying calendar component. The <strong>full-page</strong> calendar fills the screen — used as a standalone view or a full-screen overlay. The <strong>compact</strong> calendar mounts inside a bottom sheet, keeping the surrounding app context visible.</p>
+          <p class="comp-description">Two layout variants share the same underlying calendar component. The <strong>full-page</strong> calendar fills the screen — used as a standalone view or a full-screen overlay. The <strong>compact</strong> calendar sits inline as a card, embedded directly in the page context alongside other UI.</p>
 
           <div style="display:flex; flex-wrap:wrap; gap:var(--space-600); margin-top:var(--space-600); align-items:flex-start;">
 
@@ -9503,14 +9480,13 @@
 
             <!-- Compact mini -->
             <div>
-              <p class="comp-label" style="margin-bottom:var(--space-300);">Compact (bottom sheet)</p>
+              <p class="comp-label" style="margin-bottom:var(--space-300);">Compact (inline card)</p>
               <div class="dp-compact-card">
                 <div class="dp-compact-card-app">
                   <div class="dp-compact-card-field"></div>
                   <div class="dp-compact-card-field"></div>
                 </div>
                 <div class="dp-compact-card-sheet">
-                  <div class="dp-grabber" style="margin-top:8px;"></div>
                   <div class="dp" style="padding:4px 10px 10px;">
                     <div class="dp-header" style="padding:2px 0 6px;">
                       <button class="dp-nav-btn" tabindex="-1" aria-hidden="true" style="width:22px;height:22px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-lt"/></svg></button>
@@ -9767,33 +9743,35 @@
 
         // ── State ──────────────────────────────
         var today        = new Date();
-        var dpVariant    = 'fullpage';
-        var dpReversed   = false;
+        var dpVariantKey = 'fullpage';  // 'fullpage' | 'fullpage-rev' | 'compact' | 'compact-rev'
+        var dpMode       = 'range';     // 'range' | 'single'
         var dpAccent     = 'citron';
         var dpFpYear     = today.getFullYear();
         var dpFpMonth    = today.getMonth();
         var dpCpYear     = today.getFullYear();
         var dpCpMonth    = today.getMonth();
-        var dpStart      = null; // Date
-        var dpEnd        = null; // Date
-        var dpHover      = null; // Date (preview while picking second date)
+        var dpStart      = null;
+        var dpEnd        = null;
+        var dpHover      = null;
         var dpSelMode    = 'none'; // 'none' | 'picking' | 'done'
 
+        function getVariant() { return (dpVariantKey === 'compact' || dpVariantKey === 'compact-rev') ? 'compact' : 'fullpage'; }
+        function getReversed() { return dpVariantKey === 'fullpage-rev' || dpVariantKey === 'compact-rev'; }
+
         // ── DOM refs ───────────────────────────
-        var phone     = document.getElementById('dp-phone-mock');
-        var fpView    = document.getElementById('dp-fp-view');
-        var cpView    = document.getElementById('dp-cp-view');
-        var fpGrid    = document.getElementById('dp-fp-grid');
-        var cpGrid    = document.getElementById('dp-cp-grid');
-        var fpTitle   = document.getElementById('dp-fp-title');
-        var cpTitle   = document.getElementById('dp-cp-title');
-        var fpCal     = document.getElementById('dp-fp-cal');
-        var cpCal     = document.getElementById('dp-cp-cal');
-        var cpSheet   = document.getElementById('dp-cp-sheet');
-        var appBg     = document.getElementById('dp-app-bg');
-        var fieldIn   = document.getElementById('dp-field-checkin');
-        var fieldOut  = document.getElementById('dp-field-checkout');
-        var colorCtrl = document.getElementById('dp-color-picker');
+        var phone         = document.getElementById('dp-phone-mock');
+        var fpView        = document.getElementById('dp-fp-view');
+        var cpView        = document.getElementById('dp-cp-view');
+        var fpGrid        = document.getElementById('dp-fp-grid');
+        var cpGrid        = document.getElementById('dp-cp-grid');
+        var fpTitle       = document.getElementById('dp-fp-title');
+        var cpTitle       = document.getElementById('dp-cp-title');
+        var fpCal         = document.getElementById('dp-fp-cal');
+        var cpCal         = document.getElementById('dp-cp-cal');
+        var compactWidget = document.getElementById('dp-compact-widget');
+        var fieldIn       = document.getElementById('dp-field-checkin');
+        var fieldOut      = document.getElementById('dp-field-checkout');
+        var colorCtrl     = document.getElementById('dp-color-picker');
 
         // ── Helpers ───────────────────────────
         function sameDay(a, b) {
@@ -9805,22 +9783,38 @@
         }
         function dateOnly(y, m, d) { return new Date(y, m, d); }
 
-        // ── Build a calendar grid ──────────────
-        function buildGrid(gridEl, year, month, reversed, accent) {
-          gridEl.innerHTML = '';
-          var firstDay     = new Date(year, month, 1).getDay();
-          var daysInMonth  = new Date(year, month + 1, 0).getDate();
-          var daysInPrev   = new Date(year, month, 0).getDate();
-
-          // Compute effective range (including hover preview)
+        // ── Class-only hover update (no DOM rebuild — fixes mobile click bug) ──
+        function updateGridClasses(gridEl) {
           var effStart = dpStart, effEnd = dpEnd;
-          if (dpSelMode === 'picking' && dpStart && dpHover) {
+          if (dpMode === 'range' && dpSelMode === 'picking' && dpStart && dpHover) {
             if (dpHover < dpStart) { effStart = dpHover; effEnd = dpStart; }
             else                   { effStart = dpStart; effEnd = dpHover; }
           }
-          if (effStart && effEnd && effEnd < effStart) {
-            var tmp = effStart; effStart = effEnd; effEnd = tmp;
-          }
+          var cells = gridEl.querySelectorAll('.dp-day');
+          cells.forEach(function(cell) {
+            var d = cell._date;
+            if (!d) return;
+            if (dpMode === 'single') {
+              cell.classList.toggle('dp-day--selected', !!(dpStart && sameDay(d, dpStart)));
+              cell.classList.remove('dp-day--range-start', 'dp-day--range-end', 'dp-day--range');
+            } else {
+              var isStart = !!(effStart && sameDay(d, effStart));
+              var isEnd   = !!(effEnd   && sameDay(d, effEnd));
+              var inRange = !!(effStart && effEnd && d > effStart && d < effEnd);
+              cell.classList.toggle('dp-day--selected',    isStart || isEnd);
+              cell.classList.toggle('dp-day--range-start', isStart);
+              cell.classList.toggle('dp-day--range-end',   isEnd);
+              cell.classList.toggle('dp-day--range',       inRange);
+            }
+          });
+        }
+
+        // ── Build a calendar grid ──────────────
+        function buildGrid(gridEl, year, month, reversed, accent) {
+          gridEl.innerHTML = '';
+          var firstDay    = new Date(year, month, 1).getDay();
+          var daysInMonth = new Date(year, month + 1, 0).getDate();
+          var daysInPrev  = new Date(year, month, 0).getDate();
 
           for (var i = 0; i < 42; i++) {
             var dayNum, isCurrent = true, date;
@@ -9837,49 +9831,52 @@
               date = dateOnly(year, month, dayNum);
             }
 
-            var isToday  = sameDay(date, today);
-            var isStart  = effStart && sameDay(date, effStart);
-            var isEnd    = effEnd   && sameDay(date, effEnd);
-            var inRange  = false;
-            if (effStart && effEnd) {
-              inRange = date > effStart && date < effEnd;
-            }
-
             var cls = 'dp-day';
-            if (!isCurrent)      cls += ' dp-day--other-month';
-            if (isToday)         cls += ' dp-day--today';
-            if (isStart || isEnd) cls += ' dp-day--selected';
-            if (isStart)         cls += ' dp-day--range-start';
-            if (isEnd)           cls += ' dp-day--range-end';
-            if (inRange)         cls += ' dp-day--range';
+            if (!isCurrent)       cls += ' dp-day--other-month';
+            if (sameDay(date, today)) cls += ' dp-day--today';
 
             var cell = document.createElement('div');
             cell.className = cls;
+            cell._date = date; // stored for updateGridClasses — no DOM re-parse
             cell.innerHTML = '<span class="dp-day-rng"></span><span class="dp-day-inner">' + dayNum + '</span>';
 
             if (isCurrent) {
-              (function(d) {
-                cell.addEventListener('mouseenter', function() {
-                  if (dpSelMode === 'picking') { dpHover = d; buildGrid(gridEl, year, month, reversed, accent); }
+              (function(d, cel) {
+                cel.addEventListener('mouseenter', function() {
+                  if (dpMode === 'range' && dpSelMode === 'picking') {
+                    dpHover = d;
+                    updateGridClasses(gridEl); // class-toggle only — DOM stays intact
+                  }
                 });
-                cell.addEventListener('mouseleave', function() {
-                  if (dpSelMode === 'picking') { dpHover = null; buildGrid(gridEl, year, month, reversed, accent); }
+                cel.addEventListener('mouseleave', function() {
+                  if (dpMode === 'range' && dpSelMode === 'picking') {
+                    dpHover = null;
+                    updateGridClasses(gridEl);
+                  }
                 });
-                cell.addEventListener('click', function() {
-                  if (dpSelMode === 'none' || dpSelMode === 'done') {
-                    dpStart = d; dpEnd = null; dpHover = null; dpSelMode = 'picking';
-                  } else if (dpSelMode === 'picking') {
-                    if (sameDay(d, dpStart)) { dpStart = null; dpSelMode = 'none'; }
-                    else {
-                      dpEnd = d;
-                      if (dpEnd < dpStart) { var t = dpStart; dpStart = dpEnd; dpEnd = t; }
-                      dpHover = null; dpSelMode = 'done';
+                cel.addEventListener('touchstart', function() {
+                  dpHover = null; // suppress hover preview on touch
+                }, { passive: true });
+                cel.addEventListener('click', function() {
+                  if (dpMode === 'single') {
+                    dpStart = d; dpEnd = null; dpHover = null; dpSelMode = 'done';
+                  } else {
+                    if (dpSelMode === 'none' || dpSelMode === 'done') {
+                      dpStart = d; dpEnd = null; dpHover = null; dpSelMode = 'picking';
+                    } else if (dpSelMode === 'picking') {
+                      if (sameDay(d, dpStart)) {
+                        dpStart = null; dpSelMode = 'none';
+                      } else {
+                        dpEnd = d;
+                        if (dpEnd < dpStart) { var t = dpStart; dpStart = dpEnd; dpEnd = t; }
+                        dpHover = null; dpSelMode = 'done';
+                      }
                     }
                   }
                   updateFields();
-                  buildGrid(gridEl, year, month, reversed, accent);
+                  updateGridClasses(gridEl);
                 });
-              })(date);
+              })(date, cell);
             }
             gridEl.appendChild(cell);
           }
@@ -9887,6 +9884,9 @@
           // Apply accent to calendar root
           var calRoot = gridEl.closest('.dp');
           if (calRoot) calRoot.style.setProperty('--dp-accent', ACCENTS[accent] || ACCENTS.citron);
+
+          // Stamp initial selection state
+          updateGridClasses(gridEl);
         }
 
         // ── Update compact field values ────────
@@ -9897,110 +9897,113 @@
 
         // ── Full render ────────────────────────
         function render() {
-          var rev = dpReversed;
+          var variant = getVariant();
+          var rev     = getReversed();
 
-          // Swap views
-          fpView.style.display = dpVariant === 'fullpage' ? 'flex' : 'none';
-          cpView.style.display = dpVariant === 'compact'  ? 'flex' : 'none';
+          fpView.style.display = variant === 'fullpage' ? 'flex' : 'none';
+          cpView.style.display = variant === 'compact'  ? 'flex' : 'none';
 
-          // Phone background
-          if (dpVariant === 'fullpage' && rev) {
-            phone.classList.add('dp-phone--contrast');
-          } else {
-            phone.classList.remove('dp-phone--contrast');
-          }
+          // Full-page reversed → phone background flips; compact reversed → only widget flips
+          phone.classList.toggle('dp-phone--contrast', variant === 'fullpage' && rev);
 
-          // Calendar reversed class
           fpCal.classList.toggle('dp--reversed', rev);
           cpCal.classList.toggle('dp--reversed', rev);
+          if (compactWidget) compactWidget.classList.toggle('dp-compact-widget--reversed', rev);
 
-          // Sheet reversed
-          cpSheet.classList.toggle('dp-compact-sheet--reversed', rev);
-
-          // Action buttons
           updateActionColors(rev);
 
-          // Build grids
           fpTitle.textContent = MONTHS[dpFpMonth] + ' ' + dpFpYear;
           cpTitle.textContent = MONTHS[dpCpMonth] + ' ' + dpCpYear;
           buildGrid(fpGrid, dpFpYear, dpFpMonth, rev, dpAccent);
           buildGrid(cpGrid, dpCpYear, dpCpMonth, rev, dpAccent);
 
-          // Color control visibility
           colorCtrl.style.display = rev ? '' : 'none';
-
           updateFields();
         }
 
         function updateActionColors(rev) {
-          var fpCancel  = document.getElementById('dp-fp-cancel');
-          var fpConfirm = document.getElementById('dp-fp-confirm');
-          var cpCancel  = document.getElementById('dp-cp-cancel');
-          var cpConfirm = document.getElementById('dp-cp-confirm');
-          [fpCancel, fpConfirm, cpCancel, cpConfirm].forEach(function(btn) {
-            if (!btn) return;
-            if (rev) {
-              btn.classList.add('btn--inverse');
-            } else {
-              btn.classList.remove('btn--inverse');
-            }
+          ['dp-fp-cancel','dp-fp-confirm','dp-cp-cancel','dp-cp-confirm'].forEach(function(id) {
+            var btn = document.getElementById(id);
+            if (btn) btn.classList.toggle('btn--inverse', rev);
           });
         }
 
-        // ── Reset range ────────────────────────
-        function resetRange() { dpStart = null; dpEnd = null; dpHover = null; dpSelMode = 'none'; updateFields(); }
+        // ── Reset ──────────────────────────────
+        function resetSelection() {
+          dpStart = null; dpEnd = null; dpHover = null; dpSelMode = 'none';
+          updateFields();
+          updateGridClasses(fpGrid);
+          updateGridClasses(cpGrid);
+        }
 
-        document.getElementById('dp-fp-cancel').addEventListener('click', resetRange);
-        document.getElementById('dp-cp-cancel').addEventListener('click', resetRange);
-        document.getElementById('dp-fp-confirm').addEventListener('click', function() { /* confirm — range stays */ });
-        document.getElementById('dp-cp-confirm').addEventListener('click', function() { /* confirm */ });
+        document.getElementById('dp-fp-cancel').addEventListener('click', resetSelection);
+        document.getElementById('dp-cp-cancel').addEventListener('click', resetSelection);
+        document.getElementById('dp-fp-confirm').addEventListener('click', function() {});
+        document.getElementById('dp-cp-confirm').addEventListener('click', function() {});
 
         // ── Month navigation ───────────────────
         document.getElementById('dp-fp-prev').addEventListener('click', function() {
-          dpFpMonth--; if (dpFpMonth < 0) { dpFpMonth = 11; dpFpYear--; }
+          dpFpMonth--; if (dpFpMonth < 0)  { dpFpMonth = 11; dpFpYear--; }
           fpTitle.textContent = MONTHS[dpFpMonth] + ' ' + dpFpYear;
-          buildGrid(fpGrid, dpFpYear, dpFpMonth, dpReversed, dpAccent);
+          buildGrid(fpGrid, dpFpYear, dpFpMonth, getReversed(), dpAccent);
         });
         document.getElementById('dp-fp-next').addEventListener('click', function() {
-          dpFpMonth++; if (dpFpMonth > 11) { dpFpMonth = 0; dpFpYear++; }
+          dpFpMonth++; if (dpFpMonth > 11) { dpFpMonth = 0;  dpFpYear++; }
           fpTitle.textContent = MONTHS[dpFpMonth] + ' ' + dpFpYear;
-          buildGrid(fpGrid, dpFpYear, dpFpMonth, dpReversed, dpAccent);
+          buildGrid(fpGrid, dpFpYear, dpFpMonth, getReversed(), dpAccent);
         });
         document.getElementById('dp-cp-prev').addEventListener('click', function() {
-          dpCpMonth--; if (dpCpMonth < 0) { dpCpMonth = 11; dpCpYear--; }
+          dpCpMonth--; if (dpCpMonth < 0)  { dpCpMonth = 11; dpCpYear--; }
           cpTitle.textContent = MONTHS[dpCpMonth] + ' ' + dpCpYear;
-          buildGrid(cpGrid, dpCpYear, dpCpMonth, dpReversed, dpAccent);
+          buildGrid(cpGrid, dpCpYear, dpCpMonth, getReversed(), dpAccent);
         });
         document.getElementById('dp-cp-next').addEventListener('click', function() {
-          dpCpMonth++; if (dpCpMonth > 11) { dpCpMonth = 0; dpCpYear++; }
+          dpCpMonth++; if (dpCpMonth > 11) { dpCpMonth = 0;  dpCpYear++; }
           cpTitle.textContent = MONTHS[dpCpMonth] + ' ' + dpCpYear;
-          buildGrid(cpGrid, dpCpYear, dpCpMonth, dpReversed, dpAccent);
+          buildGrid(cpGrid, dpCpYear, dpCpMonth, getReversed(), dpAccent);
         });
 
         // ── Variant dropdown ───────────────────
-        var varPicker = document.getElementById('dp-variant-picker');
+        var varPicker  = document.getElementById('dp-variant-picker');
         var varTrigger = varPicker.querySelector('.dropdown-trigger');
         var varOpts    = varPicker.querySelectorAll('.dropdown-option');
         function openVar()  { varPicker.setAttribute('data-open',''); varTrigger.setAttribute('aria-expanded','true'); }
         function closeVar() { varPicker.removeAttribute('data-open'); varTrigger.setAttribute('aria-expanded','false'); }
         varTrigger.addEventListener('click', function(e) { e.stopPropagation(); varPicker.hasAttribute('data-open') ? closeVar() : openVar(); });
-        document.addEventListener('click', closeVar);
+        document.addEventListener('click', function() { closeVar(); });
         varOpts.forEach(function(opt) {
           opt.addEventListener('click', function(e) {
             e.stopPropagation();
             varOpts.forEach(function(o) { o.setAttribute('aria-selected','false'); });
             opt.setAttribute('aria-selected','true');
             document.getElementById('dp-variant-label').textContent = opt.textContent.trim();
-            dpVariant = opt.dataset.value;
+            dpVariantKey = opt.dataset.value;
             closeVar();
             render();
           });
         });
 
-        // ── Reversed toggle ────────────────────
-        document.getElementById('dp-reversed-switch').addEventListener('change', function() {
-          dpReversed = this.checked;
-          render();
+        // ── Mode dropdown ──────────────────────
+        var modePicker  = document.getElementById('dp-mode-picker');
+        var modeTrigger = modePicker.querySelector('.dropdown-trigger');
+        var modeOpts    = modePicker.querySelectorAll('.dropdown-option');
+        function openMode()  { modePicker.setAttribute('data-open',''); modeTrigger.setAttribute('aria-expanded','true'); }
+        function closeMode() { modePicker.removeAttribute('data-open'); modeTrigger.setAttribute('aria-expanded','false'); }
+        modeTrigger.addEventListener('click', function(e) { e.stopPropagation(); modePicker.hasAttribute('data-open') ? closeMode() : openMode(); });
+        document.addEventListener('click', function() { closeMode(); });
+        modeOpts.forEach(function(opt) {
+          opt.addEventListener('click', function(e) {
+            e.stopPropagation();
+            modeOpts.forEach(function(o) { o.setAttribute('aria-selected','false'); });
+            opt.setAttribute('aria-selected','true');
+            document.getElementById('dp-mode-label').textContent = opt.textContent.trim();
+            dpMode = opt.dataset.value;
+            dpStart = null; dpEnd = null; dpHover = null; dpSelMode = 'none';
+            closeMode();
+            updateFields();
+            updateGridClasses(fpGrid);
+            updateGridClasses(cpGrid);
+          });
         });
 
         // ── Colour picker dropdown ─────────────
@@ -10028,16 +10031,16 @@
         function buildMini(gridId, year, month, reversed, accent, preStart, preEnd) {
           var g = document.getElementById(gridId);
           if (!g) return;
-          var savedStart = dpStart, savedEnd = dpEnd, savedMode = dpSelMode;
-          dpStart = preStart || null; dpEnd = preEnd || null; dpSelMode = preEnd ? 'done' : 'none';
+          var savedStart = dpStart, savedEnd = dpEnd, savedSelMode = dpSelMode, savedMode = dpMode;
+          dpStart = preStart || null; dpEnd = preEnd || null; dpSelMode = preEnd ? 'done' : 'none'; dpMode = 'range';
           buildGrid(g, year, month, reversed, accent || 'citron');
-          // Remove event listeners (mini is static)
+          // Clone cells to strip event listeners — mini calendars are static
           var cells = g.querySelectorAll('.dp-day');
           cells.forEach(function(c) {
             var clone = c.cloneNode(true);
             c.parentNode.replaceChild(clone, c);
           });
-          dpStart = savedStart; dpEnd = savedEnd; dpSelMode = savedMode;
+          dpStart = savedStart; dpEnd = savedEnd; dpSelMode = savedSelMode; dpMode = savedMode;
         }
 
         var miniY = today.getFullYear(), miniM = today.getMonth();
