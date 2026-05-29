@@ -2353,6 +2353,407 @@
     }
 
     /* ─────────────────────────────────────────
+       DATE PICKER CALENDAR
+    ───────────────────────────────────────── */
+
+    /* Phone mock */
+    #dp-phone-mock {
+      position: relative;
+      padding: 0 !important;
+      height: 600px;
+      width: 100%;
+      max-width: 375px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--color-background-page);
+      box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
+      transition: background 220ms ease;
+    }
+    [data-theme="dark"] #dp-phone-mock {
+      box-shadow: none;
+      border: var(--border-width-default) solid var(--color-border-default);
+    }
+    #dp-phone-mock.dp-phone--contrast {
+      background: var(--color-background-contrast);
+    }
+    [data-theme="dark"] #dp-phone-mock.dp-phone--contrast {
+      border-color: var(--color-border-inverse-subtle);
+    }
+
+    /* Full-page layout */
+    .dp-fp-view {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Compact layout */
+    .dp-cp-view {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Fake app background (compact) */
+    .dp-app-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--color-background-page);
+      padding: 28px 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-400);
+      transition: background 220ms ease;
+    }
+    .dp-app-topbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .dp-app-topbar-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--color-border-default);
+    }
+    .dp-app-eyebrow {
+      font-family: var(--font-family-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-content-subtle);
+    }
+    .dp-app-title {
+      font-family: var(--font-family-serif);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--color-content-default);
+      margin: 0;
+    }
+    .dp-app-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 14px;
+      background: var(--color-background-secondary);
+      border-radius: 10px;
+      border: 1.5px solid var(--color-border-subtle);
+    }
+    .dp-app-field-label {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-subtle);
+    }
+    .dp-app-field-value {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      font-weight: 500;
+      color: var(--color-content-default);
+    }
+
+    /* Compact scrim */
+    .dp-compact-scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(3,6,13,0.45);
+      z-index: 1;
+    }
+
+    /* Compact sheet */
+    .dp-compact-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      border-radius: 20px 20px 0 0;
+      background: var(--color-background-page);
+      padding-bottom: 28px;
+      transition: background 220ms ease;
+    }
+    .dp-compact-sheet--reversed {
+      background: var(--color-background-contrast);
+    }
+
+    /* Grabber */
+    .dp-grabber {
+      width: 40px; height: 4px;
+      border-radius: 2px;
+      background: var(--color-border-default);
+      margin: 10px auto 14px;
+    }
+    .dp-compact-sheet--reversed .dp-grabber {
+      background: var(--color-border-inverse-subtle);
+    }
+
+    /* ── Calendar component ── */
+    .dp {
+      --dp-accent: var(--primitive-citron-300);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 8px 16px 0;
+      flex: 1;
+    }
+
+    /* Month header */
+    .dp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 0 8px;
+    }
+    .dp-month-title {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-m);
+      font-weight: 600;
+      color: var(--color-content-default);
+      letter-spacing: -0.01em;
+    }
+    .dp--reversed .dp-month-title { color: var(--color-inverse); }
+
+    .dp-nav-btn {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border: none; background: transparent; cursor: pointer;
+      border-radius: 8px;
+      color: var(--color-content-default);
+      transition: background 120ms ease;
+    }
+    .dp-nav-btn:hover { background: var(--color-action-hover-subtle); }
+    .dp-nav-btn svg { width: 20px; height: 20px; }
+    .dp--reversed .dp-nav-btn { color: var(--color-inverse); }
+    .dp--reversed .dp-nav-btn:hover { background: var(--color-action-inverse-hover-subtle); }
+
+    /* Weekday labels */
+    .dp-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-bottom: 2px;
+    }
+    .dp-weekday {
+      height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-family-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--color-content-subtle);
+    }
+    .dp--reversed .dp-weekday { color: var(--color-content-inverse-disabled); }
+
+    /* Divider */
+    .dp-divider {
+      height: 1px;
+      background: var(--color-border-subtle);
+      margin: 0 -16px 2px;
+    }
+    .dp--reversed .dp-divider { background: var(--color-border-inverse-subtle); }
+
+    /* Day grid */
+    .dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+
+    /* Day cell */
+    .dp-day {
+      position: relative;
+      height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .dp-day--other-month { opacity: 0.22; pointer-events: none; }
+    .dp-day--disabled { cursor: default; pointer-events: none; }
+
+    /* Range band element */
+    .dp-day-rng {
+      position: absolute;
+      top: 4px; bottom: 4px; left: 0; right: 0;
+      background: transparent;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 0;
+    }
+    .dp-day--range .dp-day-rng           { background: var(--color-background-ui); }
+    .dp-day--range-start .dp-day-rng     { background: var(--color-background-ui); left: 50%; }
+    .dp-day--range-end   .dp-day-rng     { background: var(--color-background-ui); right: 50%; }
+    .dp-day--range-start.dp-day--range-end .dp-day-rng { background: transparent; }
+
+    .dp--reversed .dp-day--range .dp-day-rng,
+    .dp--reversed .dp-day--range-start .dp-day-rng,
+    .dp--reversed .dp-day--range-end   .dp-day-rng { background: var(--color-background-inverse-selection); }
+    .dp--reversed .dp-day--range-start.dp-day--range-end .dp-day-rng { background: transparent; }
+
+    /* Day circle */
+    .dp-day-inner {
+      position: relative; z-index: 1;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      font-weight: 400;
+      color: var(--color-content-default);
+      transition: background 100ms ease, color 100ms ease;
+    }
+    .dp--reversed .dp-day-inner { color: var(--color-inverse); }
+
+    /* Hover */
+    .dp-day:not(.dp-day--selected):not(.dp-day--other-month):not(.dp-day--disabled):hover .dp-day-inner {
+      background: var(--color-background-ui);
+    }
+    .dp--reversed .dp-day:not(.dp-day--selected):not(.dp-day--other-month):not(.dp-day--disabled):hover .dp-day-inner {
+      background: var(--color-background-inverse-selection);
+    }
+
+    /* Today */
+    .dp-day--today .dp-day-inner {
+      background: var(--color-brand-cream);
+      box-shadow: inset 0 0 0 1.5px var(--color-border-default);
+      font-weight: 600;
+    }
+    .dp--reversed .dp-day--today .dp-day-inner {
+      background: var(--color-background-inverse-selection);
+      box-shadow: inset 0 0 0 1.5px var(--color-border-inverse-default);
+    }
+
+    /* Selected / range endpoints — standard */
+    .dp-day--selected .dp-day-inner {
+      background: var(--color-background-contrast);
+      color: var(--color-inverse);
+      font-weight: 600;
+    }
+    /* Selected / range endpoints — reversed (accent) */
+    .dp--reversed .dp-day--selected .dp-day-inner {
+      background: var(--dp-accent);
+      color: var(--primitive-ink-900);
+      font-weight: 600;
+    }
+
+    /* Focus ring demo */
+    .dp-day.is-demo-focused .dp-day-inner {
+      outline: 2px solid var(--color-action-default);
+      outline-offset: 2px;
+    }
+    .dp--reversed .dp-day.is-demo-focused .dp-day-inner {
+      outline-color: var(--color-action-inverse-default);
+    }
+
+    /* Disabled */
+    .dp-day--disabled .dp-day-inner { color: var(--color-content-disabled); }
+    .dp--reversed .dp-day--disabled .dp-day-inner { color: var(--color-content-inverse-disabled); }
+
+    /* Action bar (full-page) */
+    .dp-actions {
+      display: flex;
+      gap: var(--space-300);
+      padding: 12px 16px 20px;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .dp-phone--contrast .dp-actions { border-top-color: var(--color-border-inverse-subtle); }
+    .dp-actions .btn { flex: 1; }
+
+    /* Sheet action bar (compact) */
+    .dp-sheet-actions {
+      display: flex;
+      gap: var(--space-300);
+      padding: 12px 16px 0;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .dp-compact-sheet--reversed .dp-sheet-actions { border-top-color: var(--color-border-inverse-subtle); }
+    .dp-sheet-actions .btn { flex: 1; }
+
+    /* Accent color swatch */
+    .dp-swatch {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 1.5px rgba(0,0,0,0.10);
+    }
+
+    /* Static mini calendar (variants section) */
+    .dp-mini {
+      --dp-accent: var(--primitive-citron-300);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--color-border-subtle);
+      background: var(--color-background-page);
+      width: 240px;
+      flex-shrink: 0;
+    }
+    .dp-mini--reversed {
+      background: var(--color-background-contrast);
+      border-color: var(--color-border-inverse-subtle);
+    }
+    .dp-mini .dp { padding: 6px 10px 10px; }
+    .dp-mini .dp-day-inner { width: 26px; height: 26px; font-size: 12px; }
+    .dp-mini .dp-day { height: 30px; }
+    .dp-mini .dp-day-rng { top: 2px; bottom: 2px; }
+    .dp-mini .dp-month-title { font-size: 13px; }
+    .dp-mini .dp-nav-btn { width: 24px; height: 24px; }
+    .dp-mini .dp-nav-btn svg { width: 16px; height: 16px; }
+    .dp-mini .dp-weekday { height: 26px; font-size: 10px; }
+    .dp-mini .dp-divider { margin: 0 -10px 1px; }
+
+    /* Compact card preview (variants section) */
+    .dp-compact-card {
+      border-radius: 16px;
+      border: 1px solid var(--color-border-subtle);
+      overflow: hidden;
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--color-background-page);
+    }
+    .dp-compact-card-app {
+      height: 80px;
+      background: var(--color-background-secondary);
+      display: flex;
+      align-items: flex-end;
+      padding: 0 12px 8px;
+      gap: 6px;
+    }
+    .dp-compact-card-field {
+      flex: 1; height: 28px;
+      background: var(--color-background-page);
+      border-radius: 6px;
+      border: 1px solid var(--color-border-subtle);
+    }
+    .dp-compact-card-sheet {
+      background: var(--color-background-page);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    /* Day-state grid (states section) */
+    .dp-states-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-400);
+    }
+    .dp-state-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-200);
+    }
+    .dp-state-label {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+    }
+    .dp-state-demo {
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .dp-state-demo .dp-day-rng {
+      position: absolute;
+      top: 4px; bottom: 4px; left: 0; right: 0;
+      background: transparent;
+    }
+    .dp-state-demo.is-range .dp-day-rng { background: var(--color-background-ui); }
+    .dp-state-demo.is-range-start .dp-day-rng { background: var(--color-background-ui); left: 50%; }
+    .dp-state-demo.is-range-end .dp-day-rng { background: var(--color-background-ui); right: 50%; }
+
+    /* ─────────────────────────────────────────
        RADIO
     ───────────────────────────────────────── */
 
@@ -8929,7 +9330,731 @@
       </div>
 
     </div><!-- /page-bottom-sheet -->
-    <div class="page-panel" id="page-date-picker"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Date Picker Calendar</h2><p class="section-description">Calendar overlay for single and range date selection.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-date-picker">
+      <section class="section">
+
+        <div class="section-header">
+          <p class="section-eyebrow">Components · Overlays</p>
+          <h2 class="section-title">Date Picker Calendar</h2>
+          <p class="section-description">Full-page and compact calendar for single-date and range selection. Supports a reversed surface with a customizable accent colour for the selected state.</p>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             1. LIVE PREVIEW
+        ══════════════════════════════════════ -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Live Preview</h2>
+          <hr class="doc-rule">
+          <p class="doc-section-description">Click a date to start a selection. Click a second date to complete a range. Use the controls to explore variants.</p>
+
+          <!-- Controls -->
+          <div class="btn-controls">
+
+            <!-- Variant picker -->
+            <div class="dropdown" id="dp-variant-picker">
+              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span id="dp-variant-label">Full page</span>
+                <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="dropdown-menu" role="listbox" aria-label="Variant">
+                <li class="dropdown-option" role="option" aria-selected="true"  data-value="fullpage" tabindex="0">Full page</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="compact"  tabindex="0">Compact</li>
+              </ul>
+            </div>
+
+            <!-- Reversed toggle -->
+            <label class="switch-item" style="flex-shrink:0;">
+              <div class="toggle-switch">
+                <input type="checkbox" id="dp-reversed-switch">
+                <div class="toggle-track">
+                  <div class="toggle-handle">
+                    <div class="toggle-icon">
+                      <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="switch-item-text">Reversed</span>
+            </label>
+
+            <!-- Accent colour picker (shown when reversed) -->
+            <div class="dropdown" id="dp-color-picker" style="display:none;">
+              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="dp-swatch" id="dp-swatch-trigger" style="background:var(--primitive-citron-300);"></span>
+                <span id="dp-color-label">Citron</span>
+                <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="dropdown-menu" role="listbox" aria-label="Accent colour">
+                <li class="dropdown-option" role="option" aria-selected="true"  data-value="citron"  tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-citron-300);"></span> Citron</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="pool"    tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-pool-300);"></span> Pool</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="violet"  tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-violet-300);"></span> Violet</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="berry"   tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-berry-300);"></span> Berry</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot" tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-apricot-300);"></span> Apricot</li>
+                <li class="dropdown-option" role="option" aria-selected="false" data-value="mint"    tabindex="0" style="display:flex;align-items:center;gap:8px;"><span class="dp-swatch" style="background:var(--primitive-mint-300);"></span> Mint</li>
+              </ul>
+            </div>
+
+          </div><!-- /.btn-controls -->
+
+          <!-- Phone mock -->
+          <div class="preview-canvas" style="padding:var(--space-800) var(--space-600); overflow:visible; justify-content:center;">
+            <div id="dp-phone-mock" aria-label="Date picker preview">
+
+              <!-- Full-page view -->
+              <div class="dp-fp-view" id="dp-fp-view">
+                <div class="dp" id="dp-fp-cal">
+                  <div class="dp-header">
+                    <button class="dp-nav-btn" id="dp-fp-prev" aria-label="Previous month">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-lt"/></svg>
+                    </button>
+                    <span class="dp-month-title" id="dp-fp-title"></span>
+                    <button class="dp-nav-btn" id="dp-fp-next" aria-label="Next month">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-rt"/></svg>
+                    </button>
+                  </div>
+                  <div class="dp-weekdays">
+                    <span class="dp-weekday">S</span><span class="dp-weekday">M</span><span class="dp-weekday">T</span><span class="dp-weekday">W</span><span class="dp-weekday">T</span><span class="dp-weekday">F</span><span class="dp-weekday">S</span>
+                  </div>
+                  <div class="dp-divider"></div>
+                  <div class="dp-grid" id="dp-fp-grid"></div>
+                </div>
+                <div class="dp-actions" id="dp-fp-actions">
+                  <button class="btn btn--medium btn-outlined" id="dp-fp-cancel">Cancel</button>
+                  <button class="btn btn--medium btn-filled"   id="dp-fp-confirm">Confirm</button>
+                </div>
+              </div>
+
+              <!-- Compact view -->
+              <div class="dp-cp-view" id="dp-cp-view" style="display:none;">
+                <!-- Fake app background -->
+                <div class="dp-app-bg" id="dp-app-bg">
+                  <div class="dp-app-eyebrow">Booking</div>
+                  <p class="dp-app-title">Choose your<br>dates</p>
+                  <div class="dp-app-field">
+                    <span class="dp-app-field-label">Check-in</span>
+                    <span class="dp-app-field-value" id="dp-field-checkin">—</span>
+                  </div>
+                  <div class="dp-app-field">
+                    <span class="dp-app-field-label">Check-out</span>
+                    <span class="dp-app-field-value" id="dp-field-checkout">—</span>
+                  </div>
+                </div>
+                <!-- Scrim -->
+                <div class="dp-compact-scrim"></div>
+                <!-- Sheet -->
+                <div class="dp-compact-sheet" id="dp-cp-sheet">
+                  <div class="dp-grabber"></div>
+                  <div class="dp" id="dp-cp-cal">
+                    <div class="dp-header">
+                      <button class="dp-nav-btn" id="dp-cp-prev" aria-label="Previous month">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-lt"/></svg>
+                      </button>
+                      <span class="dp-month-title" id="dp-cp-title"></span>
+                      <button class="dp-nav-btn" id="dp-cp-next" aria-label="Next month">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-rt"/></svg>
+                      </button>
+                    </div>
+                    <div class="dp-weekdays">
+                      <span class="dp-weekday">S</span><span class="dp-weekday">M</span><span class="dp-weekday">T</span><span class="dp-weekday">W</span><span class="dp-weekday">T</span><span class="dp-weekday">F</span><span class="dp-weekday">S</span>
+                    </div>
+                    <div class="dp-divider"></div>
+                    <div class="dp-grid" id="dp-cp-grid"></div>
+                  </div>
+                  <div class="dp-sheet-actions">
+                    <button class="btn btn--medium btn-outlined" id="dp-cp-cancel">Cancel</button>
+                    <button class="btn btn--medium btn-filled"   id="dp-cp-confirm">Confirm</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /#dp-phone-mock -->
+          </div><!-- /.preview-canvas -->
+        </div><!-- /.doc-section preview -->
+
+
+        <!-- ══════════════════════════════════════
+             2. VARIANTS
+        ══════════════════════════════════════ -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Variants</h2>
+          <hr class="doc-rule">
+
+          <p class="comp-description">Two layout variants share the same underlying calendar component. The <strong>full-page</strong> calendar fills the screen — used as a standalone view or a full-screen overlay. The <strong>compact</strong> calendar mounts inside a bottom sheet, keeping the surrounding app context visible.</p>
+
+          <div style="display:flex; flex-wrap:wrap; gap:var(--space-600); margin-top:var(--space-600); align-items:flex-start;">
+
+            <!-- Standard full-page mini -->
+            <div>
+              <p class="comp-label" style="margin-bottom:var(--space-300);">Full page</p>
+              <div class="dp-mini">
+                <div class="dp">
+                  <div class="dp-header">
+                    <button class="dp-nav-btn" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-lt"/></svg></button>
+                    <span class="dp-month-title">May 2026</span>
+                    <button class="dp-nav-btn" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></button>
+                  </div>
+                  <div class="dp-weekdays"><span class="dp-weekday">S</span><span class="dp-weekday">M</span><span class="dp-weekday">T</span><span class="dp-weekday">W</span><span class="dp-weekday">T</span><span class="dp-weekday">F</span><span class="dp-weekday">S</span></div>
+                  <div class="dp-divider"></div>
+                  <div class="dp-grid" id="dp-mini-std-grid"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Compact mini -->
+            <div>
+              <p class="comp-label" style="margin-bottom:var(--space-300);">Compact (bottom sheet)</p>
+              <div class="dp-compact-card">
+                <div class="dp-compact-card-app">
+                  <div class="dp-compact-card-field"></div>
+                  <div class="dp-compact-card-field"></div>
+                </div>
+                <div class="dp-compact-card-sheet">
+                  <div class="dp-grabber" style="margin-top:8px;"></div>
+                  <div class="dp" style="padding:4px 10px 10px;">
+                    <div class="dp-header" style="padding:2px 0 6px;">
+                      <button class="dp-nav-btn" tabindex="-1" aria-hidden="true" style="width:22px;height:22px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-lt"/></svg></button>
+                      <span class="dp-month-title" style="font-size:12px;">May 2026</span>
+                      <button class="dp-nav-btn" tabindex="-1" aria-hidden="true" style="width:22px;height:22px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></button>
+                    </div>
+                    <div class="dp-weekdays"><span class="dp-weekday" style="height:22px;font-size:9px;">S</span><span class="dp-weekday" style="height:22px;font-size:9px;">M</span><span class="dp-weekday" style="height:22px;font-size:9px;">T</span><span class="dp-weekday" style="height:22px;font-size:9px;">W</span><span class="dp-weekday" style="height:22px;font-size:9px;">T</span><span class="dp-weekday" style="height:22px;font-size:9px;">F</span><span class="dp-weekday" style="height:22px;font-size:9px;">S</span></div>
+                    <div class="dp-divider" style="margin:0 -10px 1px;"></div>
+                    <div class="dp-grid" id="dp-mini-cmp-grid"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reversed with citron accent -->
+            <div>
+              <p class="comp-label" style="margin-bottom:var(--space-300);">Reversed · citron accent</p>
+              <div class="dp-mini dp-mini--reversed">
+                <div class="dp dp--reversed">
+                  <div class="dp-header">
+                    <button class="dp-nav-btn" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-lt"/></svg></button>
+                    <span class="dp-month-title">May 2026</span>
+                    <button class="dp-nav-btn" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-rt"/></svg></button>
+                  </div>
+                  <div class="dp-weekdays"><span class="dp-weekday">S</span><span class="dp-weekday">M</span><span class="dp-weekday">T</span><span class="dp-weekday">W</span><span class="dp-weekday">T</span><span class="dp-weekday">F</span><span class="dp-weekday">S</span></div>
+                  <div class="dp-divider"></div>
+                  <div class="dp-grid" id="dp-mini-rev-grid"></div>
+                </div>
+              </div>
+              <p class="doc-section-description" style="margin-top:var(--space-300); max-width:240px;">The accent colour on the selected state is customisable. All six brand colour families are supported at the <code class="inline-code">-300</code> ramp.</p>
+            </div>
+
+          </div>
+        </div><!-- /.doc-section variants -->
+
+
+        <!-- ══════════════════════════════════════
+             3. STATES
+        ══════════════════════════════════════ -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">States</h2>
+          <hr class="doc-rule">
+
+          <p class="comp-description">Day cells carry eight states. Range endpoints are always displayed as filled circles; in-range days show a tinted band spanning the full cell width.</p>
+
+          <!-- Standard states -->
+          <p class="comp-label" style="margin:var(--space-500) 0 var(--space-400);">Standard</p>
+          <div class="dp-states-grid">
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner">8</span>
+              </div>
+              <span class="dp-state-label">Default</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="background:var(--color-brand-cream);box-shadow:inset 0 0 0 1.5px var(--color-border-default);font-weight:600;">8</span>
+              </div>
+              <span class="dp-state-label">Today</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="background:var(--color-background-ui);">8</span>
+              </div>
+              <span class="dp-state-label">Hover</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner is-demo-focused" style="outline:2px solid var(--color-action-default);outline-offset:2px;">8</span>
+              </div>
+              <span class="dp-state-label">Focused</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span>
+              </div>
+              <span class="dp-state-label">Selected</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo is-range-start">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span>
+              </div>
+              <span class="dp-state-label">Range start</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo is-range">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner">8</span>
+              </div>
+              <span class="dp-state-label">In range</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo is-range-end">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="background:var(--color-background-contrast);color:var(--color-inverse);font-weight:600;">8</span>
+              </div>
+              <span class="dp-state-label">Range end</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo" style="opacity:0.35;">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner">8</span>
+              </div>
+              <span class="dp-state-label">Disabled</span>
+            </div>
+          </div>
+
+          <!-- Reversed states -->
+          <p class="comp-label" style="margin:var(--space-600) 0 var(--space-400);">Reversed</p>
+          <div style="background:var(--color-background-contrast); border-radius:16px; padding:var(--space-500) var(--space-600); display:inline-flex; gap:var(--space-400); flex-wrap:wrap; border: 1px solid var(--color-border-inverse-subtle);">
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="color:var(--color-inverse);">8</span>
+              </div>
+              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Default</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="color:var(--color-inverse);background:var(--color-background-inverse-selection);box-shadow:inset 0 0 0 1.5px var(--color-border-inverse-default);font-weight:600;">8</span>
+              </div>
+              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Today</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="color:var(--color-inverse);background:var(--color-background-inverse-selection);">8</span>
+              </div>
+              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Hover</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="color:var(--color-inverse);background:var(--primitive-citron-300);color:var(--primitive-ink-900);font-weight:600;">8</span>
+              </div>
+              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Selected</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo is-range" style="--bg:var(--color-background-inverse-selection);">
+                <span class="dp-day-rng" style="background:var(--color-background-inverse-selection);"></span>
+                <span class="dp-day-inner" style="color:var(--color-inverse);">8</span>
+              </div>
+              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">In range</span>
+            </div>
+            <div class="dp-state-cell">
+              <div class="dp-state-demo" style="opacity:0.35;">
+                <span class="dp-day-rng"></span>
+                <span class="dp-day-inner" style="color:var(--color-content-inverse-disabled);">8</span>
+              </div>
+              <span class="dp-state-label" style="color:var(--color-content-inverse-disabled);">Disabled</span>
+            </div>
+          </div>
+
+        </div><!-- /.doc-section states -->
+
+
+        <!-- ══════════════════════════════════════
+             4. ACCESSIBILITY
+        ══════════════════════════════════════ -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Accessibility</h2>
+          <hr class="doc-rule">
+          <div class="table-wrap">
+            <table class="doc-table">
+              <thead><tr><th>Concern</th><th>Implementation</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>Container role</td>
+                  <td>Wrap the calendar in <code class="inline-code">role="dialog"</code> with <code class="inline-code">aria-modal="true"</code> and <code class="inline-code">aria-label="Choose date"</code> when presented as an overlay.</td>
+                </tr>
+                <tr>
+                  <td>Grid semantics</td>
+                  <td>The day grid uses <code class="inline-code">role="grid"</code>. Each row is <code class="inline-code">role="row"</code> and each cell is <code class="inline-code">role="gridcell"</code>. Day buttons carry <code class="inline-code">aria-label="Day, Month Date"</code> (e.g. <em>Thursday, May 14</em>) and <code class="inline-code">aria-pressed="true/false"</code> for selection state.</td>
+                </tr>
+                <tr>
+                  <td>Keyboard navigation</td>
+                  <td><kbd>Arrow keys</kbd> move focus between days. <kbd>Enter</kbd> / <kbd>Space</kbd> select a date. <kbd>Page Up</kbd> / <kbd>Page Down</kbd> navigate months. <kbd>Home</kbd> / <kbd>End</kbd> jump to the first and last day of the current week. <kbd>Escape</kbd> closes the overlay.</td>
+                </tr>
+                <tr>
+                  <td>Range selection</td>
+                  <td>Announce start date with <code class="inline-code">aria-live="polite"</code>: <em>"Start date selected: May 14. Select an end date."</em> On completion: <em>"Date range selected: May 14 to May 20."</em></td>
+                </tr>
+                <tr>
+                  <td>Month navigation</td>
+                  <td>Prev/next buttons carry <code class="inline-code">aria-label="Previous month"</code> / <code class="inline-code">"Next month"</code>. The month heading is marked with <code class="inline-code">aria-live="polite"</code> so changes are announced.</td>
+                </tr>
+                <tr>
+                  <td>Disabled dates</td>
+                  <td>Unavailable cells use <code class="inline-code">aria-disabled="true"</code> and <code class="inline-code">tabindex="-1"</code>. Do not use the native <code class="inline-code">disabled</code> attribute as it removes the element from the accessibility tree.</td>
+                </tr>
+                <tr>
+                  <td>Focus management</td>
+                  <td>On open, focus is placed on today's date or the current selection. On close, focus returns to the trigger element that opened the picker.</td>
+                </tr>
+                <tr>
+                  <td>Colour contrast</td>
+                  <td>All six accent colours at the <code class="inline-code">-300</code> ramp achieve ≥ 4.5 : 1 contrast against <code class="inline-code">primitive-ink-900</code> label text on the reversed surface. The standard dark circle (<code class="inline-code">color-background-contrast</code>) achieves ≥ 7 : 1.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div><!-- /.doc-section accessibility -->
+
+
+        <!-- ══════════════════════════════════════
+             5. PROPERTIES
+        ══════════════════════════════════════ -->
+        <div class="doc-section">
+          <h2 class="doc-section-title">Properties</h2>
+          <hr class="doc-rule">
+          <div class="table-wrap">
+            <table class="doc-table">
+              <thead><tr><th>Class / property</th><th>Values</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td class="td-mono">.dp</td><td class="td-subtle">—</td><td>Calendar root. Sets the <code class="inline-code">--dp-accent</code> custom property to <code class="inline-code">primitive-citron-300</code> by default.</td></tr>
+                <tr><td class="td-mono">.dp--reversed</td><td class="td-subtle">—</td><td>Reversed surface variant. Switches all internal tokens to their <code class="inline-code">-inverse</code> counterparts and uses <code class="inline-code">--dp-accent</code> for the selected circle.</td></tr>
+                <tr><td class="td-mono">--dp-accent</td><td class="td-subtle">CSS custom property</td><td>Accent colour for the selected state on the reversed surface. Any <code class="inline-code">primitive-*-300</code> colour token. Only active when <code class="inline-code">.dp--reversed</code> is present.</td></tr>
+                <tr><td class="td-mono">.dp-day</td><td class="td-subtle">—</td><td>Individual date cell. Interactive; fires click and keydown events.</td></tr>
+                <tr><td class="td-mono">.dp-day--today</td><td class="td-subtle">—</td><td>Marks the current date. Renders a <code class="inline-code">color-brand-cream</code> fill with a <code class="inline-code">color-border-default</code> inset ring.</td></tr>
+                <tr><td class="td-mono">.dp-day--selected</td><td class="td-subtle">—</td><td>Applied to range start and end endpoints. Renders a filled circle using <code class="inline-code">color-background-contrast</code> (standard) or <code class="inline-code">--dp-accent</code> (reversed).</td></tr>
+                <tr><td class="td-mono">.dp-day--range</td><td class="td-subtle">—</td><td>Applied to days between the start and end of a range. Renders a full-width <code class="inline-code">color-background-ui</code> band (standard) or <code class="inline-code">color-background-inverse-selection</code> (reversed).</td></tr>
+                <tr><td class="td-mono">.dp-day--range-start</td><td class="td-subtle">—</td><td>Range start endpoint. Combines <code class="inline-code">.dp-day--selected</code> with a right-half range band extending to adjacent in-range days.</td></tr>
+                <tr><td class="td-mono">.dp-day--range-end</td><td class="td-subtle">—</td><td>Range end endpoint. Combines <code class="inline-code">.dp-day--selected</code> with a left-half range band.</td></tr>
+                <tr><td class="td-mono">.dp-day--disabled</td><td class="td-subtle">—</td><td>Unavailable date. Uses <code class="inline-code">color-content-disabled</code> (standard) or <code class="inline-code">color-content-inverse-disabled</code> (reversed). Non-interactive.</td></tr>
+                <tr><td class="td-mono">.dp-day--other-month</td><td class="td-subtle">—</td><td>Overflow days from the previous or next month. Rendered at reduced opacity, non-interactive.</td></tr>
+                <tr><td class="td-mono">.dp-compact-sheet</td><td class="td-subtle">—</td><td>Bottom-sheet panel for the compact variant. Pair with <code class="inline-code">.dp-compact-sheet--reversed</code> to apply the contrast background.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div><!-- /.doc-section properties -->
+
+      </section>
+
+      <!-- ── Date Picker JS ───────────────────── -->
+      <script>
+      (function() {
+        var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        var ACCENTS = {
+          citron:  'var(--primitive-citron-300)',
+          pool:    'var(--primitive-pool-300)',
+          violet:  'var(--primitive-violet-300)',
+          berry:   'var(--primitive-berry-300)',
+          apricot: 'var(--primitive-apricot-300)',
+          mint:    'var(--primitive-mint-300)',
+        };
+        var ACCENT_LABELS = { citron:'Citron', pool:'Pool', violet:'Violet', berry:'Berry', apricot:'Apricot', mint:'Mint' };
+
+        // ── State ──────────────────────────────
+        var today        = new Date();
+        var dpVariant    = 'fullpage';
+        var dpReversed   = false;
+        var dpAccent     = 'citron';
+        var dpFpYear     = today.getFullYear();
+        var dpFpMonth    = today.getMonth();
+        var dpCpYear     = today.getFullYear();
+        var dpCpMonth    = today.getMonth();
+        var dpStart      = null; // Date
+        var dpEnd        = null; // Date
+        var dpHover      = null; // Date (preview while picking second date)
+        var dpSelMode    = 'none'; // 'none' | 'picking' | 'done'
+
+        // ── DOM refs ───────────────────────────
+        var phone     = document.getElementById('dp-phone-mock');
+        var fpView    = document.getElementById('dp-fp-view');
+        var cpView    = document.getElementById('dp-cp-view');
+        var fpGrid    = document.getElementById('dp-fp-grid');
+        var cpGrid    = document.getElementById('dp-cp-grid');
+        var fpTitle   = document.getElementById('dp-fp-title');
+        var cpTitle   = document.getElementById('dp-cp-title');
+        var fpCal     = document.getElementById('dp-fp-cal');
+        var cpCal     = document.getElementById('dp-cp-cal');
+        var cpSheet   = document.getElementById('dp-cp-sheet');
+        var appBg     = document.getElementById('dp-app-bg');
+        var fieldIn   = document.getElementById('dp-field-checkin');
+        var fieldOut  = document.getElementById('dp-field-checkout');
+        var colorCtrl = document.getElementById('dp-color-picker');
+
+        // ── Helpers ───────────────────────────
+        function sameDay(a, b) {
+          return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+        }
+        function fmtDate(d) {
+          if (!d) return '—';
+          return MONTHS[d.getMonth()].slice(0,3) + ' ' + d.getDate();
+        }
+        function dateOnly(y, m, d) { return new Date(y, m, d); }
+
+        // ── Build a calendar grid ──────────────
+        function buildGrid(gridEl, year, month, reversed, accent) {
+          gridEl.innerHTML = '';
+          var firstDay     = new Date(year, month, 1).getDay();
+          var daysInMonth  = new Date(year, month + 1, 0).getDate();
+          var daysInPrev   = new Date(year, month, 0).getDate();
+
+          // Compute effective range (including hover preview)
+          var effStart = dpStart, effEnd = dpEnd;
+          if (dpSelMode === 'picking' && dpStart && dpHover) {
+            if (dpHover < dpStart) { effStart = dpHover; effEnd = dpStart; }
+            else                   { effStart = dpStart; effEnd = dpHover; }
+          }
+          if (effStart && effEnd && effEnd < effStart) {
+            var tmp = effStart; effStart = effEnd; effEnd = tmp;
+          }
+
+          for (var i = 0; i < 42; i++) {
+            var dayNum, isCurrent = true, date;
+            if (i < firstDay) {
+              dayNum = daysInPrev - firstDay + 1 + i;
+              isCurrent = false;
+              date = dateOnly(year, month - 1, dayNum);
+            } else if (i >= firstDay + daysInMonth) {
+              dayNum = i - firstDay - daysInMonth + 1;
+              isCurrent = false;
+              date = dateOnly(year, month + 1, dayNum);
+            } else {
+              dayNum = i - firstDay + 1;
+              date = dateOnly(year, month, dayNum);
+            }
+
+            var isToday  = sameDay(date, today);
+            var isStart  = effStart && sameDay(date, effStart);
+            var isEnd    = effEnd   && sameDay(date, effEnd);
+            var inRange  = false;
+            if (effStart && effEnd) {
+              inRange = date > effStart && date < effEnd;
+            }
+
+            var cls = 'dp-day';
+            if (!isCurrent)      cls += ' dp-day--other-month';
+            if (isToday)         cls += ' dp-day--today';
+            if (isStart || isEnd) cls += ' dp-day--selected';
+            if (isStart)         cls += ' dp-day--range-start';
+            if (isEnd)           cls += ' dp-day--range-end';
+            if (inRange)         cls += ' dp-day--range';
+
+            var cell = document.createElement('div');
+            cell.className = cls;
+            cell.innerHTML = '<span class="dp-day-rng"></span><span class="dp-day-inner">' + dayNum + '</span>';
+
+            if (isCurrent) {
+              (function(d) {
+                cell.addEventListener('mouseenter', function() {
+                  if (dpSelMode === 'picking') { dpHover = d; buildGrid(gridEl, year, month, reversed, accent); }
+                });
+                cell.addEventListener('mouseleave', function() {
+                  if (dpSelMode === 'picking') { dpHover = null; buildGrid(gridEl, year, month, reversed, accent); }
+                });
+                cell.addEventListener('click', function() {
+                  if (dpSelMode === 'none' || dpSelMode === 'done') {
+                    dpStart = d; dpEnd = null; dpHover = null; dpSelMode = 'picking';
+                  } else if (dpSelMode === 'picking') {
+                    if (sameDay(d, dpStart)) { dpStart = null; dpSelMode = 'none'; }
+                    else {
+                      dpEnd = d;
+                      if (dpEnd < dpStart) { var t = dpStart; dpStart = dpEnd; dpEnd = t; }
+                      dpHover = null; dpSelMode = 'done';
+                    }
+                  }
+                  updateFields();
+                  buildGrid(gridEl, year, month, reversed, accent);
+                });
+              })(date);
+            }
+            gridEl.appendChild(cell);
+          }
+
+          // Apply accent to calendar root
+          var calRoot = gridEl.closest('.dp');
+          if (calRoot) calRoot.style.setProperty('--dp-accent', ACCENTS[accent] || ACCENTS.citron);
+        }
+
+        // ── Update compact field values ────────
+        function updateFields() {
+          if (fieldIn)  fieldIn.textContent  = dpStart ? fmtDate(dpStart) : '—';
+          if (fieldOut) fieldOut.textContent = dpEnd   ? fmtDate(dpEnd)   : '—';
+        }
+
+        // ── Full render ────────────────────────
+        function render() {
+          var rev = dpReversed;
+
+          // Swap views
+          fpView.style.display = dpVariant === 'fullpage' ? 'flex' : 'none';
+          cpView.style.display = dpVariant === 'compact'  ? 'flex' : 'none';
+
+          // Phone background
+          if (dpVariant === 'fullpage' && rev) {
+            phone.classList.add('dp-phone--contrast');
+          } else {
+            phone.classList.remove('dp-phone--contrast');
+          }
+
+          // Calendar reversed class
+          fpCal.classList.toggle('dp--reversed', rev);
+          cpCal.classList.toggle('dp--reversed', rev);
+
+          // Sheet reversed
+          cpSheet.classList.toggle('dp-compact-sheet--reversed', rev);
+
+          // Action buttons
+          updateActionColors(rev);
+
+          // Build grids
+          fpTitle.textContent = MONTHS[dpFpMonth] + ' ' + dpFpYear;
+          cpTitle.textContent = MONTHS[dpCpMonth] + ' ' + dpCpYear;
+          buildGrid(fpGrid, dpFpYear, dpFpMonth, rev, dpAccent);
+          buildGrid(cpGrid, dpCpYear, dpCpMonth, rev, dpAccent);
+
+          // Color control visibility
+          colorCtrl.style.display = rev ? '' : 'none';
+
+          updateFields();
+        }
+
+        function updateActionColors(rev) {
+          var fpCancel  = document.getElementById('dp-fp-cancel');
+          var fpConfirm = document.getElementById('dp-fp-confirm');
+          var cpCancel  = document.getElementById('dp-cp-cancel');
+          var cpConfirm = document.getElementById('dp-cp-confirm');
+          [fpCancel, fpConfirm, cpCancel, cpConfirm].forEach(function(btn) {
+            if (!btn) return;
+            if (rev) {
+              btn.classList.add('btn--inverse');
+            } else {
+              btn.classList.remove('btn--inverse');
+            }
+          });
+        }
+
+        // ── Reset range ────────────────────────
+        function resetRange() { dpStart = null; dpEnd = null; dpHover = null; dpSelMode = 'none'; updateFields(); }
+
+        document.getElementById('dp-fp-cancel').addEventListener('click', resetRange);
+        document.getElementById('dp-cp-cancel').addEventListener('click', resetRange);
+        document.getElementById('dp-fp-confirm').addEventListener('click', function() { /* confirm — range stays */ });
+        document.getElementById('dp-cp-confirm').addEventListener('click', function() { /* confirm */ });
+
+        // ── Month navigation ───────────────────
+        document.getElementById('dp-fp-prev').addEventListener('click', function() {
+          dpFpMonth--; if (dpFpMonth < 0) { dpFpMonth = 11; dpFpYear--; }
+          fpTitle.textContent = MONTHS[dpFpMonth] + ' ' + dpFpYear;
+          buildGrid(fpGrid, dpFpYear, dpFpMonth, dpReversed, dpAccent);
+        });
+        document.getElementById('dp-fp-next').addEventListener('click', function() {
+          dpFpMonth++; if (dpFpMonth > 11) { dpFpMonth = 0; dpFpYear++; }
+          fpTitle.textContent = MONTHS[dpFpMonth] + ' ' + dpFpYear;
+          buildGrid(fpGrid, dpFpYear, dpFpMonth, dpReversed, dpAccent);
+        });
+        document.getElementById('dp-cp-prev').addEventListener('click', function() {
+          dpCpMonth--; if (dpCpMonth < 0) { dpCpMonth = 11; dpCpYear--; }
+          cpTitle.textContent = MONTHS[dpCpMonth] + ' ' + dpCpYear;
+          buildGrid(cpGrid, dpCpYear, dpCpMonth, dpReversed, dpAccent);
+        });
+        document.getElementById('dp-cp-next').addEventListener('click', function() {
+          dpCpMonth++; if (dpCpMonth > 11) { dpCpMonth = 0; dpCpYear++; }
+          cpTitle.textContent = MONTHS[dpCpMonth] + ' ' + dpCpYear;
+          buildGrid(cpGrid, dpCpYear, dpCpMonth, dpReversed, dpAccent);
+        });
+
+        // ── Variant dropdown ───────────────────
+        var varPicker = document.getElementById('dp-variant-picker');
+        var varTrigger = varPicker.querySelector('.dropdown-trigger');
+        var varOpts    = varPicker.querySelectorAll('.dropdown-option');
+        function openVar()  { varPicker.setAttribute('data-open',''); varTrigger.setAttribute('aria-expanded','true'); }
+        function closeVar() { varPicker.removeAttribute('data-open'); varTrigger.setAttribute('aria-expanded','false'); }
+        varTrigger.addEventListener('click', function(e) { e.stopPropagation(); varPicker.hasAttribute('data-open') ? closeVar() : openVar(); });
+        document.addEventListener('click', closeVar);
+        varOpts.forEach(function(opt) {
+          opt.addEventListener('click', function(e) {
+            e.stopPropagation();
+            varOpts.forEach(function(o) { o.setAttribute('aria-selected','false'); });
+            opt.setAttribute('aria-selected','true');
+            document.getElementById('dp-variant-label').textContent = opt.textContent.trim();
+            dpVariant = opt.dataset.value;
+            closeVar();
+            render();
+          });
+        });
+
+        // ── Reversed toggle ────────────────────
+        document.getElementById('dp-reversed-switch').addEventListener('change', function() {
+          dpReversed = this.checked;
+          render();
+        });
+
+        // ── Colour picker dropdown ─────────────
+        var colPicker  = document.getElementById('dp-color-picker');
+        var colTrigger = colPicker.querySelector('.dropdown-trigger');
+        var colOpts    = colPicker.querySelectorAll('.dropdown-option');
+        function openCol()  { colPicker.setAttribute('data-open',''); colTrigger.setAttribute('aria-expanded','true'); }
+        function closeCol() { colPicker.removeAttribute('data-open'); colTrigger.setAttribute('aria-expanded','false'); }
+        colTrigger.addEventListener('click', function(e) { e.stopPropagation(); colPicker.hasAttribute('data-open') ? closeCol() : openCol(); });
+        document.addEventListener('click', function() { closeCol(); });
+        colOpts.forEach(function(opt) {
+          opt.addEventListener('click', function(e) {
+            e.stopPropagation();
+            colOpts.forEach(function(o) { o.setAttribute('aria-selected','false'); });
+            opt.setAttribute('aria-selected','true');
+            dpAccent = opt.dataset.value;
+            document.getElementById('dp-color-label').textContent = ACCENT_LABELS[dpAccent];
+            document.getElementById('dp-swatch-trigger').style.background = ACCENTS[dpAccent];
+            closeCol();
+            render();
+          });
+        });
+
+        // ── Mini variant calendars ─────────────
+        function buildMini(gridId, year, month, reversed, accent, preStart, preEnd) {
+          var g = document.getElementById(gridId);
+          if (!g) return;
+          var savedStart = dpStart, savedEnd = dpEnd, savedMode = dpSelMode;
+          dpStart = preStart || null; dpEnd = preEnd || null; dpSelMode = preEnd ? 'done' : 'none';
+          buildGrid(g, year, month, reversed, accent || 'citron');
+          // Remove event listeners (mini is static)
+          var cells = g.querySelectorAll('.dp-day');
+          cells.forEach(function(c) {
+            var clone = c.cloneNode(true);
+            c.parentNode.replaceChild(clone, c);
+          });
+          dpStart = savedStart; dpEnd = savedEnd; dpSelMode = savedMode;
+        }
+
+        var miniY = today.getFullYear(), miniM = today.getMonth();
+        // Pre-select a range for demo: 9th to 17th of current month
+        var demoStart = dateOnly(miniY, miniM, 9);
+        var demoEnd   = dateOnly(miniY, miniM, 17);
+        buildMini('dp-mini-std-grid', miniY, miniM, false, 'citron', demoStart, demoEnd);
+        buildMini('dp-mini-cmp-grid', miniY, miniM, false, 'citron', demoStart, demoEnd);
+        buildMini('dp-mini-rev-grid', miniY, miniM, true,  'citron', demoStart, demoEnd);
+
+        // ── Initial render ─────────────────────
+        render();
+
+      })();
+      </script>
+
+    </div><!-- /#page-date-picker -->
 
     <!-- Content -->
     <div class="page-panel" id="page-card">
