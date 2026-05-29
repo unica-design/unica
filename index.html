@@ -2271,19 +2271,19 @@
     .chip--selected:hover, .chip[aria-pressed="true"]:hover {
       background: var(--color-background-secondary);
     }
-    /* Toggle-strong — selected: dark-filled (ink bg, white text) */
+    /* Toggle-strong — selected: dark-filled (ink bg, page-bg text — reverses correctly in dark mode) */
     .chip--strong.chip--selected,
     .chip--strong[aria-pressed="true"] {
       background: var(--color-content-default);
       border-color: var(--color-content-default);
-      color: #fff;
+      color: var(--color-background-page);
     }
     /* Add .chip to reach 0-4-0 specificity — beats base hover rule (also 0-4-0 but earlier) */
     .chip.chip--strong.chip--selected:hover,
     .chip.chip--strong[aria-pressed="true"]:hover {
       background: var(--color-content-default);
       border-color: var(--color-content-default);
-      color: #fff;
+      color: var(--color-background-page);
     }
     .chip[disabled], .chip--disabled {
       background: var(--color-background-ui);
@@ -2319,11 +2319,11 @@
       background: var(--color-content-default);
       color: var(--color-background-page);
     }
-    /* Toggle-strong selected badge — white-tinted */
+    /* Toggle-strong selected badge — tinted overlay, text inherits page-bg color */
     .chip--strong.chip--selected .chip-badge,
     .chip--strong[aria-pressed="true"] .chip-badge {
-      background: rgba(255,255,255,0.22);
-      color: #fff;
+      background: rgba(128,128,128,0.22);
+      color: var(--color-background-page);
     }
     /* Dropdown chevron */
     .chip-chevron { width: 12px; height: 12px; flex-shrink: 0; color: var(--color-content-subtle); }
