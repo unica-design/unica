@@ -2278,9 +2278,11 @@
       border-color: var(--color-content-default);
       color: #fff;
     }
-    .chip--strong.chip--selected:hover,
-    .chip--strong[aria-pressed="true"]:hover {
+    /* Add .chip to reach 0-4-0 specificity — beats base hover rule (also 0-4-0 but earlier) */
+    .chip.chip--strong.chip--selected:hover,
+    .chip.chip--strong[aria-pressed="true"]:hover {
       background: var(--color-content-default);
+      border-color: var(--color-content-default);
       color: #fff;
     }
     .chip[disabled], .chip--disabled {
@@ -2330,8 +2332,8 @@
     .chip--strong .chip-dismiss { color: rgba(255,255,255,0.7); }
     /* Chip group */
     .chip-group { display: flex; flex-wrap: wrap; gap: var(--space-200); align-items: center; }
-    /* Leading icon inside chip */
-    .chip-icon { width: 14px; height: 14px; flex-shrink: 0; }
+    /* Leading icon inside chip — ůnicons use 24×24 canvas, display at 16px */
+    .chip-icon { width: 16px; height: 16px; flex-shrink: 0; }
     /* 6-state chip matrix — overrides the default 5-col grid */
     .states-matrix--6col .states-matrix-head,
     .states-matrix--6col .states-matrix-row {
@@ -2343,8 +2345,9 @@
     /* Contextual section label used in preview (matches chip-group Figma usage) */
     .chip-ctx-label {
       font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-s);
-      font-weight: 500;
+      font-size: var(--font-size-body-l);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--font-leading-body-l);
       color: var(--color-content-default);
       margin: 0;
     }
@@ -6404,9 +6407,9 @@
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Chip type">
               <li class="dropdown-option" role="option" aria-selected="true"  data-value="toggle"         tabindex="0">Toggle</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="toggle-strong"  tabindex="0">Toggle-strong</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="dropdown"       tabindex="0">Dropdown</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="dismissible"    tabindex="0">Dismissible</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="toggle-strong"  tabindex="0">Toggle-strong</li>
             </ul>
           </div>
 
@@ -6520,12 +6523,6 @@
                 <td><button class="chip" tabindex="-1" aria-pressed="false">Label <span class="chip-badge">8</span></button></td>
               </tr>
               <tr>
-                <td>Toggle-strong</td>
-                <td><button class="chip chip--strong" tabindex="-1" aria-pressed="false">Label</button></td>
-                <td><button class="chip chip--strong chip--selected" tabindex="-1" aria-pressed="true">Label</button></td>
-                <td>—</td>
-              </tr>
-              <tr>
                 <td>Dropdown</td>
                 <td><button class="chip chip--dropdown" tabindex="-1">Label <svg class="chip-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></td>
                 <td><button class="chip chip--dropdown chip--selected" tabindex="-1" aria-pressed="true">Label <svg class="chip-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></td>
@@ -6538,9 +6535,9 @@
                 <td>—</td>
               </tr>
               <tr>
-                <td>Disabled</td>
-                <td><button class="chip chip--disabled" tabindex="-1" disabled>Label</button></td>
-                <td>—</td>
+                <td>Toggle-strong</td>
+                <td><button class="chip chip--strong" tabindex="-1" aria-pressed="false">Label</button></td>
+                <td><button class="chip chip--strong chip--selected" tabindex="-1" aria-pressed="true">Label</button></td>
                 <td>—</td>
               </tr>
             </tbody>
@@ -6681,7 +6678,7 @@
       (function() {
         var DISMISS_SVG = '<svg class="chip-dismiss" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
         var CHEVRON_SVG = '<svg class="chip-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        var ICON_SVG    = '<svg class="chip-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg>';
+        var ICON_SVG    = '<svg class="chip-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>';
 
         // ── Live preview state ──────────────────────────────────────────
         var currentType  = 'toggle';
@@ -6709,7 +6706,7 @@
           preview.innerHTML = '';
 
           if (currentType === 'toggle') {
-            // Two labeled groups: Filter by + Categories
+            // Single labeled group: Filter by
             var filterItems = [
               { label: 'All',         selected: true,  badge: null },
               { label: 'Photography', selected: false, badge: 12   },
@@ -6718,33 +6715,25 @@
               { label: 'Type',        selected: false, badge: null },
               { label: 'Space',       selected: false, badge: null },
             ];
-            var catItems = [
-              { label: 'Editorial',   selected: false, badge: null },
-              { label: 'Campaign',    selected: true,  badge: null },
-              { label: 'Product',     selected: false, badge: null },
-              { label: 'Portrait',    selected: false, badge: null },
-            ];
 
-            [{ sectionLabel: 'Filter by', items: filterItems }, { sectionLabel: 'Categories', items: catItems }].forEach(function(section) {
-              preview.appendChild(makeCtxLabel(section.sectionLabel));
-              var group = makeChipGroup();
-              section.items.forEach(function(item) {
-                var btn = document.createElement('button');
-                btn.className = 'chip' + (item.selected ? ' chip--selected' : '');
-                btn.type = 'button';
-                btn.setAttribute('aria-pressed', String(!!item.selected));
-                var iconHtml  = showIcon ? ICON_SVG : '';
-                var badgeHtml = (showBadge && item.badge != null) ? '<span class="chip-badge">' + item.badge + '</span>' : '';
-                btn.innerHTML = iconHtml + item.label + (badgeHtml ? ' ' + badgeHtml : '');
-                btn.addEventListener('click', function() {
-                  var p = btn.getAttribute('aria-pressed') === 'true';
-                  btn.setAttribute('aria-pressed', String(!p));
-                  btn.classList.toggle('chip--selected', !p);
-                });
-                group.appendChild(btn);
+            preview.appendChild(makeCtxLabel('Filter by'));
+            var group = makeChipGroup();
+            filterItems.forEach(function(item) {
+              var btn = document.createElement('button');
+              btn.className = 'chip' + (item.selected ? ' chip--selected' : '');
+              btn.type = 'button';
+              btn.setAttribute('aria-pressed', String(!!item.selected));
+              var iconHtml  = showIcon ? ICON_SVG : '';
+              var badgeHtml = (showBadge && item.badge != null) ? '<span class="chip-badge">' + item.badge + '</span>' : '';
+              btn.innerHTML = iconHtml + item.label + (badgeHtml ? ' ' + badgeHtml : '');
+              btn.addEventListener('click', function() {
+                var p = btn.getAttribute('aria-pressed') === 'true';
+                btn.setAttribute('aria-pressed', String(!p));
+                btn.classList.toggle('chip--selected', !p);
               });
-              preview.appendChild(group);
+              group.appendChild(btn);
             });
+            preview.appendChild(group);
 
           } else if (currentType === 'toggle-strong') {
             preview.appendChild(makeCtxLabel('Sort by'));
