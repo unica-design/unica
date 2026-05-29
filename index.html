@@ -7854,13 +7854,34 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
-        <ul class="doc-list">
-          <li>Always use a native <code class="inline-code">&lt;a&gt;</code> with a valid <code class="inline-code">href</code> — never a <code class="inline-code">&lt;button&gt;</code> or <code class="inline-code">&lt;div&gt;</code> for navigation.</li>
-          <li>Write descriptive link text. Avoid "click here" or "read more" without surrounding context to differentiate.</li>
-          <li>Icons are decorative — mark them <code class="inline-code">aria-hidden="true"</code> and ensure the visible text label stands alone.</li>
-          <li>The focus ring uses <code class="inline-code">outline</code> rather than <code class="inline-code">box-shadow</code> so it remains visible in Windows High Contrast Mode.</li>
-          <li>Disabled links use <code class="inline-code">aria-disabled="true"</code> with <code class="inline-code">pointer-events: none</code>. The HTML <code class="inline-code">disabled</code> attribute is not valid on anchor elements.</li>
-        </ul>
+        <p class="doc-body">Built on the native <code class="inline-code">&lt;a&gt;</code> element — keyboard navigation, focus management, and visited-state tracking are handled by the browser automatically.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Pattern</th><th>Guidance</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Element choice</td>
+                <td>Always use a native <code class="inline-code">&lt;a href="…"&gt;</code> for navigation. Never use a <code class="inline-code">&lt;button&gt;</code> or <code class="inline-code">&lt;div&gt;</code> — they break browser history, visited state, and right-click behaviour.</td>
+              </tr>
+              <tr>
+                <td>Link text</td>
+                <td>Write labels that make sense out of context. Avoid "click here" or "read more" — screen reader users often browse links as a list.</td>
+              </tr>
+              <tr>
+                <td>Decorative icons</td>
+                <td>Mark icon wrappers <code class="inline-code">aria-hidden="true"</code>. The visible text label must stand alone as a complete accessible name without the icon.</td>
+              </tr>
+              <tr>
+                <td>Disabled</td>
+                <td>Use <code class="inline-code">aria-disabled="true"</code> with <code class="inline-code">pointer-events: none</code> and <code class="inline-code">tabindex="-1"</code>. The HTML <code class="inline-code">disabled</code> attribute is not valid on anchor elements.</td>
+              </tr>
+              <tr>
+                <td>Focus ring</td>
+                <td>Uses <code class="inline-code">outline</code> rather than <code class="inline-code">box-shadow</code> so it remains visible in Windows High Contrast Mode.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- ══════════════════════════════════════════
