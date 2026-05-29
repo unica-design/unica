@@ -5830,14 +5830,34 @@
       transition: color 120ms ease;
     }
 
-    /* Inner content area — receives the hover background */
+    /* Inner content area — stacking context for the animated highlight layer */
     .link-inner {
       display: inline-flex;
       align-items: center;
       gap: 4px;
       padding: 0 4px;
       border-radius: 2px;
-      transition: background 120ms ease;
+      position: relative;
+    }
+
+    /* Animated highlight — grows left→right on enter, collapses right→left on exit */
+    .link-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      background: var(--link-highlight-color, var(--color-action-hover-subtle));
+      transform: scaleX(0);
+      transform-origin: right center;   /* exit: collapses toward right */
+      transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    /* Text and icon sit above the highlight layer */
+    .link-text,
+    .link-icon {
+      position: relative;
+      z-index: 1;
     }
 
     /* Icon wrapper — always native 24×24px canvas to preserve stroke weight */
@@ -5854,10 +5874,11 @@
     .link--medium .link-inner { height: 24px; font-size: var(--font-size-body-m); line-height: var(--font-leading-body-m); }
     .link--small .link-inner  { height: 24px; font-size: var(--font-size-body-s); line-height: var(--font-leading-body-s); }
 
-    /* ── Hover ── */
-    .link:hover .link-inner,
-    .link.is-demo-hover .link-inner {
-      background: var(--color-action-hover-subtle);
+    /* ── Hover — highlight grows from left, text/color update ── */
+    .link:hover .link-inner::before,
+    .link.is-demo-hover .link-inner::before {
+      transform: scaleX(1);
+      transform-origin: left center;    /* enter: expands from left */
     }
     .link:hover,
     .link.is-demo-hover {
@@ -5871,15 +5892,26 @@
     .link.is-demo-visited {
       color: var(--color-action-visited);
     }
-    .link:visited:hover .link-inner,
-    .link.is-demo-visited.is-demo-hover .link-inner {
-      background: var(--color-action-hover-subtle);
+    .link:visited:hover .link-inner::before,
+    .link.is-demo-visited.is-demo-hover .link-inner::before {
+      transform: scaleX(1);
+      transform-origin: left center;
     }
     .link:visited:hover,
     .link.is-demo-visited.is-demo-hover {
       color: var(--color-action-visited);
       text-decoration: underline;
       text-underline-offset: 2px;
+    }
+
+    /* Color swatch dot — used in the highlight color dropdown */
+    .link-color-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.12);
+      flex-shrink: 0;
     }
 
     /* ── Focused ── */
@@ -7721,6 +7753,30 @@
               <li class="dropdown-option" role="option" aria-selected="true"  data-value="trailing-icon"  tabindex="0">Trailing icon</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="leading-icon"   tabindex="0">Leading icon</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="label-only"     tabindex="0">Label only</li>
+            </ul>
+          </div>
+
+          <!-- Highlight color picker -->
+          <div class="dropdown" id="link-color-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span class="link-color-dot" id="link-color-dot-trigger" style="background:#E5E2E0;"></span>
+              <span id="link-color-label">Default</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Highlight color">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="default"      data-color=""         tabindex="0"><span class="link-color-dot" style="background:#E5E2E0;"></span> Default</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="violet-100"   data-color="#F3EDFF"  tabindex="0"><span class="link-color-dot" style="background:#F3EDFF;"></span> Violet 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="violet-200"   data-color="#E9E1FA"  tabindex="0"><span class="link-color-dot" style="background:#E9E1FA;"></span> Violet 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="berry-100"    data-color="#FFEBF2"  tabindex="0"><span class="link-color-dot" style="background:#FFEBF2;"></span> Berry 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="berry-200"    data-color="#FFD9E6"  tabindex="0"><span class="link-color-dot" style="background:#FFD9E6;"></span> Berry 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="mint-100"     data-color="#D1FFF0"  tabindex="0"><span class="link-color-dot" style="background:#D1FFF0;"></span> Mint 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="mint-200"     data-color="#BAF7E4"  tabindex="0"><span class="link-color-dot" style="background:#BAF7E4;"></span> Mint 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="pool-100"     data-color="#CFFCFA"  tabindex="0"><span class="link-color-dot" style="background:#CFFCFA;"></span> Pool 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="pool-200"     data-color="#ADF7F3"  tabindex="0"><span class="link-color-dot" style="background:#ADF7F3;"></span> Pool 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot-100"  data-color="#FFEBE0"  tabindex="0"><span class="link-color-dot" style="background:#FFEBE0;"></span> Apricot 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot-200"  data-color="#FFDFCC"  tabindex="0"><span class="link-color-dot" style="background:#FFDFCC;"></span> Apricot 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="citron-100"   data-color="#F0F7C6"  tabindex="0"><span class="link-color-dot" style="background:#F0F7C6;"></span> Citron 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="citron-200"   data-color="#E7F29D"  tabindex="0"><span class="link-color-dot" style="background:#E7F29D;"></span> Citron 200</li>
             </ul>
           </div>
 
@@ -13286,8 +13342,9 @@
       const SIZE_CLASS  = { large: 'link--large', medium: 'link--medium', small: 'link--small' };
       const SIZE_LABEL  = { large: 'Large', medium: 'Medium', small: 'Small' };
       const ICON_LABELS = { 'label-only': 'Label only', 'leading-icon': 'Leading icon', 'trailing-icon': 'Trailing icon' };
-      let currentSize = 'large';
-      let currentIcon = 'trailing-icon';
+      let currentSize  = 'large';
+      let currentIcon  = 'trailing-icon';
+      let currentColor = '';   /* '' = default semantic token */
 
       function buildLink(size, iconConfig) {
         const leading  = `<span class="link-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-unica"/></svg></span>`;
@@ -13299,9 +13356,17 @@
         return `<a class="link ${SIZE_CLASS[size]}" href="#"><span class="link-inner">${inner}</span></a>`;
       }
 
+      function applyColor(linkEl) {
+        if (!linkEl) return;
+        if (currentColor) linkEl.style.setProperty('--link-highlight-color', currentColor);
+        else              linkEl.style.removeProperty('--link-highlight-color');
+      }
+
       function updatePreview() {
         const canvas = document.getElementById('link-preview-canvas');
-        if (canvas) canvas.innerHTML = buildLink(currentSize, currentIcon);
+        if (!canvas) return;
+        canvas.innerHTML = buildLink(currentSize, currentIcon);
+        applyColor(canvas.querySelector('.link'));
       }
 
       initDropdown(document.getElementById('link-size-picker'), val => {
@@ -13313,6 +13378,15 @@
         currentIcon = val;
         document.getElementById('link-icon-label').textContent = ICON_LABELS[val];
         updatePreview();
+      });
+      initDropdown(document.getElementById('link-color-picker'), val => {
+        const opt = document.querySelector(`#link-color-picker [data-value="${val}"]`);
+        currentColor = opt ? (opt.dataset.color || '') : '';
+        /* update trigger dot + label */
+        const dot = document.getElementById('link-color-dot-trigger');
+        if (dot) dot.style.background = currentColor || '#E5E2E0';
+        document.getElementById('link-color-label').textContent = opt ? opt.textContent.trim() : 'Default';
+        applyColor(document.querySelector('#link-preview-canvas .link'));
       });
 
       updatePreview();
