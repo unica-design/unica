@@ -6004,9 +6004,8 @@
     }
     .scrim-device[data-size="desktop"] .scrim-device-photo {
       object-fit: cover;
-      object-position: center 22%;
-      transform: scale(1.55);
-      transform-origin: 25% 55%;
+      object-position: center center;
+      transform: none;
     }
 
     /* The scrim layer — this is the component being documented */
@@ -13654,10 +13653,17 @@
     (function initScrimPreview() {
       const device = document.getElementById('scrim-device');
       if (!device) return;
+      const photo = device.querySelector('.scrim-device-photo');
       const LABELS = { mobile: 'Mobile', tablet: 'Tablet', desktop: 'Desktop' };
+      const PHOTOS = {
+        mobile:  'assets/butterfly-woman.png',
+        tablet:  'assets/butterfly-woman.png',
+        desktop: 'assets/butterfly-woman-cropped.png'
+      };
       initDropdown(document.getElementById('scrim-size-picker'), val => {
         device.setAttribute('data-size', val);
         document.getElementById('scrim-size-label').textContent = LABELS[val] || val;
+        if (photo && PHOTOS[val]) photo.src = PHOTOS[val];
       });
     })();
 
