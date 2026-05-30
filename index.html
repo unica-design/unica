@@ -6035,6 +6035,175 @@
     }
 
 
+    /* ─────────────────────────────────────────
+       MODAL DIALOG
+    ───────────────────────────────────────── */
+
+    .modal-dialog {
+      background: var(--color-background-page);
+      border-radius: var(--corner-radius-xl);
+      box-shadow: var(--shadow-elevation-l);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 560px;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .modal-dialog {
+      box-shadow: 0 0 0 1px var(--color-border-default), var(--shadow-elevation-l);
+    }
+
+    /* Media slot — sits flush at top, above padding */
+    .modal-media {
+      width: 100%;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .modal-media--photo {
+      height: 220px;
+    }
+    .modal-media--photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .modal-media--illustration {
+      height: 180px;
+      background: var(--color-background-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-700);
+    }
+    .modal-media--illustration img {
+      height: 100%;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+    }
+
+    /* Content area */
+    .modal-content {
+      padding: var(--space-700);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-500);
+    }
+
+    /* Heading row */
+    .modal-heading {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .modal-brand-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: var(--corner-radius-round);
+      background: var(--color-content-default);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+    .modal-brand-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .modal-title-text {
+      flex: 1;
+      font-family: var(--font-family-serif);
+      font-size: var(--font-size-heading-l);
+      font-weight: 700;
+      line-height: var(--font-leading-heading-l);
+      color: var(--color-content-default);
+      min-width: 0;
+    }
+    .modal-close-btn {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: var(--corner-radius-round);
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--color-content-default);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .modal-close-btn:hover { background: var(--color-background-subtle); }
+    .modal-close-btn svg { width: 24px; height: 24px; pointer-events: none; }
+
+    /* Body text */
+    .modal-body-text {
+      font-size: var(--font-size-body-l);
+      line-height: var(--font-leading-body-l);
+      color: var(--color-content-default);
+    }
+
+    /* Actions row */
+    .modal-actions-row {
+      display: flex;
+      gap: var(--space-400);
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .modal-action-text {
+      height: 48px;
+      padding: 4px var(--space-400);
+      border: none;
+      border-radius: var(--corner-radius-round);
+      background: none;
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+      color: var(--color-content-default);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .modal-action-outlined {
+      height: 48px;
+      padding: 4px var(--space-400);
+      border: 1px solid var(--color-content-default);
+      border-radius: var(--corner-radius-round);
+      background: none;
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+      color: var(--color-content-default);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .modal-action-filled {
+      height: 48px;
+      padding: 4px var(--space-400);
+      border: none;
+      border-radius: var(--corner-radius-round);
+      background: var(--color-content-default);
+      font-size: var(--font-size-body-m);
+      line-height: var(--font-leading-body-m);
+      color: var(--color-background-page);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Preview canvas */
+    #modal-preview-canvas {
+      min-height: 0;
+      height: auto;
+      padding: var(--space-800) var(--space-600);
+      background: var(--color-background-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
   </style>
 </head>
 <body>
@@ -10037,7 +10206,203 @@
     </div><!-- /#page-scrim -->
 
     <!-- Overlays -->
-    <div class="page-panel" id="page-modal"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Modal Dialog</h2><p class="section-description">Focused overlay requiring user acknowledgement or action.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-modal">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Overlays</p>
+        <h1 class="comp-title">Modal Dialog</h1>
+        <p class="comp-description">An overlay panel that interrupts the current flow to present critical information, a decision, or a focused task. It disables the page behind it and requires explicit user action to dismiss.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web · Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=4210-162664" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="btn-controls">
+
+          <!-- Media type -->
+          <div class="dropdown" id="modal-media-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="modal-media-label">Photo</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Media type">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="photo"        tabindex="0">Photo</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="illustration" tabindex="0">Illustration</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="none"         tabindex="0">None</li>
+            </ul>
+          </div>
+
+          <!-- Title toggle -->
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch toggle-switch--small">
+              <input type="checkbox" id="modal-title-toggle" checked>
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Title</span>
+          </label>
+
+          <!-- Close toggle -->
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch toggle-switch--small">
+              <input type="checkbox" id="modal-close-toggle" checked>
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Close</span>
+          </label>
+
+          <!-- Actions toggle -->
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch toggle-switch--small">
+              <input type="checkbox" id="modal-actions-toggle" checked>
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Actions</span>
+          </label>
+
+        </div>
+
+        <!-- Preview canvas -->
+        <div class="preview-canvas" id="modal-preview-canvas">
+          <div class="modal-dialog" id="modal-preview" role="dialog" aria-labelledby="modal-preview-title" aria-modal="true">
+
+            <!-- Media slot -->
+            <div class="modal-media modal-media--photo" id="modal-media-slot">
+              <img src="assets/arch-house.png" alt="" id="modal-media-img">
+            </div>
+
+            <!-- Content -->
+            <div class="modal-content">
+
+              <!-- Heading -->
+              <div class="modal-heading" id="modal-heading-row">
+                <div class="modal-brand-icon" aria-hidden="true">
+                  <img src="assets/unica-mark-dark.png" alt="">
+                </div>
+                <p class="modal-title-text" id="modal-preview-title">Title</p>
+                <button class="modal-close-btn" id="modal-close-btn" aria-label="Close dialog">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Body -->
+              <p class="modal-body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+              <!-- Actions -->
+              <div class="modal-actions-row" id="modal-actions-row">
+                <button class="modal-action-text">Cancel</button>
+                <button class="modal-action-outlined">Learn more</button>
+                <button class="modal-action-filled">Confirm</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           2. TOKENS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Tokens</h2>
+        <hr class="doc-rule">
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Property</th><th>Token</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>background</td><td class="td-mono">color-background-page</td><td>White / Dark surface</td></tr>
+              <tr><td>border-radius</td><td class="td-mono">corner-radius-xl</td><td>32px</td></tr>
+              <tr><td>padding</td><td class="td-mono">space-700</td><td>40px</td></tr>
+              <tr><td>gap (sections)</td><td class="td-mono">space-500</td><td>24px</td></tr>
+              <tr><td>shadow</td><td class="td-mono">shadow-elevation-l</td><td>0 0 24px rgba(0, 11, 30, 0.24)</td></tr>
+              <tr><td>title font</td><td class="td-mono">font-family-serif · font-size-heading-l</td><td>Noto Serif Bold · 32px / 40</td></tr>
+              <tr><td>body font</td><td class="td-mono">font-family-sans · font-size-body-l</td><td>Inter Regular · 18px / 28</td></tr>
+              <tr><td>action font</td><td class="td-mono">font-family-sans · font-size-body-m</td><td>Inter Regular · 16px / 22</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           3. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Attribute</th><th>Value</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="td-mono">role</td><td class="td-mono">dialog</td><td>Applied to the modal container.</td></tr>
+              <tr><td class="td-mono">aria-modal</td><td class="td-mono">true</td><td>Tells assistive technology the dialog is modal.</td></tr>
+              <tr><td class="td-mono">aria-labelledby</td><td>title element ID</td><td>Associates the visible title with the dialog for screen readers.</td></tr>
+              <tr><td>Focus trap</td><td>Required</td><td>Focus must be constrained within the open dialog. Return focus to the trigger element on close.</td></tr>
+              <tr><td>Escape key</td><td>Dismiss</td><td>Pressing Escape should close the dialog when a close action is available.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           4. USAGE
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Usage</h2>
+        <hr class="doc-rule">
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Guideline</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Use sparingly</td><td>Modals are highly interruptive. Reserve them for critical decisions, destructive actions, or focused tasks that cannot be completed inline.</td></tr>
+              <tr><td>Always provide a dismiss path</td><td>Include either a close button, a cancel action, or both. Tapping the scrim behind the modal should also dismiss it.</td></tr>
+              <tr><td>Keep it focused</td><td>Limit the modal to a single task or decision. Avoid placing navigation, complex forms, or secondary modals inside.</td></tr>
+              <tr><td>Pair with Scrim</td><td>Always render a Scrim behind the modal to signal that background content is inaccessible.</td></tr>
+              <tr><td>Media is optional</td><td>Use the photo or illustration slot to provide visual context, not decoration. Omit when the content alone is sufficient.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /#page-modal -->
     <div class="page-panel" id="page-bottom-sheet">
 
       <!-- ── Component header ──────────────────────── -->
@@ -13664,6 +14029,50 @@
         device.setAttribute('data-size', val);
         document.getElementById('scrim-size-label').textContent = LABELS[val] || val;
         if (photo && PHOTOS[val]) photo.src = PHOTOS[val];
+      });
+    })();
+
+    /* ── Modal Dialog preview ── */
+    (function initModalPreview() {
+      const mediaSlot   = document.getElementById('modal-media-slot');
+      const mediaImg    = document.getElementById('modal-media-img');
+      const headingRow  = document.getElementById('modal-heading-row');
+      const closeBtn    = document.getElementById('modal-close-btn');
+      const actionsRow  = document.getElementById('modal-actions-row');
+      if (!mediaSlot) return;
+
+      const MEDIA_PHOTOS = {
+        photo:        'assets/arch-house.png',
+        illustration: 'assets/flower.png',
+      };
+
+      // Media type dropdown
+      initDropdown(document.getElementById('modal-media-picker'), val => {
+        document.getElementById('modal-media-label').textContent =
+          { photo: 'Photo', illustration: 'Illustration', none: 'None' }[val] || val;
+
+        if (val === 'none') {
+          mediaSlot.style.display = 'none';
+        } else {
+          mediaSlot.style.display = '';
+          mediaSlot.className = 'modal-media modal-media--' + val;
+          if (mediaImg && MEDIA_PHOTOS[val]) mediaImg.src = MEDIA_PHOTOS[val];
+        }
+      });
+
+      // Title toggle
+      document.getElementById('modal-title-toggle').addEventListener('change', function() {
+        if (headingRow) headingRow.style.display = this.checked ? '' : 'none';
+      });
+
+      // Close toggle
+      document.getElementById('modal-close-toggle').addEventListener('change', function() {
+        if (closeBtn) closeBtn.style.display = this.checked ? '' : 'none';
+      });
+
+      // Actions toggle
+      document.getElementById('modal-actions-toggle').addEventListener('change', function() {
+        if (actionsRow) actionsRow.style.display = this.checked ? '' : 'none';
       });
     })();
 
