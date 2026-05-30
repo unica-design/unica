@@ -6690,6 +6690,95 @@
       .prog-linear-static { width: 100%; }
     }
 
+    /* ─── Brand Loader — logo upload UI ──────────────────────────────── */
+
+    #prog-brand-controls {
+      margin-bottom: var(--space-500);
+    }
+
+    /* The upload zone — dashed drop area */
+    .prog-upload-zone {
+      border: 1.5px dashed var(--color-border-default);
+      border-radius: var(--corner-radius-m);
+      padding: var(--space-800) var(--space-700);
+      display: flex; flex-direction: column; align-items: center; gap: var(--space-300);
+      cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease;
+      margin-top: var(--space-400);
+      text-align: center;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .prog-upload-zone:hover,
+    .prog-upload-zone--over {
+      background: var(--color-action-hover-subtle);
+      border-color: var(--color-border-strong, var(--color-content-subtle));
+    }
+
+    .prog-upload-icon {
+      color: var(--color-content-subtle);
+      flex-shrink: 0;
+    }
+
+    .prog-upload-label {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-default);
+      margin: 0; line-height: 1.4;
+    }
+
+    .prog-upload-hint {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-xs);
+      color: var(--color-content-subtle);
+      margin: 0; line-height: 1.4;
+    }
+
+    /* Loaded state — compact row */
+    .prog-upload-loaded-row {
+      display: flex; align-items: center; gap: var(--space-400);
+      border: var(--border-width-default) solid var(--color-border-subtle);
+      border-radius: var(--corner-radius-m);
+      padding: var(--space-400) var(--space-500);
+      margin-top: var(--space-400);
+      background: var(--color-background-page);
+    }
+
+    .prog-upload-thumb {
+      width: 32px; height: 32px;
+      border-radius: var(--corner-radius-s, 8px);
+      background: var(--color-background-contrast);
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .prog-upload-filename {
+      flex: 1; min-width: 0;
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-s);
+      color: var(--color-content-default);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .prog-upload-change-btn {
+      display: inline-flex; align-items: center;
+      padding: 3px var(--space-300);
+      background: transparent;
+      border: var(--border-width-default) solid var(--doc-rule-default);
+      border-radius: var(--corner-radius-round);
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-xs);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.03em;
+      color: var(--color-content-default);
+      cursor: pointer;
+      transition: background 150ms ease;
+      white-space: nowrap; flex-shrink: 0;
+      line-height: inherit;
+    }
+    .prog-upload-change-btn:hover { background: var(--color-action-hover-subtle); }
+
   </style>
 </head>
 <body>
@@ -10813,6 +10902,44 @@
               <li class="dropdown-option" role="option" aria-selected="false" data-value="brand"    tabindex="0">Brand Loader</li>
             </ul>
           </div>
+        </div>
+
+        <!-- Brand Loader secondary controls — shown only when brand type is active -->
+        <div id="prog-brand-controls" style="display:none">
+
+          <!-- Logo source picker -->
+          <div class="dropdown" id="prog-logo-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="prog-logo-label">ůnica placeholder</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Logo source">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="default" tabindex="0">ůnica placeholder</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="upload"  tabindex="0">Upload your logo</li>
+            </ul>
+          </div>
+
+          <!-- Upload zone — shown when "Upload your logo" is selected -->
+          <div id="prog-upload-zone" class="prog-upload-zone" style="display:none" role="button" tabindex="0" aria-label="Upload logo image">
+            <input type="file" id="prog-upload-input" accept="image/png,image/svg+xml,image/jpeg,image/webp" style="display:none" tabindex="-1" aria-hidden="true">
+            <!-- Empty / ready state -->
+            <div id="prog-upload-empty">
+              <svg class="prog-upload-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <path d="M14 20V10M14 10L10 14M14 10L18 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 21H23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <p class="prog-upload-label">Drop image here or click to browse</p>
+              <p class="prog-upload-hint">96 &times; 96 px recommended &middot; PNG or SVG</p>
+            </div>
+          </div>
+
+          <!-- Loaded state — compact thumbnail row -->
+          <div id="prog-upload-loaded-row" class="prog-upload-loaded-row" style="display:none">
+            <img id="prog-upload-thumb" class="prog-upload-thumb" width="32" height="32" alt="" aria-hidden="true">
+            <span id="prog-upload-filename" class="prog-upload-filename"></span>
+            <button class="prog-upload-change-btn" id="prog-upload-change" type="button">Change</button>
+          </div>
+
         </div>
 
         <!-- Phone shells — one per type, JS toggles visibility -->
@@ -17464,6 +17591,21 @@ ${accessoryMarkup}
         brand:    document.getElementById('prog-code-brand')
       };
 
+      // Brand logo upload elements
+      var brandControls    = document.getElementById('prog-brand-controls');
+      var uploadZone       = document.getElementById('prog-upload-zone');
+      var uploadInput      = document.getElementById('prog-upload-input');
+      var uploadEmpty      = document.getElementById('prog-upload-empty');
+      var uploadLoadedRow  = document.getElementById('prog-upload-loaded-row');
+      var uploadThumb      = document.getElementById('prog-upload-thumb');
+      var uploadFilename   = document.getElementById('prog-upload-filename');
+      var uploadChangeBtn  = document.getElementById('prog-upload-change');
+
+      // All brand loader <img> tags (preview + variants tile)
+      var brandImgs = document.querySelectorAll('.prog-brand-loader img');
+      var defaultLogoSrc = 'assets/logo.png';
+      var userLogoSrc    = null; // data URL once uploaded
+
       function restartAnim(shellEl) {
         if (!shellEl) return;
         shellEl.querySelectorAll('.prog-linear-fill--anim, .prog-circular-fill--anim').forEach(function(a) {
@@ -17479,7 +17621,7 @@ ${accessoryMarkup}
           if (!el) return;
           if (k === t) {
             el.style.display = '';
-            if (t !== 'brand') restartAnim(el); // re-trigger once animation
+            if (t !== 'brand') restartAnim(el);
           } else {
             el.style.display = 'none';
           }
@@ -17488,8 +17630,105 @@ ${accessoryMarkup}
           var el = codeBlocks[k];
           if (el) el.style.display = k === t ? '' : 'none';
         });
+        // Show / hide brand secondary controls
+        if (brandControls) brandControls.style.display = t === 'brand' ? '' : 'none';
       }
 
+      // ── Logo source dropdown ──────────────────────────────────────────
+      function setLogoSource(source) {
+        if (source === 'upload') {
+          // Show upload zone if no file yet, otherwise show loaded row
+          if (userLogoSrc) {
+            uploadZone.style.display  = 'none';
+            uploadLoadedRow.style.display = '';
+          } else {
+            uploadZone.style.display  = '';
+            uploadLoadedRow.style.display = 'none';
+          }
+        } else {
+          // Revert to default placeholder
+          uploadZone.style.display  = 'none';
+          uploadLoadedRow.style.display = 'none';
+          applyLogo(defaultLogoSrc, null, null);
+        }
+      }
+
+      initDropdown(document.getElementById('prog-logo-picker'), function(v) {
+        setLogoSource(v);
+      });
+
+      // ── Apply logo to all brand loader images ─────────────────────────
+      function applyLogo(src, thumbSrc, filename) {
+        brandImgs.forEach(function(img) { img.src = src; });
+        if (thumbSrc && uploadThumb) {
+          uploadThumb.src = thumbSrc;
+        }
+        if (filename && uploadFilename) {
+          uploadFilename.textContent = filename;
+        }
+      }
+
+      // ── File handling ─────────────────────────────────────────────────
+      function handleFile(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          userLogoSrc = e.target.result;
+          applyLogo(userLogoSrc, userLogoSrc, file.name);
+          // Switch UI to loaded state
+          uploadZone.style.display      = 'none';
+          uploadLoadedRow.style.display = '';
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // Click to browse
+      if (uploadZone) {
+        uploadZone.addEventListener('click', function() {
+          uploadInput.click();
+        });
+        uploadZone.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); uploadInput.click(); }
+        });
+      }
+
+      if (uploadInput) {
+        uploadInput.addEventListener('change', function() {
+          if (uploadInput.files && uploadInput.files[0]) {
+            handleFile(uploadInput.files[0]);
+          }
+          // Reset input so same file can be re-selected
+          uploadInput.value = '';
+        });
+      }
+
+      // "Change" button — reopens file picker
+      if (uploadChangeBtn) {
+        uploadChangeBtn.addEventListener('click', function() {
+          uploadInput.click();
+        });
+      }
+
+      // Drag-and-drop on the upload zone
+      if (uploadZone) {
+        uploadZone.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          uploadZone.classList.add('prog-upload-zone--over');
+        });
+        uploadZone.addEventListener('dragleave', function(e) {
+          if (!uploadZone.contains(e.relatedTarget)) {
+            uploadZone.classList.remove('prog-upload-zone--over');
+          }
+        });
+        uploadZone.addEventListener('drop', function(e) {
+          e.preventDefault();
+          uploadZone.classList.remove('prog-upload-zone--over');
+          var file = e.dataTransfer.files && e.dataTransfer.files[0];
+          if (file) handleFile(file);
+        });
+      }
+
+      // ── Type picker ───────────────────────────────────────────────────
       initDropdown(document.getElementById('prog-type-picker'), function(v) {
         setType(v);
       });
