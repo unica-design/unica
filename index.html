@@ -6754,6 +6754,84 @@
       background: var(--color-action-hover-subtle);
     }
 
+  /* ─── Segmented Control component ─────────────────────────────── */
+  .sc-preview-canvas {
+    background: var(--doc-surface-preview);
+    padding: var(--space-1000) var(--space-800);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sc-ctrl {
+    display: inline-flex; align-items: center;
+    background: var(--color-background-ui);
+    border-radius: var(--corner-radius-round);
+    padding: 4px; gap: 2px;
+  }
+  .sc-ctrl--lg { padding: 6px; }
+  .sc-ctrl-tab {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px; padding: 0 12px; height: 32px;
+    border: none; background: transparent;
+    border-radius: var(--corner-radius-round);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-subtle);
+    cursor: pointer;
+    transition: background 180ms ease, color 150ms ease, box-shadow 180ms ease;
+    white-space: nowrap; user-select: none; -webkit-user-select: none; line-height: 1;
+  }
+  .sc-ctrl--lg .sc-ctrl-tab {
+    height: 40px; padding: 0 16px; font-size: var(--font-size-body-m);
+  }
+  .sc-ctrl-tab[aria-selected="true"] {
+    background: var(--color-background-page);
+    color: var(--color-content-default);
+    box-shadow: 0 1px 3px rgba(8, 5, 13, 0.12), 0 1px 2px rgba(8, 5, 13, 0.06);
+  }
+  [data-theme="dark"] .sc-ctrl-tab[aria-selected="true"] {
+    box-shadow: none;
+    border: var(--border-width-default) solid var(--color-border-subtle);
+  }
+  .sc-ctrl-tab:not([aria-selected="true"]):hover { color: var(--color-content-default); }
+  .sc-ctrl-icon {
+    display: flex; align-items: center; flex-shrink: 0;
+    width: 16px; height: 16px; color: inherit;
+  }
+  .sc-ctrl--lg .sc-ctrl-icon { width: 20px; height: 20px; }
+  .sc-ctrl-icon svg { width: 100%; height: 100%; }
+  .sc-ctrl-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 18px; height: 18px; padding: 0 5px;
+    border-radius: var(--corner-radius-round);
+    background: var(--color-background-contrast);
+    color: var(--color-action-inverse-default);
+    font-family: var(--font-family-sans);
+    font-size: 11px; font-weight: var(--font-weight-semibold);
+    line-height: 1; flex-shrink: 0;
+  }
+  .sc-toggle-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--space-700);
+    padding: var(--space-500) 0 var(--space-600);
+  }
+  .sc-variants-row {
+    display: flex; flex-wrap: wrap; gap: var(--space-700);
+    margin-bottom: var(--space-800);
+  }
+  .sc-variant-tile { display: flex; flex-direction: column; gap: var(--space-400); }
+  .sc-variant-swatch {
+    background: var(--doc-surface-preview);
+    border-radius: var(--corner-radius-m);
+    padding: var(--space-600) var(--space-700);
+    display: flex; align-items: center; justify-content: center;
+    min-width: 180px; min-height: 64px;
+  }
+  @media (max-width: 640px) {
+    .sc-variants-row { flex-direction: column; }
+    .sc-variant-tile { width: 100%; }
+    .sc-variant-swatch { min-width: 0; width: 100%; }
+  }
+
   </style>
 </head>
 <body>
@@ -9927,7 +10005,320 @@
       </div>
 
     </div>
-    <div class="page-panel" id="page-segmented-control"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Segmented Control</h2><p class="section-description">Inline selection control for 2–5 mutually exclusive options.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-segmented-control">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Forms</p>
+        <h1 class="comp-title">Segmented Control</h1>
+        <p class="comp-description">A compact inline control for switching between 2–4 mutually exclusive views or states. Tabs share equal width and one is always selected. Supports a leading icon and trailing badge on each tab.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile · Web</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=728-13245" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <!-- Controls -->
+        <div class="btn-controls">
+
+          <!-- Size picker -->
+          <div class="dropdown" id="sc-size-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="sc-size-label">Small</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Segmented control size">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="small" tabindex="0">Small</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="large" tabindex="0">Large</li>
+            </ul>
+          </div>
+
+          <!-- Tabs count picker -->
+          <div class="dropdown" id="sc-tabs-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="sc-tabs-label">2 tabs</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Number of tabs">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="2" tabindex="0">2 tabs</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="3" tabindex="0">3 tabs</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="4" tabindex="0">4 tabs</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Live preview -->
+        <div class="sc-preview-canvas">
+          <div id="sc-live" class="sc-ctrl" role="tablist" aria-label="Segmented control preview"></div>
+        </div>
+
+        <!-- Toggle row: icon + badge switches -->
+        <div class="sc-toggle-row">
+
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch">
+              <input type="checkbox" id="sc-icon-switch">
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Leading icon</span>
+          </label>
+
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch">
+              <input type="checkbox" id="sc-badge-switch">
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Trailing badge</span>
+          </label>
+
+        </div>
+
+        <!-- Show / hide code -->
+        <button class="code-reveal-btn" id="sc-code-toggle" aria-expanded="false" aria-controls="sc-code-reveal">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="sc-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('sc-code-snippet').textContent)">Copy</button>
+            <pre><code id="sc-code-snippet" class="language-html">&lt;div class="sc-ctrl" role="tablist" aria-label="View mode"&gt;
+  &lt;button class="sc-ctrl-tab" role="tab" aria-selected="true"&gt;Overview&lt;/button&gt;
+  &lt;button class="sc-ctrl-tab" role="tab" aria-selected="false"&gt;Details&lt;/button&gt;
+  &lt;button class="sc-ctrl-tab" role="tab" aria-selected="false"&gt;Reviews&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+      </div><!-- /.doc-section Preview -->
+
+      <!-- ══════════════════════════════════════════
+           2. VARIANTS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">All accessor and size combinations shown at a glance.</p>
+
+        <!-- Row 1: small variants -->
+        <div class="sc-variants-row">
+
+          <div class="sc-variant-tile">
+            <p class="variant-label">Label only</p>
+            <div class="sc-variant-swatch">
+              <div class="sc-ctrl" role="tablist" aria-label="Label only">
+                <button class="sc-ctrl-tab" role="tab" aria-selected="true"><span>Overview</span></button>
+                <button class="sc-ctrl-tab" role="tab" aria-selected="false"><span>Details</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sc-variant-tile">
+            <p class="variant-label">Leading icon</p>
+            <div class="sc-variant-swatch">
+              <div class="sc-ctrl" role="tablist" aria-label="Leading icon">
+                <button class="sc-ctrl-tab" role="tab" aria-selected="true">
+                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
+                  <span>Overview</span>
+                </button>
+                <button class="sc-ctrl-tab" role="tab" aria-selected="false">
+                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
+                  <span>Details</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sc-variant-tile">
+            <p class="variant-label">Trailing badge</p>
+            <div class="sc-variant-swatch">
+              <div class="sc-ctrl" role="tablist" aria-label="Trailing badge">
+                <button class="sc-ctrl-tab" role="tab" aria-selected="true">
+                  <span>Overview</span>
+                  <span class="sc-ctrl-badge" aria-hidden="true">9</span>
+                </button>
+                <button class="sc-ctrl-tab" role="tab" aria-selected="false">
+                  <span>Details</span>
+                  <span class="sc-ctrl-badge" aria-hidden="true">3</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sc-variant-tile">
+            <p class="variant-label">Icon + badge</p>
+            <div class="sc-variant-swatch">
+              <div class="sc-ctrl" role="tablist" aria-label="Icon and badge">
+                <button class="sc-ctrl-tab" role="tab" aria-selected="true">
+                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
+                  <span>Overview</span>
+                  <span class="sc-ctrl-badge" aria-hidden="true">9</span>
+                </button>
+                <button class="sc-ctrl-tab" role="tab" aria-selected="false">
+                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
+                  <span>Details</span>
+                  <span class="sc-ctrl-badge" aria-hidden="true">3</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.sc-variants-row (small) -->
+
+        <!-- Row 2: large variants -->
+        <div class="sc-variants-row">
+
+          <div class="sc-variant-tile">
+            <p class="variant-label">Large</p>
+            <div class="sc-variant-swatch">
+              <div class="sc-ctrl sc-ctrl--lg" role="tablist" aria-label="Large label only">
+                <button class="sc-ctrl-tab" role="tab" aria-selected="true"><span>Overview</span></button>
+                <button class="sc-ctrl-tab" role="tab" aria-selected="false"><span>Details</span></button>
+                <button class="sc-ctrl-tab" role="tab" aria-selected="false"><span>Reviews</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sc-variant-tile">
+            <p class="variant-label">Large + icon + badge</p>
+            <div class="sc-variant-swatch">
+              <div class="sc-ctrl sc-ctrl--lg" role="tablist" aria-label="Large with icon and badge">
+                <button class="sc-ctrl-tab" role="tab" aria-selected="true">
+                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
+                  <span>Overview</span>
+                  <span class="sc-ctrl-badge" aria-hidden="true">9</span>
+                </button>
+                <button class="sc-ctrl-tab" role="tab" aria-selected="false">
+                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
+                  <span>Details</span>
+                  <span class="sc-ctrl-badge" aria-hidden="true">3</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.sc-variants-row (large) -->
+
+      </div><!-- /.doc-section Variants -->
+
+      <!-- ══════════════════════════════════════════
+           3. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Segmented Control is implemented as a tab widget — the track is a <code>tablist</code> and each segment is a <code>tab</code>.</p>
+
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Concern</th>
+                <th>Implementation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Roles</td>
+                <td>Track element receives <code>role="tablist"</code>; each tab receives <code>role="tab"</code>.</td>
+              </tr>
+              <tr>
+                <td>Selection state</td>
+                <td>The active tab carries <code>aria-selected="true"</code>; all others carry <code>aria-selected="false"</code>.</td>
+              </tr>
+              <tr>
+                <td>Keyboard</td>
+                <td><kbd>←</kbd> / <kbd>→</kbd> arrow keys move focus between tabs. <kbd>Space</kbd> or <kbd>Enter</kbd> selects the focused tab.</td>
+              </tr>
+              <tr>
+                <td>Label</td>
+                <td>Provide <code>aria-label</code> on the <code>tablist</code> to describe the group (e.g. <code>aria-label="View mode"</code>).</td>
+              </tr>
+              <tr>
+                <td>Icons</td>
+                <td>Leading icons are decorative — mark them <code>aria-hidden="true"</code>. The tab label provides the accessible name.</td>
+              </tr>
+              <tr>
+                <td>Badges</td>
+                <td>When a badge count is meaningful, annotate with an <code>aria-label</code> on the badge element (e.g. <code>aria-label="9 unread"</code>) or include the count in the tab label via <code>aria-label</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Accessibility -->
+
+      <!-- ══════════════════════════════════════════
+           4. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">All configurable properties exposed on the Segmented Control component.</p>
+
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">size</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">small</td>
+                <td>One of <code style="font-family:monospace;font-size:0.9em;">small</code> · <code style="font-family:monospace;font-size:0.9em;">large</code>. Small: 32px tab height, 4px track padding. Large: 40px tab height, 6px track padding.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">tabs</td>
+                <td class="td-type">2 – 4</td>
+                <td class="td-subtle">2</td>
+                <td>Number of tab segments. All tabs share equal width determined by the widest tab's content.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">leadingIcon</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>When true, each tab renders a 16px (small) or 20px (large) icon before the label. The icon is decorative and receives <code style="font-family:monospace;font-size:0.9em;">aria-hidden="true"</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">trailingBadge</td>
+                <td class="td-type">boolean | number</td>
+                <td class="td-subtle">false</td>
+                <td>When truthy, each tab renders a dark circular badge after the label showing a count. Annotate with <code style="font-family:monospace;font-size:0.9em;">aria-label</code> if the count is meaningful to screen reader users.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Properties -->
+
+    </div><!-- /#page-segmented-control -->
     <div class="page-panel" id="page-stepper"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Stepper</h2><p class="section-description">Numeric increment/decrement input.</p></div><span class="stub-pill">In progress</span></section></div>
 
     <!-- Navigation -->
@@ -17675,6 +18066,63 @@ ${accessoryMarkup}
 
       // ── Wire type dropdown ────────────────────────────────────────────
       initDropdown(document.getElementById('prog-type-picker'), function(v) { setType(v); });
+    })();
+
+
+    (function initSegControl() {
+      var track      = document.getElementById('sc-live');
+      var iconSwitch = document.getElementById('sc-icon-switch');
+      var badgeSwitch = document.getElementById('sc-badge-switch');
+      if (!track) return;
+
+      var state = { size: 'small', tabs: 2, icon: false, badge: false };
+      var selectedIdx = 0;
+      var LABELS = ['Overview', 'Details', 'Reviews', 'Info'];
+      var ICON_PATH = 'M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z';
+
+      function makeIcon() {
+        return '<span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="' + ICON_PATH + '"/></svg></span>';
+      }
+      function makeBadge() { return '<span class="sc-ctrl-badge" aria-hidden="true">9</span>'; }
+
+      function render() {
+        if (selectedIdx >= state.tabs) selectedIdx = 0;
+        track.className = 'sc-ctrl' + (state.size === 'large' ? ' sc-ctrl--lg' : '');
+        var html = '';
+        for (var i = 0; i < state.tabs; i++) {
+          var sel = i === selectedIdx ? 'true' : 'false';
+          html += '<button class="sc-ctrl-tab" role="tab" aria-selected="' + sel + '" data-idx="' + i + '">';
+          if (state.icon)  html += makeIcon();
+          html += '<span>' + LABELS[i] + '</span>';
+          if (state.badge) html += makeBadge();
+          html += '</button>';
+        }
+        track.innerHTML = html;
+        track.querySelectorAll('.sc-ctrl-tab').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            selectedIdx = parseInt(this.getAttribute('data-idx'));
+            render();
+          });
+        });
+      }
+
+      // Keyboard navigation — add once to track
+      track.addEventListener('keydown', function(e) {
+        var tabs = Array.from(track.querySelectorAll('.sc-ctrl-tab'));
+        var cur = tabs.indexOf(document.activeElement);
+        if (cur === -1) return;
+        if (e.key === 'ArrowRight') { e.preventDefault(); tabs[(cur + 1) % tabs.length].focus(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); tabs[(cur - 1 + tabs.length) % tabs.length].focus(); }
+        else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); selectedIdx = cur; render(); tabs[cur].focus(); }
+      });
+
+      if (iconSwitch)  iconSwitch.addEventListener('change',  function() { state.icon  = this.checked; render(); });
+      if (badgeSwitch) badgeSwitch.addEventListener('change', function() { state.badge = this.checked; render(); });
+
+      initDropdown(document.getElementById('sc-size-picker'), function(v) { state.size = v; render(); });
+      initDropdown(document.getElementById('sc-tabs-picker'), function(v) { state.tabs = parseInt(v); render(); });
+
+      render();
     })();
 
 
