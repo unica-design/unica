@@ -5957,6 +5957,77 @@
     }
 
 
+    /* ─────────────────────────────────────────
+       SCRIM
+    ───────────────────────────────────────── */
+
+    /* Device frame that morphs between screen sizes */
+    .scrim-device {
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      box-shadow: 0 8px 40px rgba(8,5,13,0.32), 0 0 0 1px rgba(8,5,13,0.10);
+      /* Smooth morph between sizes */
+      transition: width 380ms cubic-bezier(0.4,0,0.2,1),
+                  height 380ms cubic-bezier(0.4,0,0.2,1),
+                  border-radius 380ms cubic-bezier(0.4,0,0.2,1);
+      /* Default: mobile */
+      width: 270px;
+      height: 568px;
+      border-radius: 32px;
+      flex-shrink: 0;
+    }
+    .scrim-device[data-size="tablet"] {
+      width: 390px;
+      height: 520px;
+      border-radius: 20px;
+    }
+    .scrim-device[data-size="desktop"] {
+      width: 580px;
+      height: 363px;
+      border-radius: 10px;
+    }
+    [data-theme="dark"] .scrim-device {
+      box-shadow: 0 0 0 1px var(--color-border-default);
+    }
+
+    /* Photo fills the device */
+    .scrim-device-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      pointer-events: none;
+    }
+
+    /* The scrim layer — this is the component being documented */
+    .scrim-layer {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 5, 13, 0.50);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Dark mode: same transparency, white tint */
+    [data-theme="dark"] .scrim-layer {
+      background: rgba(255, 255, 255, 0.50);
+    }
+
+    /* Preview canvas override — centered, taller to fit mobile device */
+    #scrim-preview-canvas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 620px;
+      overflow: hidden;
+    }
+
+
   </style>
 </head>
 <body>
@@ -9775,7 +9846,190 @@
 
     </div>
     <div class="page-panel" id="page-progress"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Progress Indicators</h2><p class="section-description">Linear and circular progress bars, determinate and indeterminate.</p></div><span class="stub-pill">In progress</span></section></div>
-    <div class="page-panel" id="page-scrim"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Scrim</h2><p class="section-description">Overlay layer used behind modals, sheets, and drawers.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-scrim">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Overlays</p>
+        <h1 class="comp-title">Scrim</h1>
+        <p class="comp-description">A full-surface overlay layer that sits between the page and elevated content like modals, drawers, and bottom sheets. It dims and blurs the background, signals that the UI below is temporarily inaccessible, and provides a tap target for dismissal.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Web · Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">The scrim fills its container and sits directly beneath elevated surface content. Toggle screen size to see how the layer scales across contexts.</p>
+
+        <!-- Controls -->
+        <div class="btn-controls">
+          <div class="dropdown" id="scrim-size-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="scrim-size-label">Mobile</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true">
+                <path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Screen size">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="mobile"  tabindex="0">Mobile</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="tablet"  tabindex="0">Tablet</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="desktop" tabindex="0">Desktop</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Device frame -->
+        <div class="preview-canvas" id="scrim-preview-canvas">
+          <div class="scrim-device" id="scrim-device" data-size="mobile" role="img" aria-label="Scrim overlay covering a background photo">
+            <img class="scrim-device-photo" src="assets/arch-house.png" alt="">
+            <div class="scrim-layer" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           2. TOKENS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Tokens</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">The scrim is defined by two fill values — one per color mode — and a single blur. There are no size variants; it always fills its positioned container.</p>
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Mode</th>
+                <th>Value</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">background</td>
+                <td>Light</td>
+                <td class="td-mono">rgba(8, 5, 13, 0.50)</td>
+                <td>Ink at 50% opacity. Darkens the background without fully obscuring it.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">background</td>
+                <td>Dark</td>
+                <td class="td-mono">rgba(255, 255, 255, 0.50)</td>
+                <td>White at 50% opacity. Same perceptual weight on dark backgrounds.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">backdrop-filter</td>
+                <td>Both</td>
+                <td class="td-mono">blur(20px)</td>
+                <td>Frosted-glass blur softens the background and reinforces the depth hierarchy.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">transition</td>
+                <td>Both</td>
+                <td class="td-mono">opacity 300ms ease</td>
+                <td>Fade in on open, fade out on close. No transform — just opacity.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">z-index</td>
+                <td>Both</td>
+                <td class="td-mono">1</td>
+                <td>Above page content, below the elevated surface (modal, sheet, drawer). Adjust to your stacking context.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           3. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">The scrim is a structural affordance, not a content element. Its accessibility role is to block and redirect interaction — not to convey information.</p>
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Pattern</th>
+                <th>Guidance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">aria-hidden</td>
+                <td>Mark the scrim element with <code class="inline-code">aria-hidden="true"</code>. It has no semantic meaning — screen readers should traverse directly to the elevated content above it.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">inert</td>
+                <td>Apply the <code class="inline-code">inert</code> attribute to all page content behind the scrim when an overlay is open. This prevents focus, click, and screen-reader traversal in the background without needing <code class="inline-code">aria-hidden</code> on every sibling.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Dismissal</td>
+                <td>If the scrim is tap-dismissible, also handle <code class="inline-code">Escape</code> on keyboard. The scrim can be a <code class="inline-code">&lt;button&gt;</code> or use <code class="inline-code">role="button"</code> with a <code class="inline-code">keydown</code> listener. Always ensure a visible close affordance exists within the overlay content itself.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Focus trap</td>
+                <td>When the overlay above the scrim is open, trap focus within it. Focus must not reach elements behind the scrim. Return focus to the trigger element on dismissal.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">Motion</td>
+                <td>The scrim's opacity fade is subtle and low-risk on its own. When paired with overlay entrance animations, honor <code class="inline-code">prefers-reduced-motion</code> for the overlay's transform — the scrim opacity can remain.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           4. USAGE
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Usage</h2>
+        <hr class="doc-rule">
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Context</th>
+                <th>Guidance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Modal dialogs</td>
+                <td>Always pair a modal with a scrim. It communicates that the rest of the UI is temporarily blocked and provides a touch target for light-dismiss.</td>
+              </tr>
+              <tr>
+                <td>Bottom sheets</td>
+                <td>Use a scrim with modal bottom sheets. Non-modal sheets — persistent, peek, or inline — do not need one.</td>
+              </tr>
+              <tr>
+                <td>Drawers</td>
+                <td>Navigation and context drawers that overlap page content use a scrim. Inline drawers that push content do not.</td>
+              </tr>
+              <tr>
+                <td>Image lightboxes</td>
+                <td>Use a scrim when a lightbox or full-screen media viewer replaces the page context. The blur softens the background without a hard-cut to black.</td>
+              </tr>
+              <tr>
+                <td>Stacking</td>
+                <td>Never stack two scrims. If a second overlay opens above the first, keep a single scrim and raise only the topmost surface's <code class="inline-code">z-index</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /#page-scrim -->
 
     <!-- Overlays -->
     <div class="page-panel" id="page-modal"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Overlays</p><h2 class="section-title">Modal Dialog</h2><p class="section-description">Focused overlay requiring user acknowledgement or action.</p></div><span class="stub-pill">In progress</span></section></div>
@@ -13390,6 +13644,17 @@
       });
 
       updatePreview();
+    })();
+
+    /* ── Scrim preview size picker ── */
+    (function initScrimPreview() {
+      const device = document.getElementById('scrim-device');
+      if (!device) return;
+      const LABELS = { mobile: 'Mobile', tablet: 'Tablet', desktop: 'Desktop' };
+      initDropdown(document.getElementById('scrim-size-picker'), val => {
+        device.setAttribute('data-size', val);
+        document.getElementById('scrim-size-label').textContent = LABELS[val] || val;
+      });
     })();
 
     /* ── Bottom nav preview variant dropdown ── */
