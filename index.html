@@ -2353,12 +2353,21 @@
       scrollbar-width: none;
     }
     .pag-carousel-wrap::-webkit-scrollbar { display: none; }
-    /* Inner flex track */
+    /* Inner flex track.
+       Right padding is intentionally on ::after, NOT as padding-right, because
+       trailing padding in a flex container inside overflow:scroll is excluded from
+       scrollWidth in all browsers — the pseudo-element is a real flex item and IS counted. */
     .pag-carousel-track {
       display: flex;
       flex-direction: row;
       gap: 12px;
-      padding: 20px 34px;
+      padding: 20px 0 20px 34px;
+    }
+    .pag-carousel-track::after {
+      content: '';
+      display: block;
+      min-width: 34px;
+      flex-shrink: 0;
     }
     /* Individual skeleton card */
     .pag-carousel-card {
@@ -2427,8 +2436,8 @@
       cursor: default;
       pointer-events: none;
       color: var(--color-content-subtle);
-      font-size: 18px;
-      letter-spacing: 2px;
+      font-size: 22px;
+      letter-spacing: 3px;
     }
     .pag-btn--ellipsis::before { display: none; }
 
