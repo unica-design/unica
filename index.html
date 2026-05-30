@@ -6696,46 +6696,7 @@
 
     /* ─── Brand Loader — logo upload UI ──────────────────────────────── */
 
-    /* Upload zone — dashed drop area, intentionally light */
-    .prog-upload-zone {
-      border: 1px dashed var(--color-border-subtle);
-      border-radius: var(--corner-radius-m);
-      padding: var(--space-800) var(--space-700);
-      display: flex; flex-direction: column; align-items: center; gap: var(--space-300);
-      cursor: pointer;
-      transition: background 150ms ease, border-color 150ms ease;
-      margin-bottom: var(--space-500);
-      text-align: center;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    .prog-upload-zone:hover,
-    .prog-upload-zone--over {
-      background: var(--color-action-hover-subtle);
-      border-color: var(--color-border-default);
-    }
-
-    .prog-upload-icon {
-      color: var(--color-content-subtle);
-      flex-shrink: 0;
-    }
-
-    .prog-upload-label {
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-s);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-content-default);
-      margin: 0; line-height: 1.4;
-    }
-
-    .prog-upload-hint {
-      font-family: var(--font-family-sans);
-      font-size: var(--font-size-body-xs);
-      color: var(--color-content-subtle);
-      margin: 0; line-height: 1.4;
-    }
-
-    /* "Change logo" outline button — lives inline in .btn-controls */
+    /* Upload / action button — pill outline matching the dropdown trigger */
     .prog-upload-change-btn {
       display: inline-flex; align-items: center;
       padding: 3px var(--space-300);
@@ -6753,6 +6714,45 @@
       line-height: inherit;
     }
     .prog-upload-change-btn:hover { background: var(--color-action-hover-subtle); }
+
+    /* Dismissible logo chip */
+    .prog-logo-chip {
+      display: inline-flex; align-items: center; gap: var(--space-200);
+      padding: 3px var(--space-200) 3px 3px;
+      background: var(--color-background-page);
+      border: var(--border-width-default) solid var(--doc-rule-default);
+      border-radius: var(--corner-radius-round);
+      user-select: none; -webkit-user-select: none;
+    }
+
+    .prog-logo-chip-circle {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--color-background-contrast);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; overflow: hidden;
+    }
+
+    .prog-logo-chip-label {
+      font-family: var(--font-family-sans);
+      font-size: var(--font-size-body-xs);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.03em;
+      color: var(--color-content-default);
+      white-space: nowrap;
+    }
+
+    .prog-logo-chip-dismiss {
+      display: flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; padding: 0;
+      background: none; border: none; border-radius: 50%;
+      color: var(--color-content-subtle);
+      cursor: pointer; flex-shrink: 0;
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .prog-logo-chip-dismiss:hover {
+      color: var(--color-content-default);
+      background: var(--color-action-hover-subtle);
+    }
 
   </style>
 </head>
@@ -10878,31 +10878,24 @@
             </ul>
           </div>
 
-          <!-- Logo source — only visible when Brand Loader is active -->
-          <div class="dropdown" id="prog-logo-picker" style="display:none">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="prog-logo-label">ůnica placeholder</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <!-- Upload button — mode-aware, only shown when Brand Loader is active -->
+          <button class="prog-upload-change-btn" id="prog-upload-btn" type="button" style="display:none">Upload your logo</button>
+
+          <!-- Dismissible chip — replaces button after upload -->
+          <div class="prog-logo-chip" id="prog-logo-chip" style="display:none">
+            <div class="prog-logo-chip-circle">
+              <img id="prog-logo-chip-img" width="8" height="8" alt="" aria-hidden="true">
+            </div>
+            <span id="prog-logo-chip-label" class="prog-logo-chip-label">Your logo</span>
+            <button class="prog-logo-chip-dismiss" id="prog-logo-chip-dismiss" type="button" aria-label="Remove logo">
+              <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
+                <path d="M1 1L7 7M7 1L1 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
             </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Logo source">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="default" tabindex="0">ůnica placeholder</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="upload"  tabindex="0">Upload your logo</li>
-            </ul>
           </div>
 
-          <!-- Change logo — only visible after a logo has been uploaded -->
-          <button class="prog-upload-change-btn" id="prog-change-logo" style="display:none" type="button">Change logo</button>
-        </div>
-
-        <!-- Upload zone — appears below controls row, only when prompted -->
-        <div id="prog-upload-zone" class="prog-upload-zone" style="display:none" role="button" tabindex="0" aria-label="Upload logo image">
+          <!-- Hidden file input — shared by upload button and any future trigger -->
           <input type="file" id="prog-upload-input" accept="image/png,image/svg+xml,image/jpeg,image/webp" style="display:none" tabindex="-1" aria-hidden="true">
-          <svg class="prog-upload-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <path d="M14 20V10M14 10L10 14M14 10L18 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M5 21H23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <p class="prog-upload-label">Drop image here or click to browse</p>
-          <p class="prog-upload-hint">96 &times; 96 px recommended &middot; PNG or SVG</p>
         </div>
 
         <!-- Phone shells — one per type, JS toggles visibility -->
@@ -17556,20 +17549,61 @@ ${accessoryMarkup}
         brand:    document.getElementById('prog-code-brand')
       };
 
-      // Logo upload elements
-      var logoPicker    = document.getElementById('prog-logo-picker');
-      var uploadZone    = document.getElementById('prog-upload-zone');
-      var uploadInput   = document.getElementById('prog-upload-input');
-      var changeLogoBtn = document.getElementById('prog-change-logo');
+      // Brand loader img tags
+      var brandImgsLm   = document.querySelectorAll('.prog-brand-loader .prog-logo-lm');
+      var brandImgsDm   = document.querySelectorAll('.prog-brand-loader .prog-logo-dm');
+      var defaultLogoLm = 'assets/logo.png';
+      var defaultLogoDm = 'assets/logo-dark-mode.png';
 
-      // All brand loader img tags — split by light/dark
-      var brandImgsLm    = document.querySelectorAll('.prog-brand-loader .prog-logo-lm');
-      var brandImgsDm    = document.querySelectorAll('.prog-brand-loader .prog-logo-dm');
-      var defaultLogoLm  = 'assets/logo.png';
-      var defaultLogoDm  = 'assets/logo-dark-mode.png';
-      var userLogoSrc    = null; // data URL once uploaded (used for both modes)
+      // Per-mode uploads — null until the user uploads
+      var userLogoLm = null;
+      var userLogoDm = null;
 
-      // ── Helpers ───────────────────────────────────────────────────────
+      // UI elements
+      var uploadBtn      = document.getElementById('prog-upload-btn');
+      var uploadInput    = document.getElementById('prog-upload-input');
+      var logoChip       = document.getElementById('prog-logo-chip');
+      var chipImg        = document.getElementById('prog-logo-chip-img');
+      var chipLabel      = document.getElementById('prog-logo-chip-label');
+      var chipDismiss    = document.getElementById('prog-logo-chip-dismiss');
+
+      var brandActive = false; // tracks whether brand type is showing
+
+      // ── Theme helpers ─────────────────────────────────────────────────
+      function getTheme() {
+        return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      }
+      function getUserLogo(mode) { return mode === 'dark' ? userLogoDm : userLogoLm; }
+      function setUserLogo(mode, src) {
+        if (mode === 'dark') userLogoDm = src; else userLogoLm = src;
+      }
+
+      // ── Apply current uploads to all brand loader images ──────────────
+      function applyLogos() {
+        brandImgsLm.forEach(function(img) { img.src = userLogoLm || defaultLogoLm; });
+        brandImgsDm.forEach(function(img) { img.src = userLogoDm || defaultLogoDm; });
+      }
+
+      // ── Sync the upload button / chip to current mode + upload state ──
+      function syncBrandControls() {
+        if (!brandActive) return;
+        var mode = getTheme();
+        var logo = getUserLogo(mode);
+        if (logo) {
+          // Show chip
+          uploadBtn.style.display  = 'none';
+          logoChip.style.display   = '';
+          chipImg.src              = logo;
+          chipLabel.textContent    = mode === 'dark' ? 'Your dark logo' : 'Your logo';
+        } else {
+          // Show upload button with mode-aware label
+          logoChip.style.display   = 'none';
+          uploadBtn.style.display  = '';
+          uploadBtn.textContent    = mode === 'dark' ? 'Upload dark mode logo' : 'Upload your logo';
+        }
+      }
+
+      // ── Animation restart ─────────────────────────────────────────────
       function restartAnim(shellEl) {
         if (!shellEl) return;
         shellEl.querySelectorAll('.prog-linear-fill--anim, .prog-circular-fill--anim').forEach(function(a) {
@@ -17579,55 +17613,24 @@ ${accessoryMarkup}
         });
       }
 
-      function applyLogo(src) {
-        // src = null means revert to defaults
-        brandImgsLm.forEach(function(img) { img.src = src || defaultLogoLm; });
-        brandImgsDm.forEach(function(img) { img.src = src || defaultLogoDm; });
-      }
-
-      // ── Type picker ───────────────────────────────────────────────────
+      // ── Type switcher ─────────────────────────────────────────────────
       function setType(t) {
         Object.keys(shells).forEach(function(k) {
           var el = shells[k];
           if (!el) return;
-          if (k === t) {
-            el.style.display = '';
-            if (t !== 'brand') restartAnim(el);
-          } else {
-            el.style.display = 'none';
-          }
+          el.style.display = k === t ? '' : 'none';
+          if (k === t && t !== 'brand') restartAnim(el);
         });
         Object.keys(codeBlocks).forEach(function(k) {
           var el = codeBlocks[k];
           if (el) el.style.display = k === t ? '' : 'none';
         });
-        // Brand logo controls — show when brand is active
-        if (logoPicker) logoPicker.style.display = t === 'brand' ? '' : 'none';
-        // Hide upload zone + change btn when switching away
-        if (t !== 'brand') {
-          if (uploadZone)    uploadZone.style.display    = 'none';
-          if (changeLogoBtn) changeLogoBtn.style.display = 'none';
-        }
-      }
-
-      // ── Logo source dropdown ──────────────────────────────────────────
-      function setLogoSource(source) {
-        if (source === 'upload') {
-          if (userLogoSrc) {
-            // Already have a logo — apply it immediately, keep zone hidden
-            applyLogo(userLogoSrc);
-            uploadZone.style.display    = 'none';
-            changeLogoBtn.style.display = '';
-          } else {
-            // No logo yet — show the upload zone
-            uploadZone.style.display    = '';
-            changeLogoBtn.style.display = 'none';
-          }
+        brandActive = t === 'brand';
+        if (!brandActive) {
+          uploadBtn.style.display = 'none';
+          logoChip.style.display  = 'none';
         } else {
-          // Revert to ůnica placeholder
-          applyLogo(null);
-          uploadZone.style.display    = 'none';
-          changeLogoBtn.style.display = 'none';
+          syncBrandControls();
         }
       }
 
@@ -17636,51 +17639,41 @@ ${accessoryMarkup}
         if (!file || !file.type.startsWith('image/')) return;
         var reader = new FileReader();
         reader.onload = function(e) {
-          userLogoSrc = e.target.result;
-          applyLogo(userLogoSrc);
-          // Hide zone, show "Change logo" button
-          uploadZone.style.display    = 'none';
-          changeLogoBtn.style.display = '';
+          var mode = getTheme();
+          setUserLogo(mode, e.target.result);
+          applyLogos();
+          syncBrandControls();
         };
         reader.readAsDataURL(file);
       }
 
-      // Click / keyboard on upload zone
-      if (uploadZone) {
-        uploadZone.addEventListener('click', function() { uploadInput.click(); });
-        uploadZone.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); uploadInput.click(); }
-        });
-        // Drag and drop
-        uploadZone.addEventListener('dragover', function(e) {
-          e.preventDefault();
-          uploadZone.classList.add('prog-upload-zone--over');
-        });
-        uploadZone.addEventListener('dragleave', function(e) {
-          if (!uploadZone.contains(e.relatedTarget)) uploadZone.classList.remove('prog-upload-zone--over');
-        });
-        uploadZone.addEventListener('drop', function(e) {
-          e.preventDefault();
-          uploadZone.classList.remove('prog-upload-zone--over');
-          var file = e.dataTransfer.files && e.dataTransfer.files[0];
-          if (file) handleFile(file);
-        });
+      if (uploadBtn) {
+        uploadBtn.addEventListener('click', function() { uploadInput.click(); });
       }
-
       if (uploadInput) {
         uploadInput.addEventListener('change', function() {
           if (uploadInput.files && uploadInput.files[0]) handleFile(uploadInput.files[0]);
-          uploadInput.value = ''; // allow re-selecting same file
+          uploadInput.value = '';
         });
       }
 
-      // "Change logo" button — reopens file picker directly
-      if (changeLogoBtn) {
-        changeLogoBtn.addEventListener('click', function() { uploadInput.click(); });
+      // Chip dismiss — clears upload for current mode, reverts to placeholder
+      if (chipDismiss) {
+        chipDismiss.addEventListener('click', function() {
+          var mode = getTheme();
+          setUserLogo(mode, null);
+          applyLogos();
+          syncBrandControls();
+        });
       }
 
-      // ── Wire dropdowns ────────────────────────────────────────────────
-      initDropdown(document.getElementById('prog-logo-picker'), function(v) { setLogoSource(v); });
+      // ── Watch theme changes so button/chip stay in sync ───────────────
+      new MutationObserver(function() {
+        applyLogos();
+        syncBrandControls();
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+      // ── Wire type dropdown ────────────────────────────────────────────
       initDropdown(document.getElementById('prog-type-picker'), function(v) { setType(v); });
     })();
 
