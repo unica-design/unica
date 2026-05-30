@@ -6135,6 +6135,11 @@
       transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
       pointer-events: none;
     }
+    /* Dark mode: replace solid light-mode pastels with low-opacity hue tints so
+       white labels retain contrast (mirrors the default token which is rgba(255,255,255,0.16)) */
+    [data-theme="dark"] .link-inner::before {
+      background: var(--link-highlight-color-dark, var(--color-action-hover-subtle));
+    }
 
     /* Text and icon sit above the highlight layer */
     .link-text,
@@ -8335,19 +8340,19 @@
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true" style="order:3;"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Highlight color">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="default"      data-color=""         tabindex="0"><span class="link-color-dot" style="background:#E5E2E0;"></span> Default</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="violet-100"   data-color="#F3EDFF"  tabindex="0"><span class="link-color-dot" style="background:#F3EDFF;"></span> Violet 100</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="violet-200"   data-color="#E9E1FA"  tabindex="0"><span class="link-color-dot" style="background:#E9E1FA;"></span> Violet 200</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="berry-100"    data-color="#FFEBF2"  tabindex="0"><span class="link-color-dot" style="background:#FFEBF2;"></span> Berry 100</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="berry-200"    data-color="#FFD9E6"  tabindex="0"><span class="link-color-dot" style="background:#FFD9E6;"></span> Berry 200</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="mint-100"     data-color="#D1FFF0"  tabindex="0"><span class="link-color-dot" style="background:#D1FFF0;"></span> Mint 100</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="mint-200"     data-color="#BAF7E4"  tabindex="0"><span class="link-color-dot" style="background:#BAF7E4;"></span> Mint 200</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="pool-100"     data-color="#CFFCFA"  tabindex="0"><span class="link-color-dot" style="background:#CFFCFA;"></span> Pool 100</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="pool-200"     data-color="#ADF7F3"  tabindex="0"><span class="link-color-dot" style="background:#ADF7F3;"></span> Pool 200</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot-100"  data-color="#FFEBE0"  tabindex="0"><span class="link-color-dot" style="background:#FFEBE0;"></span> Apricot 100</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot-200"  data-color="#FFDFCC"  tabindex="0"><span class="link-color-dot" style="background:#FFDFCC;"></span> Apricot 200</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="citron-100"   data-color="#F0F7C6"  tabindex="0"><span class="link-color-dot" style="background:#F0F7C6;"></span> Citron 100</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="citron-200"   data-color="#E7F29D"  tabindex="0"><span class="link-color-dot" style="background:#E7F29D;"></span> Citron 200</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="default"      data-color=""         data-color-dark=""                       tabindex="0"><span class="link-color-dot" style="background:#E5E2E0;"></span> Default</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="violet-100"   data-color="#F3EDFF"  data-color-dark="rgba(178,145,242,0.22)"  tabindex="0"><span class="link-color-dot" style="background:#F3EDFF;"></span> Violet 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="violet-200"   data-color="#E9E1FA"  data-color-dark="rgba(178,145,242,0.22)"  tabindex="0"><span class="link-color-dot" style="background:#E9E1FA;"></span> Violet 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="berry-100"    data-color="#FFEBF2"  data-color-dark="rgba(242,121,161,0.22)"  tabindex="0"><span class="link-color-dot" style="background:#FFEBF2;"></span> Berry 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="berry-200"    data-color="#FFD9E6"  data-color-dark="rgba(242,121,161,0.22)"  tabindex="0"><span class="link-color-dot" style="background:#FFD9E6;"></span> Berry 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="mint-100"     data-color="#D1FFF0"  data-color-dark="rgba(4,217,149,0.22)"    tabindex="0"><span class="link-color-dot" style="background:#D1FFF0;"></span> Mint 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="mint-200"     data-color="#BAF7E4"  data-color-dark="rgba(4,217,149,0.22)"    tabindex="0"><span class="link-color-dot" style="background:#BAF7E4;"></span> Mint 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="pool-100"     data-color="#CFFCFA"  data-color-dark="rgba(10,204,194,0.22)"   tabindex="0"><span class="link-color-dot" style="background:#CFFCFA;"></span> Pool 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="pool-200"     data-color="#ADF7F3"  data-color-dark="rgba(10,204,194,0.22)"   tabindex="0"><span class="link-color-dot" style="background:#ADF7F3;"></span> Pool 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot-100"  data-color="#FFEBE0"  data-color-dark="rgba(247,146,87,0.22)"   tabindex="0"><span class="link-color-dot" style="background:#FFEBE0;"></span> Apricot 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot-200"  data-color="#FFDFCC"  data-color-dark="rgba(247,146,87,0.22)"   tabindex="0"><span class="link-color-dot" style="background:#FFDFCC;"></span> Apricot 200</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="citron-100"   data-color="#F0F7C6"  data-color-dark="rgba(181,204,31,0.22)"   tabindex="0"><span class="link-color-dot" style="background:#F0F7C6;"></span> Citron 100</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="citron-200"   data-color="#E7F29D"  data-color-dark="rgba(181,204,31,0.22)"   tabindex="0"><span class="link-color-dot" style="background:#E7F29D;"></span> Citron 200</li>
             </ul>
           </div>
 
@@ -14816,7 +14821,8 @@
       const ICON_LABELS = { 'label-only': 'Label only', 'leading-icon': 'Leading icon', 'trailing-icon': 'Trailing icon' };
       let currentSize  = 'large';
       let currentIcon  = 'trailing-icon';
-      let currentColor = '';   /* '' = default semantic token */
+      let currentColor     = '';   /* '' = default semantic token */
+      let currentColorDark = '';   /* '' = default semantic token (dark mode) */
 
       function buildLink(size, iconConfig) {
         const leading  = `<span class="link-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-unica"/></svg></span>`;
@@ -14830,8 +14836,10 @@
 
       function applyColor(linkEl) {
         if (!linkEl) return;
-        if (currentColor) linkEl.style.setProperty('--link-highlight-color', currentColor);
-        else              linkEl.style.removeProperty('--link-highlight-color');
+        if (currentColor)     linkEl.style.setProperty('--link-highlight-color',      currentColor);
+        else                  linkEl.style.removeProperty('--link-highlight-color');
+        if (currentColorDark) linkEl.style.setProperty('--link-highlight-color-dark', currentColorDark);
+        else                  linkEl.style.removeProperty('--link-highlight-color-dark');
       }
 
       function updatePreview() {
@@ -14853,7 +14861,8 @@
       });
       initDropdown(document.getElementById('link-color-picker'), val => {
         const opt = document.querySelector(`#link-color-picker [data-value="${val}"]`);
-        currentColor = opt ? (opt.dataset.color || '') : '';
+        currentColor     = opt ? (opt.dataset.color     || '') : '';
+        currentColorDark = opt ? (opt.dataset.colorDark || '') : '';
         /* update trigger dot + label */
         const dot = document.getElementById('link-color-dot-trigger');
         if (dot) dot.style.background = currentColor || '#E5E2E0';
