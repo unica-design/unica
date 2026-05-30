@@ -6145,7 +6145,23 @@
       gap: var(--space-400);
       align-items: center;
       justify-content: flex-end;
-      flex-wrap: wrap;
+    }
+    /* Mobile: stack buttons, full-width equal, primary on top.
+       column-reverse because HTML order is clear→outlined→filled,
+       reversed it becomes filled→outlined→clear top-to-bottom. */
+    @media (max-width: 560px) {
+      .modal-actions-row {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        justify-content: flex-start;
+      }
+      .modal-actions-row .modal-action-text,
+      .modal-actions-row .modal-action-outlined,
+      .modal-actions-row .modal-action-filled {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
     }
     .modal-action-text {
       height: 48px;
