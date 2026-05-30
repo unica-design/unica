@@ -5971,34 +5971,34 @@
       transition: width 380ms cubic-bezier(0.4,0,0.2,1),
                   height 380ms cubic-bezier(0.4,0,0.2,1),
                   border-radius 380ms cubic-bezier(0.4,0,0.2,1);
-      /* Default: mobile */
-      width: 270px;
-      height: 568px;
-      border-radius: 32px;
+      /* Default: mobile — true iPhone CSS proportions so 48px blur reads right */
+      width: 390px;
+      height: 844px;
+      border-radius: 44px;
       flex-shrink: 0;
     }
     .scrim-device[data-size="tablet"] {
-      width: 390px;
-      height: 520px;
-      border-radius: 20px;
+      width: 520px;
+      height: 693px;
+      border-radius: 24px;
     }
     .scrim-device[data-size="desktop"] {
-      width: 580px;
-      height: 363px;
+      width: 680px;
+      height: 425px;
       border-radius: 10px;
     }
     [data-theme="dark"] .scrim-device {
       box-shadow: 0 0 0 1px var(--color-border-default);
     }
 
-    /* Photo fills the device */
+    /* Photo fills the device — crop anchored so eyes+mouth always show */
     .scrim-device-photo {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      object-position: center 22%;
       display: block;
       pointer-events: none;
     }
@@ -6008,8 +6008,8 @@
       position: absolute;
       inset: 0;
       background: rgba(8, 5, 13, 0.50);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(48px);
+      -webkit-backdrop-filter: blur(48px);
       z-index: 1;
       pointer-events: none;
     }
@@ -6018,13 +6018,13 @@
       background: rgba(255, 255, 255, 0.50);
     }
 
-    /* Preview canvas override — centered, taller to fit mobile device */
+    /* Preview canvas override — tall enough for full-size mobile device */
     #scrim-preview-canvas {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 620px;
-      overflow: hidden;
+      min-height: 908px;
+      overflow: visible;
     }
 
 
@@ -9889,7 +9889,7 @@
         <!-- Device frame -->
         <div class="preview-canvas" id="scrim-preview-canvas">
           <div class="scrim-device" id="scrim-device" data-size="mobile" role="img" aria-label="Scrim overlay covering a background photo">
-            <img class="scrim-device-photo" src="assets/arch-house.png" alt="">
+            <img class="scrim-device-photo" src="assets/woman-portrait.png" alt="">
             <div class="scrim-layer" aria-hidden="true"></div>
           </div>
         </div>
@@ -9928,7 +9928,7 @@
               <tr>
                 <td class="td-mono">backdrop-filter</td>
                 <td>Both</td>
-                <td class="td-mono">blur(20px)</td>
+                <td class="td-mono">blur(48px)</td>
                 <td>Frosted-glass blur softens the background and reinforces the depth hierarchy.</td>
               </tr>
               <tr>
