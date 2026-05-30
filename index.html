@@ -13630,46 +13630,13 @@
     }));
   }
 
-  /* ── Sidebar link navigation ── */
-  document.querySelectorAll('.sidebar-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const page = this.dataset.page;
-      if (!page) return;
-
-      // Update active link
-      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-      this.classList.add('active');
-      // If this is a child link, also activate the parent section link (black pill)
-      if (this.classList.contains('sidebar-child-link')) {
-        const parentLink = this.closest('.sidebar-children')?.previousElementSibling;
-        if (parentLink?.classList.contains('sidebar-link')) parentLink.classList.add('active');
-      }
-
-      // Swap page panels
-      document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
-      const panel = document.getElementById('page-' + page);
-      if (panel) panel.classList.add('active');
-
-      // Re-position seg-control sliders (they read offsetWidth=0 when hidden)
-      repositionSegControls(panel);
-
-      // Scroll to top
-      window.scrollTo({ top: 0, behavior: 'instant' });
-
-      // Update URL hash for deep linking (replaceState keeps history clean)
-      history.replaceState(null, '', '#' + page);
-    });
-  });
-
-  /* ── Hash routing — navigate to a page ID from the URL hash ── */
-  function navigateToHash(hash) {
-    const page = hash.replace(/^#/, '');
+  /* ── Core navigation — switches panels/links without touching URL ── */
+  function navigateTo(page) {
     if (!page) return;
     const link = document.querySelector(`.sidebar-link[data-page="${page}"]`);
     if (!link) return;
 
-    // Determine which sidebar section contains this link and activate it
+    // Reveal the correct sidebar section
     const sidebarPanel = link.closest('.sidebar-panel');
     if (sidebarPanel) {
       const sectionId = sidebarPanel.id.replace('sidebar-', '');
@@ -13680,13 +13647,54 @@
       sidebarPanel.classList.remove('hidden');
     }
 
-    link.click();
+    // Update active link
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    if (link.classList.contains('sidebar-child-link')) {
+      const parentLink = link.closest('.sidebar-children')?.previousElementSibling;
+      if (parentLink?.classList.contains('sidebar-link')) parentLink.classList.add('active');
+    }
+
+    // Swap page panels
+    document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('page-' + page);
+    if (panel) panel.classList.add('active');
+
+    // Re-position seg-control sliders (read offsetWidth=0 when hidden)
+    repositionSegControls(panel);
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
-  // Navigate on initial page load
-  if (window.location.hash) navigateToHash(window.location.hash);
+  /* ── Sidebar link clicks — navigate and push a history entry ── */
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const page = this.dataset.page;
+      if (!page) return;
+      navigateTo(page);
+      history.pushState(null, '', '#' + page);
+    });
+  });
 
-  // Handle browser back / forward
+  /* ── Hash routing helper (no URL write — used by popstate / hashchange / load) ── */
+  function navigateToHash(hash) {
+    const page = (hash || '').replace(/^#/, '') || 'color';
+    navigateTo(page);
+  }
+
+  // Initial page load — navigate to hash if present, then anchor the history entry
+  if (window.location.hash) {
+    navigateToHash(window.location.hash);
+  }
+  // replaceState establishes the current entry so Back lands here, not on a bare URL
+  history.replaceState(null, '', window.location.hash || '#color');
+
+  // Browser Back / Forward — pushState fires popstate, not hashchange
+  window.addEventListener('popstate', () => navigateToHash(window.location.hash));
+
+  // External hash change — user types a hash directly in the address bar
   window.addEventListener('hashchange', () => navigateToHash(window.location.hash));
 
   /* ── Theme toggle ── */
