@@ -2328,21 +2328,27 @@
 
     /* ── Preview shells ── */
 
-    /* Mobile shell for dot / carousel preview */
+    /* Mobile shell for dot / carousel preview — matches phone-mock style */
     .pag-mobile-shell {
       width: 320px;
-      border-radius: 36px;
+      border-radius: 24px;
       background: var(--color-background-page);
-      border: 1.5px solid var(--color-border-subtle);
+      box-shadow: 0 1px 8px 0 rgba(8, 5, 13, 0.25);
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
-    /* Scrollable carousel track wrapper */
+    [data-theme="dark"] .pag-mobile-shell {
+      box-shadow: none;
+      border: var(--border-width-default) solid var(--color-border-default);
+    }
+    /* Scrollable carousel track wrapper
+       scroll-padding-inline = track left-padding (both 34px) → symmetric margins:
+       each focused card has 34px on left and 34px on right */
     .pag-carousel-wrap {
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
-      scroll-padding-inline: 16px;
+      scroll-padding-inline: 34px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
@@ -2352,7 +2358,7 @@
       display: flex;
       flex-direction: row;
       gap: 12px;
-      padding: 20px 16px;
+      padding: 20px 34px;
     }
     /* Individual skeleton card */
     .pag-carousel-card {
@@ -2421,6 +2427,8 @@
       cursor: default;
       pointer-events: none;
       color: var(--color-content-subtle);
+      font-size: 18px;
+      letter-spacing: 2px;
     }
     .pag-btn--ellipsis::before { display: none; }
 
@@ -15084,33 +15092,44 @@
       }
 
       function renderPagination() {
-        var isPlusMode   = (pagPages === '4plus');
-        var displayPages = isPlusMode ? 4 : pagPages;
+        var isPlusMode = (pagPages === '4plus');
         var html = '';
 
-        // Prev arrow
-        var prevDisabled = (pagActive === 1);
-        html += '<button class="pag-btn pag-btn--arrow" aria-label="Previous page"' + (prevDisabled ? ' disabled aria-disabled="true"' : '') + '>' + ICO_PREV + '</button>';
+        // Prev arrow — disabled on page 1
+        html += '<button class="pag-btn pag-btn--arrow" data-dir="prev" aria-label="Previous page"'
+              + (pagActive === 1 ? ' disabled aria-disabled="true"' : '') + '>'
+              + ICO_PREV + '</button>';
 
-        // Page number buttons
-        for (var i = 1; i <= displayPages; i++) {
-          var sel = (i === pagActive);
-          html += '<button class="pag-btn' + (sel ? ' pag-btn--selected' : '') + '"' + (sel ? ' aria-current="page"' : '') + ' data-page="' + i + '"><span>' + i + '</span></button>';
-        }
-
-        // Ellipsis for 4+ mode
         if (isPlusMode) {
+          // Sliding window of 4 pages: active page reaches rightmost position
+          // then the window slides forward (windowStart = max(1, pagActive-3))
+          var wStart = Math.max(1, pagActive - 3);
+          for (var i = wStart; i <= wStart + 3; i++) {
+            var sel = (i === pagActive);
+            html += '<button class="pag-btn' + (sel ? ' pag-btn--selected' : '') + '"'
+                  + (sel ? ' aria-current="page"' : '') + ' data-page="' + i + '"><span>' + i + '</span></button>';
+          }
+          // Trailing ellipsis — always present in 4+ mode
           html += '<button class="pag-btn pag-btn--ellipsis" aria-hidden="true" tabindex="-1"><span>···</span></button>';
+          // Next arrow — never disabled (infinite pages)
+          html += '<button class="pag-btn pag-btn--arrow" data-dir="next" aria-label="Next page">' + ICO_NEXT + '</button>';
+        } else {
+          // Fixed set of pages
+          for (var i = 1; i <= pagPages; i++) {
+            var sel = (i === pagActive);
+            html += '<button class="pag-btn' + (sel ? ' pag-btn--selected' : '') + '"'
+                  + (sel ? ' aria-current="page"' : '') + ' data-page="' + i + '"><span>' + i + '</span></button>';
+          }
+          // Next arrow — disabled on last page
+          html += '<button class="pag-btn pag-btn--arrow" data-dir="next" aria-label="Next page"'
+                + (pagActive === pagPages ? ' disabled aria-disabled="true"' : '') + '>'
+                + ICO_NEXT + '</button>';
         }
-
-        // Next arrow
-        var nextDisabled = !isPlusMode && (pagActive === pagPages);
-        html += '<button class="pag-btn pag-btn--arrow" aria-label="Next page"' + (nextDisabled ? ' disabled aria-disabled="true"' : '') + '>' + ICO_NEXT + '</button>';
 
         numberedPreview.innerHTML = html;
         triggerSkeleton();
 
-        // Wire page clicks
+        // Wire page number clicks
         numberedPreview.querySelectorAll('.pag-btn[data-page]').forEach(function(btn) {
           btn.addEventListener('click', function() {
             pagActive = parseInt(this.dataset.page);
@@ -15118,14 +15137,16 @@
           });
         });
 
-        // Wire arrow clicks
-        var arrows = numberedPreview.querySelectorAll('.pag-btn--arrow:not([disabled])');
-        if (arrows[0]) arrows[0].addEventListener('click', function() {
+        // Wire prev arrow
+        var prevArrow = numberedPreview.querySelector('[data-dir="prev"]:not([disabled])');
+        if (prevArrow) prevArrow.addEventListener('click', function() {
           if (pagActive > 1) { pagActive--; renderPagination(); }
         });
-        if (arrows[1]) arrows[1].addEventListener('click', function() {
-          var maxPage = isPlusMode ? 4 : pagPages;
-          if (pagActive < maxPage) { pagActive++; renderPagination(); }
+
+        // Wire next arrow — in 4+ mode always advances; in fixed mode checks max
+        var nextArrow = numberedPreview.querySelector('[data-dir="next"]:not([disabled])');
+        if (nextArrow) nextArrow.addEventListener('click', function() {
+          if (isPlusMode || pagActive < pagPages) { pagActive++; renderPagination(); }
         });
       }
 
