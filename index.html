@@ -6639,10 +6639,14 @@
 
     /* ── Brand loader ── */
     .prog-brand-loader {
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
-      overflow: hidden;
+      background: var(--color-background-contrast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
-      display: block;
     }
 
     @keyframes prog-brand-pulse {
@@ -10825,7 +10829,9 @@
 
             <!-- Brand Loader -->
             <div id="prog-brand-shell" style="display:none">
-              <img src="assets/logo.png" width="64" height="64" class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading" alt="">
+              <div class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading">
+                <img src="assets/logo.png" width="24" height="24" alt="" aria-hidden="true">
+              </div>
             </div>
 
           </div>
@@ -10929,7 +10935,9 @@
           <div class="prog-variant-tile">
             <p class="avatar-group-label">Brand Loader</p>
             <div class="prog-variant-swatch">
-              <img src="assets/logo.png" width="64" height="64" class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading" alt="">
+              <div class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading">
+                <img src="assets/logo.png" width="24" height="24" alt="" aria-hidden="true">
+              </div>
             </div>
           </div>
 
