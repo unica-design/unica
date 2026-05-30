@@ -6047,40 +6047,9 @@
       flex-direction: column;
       width: 100%;
       max-width: 560px;
-      overflow: hidden;
     }
     [data-theme="dark"] .modal-dialog {
       box-shadow: 0 0 0 1px var(--color-border-default), var(--shadow-elevation-l);
-    }
-
-    /* Media slot — sits flush at top, above padding */
-    .modal-media {
-      width: 100%;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .modal-media--photo {
-      height: 220px;
-    }
-    .modal-media--photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .modal-media--illustration {
-      height: 180px;
-      background: var(--color-background-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-700);
-    }
-    .modal-media--illustration img {
-      height: 100%;
-      width: auto;
-      max-width: 160px;
-      object-fit: contain;
     }
 
     /* Content area */
@@ -6097,23 +6066,37 @@
       align-items: center;
       gap: 16px;
     }
-    .modal-brand-icon {
+
+    /* Leading media — left accessory in heading */
+    .modal-leading {
       width: 48px;
       height: 48px;
       min-width: 48px;
       border-radius: var(--corner-radius-round);
-      background: var(--color-content-default);
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .modal-leading--logo {
+      background: var(--color-content-default);
       padding: 12px;
       box-sizing: border-box;
     }
-    .modal-brand-icon img {
+    .modal-leading--logo img { width: 100%; height: 100%; object-fit: contain; }
+    .modal-leading--icon-bullet {
+      background: var(--primitive-violet-300);
+      padding: 12px;
+      box-sizing: border-box;
+    }
+    .modal-leading--icon-bullet img { width: 100%; height: 100%; object-fit: contain; }
+    .modal-leading--avatar img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
     }
+
     .modal-title-text {
       flex: 1;
       font-family: var(--font-family-serif);
@@ -6123,7 +6106,7 @@
       color: var(--color-content-default);
       min-width: 0;
     }
-    .modal-close-btn {
+    .modal-dismiss-btn {
       width: 48px;
       height: 48px;
       min-width: 48px;
@@ -6136,9 +6119,10 @@
       align-items: center;
       justify-content: center;
       padding: 0;
+      flex-shrink: 0;
     }
-    .modal-close-btn:hover { background: var(--color-background-subtle); }
-    .modal-close-btn svg { width: 24px; height: 24px; pointer-events: none; }
+    .modal-dismiss-btn:hover { background: var(--color-background-subtle); }
+    .modal-dismiss-btn svg { width: 24px; height: 24px; pointer-events: none; }
 
     /* Body text */
     .modal-body-text {
@@ -10230,16 +10214,17 @@
 
         <div class="btn-controls">
 
-          <!-- Media type -->
+          <!-- Leading media -->
           <div class="dropdown" id="modal-media-picker">
             <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="modal-media-label">Photo</span>
+              <span id="modal-media-label">Logo</span>
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Media type">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="photo"        tabindex="0">Photo</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="illustration" tabindex="0">Illustration</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="none"         tabindex="0">None</li>
+            <ul class="dropdown-menu" role="listbox" aria-label="Leading media">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="logo"        tabindex="0">Logo</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="icon-bullet" tabindex="0">Icon bullet</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar"      tabindex="0">Avatar</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="none"        tabindex="0">None</li>
             </ul>
           </div>
 
@@ -10247,46 +10232,46 @@
           <label class="switch-item" style="flex-shrink:0;">
             <div class="toggle-switch toggle-switch--small">
               <input type="checkbox" id="modal-title-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
-              </div>
+              <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div></div></div>
             </div>
             <span class="switch-item-text">Title</span>
           </label>
 
-          <!-- Close toggle -->
+          <!-- Body toggle -->
           <label class="switch-item" style="flex-shrink:0;">
             <div class="toggle-switch toggle-switch--small">
-              <input type="checkbox" id="modal-close-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
-              </div>
+              <input type="checkbox" id="modal-body-toggle" checked>
+              <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div></div></div>
             </div>
-            <span class="switch-item-text">Close</span>
+            <span class="switch-item-text">Body</span>
+          </label>
+
+          <!-- Dismiss toggle -->
+          <label class="switch-item" style="flex-shrink:0;">
+            <div class="toggle-switch toggle-switch--small">
+              <input type="checkbox" id="modal-dismiss-toggle" checked>
+              <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div></div></div>
+            </div>
+            <span class="switch-item-text">Dismiss</span>
           </label>
 
           <!-- Actions toggle -->
           <label class="switch-item" style="flex-shrink:0;">
             <div class="toggle-switch toggle-switch--small">
               <input type="checkbox" id="modal-actions-toggle" checked>
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
-              </div>
+              <div class="toggle-track"><div class="toggle-handle"><div class="toggle-icon">
+                <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div></div></div>
             </div>
             <span class="switch-item-text">Actions</span>
           </label>
@@ -10296,22 +10281,16 @@
         <!-- Preview canvas -->
         <div class="preview-canvas" id="modal-preview-canvas">
           <div class="modal-dialog" id="modal-preview" role="dialog" aria-labelledby="modal-preview-title" aria-modal="true">
-
-            <!-- Media slot -->
-            <div class="modal-media modal-media--photo" id="modal-media-slot">
-              <img src="assets/arch-house.png" alt="" id="modal-media-img">
-            </div>
-
-            <!-- Content -->
             <div class="modal-content">
 
-              <!-- Heading -->
+              <!-- Heading row -->
               <div class="modal-heading" id="modal-heading-row">
-                <div class="modal-brand-icon" aria-hidden="true">
-                  <img src="assets/unica-mark-dark.png" alt="">
+                <!-- Leading media accessory -->
+                <div class="modal-leading modal-leading--logo" id="modal-leading" aria-hidden="true">
+                  <img src="assets/unica-mark-dark.png" alt="" id="modal-leading-img">
                 </div>
                 <p class="modal-title-text" id="modal-preview-title">Title</p>
-                <button class="modal-close-btn" id="modal-close-btn" aria-label="Close dialog">
+                <button class="modal-dismiss-btn" id="modal-dismiss-btn" aria-label="Dismiss dialog">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                   </svg>
@@ -10319,7 +10298,7 @@
               </div>
 
               <!-- Body -->
-              <p class="modal-body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p class="modal-body-text" id="modal-body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
               <!-- Actions -->
               <div class="modal-actions-row" id="modal-actions-row">
@@ -14034,40 +14013,46 @@
 
     /* ── Modal Dialog preview ── */
     (function initModalPreview() {
-      const mediaSlot   = document.getElementById('modal-media-slot');
-      const mediaImg    = document.getElementById('modal-media-img');
-      const headingRow  = document.getElementById('modal-heading-row');
-      const closeBtn    = document.getElementById('modal-close-btn');
-      const actionsRow  = document.getElementById('modal-actions-row');
-      if (!mediaSlot) return;
+      const leading    = document.getElementById('modal-leading');
+      const leadingImg = document.getElementById('modal-leading-img');
+      const headingRow = document.getElementById('modal-heading-row');
+      const bodyText   = document.getElementById('modal-body-text');
+      const dismissBtn = document.getElementById('modal-dismiss-btn');
+      const actionsRow = document.getElementById('modal-actions-row');
+      if (!leading) return;
 
-      const MEDIA_PHOTOS = {
-        photo:        'assets/arch-house.png',
-        illustration: 'assets/flower.png',
+      const MEDIA_LABELS = { logo: 'Logo', 'icon-bullet': 'Icon bullet', avatar: 'Avatar', none: 'None' };
+      const MEDIA_SRCS   = {
+        logo:        'assets/unica-mark-dark.png',
+        'icon-bullet': 'assets/unica-mark-dark.png',
+        avatar:      'assets/butterfly-woman.png',
       };
 
-      // Media type dropdown
+      // Leading media dropdown
       initDropdown(document.getElementById('modal-media-picker'), val => {
-        document.getElementById('modal-media-label').textContent =
-          { photo: 'Photo', illustration: 'Illustration', none: 'None' }[val] || val;
+        document.getElementById('modal-media-label').textContent = MEDIA_LABELS[val] || val;
 
-        if (val === 'none') {
-          mediaSlot.style.display = 'none';
-        } else {
-          mediaSlot.style.display = '';
-          mediaSlot.className = 'modal-media modal-media--' + val;
-          if (mediaImg && MEDIA_PHOTOS[val]) mediaImg.src = MEDIA_PHOTOS[val];
-        }
+        // Swap class
+        leading.className = 'modal-leading' + (val !== 'none' ? ' modal-leading--' + val : '');
+        leading.style.display = val === 'none' ? 'none' : '';
+
+        // Swap image src
+        if (leadingImg && MEDIA_SRCS[val]) leadingImg.src = MEDIA_SRCS[val];
       });
 
-      // Title toggle
+      // Title toggle — hides/shows the entire heading row
       document.getElementById('modal-title-toggle').addEventListener('change', function() {
         if (headingRow) headingRow.style.display = this.checked ? '' : 'none';
       });
 
-      // Close toggle
-      document.getElementById('modal-close-toggle').addEventListener('change', function() {
-        if (closeBtn) closeBtn.style.display = this.checked ? '' : 'none';
+      // Body toggle
+      document.getElementById('modal-body-toggle').addEventListener('change', function() {
+        if (bodyText) bodyText.style.display = this.checked ? '' : 'none';
+      });
+
+      // Dismiss toggle
+      document.getElementById('modal-dismiss-toggle').addEventListener('change', function() {
+        if (dismissBtn) dismissBtn.style.display = this.checked ? '' : 'none';
       });
 
       // Actions toggle
