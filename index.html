@@ -5190,6 +5190,12 @@
     /* Concentric left padding: compensate for pill curve so avatar feels evenly nested */
     #card-multi-avatar-picker .dropdown-trigger { padding-left: 8px; }
 
+    /* Modal avatar picker — same inline layout */
+    #modal-avatar-picker .dropdown-trigger,
+    #modal-avatar-picker #modal-avatar-label { display: inline-flex; align-items: center; gap: 6px; }
+    #modal-avatar-picker .dropdown-option { display: flex; align-items: center; gap: 6px; }
+    #modal-avatar-picker .dropdown-trigger { padding-left: 8px; }
+
     /* Media variants inside multifunctional header */
     .card-multi-photo {
       width: 64px;
@@ -6042,14 +6048,15 @@
     .modal-dialog {
       background: var(--color-background-page);
       border-radius: var(--corner-radius-xl);
-      box-shadow: var(--shadow-elevation-l);
+      /* Figma: Shadow Elevation C — offset (0,0), blur 12px, spread 0, #000B1E 24% */
+      box-shadow: 0 0 12px rgba(0, 11, 30, 0.24);
       display: flex;
       flex-direction: column;
       width: 100%;
       max-width: 560px;
     }
     [data-theme="dark"] .modal-dialog {
-      box-shadow: 0 0 0 1px var(--color-border-default), var(--shadow-elevation-l);
+      box-shadow: 0 0 0 1px var(--color-border-default), 0 0 12px rgba(0, 11, 30, 0.70);
     }
 
     /* Content area */
@@ -6196,23 +6203,8 @@
       width: 100%;
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 0 0 1px var(--color-border-subtle), var(--shadow-elevation-l);
       display: flex;
       flex-direction: column;
-    }
-    .modal-shell-chrome {
-      height: 36px;
-      background: var(--color-background-subtle);
-      border-bottom: 1px solid var(--color-border-subtle);
-      display: flex;
-      align-items: center;
-      padding: 0 14px;
-      gap: 7px;
-      flex-shrink: 0;
-    }
-    .modal-shell-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--color-border-default);
     }
     .modal-shell-surface {
       position: relative;
@@ -10340,13 +10332,8 @@
 
         </div>
 
-        <!-- Desktop shell — modal floating over scrim over desktop -->
+        <!-- Desktop shell — modal floating over scrim -->
         <div class="modal-desktop-shell">
-          <div class="modal-shell-chrome" aria-hidden="true">
-            <span class="modal-shell-dot"></span>
-            <span class="modal-shell-dot"></span>
-            <span class="modal-shell-dot"></span>
-          </div>
           <div class="modal-shell-surface">
             <div class="scrim-layer" aria-hidden="true"></div>
             <div class="modal-dialog" id="modal-preview" role="dialog" aria-labelledby="modal-preview-title" aria-modal="true">
@@ -14214,6 +14201,7 @@
       let currentMedia     = 'logo';
       let currentIconColor = 'violet';
       let currentIcon      = 'unica';
+      let currentAvatarSrc = 'assets/avatars/avatar-1.png';
 
       // Color → background token
       const COLOR_BG = {
@@ -14252,6 +14240,7 @@
           if (iconUse) iconUse.setAttribute('href', '#ico-' + currentIcon);
         } else if (currentMedia === 'avatar') {
           leading.classList.add('modal-leading--avatar');
+          leadingImg.src = currentAvatarSrc;
           leadingImg.style.display = '';
           if (leadingSvg) leadingSvg.style.display = 'none';
         }
@@ -14299,9 +14288,10 @@
       // Avatar picker
       initDropdown(document.getElementById('modal-avatar-picker'), val => {
         const NAMES = { 'avatar-1.png': 'Sofia', 'avatar-2.png': 'Marcus', 'avatar-3.png': 'Andre', 'avatar-4.png': 'Kai' };
+        currentAvatarSrc = 'assets/avatars/' + val;
         document.getElementById('modal-avatar-label').innerHTML =
-          '<img class="card-multi-sub-avatar" src="assets/avatars/' + val + '" alt="">' + (NAMES[val] || val);
-        leadingImg.src = 'assets/avatars/' + val;
+          '<img class="card-multi-sub-avatar" src="' + currentAvatarSrc + '" alt="">' + (NAMES[val] || val);
+        leadingImg.src = currentAvatarSrc;
       });
 
       // Property toggles
