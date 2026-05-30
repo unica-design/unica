@@ -6880,6 +6880,50 @@
     .sc-variant-swatch { min-width: 0; width: 100%; }
   }
 
+  /* ── Stepper ────────────────────────────────────────────── */
+  .stepper-preview-canvas {
+    background: var(--doc-surface-preview);
+    padding: var(--space-1000) var(--space-800);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stepper {
+    display: inline-flex;
+    align-items: center;
+  }
+  .stepper-btn {
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; cursor: pointer;
+    flex-shrink: 0; border-radius: var(--corner-radius-round); padding: 0;
+  }
+  .stepper--sm .stepper-btn { width: 48px; height: 48px; }
+  .stepper--lg .stepper-btn { width: 60px; height: 60px; }
+  .stepper-btn-pill {
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--corner-radius-round);
+    flex-shrink: 0; color: var(--color-content-default);
+    transition: background 150ms ease, transform 150ms ease;
+  }
+  .stepper--sm .stepper-btn-pill { width: 32px; height: 32px; }
+  .stepper--lg .stepper-btn-pill { width: 48px; height: 48px; }
+  .stepper-btn:hover  .stepper-btn-pill { background: var(--color-action-hover-subtle); }
+  .stepper-btn:active .stepper-btn-pill { background: var(--color-action-active-subtle); transform: scale(0.94); }
+  .stepper-btn:disabled { cursor: not-allowed; opacity: 0.38; }
+  .stepper-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .stepper-field {
+    background: var(--color-background-page);
+    border-radius: var(--corner-radius-xs);
+    font-family: var(--font-family-sans);
+    font-weight: var(--font-weight-default);
+    color: var(--color-content-default);
+    border: none; text-align: center;
+    -moz-appearance: textfield;
+  }
+  .stepper-field::-webkit-inner-spin-button,
+  .stepper-field::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .stepper--sm .stepper-field { height: 40px; padding: 0 8px; font-size: var(--font-size-body-l); min-width: 60px; }
+  .stepper--lg .stepper-field { height: 56px; padding: 0 12px; font-size: var(--font-size-display-s); min-width: 80px; }
+
   </style>
 </head>
 <body>
@@ -10309,7 +10353,242 @@
       </div><!-- /.doc-section Properties -->
 
     </div><!-- /#page-segmented-control -->
-    <div class="page-panel" id="page-stepper"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Stepper</h2><p class="section-description">Numeric increment/decrement input.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-stepper">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Forms</p>
+        <h1 class="comp-title">Stepper</h1>
+        <p class="comp-description">A numeric input that lets users increment or decrement a value using integrated plus and minus buttons. The value field is directly tappable, activating the native keyboard for typed entry. Use a stepper when the exact value matters and users benefit from nudging — quantities, counts, durations.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile · Web</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=1183-35773" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="btn-controls">
+          <div class="dropdown" id="step-size-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="step-size-label">Small</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Stepper size">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="small" tabindex="0">Small</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="large" tabindex="0">Large</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stepper-preview-canvas">
+          <div class="stepper stepper--sm" id="step-live" role="group" aria-label="Stepper preview">
+            <button class="stepper-btn" id="step-dec" aria-label="Decrease" aria-controls="step-value">
+              <div class="stepper-btn-pill">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+            </button>
+            <input class="stepper-field" id="step-value" type="number" value="1" min="0" max="999" inputmode="numeric" aria-label="Value">
+            <button class="stepper-btn" id="step-inc" aria-label="Increase" aria-controls="step-value">
+              <div class="stepper-btn-pill">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <button class="code-reveal-btn" id="step-code-toggle" aria-expanded="false" aria-controls="step-code-reveal" onclick="toggleCodeReveal(this,'step-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="step-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;div class="stepper stepper--sm" role="group" aria-label="Quantity"&gt;
+  &lt;button class="stepper-btn" aria-label="Decrease" aria-controls="qty"&gt;
+    &lt;div class="stepper-btn-pill"&gt;
+      &lt;svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"&gt;
+        &lt;path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+  &lt;/button&gt;
+  &lt;input class="stepper-field" id="qty" type="number"
+         value="1" min="0" max="999" inputmode="numeric" aria-label="Value"&gt;
+  &lt;button class="stepper-btn" aria-label="Increase" aria-controls="qty"&gt;
+    &lt;div class="stepper-btn-pill"&gt;
+      &lt;svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"&gt;
+        &lt;path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+      </div><!-- /.doc-section Preview -->
+
+      <!-- ══════════════════════════════════════════
+           2. STATES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">States</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Button states across both sizes. The value field itself has no distinct visual states beyond a focus ring when keyboard-focused.</p>
+
+        <div class="states-matrix">
+          <div class="states-matrix-head">
+            <div class="states-matrix-head-spacer"></div>
+            <div class="states-matrix-head-cell">Default</div>
+            <div class="states-matrix-head-cell">Hover</div>
+            <div class="states-matrix-head-cell">Pressed</div>
+            <div class="states-matrix-head-cell">Focused</div>
+            <div class="states-matrix-head-cell">Disabled</div>
+          </div>
+
+          <!-- Small -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Small</div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);transform:scale(0.94);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-radius:var(--corner-radius-round);"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1" disabled><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+          </div>
+
+          <!-- Large -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Large</div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);transform:scale(0.94);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-radius:var(--corner-radius-round);"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1" disabled><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+          </div>
+
+        </div><!-- /.states-matrix -->
+
+      </div><!-- /.doc-section States -->
+
+      <!-- ══════════════════════════════════════════
+           3. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Stepper is a <code>spinbutton</code> widget — the input field carries the role and value attributes while the buttons are plain controls that manipulate it.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Concern</th><th>Implementation</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Role</td>
+                <td>The <code>&lt;input type="number"&gt;</code> natively receives <code>role="spinbutton"</code>. Wrap the whole group in a <code>&lt;div role="group"&gt;</code> with <code>aria-label</code> describing what is being counted (e.g. <code>aria-label="Quantity"</code>).</td>
+              </tr>
+              <tr>
+                <td>Value</td>
+                <td><code>aria-valuenow</code>, <code>aria-valuemin</code>, and <code>aria-valuemax</code> are set automatically by <code>type="number"</code> with <code>min</code> / <code>max</code> attributes. Reflect the current value in the <code>value</code> attribute at all times.</td>
+              </tr>
+              <tr>
+                <td>Button labels</td>
+                <td>Each button must have a descriptive <code>aria-label</code> — e.g. <code>aria-label="Decrease quantity"</code>. Pair with <code>aria-controls</code> pointing to the input's <code>id</code> to declare the relationship.</td>
+              </tr>
+              <tr>
+                <td>Keyboard</td>
+                <td><kbd>↑</kbd> / <kbd>↓</kbd> arrows inside the field increment and decrement by the <code>step</code> value natively. <kbd>Tab</kbd> moves focus to the minus button, field, then plus button in order.</td>
+              </tr>
+              <tr>
+                <td>Disabled state</td>
+                <td>Apply the <code>disabled</code> attribute to both buttons and the input when the stepper is inactive. Do not rely on pointer-events or opacity alone — disabled must be announced to assistive technology.</td>
+              </tr>
+              <tr>
+                <td>Min / max bounds</td>
+                <td>Disable the decrement button when value equals <code>min</code>; disable the increment button when value equals <code>max</code>. Prevents silent out-of-range values from reaching form state.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Accessibility -->
+
+      <!-- ══════════════════════════════════════════
+           4. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">All configurable properties exposed on the Stepper component.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">size</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">small</td>
+                <td>One of <code>small</code> · <code>large</code>. Small: 32px buttons, 40px field, 18px text. Large: 48px buttons, 56px field, 32px text.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">value</td>
+                <td class="td-type">number</td>
+                <td class="td-subtle">0</td>
+                <td>Current numeric value. Reflected in the input's <code>value</code> attribute.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">min</td>
+                <td class="td-type">number</td>
+                <td class="td-subtle">0</td>
+                <td>Lower bound. The decrement button is disabled when the value reaches this floor.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">max</td>
+                <td class="td-type">number</td>
+                <td class="td-subtle">999</td>
+                <td>Upper bound. The increment button is disabled when the value reaches this ceiling.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">step</td>
+                <td class="td-type">number</td>
+                <td class="td-subtle">1</td>
+                <td>Amount added or subtracted per button press. Also controls the arrow-key increment when the field has focus.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">disabled</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>When true, both buttons and the input are disabled and the entire stepper renders at 38% opacity.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Properties -->
+
+    </div><!-- /#page-stepper -->
 
     <!-- Navigation -->
     <div class="page-panel" id="page-top-nav-app"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Top Navigation — App</h2><p class="section-description">Mobile app top bar with back, title, and action slots.</p></div><span class="stub-pill">In progress</span></section></div>
@@ -18145,6 +18424,50 @@ ${accessoryMarkup}
       initDropdown(document.getElementById('sc-tabs-picker'), function(v) { state.tabs = parseInt(v); render(); });
 
       render();
+    })();
+
+    /* ── Stepper preview ─────────────────────────────── */
+    (function initStepperPreview() {
+      var stepper  = document.getElementById('step-live');
+      var input    = document.getElementById('step-value');
+      var decBtn   = document.getElementById('step-dec');
+      var incBtn   = document.getElementById('step-inc');
+      if (!stepper || !input) return;
+
+      var MIN = 0, MAX = 999, STEP = 1;
+
+      function clamp(v) { return Math.min(MAX, Math.max(MIN, v)); }
+
+      function syncButtons() {
+        var v = parseInt(input.value, 10);
+        decBtn.disabled = v <= MIN;
+        incBtn.disabled = v >= MAX;
+      }
+
+      decBtn.addEventListener('click', function() {
+        var v = clamp((parseInt(input.value, 10) || 0) - STEP);
+        input.value = v;
+        syncButtons();
+      });
+
+      incBtn.addEventListener('click', function() {
+        var v = clamp((parseInt(input.value, 10) || 0) + STEP);
+        input.value = v;
+        syncButtons();
+      });
+
+      input.addEventListener('change', function() {
+        var v = parseInt(input.value, 10);
+        if (isNaN(v)) v = MIN;
+        input.value = clamp(v);
+        syncButtons();
+      });
+
+      initDropdown(document.getElementById('step-size-picker'), function(size) {
+        stepper.className = 'stepper stepper--' + (size === 'large' ? 'lg' : 'sm');
+      });
+
+      syncButtons();
     })();
 
 
