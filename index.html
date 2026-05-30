@@ -6765,8 +6765,24 @@
     background: var(--color-background-ui);
     border-radius: var(--corner-radius-round);
     padding: 4px; gap: 2px;
+    position: relative;
   }
   .sc-ctrl--lg { padding: 6px; }
+  /* Animated selection pill — only used inside .sc-ctrl--live */
+  .sc-ctrl-slider {
+    position: absolute;
+    top: 4px; bottom: 4px; left: 4px;
+    border-radius: var(--corner-radius-round);
+    background: var(--color-background-page);
+    box-shadow: 0 1px 3px rgba(8, 5, 13, 0.12), 0 1px 2px rgba(8, 5, 13, 0.06);
+    transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1), width 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none; will-change: transform; z-index: 0;
+  }
+  .sc-ctrl--lg .sc-ctrl-slider { top: 6px; bottom: 6px; left: 6px; }
+  [data-theme="dark"] .sc-ctrl-slider {
+    box-shadow: none;
+    border: var(--border-width-default) solid var(--color-border-subtle);
+  }
   .sc-ctrl-tab {
     display: inline-flex; align-items: center; justify-content: center;
     gap: 6px; padding: 0 12px; height: 32px;
@@ -6779,10 +6795,12 @@
     cursor: pointer;
     transition: background 180ms ease, color 150ms ease, box-shadow 180ms ease;
     white-space: nowrap; user-select: none; -webkit-user-select: none; line-height: 1;
+    position: relative; z-index: 1;
   }
   .sc-ctrl--lg .sc-ctrl-tab {
     height: 40px; padding: 0 16px; font-size: var(--font-size-body-m);
   }
+  /* Static variants: CSS-driven selection pill */
   .sc-ctrl-tab[aria-selected="true"] {
     background: var(--color-background-page);
     color: var(--color-content-default);
@@ -6792,7 +6810,14 @@
     box-shadow: none;
     border: var(--border-width-default) solid var(--color-border-subtle);
   }
+  /* Live preview: slider handles selection — tabs stay transparent */
+  .sc-ctrl--live .sc-ctrl-tab[aria-selected="true"] {
+    background: transparent;
+    box-shadow: none;
+  }
+  [data-theme="dark"] .sc-ctrl--live .sc-ctrl-tab[aria-selected="true"] { border: none; }
   .sc-ctrl-tab:not([aria-selected="true"]):hover { color: var(--color-content-default); }
+  .sc-ctrl-tab:disabled { opacity: 0.38; cursor: not-allowed; }
   .sc-ctrl-icon {
     display: flex; align-items: center; flex-shrink: 0;
     width: 16px; height: 16px; color: inherit;
@@ -10062,39 +10087,28 @@
           <div id="sc-live" class="sc-ctrl" role="tablist" aria-label="Segmented control preview"></div>
         </div>
 
-        <!-- Toggle row: icon + badge switches -->
-        <div class="sc-toggle-row">
+        <!-- Toggle bar: icon + badge switches -->
+        <div class="card-prop-bar">
+          <p class="card-prop-bar-sub">Toggle optional slot visibility</p>
+          <div class="card-prop-bar-toggles">
 
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="sc-icon-switch">
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="sc-icon-switch">
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
               </div>
-            </div>
-            <span class="switch-item-text">Leading icon</span>
-          </label>
+              <span class="switch-item-text">Leading icon</span>
+            </label>
 
-          <label class="switch-item" style="flex-shrink:0;">
-            <div class="toggle-switch">
-              <input type="checkbox" id="sc-badge-switch">
-              <div class="toggle-track">
-                <div class="toggle-handle">
-                  <div class="toggle-icon">
-                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                </div>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="sc-badge-switch">
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
               </div>
-            </div>
-            <span class="switch-item-text">Trailing badge</span>
-          </label>
+              <span class="switch-item-text">Trailing badge</span>
+            </label>
 
+          </div>
         </div>
 
         <!-- Show / hide code -->
@@ -10116,113 +10130,66 @@
       </div><!-- /.doc-section Preview -->
 
       <!-- ══════════════════════════════════════════
-           2. VARIANTS
+           2. STATES
            ══════════════════════════════════════════ -->
       <div class="doc-section">
-        <h2 class="doc-section-title">Variants</h2>
+        <h2 class="doc-section-title">States</h2>
         <hr class="doc-rule">
-        <p class="doc-section-description">All accessor and size combinations shown at a glance.</p>
+        <p class="doc-section-description">All interactive states across both sizes. Hover changes text to default weight; focus applies a 2px action-colour ring; disabled reduces opacity to 38%.</p>
 
-        <!-- Row 1: small variants -->
-        <div class="sc-variants-row">
+        <div class="states-matrix">
+          <div class="states-matrix-head">
+            <div class="states-matrix-head-spacer"></div>
+            <div class="states-matrix-head-cell">Default</div>
+            <div class="states-matrix-head-cell">Selected</div>
+            <div class="states-matrix-head-cell">Hover</div>
+            <div class="states-matrix-head-cell">Focused</div>
+            <div class="states-matrix-head-cell">Disabled</div>
+          </div>
 
-          <div class="sc-variant-tile">
-            <p class="variant-label">Label only</p>
-            <div class="sc-variant-swatch">
-              <div class="sc-ctrl" role="tablist" aria-label="Label only">
-                <button class="sc-ctrl-tab" role="tab" aria-selected="true"><span>Overview</span></button>
-                <button class="sc-ctrl-tab" role="tab" aria-selected="false"><span>Details</span></button>
-              </div>
+          <!-- Small -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Small</div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="false" tabindex="-1">Label</button>
+            </div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="true" tabindex="-1">Label</button>
+            </div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="false" tabindex="-1" style="color:var(--color-content-default);">Label</button>
+            </div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="false" tabindex="-1" style="outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button>
+            </div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="false" tabindex="-1" disabled>Label</button>
             </div>
           </div>
 
-          <div class="sc-variant-tile">
-            <p class="variant-label">Leading icon</p>
-            <div class="sc-variant-swatch">
-              <div class="sc-ctrl" role="tablist" aria-label="Leading icon">
-                <button class="sc-ctrl-tab" role="tab" aria-selected="true">
-                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
-                  <span>Overview</span>
-                </button>
-                <button class="sc-ctrl-tab" role="tab" aria-selected="false">
-                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
-                  <span>Details</span>
-                </button>
-              </div>
+          <!-- Large -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Large</div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="false" tabindex="-1" style="height:40px;padding:0 16px;font-size:var(--font-size-body-m);">Label</button>
+            </div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="true" tabindex="-1" style="height:40px;padding:0 16px;font-size:var(--font-size-body-m);">Label</button>
+            </div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="false" tabindex="-1" style="height:40px;padding:0 16px;font-size:var(--font-size-body-m);color:var(--color-content-default);">Label</button>
+            </div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="false" tabindex="-1" style="height:40px;padding:0 16px;font-size:var(--font-size-body-m);outline:2px solid var(--color-action-default);outline-offset:2px;">Label</button>
+            </div>
+            <div class="states-matrix-cell">
+              <button class="sc-ctrl-tab" role="tab" aria-selected="false" tabindex="-1" style="height:40px;padding:0 16px;font-size:var(--font-size-body-m);" disabled>Label</button>
             </div>
           </div>
 
-          <div class="sc-variant-tile">
-            <p class="variant-label">Trailing badge</p>
-            <div class="sc-variant-swatch">
-              <div class="sc-ctrl" role="tablist" aria-label="Trailing badge">
-                <button class="sc-ctrl-tab" role="tab" aria-selected="true">
-                  <span>Overview</span>
-                  <span class="sc-ctrl-badge" aria-hidden="true">9</span>
-                </button>
-                <button class="sc-ctrl-tab" role="tab" aria-selected="false">
-                  <span>Details</span>
-                  <span class="sc-ctrl-badge" aria-hidden="true">3</span>
-                </button>
-              </div>
-            </div>
-          </div>
+        </div><!-- /.states-matrix -->
 
-          <div class="sc-variant-tile">
-            <p class="variant-label">Icon + badge</p>
-            <div class="sc-variant-swatch">
-              <div class="sc-ctrl" role="tablist" aria-label="Icon and badge">
-                <button class="sc-ctrl-tab" role="tab" aria-selected="true">
-                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
-                  <span>Overview</span>
-                  <span class="sc-ctrl-badge" aria-hidden="true">9</span>
-                </button>
-                <button class="sc-ctrl-tab" role="tab" aria-selected="false">
-                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
-                  <span>Details</span>
-                  <span class="sc-ctrl-badge" aria-hidden="true">3</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /.sc-variants-row (small) -->
-
-        <!-- Row 2: large variants -->
-        <div class="sc-variants-row">
-
-          <div class="sc-variant-tile">
-            <p class="variant-label">Large</p>
-            <div class="sc-variant-swatch">
-              <div class="sc-ctrl sc-ctrl--lg" role="tablist" aria-label="Large label only">
-                <button class="sc-ctrl-tab" role="tab" aria-selected="true"><span>Overview</span></button>
-                <button class="sc-ctrl-tab" role="tab" aria-selected="false"><span>Details</span></button>
-                <button class="sc-ctrl-tab" role="tab" aria-selected="false"><span>Reviews</span></button>
-              </div>
-            </div>
-          </div>
-
-          <div class="sc-variant-tile">
-            <p class="variant-label">Large + icon + badge</p>
-            <div class="sc-variant-swatch">
-              <div class="sc-ctrl sc-ctrl--lg" role="tablist" aria-label="Large with icon and badge">
-                <button class="sc-ctrl-tab" role="tab" aria-selected="true">
-                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
-                  <span>Overview</span>
-                  <span class="sc-ctrl-badge" aria-hidden="true">9</span>
-                </button>
-                <button class="sc-ctrl-tab" role="tab" aria-selected="false">
-                  <span class="sc-ctrl-icon" aria-hidden="true"><svg viewBox="0 0 16.0068 16.8857" fill="currentColor"><path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/></svg></span>
-                  <span>Details</span>
-                  <span class="sc-ctrl-badge" aria-hidden="true">3</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /.sc-variants-row (large) -->
-
-      </div><!-- /.doc-section Variants -->
+      </div><!-- /.doc-section States -->
 
       <!-- ══════════════════════════════════════════
            3. ACCESSIBILITY
@@ -18069,7 +18036,7 @@ ${accessoryMarkup}
     })();
 
 
-    (function initSegControl() {
+    (function initSegControlPreview() {
       var track      = document.getElementById('sc-live');
       var iconSwitch = document.getElementById('sc-icon-switch');
       var badgeSwitch = document.getElementById('sc-badge-switch');
@@ -18085,10 +18052,31 @@ ${accessoryMarkup}
       }
       function makeBadge() { return '<span class="sc-ctrl-badge" aria-hidden="true">9</span>'; }
 
+      /* Reposition the slider pill without rebuilding the DOM (enables CSS transition) */
+      function updateSlider() {
+        var slider = track.querySelector('.sc-ctrl-slider');
+        if (!slider) return;
+        var tabs = track.querySelectorAll('.sc-ctrl-tab');
+        if (!tabs[selectedIdx]) return;
+        var xOffset = 0;
+        for (var i = 0; i < selectedIdx; i++) xOffset += tabs[i].offsetWidth;
+        slider.style.width = tabs[selectedIdx].offsetWidth + 'px';
+        slider.style.transform = 'translateX(' + xOffset + 'px)';
+      }
+
+      /* Update aria-selected attributes + animate the slider (no DOM rebuild = smooth transition) */
+      function updateSelected() {
+        track.querySelectorAll('.sc-ctrl-tab').forEach(function(btn) {
+          btn.setAttribute('aria-selected', btn.getAttribute('data-idx') === String(selectedIdx) ? 'true' : 'false');
+        });
+        updateSlider();
+      }
+
+      /* Full DOM rebuild — called when count / size / icon / badge changes */
       function render() {
         if (selectedIdx >= state.tabs) selectedIdx = 0;
-        track.className = 'sc-ctrl' + (state.size === 'large' ? ' sc-ctrl--lg' : '');
-        var html = '';
+        track.className = 'sc-ctrl sc-ctrl--live' + (state.size === 'large' ? ' sc-ctrl--lg' : '');
+        var html = '<span class="sc-ctrl-slider" aria-hidden="true"></span>';
         for (var i = 0; i < state.tabs; i++) {
           var sel = i === selectedIdx ? 'true' : 'false';
           html += '<button class="sc-ctrl-tab" role="tab" aria-selected="' + sel + '" data-idx="' + i + '">';
@@ -18098,22 +18086,30 @@ ${accessoryMarkup}
           html += '</button>';
         }
         track.innerHTML = html;
+        /* Position slider after layout is painted */
+        requestAnimationFrame(updateSlider);
+        /* Wire clicks — use updateSelected so slider can animate instead of a full re-render */
         track.querySelectorAll('.sc-ctrl-tab').forEach(function(btn) {
           btn.addEventListener('click', function() {
             selectedIdx = parseInt(this.getAttribute('data-idx'));
-            render();
+            updateSelected();
           });
         });
       }
 
-      // Keyboard navigation — add once to track
+      /* Keyboard navigation */
       track.addEventListener('keydown', function(e) {
         var tabs = Array.from(track.querySelectorAll('.sc-ctrl-tab'));
         var cur = tabs.indexOf(document.activeElement);
         if (cur === -1) return;
         if (e.key === 'ArrowRight') { e.preventDefault(); tabs[(cur + 1) % tabs.length].focus(); }
         else if (e.key === 'ArrowLeft') { e.preventDefault(); tabs[(cur - 1 + tabs.length) % tabs.length].focus(); }
-        else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); selectedIdx = cur; render(); tabs[cur].focus(); }
+        else if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          selectedIdx = cur;
+          updateSelected();
+          tabs[cur].focus();
+        }
       });
 
       if (iconSwitch)  iconSwitch.addEventListener('change',  function() { state.icon  = this.checked; render(); });
