@@ -1398,7 +1398,8 @@
       left: 2px;
       border-radius: var(--corner-radius-round);
       background: var(--color-background-contrast);
-      transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                  width   300ms cubic-bezier(0.34, 1.56, 0.64, 1);
       pointer-events: none;
       will-change: transform;
     }
@@ -1422,6 +1423,11 @@
     }
     .seg-control-btn:hover {
       color: var(--color-content-default);
+    }
+    .seg-control-btn:focus { outline: none; }
+    .seg-control-btn:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
     }
     .seg-control-btn[aria-pressed="true"] {
       color: var(--color-inverse);
@@ -6775,7 +6781,8 @@
     border-radius: var(--corner-radius-round);
     background: var(--color-background-page);
     box-shadow: 0 1px 3px rgba(8, 5, 13, 0.12), 0 1px 2px rgba(8, 5, 13, 0.06);
-    transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1), width 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                width   300ms cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: none; will-change: transform; z-index: 0;
   }
   .sc-ctrl--lg .sc-ctrl-slider { top: 6px; bottom: 6px; left: 6px; }
@@ -6818,6 +6825,11 @@
   [data-theme="dark"] .sc-ctrl--live .sc-ctrl-tab[aria-selected="true"] { border: none; }
   .sc-ctrl-tab:not([aria-selected="true"]):hover { color: var(--color-content-default); }
   .sc-ctrl-tab:disabled { opacity: 0.38; cursor: not-allowed; }
+  .sc-ctrl-tab:focus { outline: none; }
+  .sc-ctrl-tab:focus-visible {
+    outline: 2px solid var(--color-border-strong);
+    outline-offset: 2px;
+  }
   .sc-ctrl-icon {
     display: flex; align-items: center; flex-shrink: 0;
     width: 16px; height: 16px; color: inherit;
@@ -10112,7 +10124,7 @@
         </div>
 
         <!-- Show / hide code -->
-        <button class="code-reveal-btn" id="sc-code-toggle" aria-expanded="false" aria-controls="sc-code-reveal">
+        <button class="code-reveal-btn" id="sc-code-toggle" aria-expanded="false" aria-controls="sc-code-reveal" onclick="toggleCodeReveal(this,'sc-code-reveal')">
           <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
           <span class="code-reveal-btn-label">Show code</span>
         </button>
