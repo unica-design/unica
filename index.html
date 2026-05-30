@@ -6534,6 +6534,175 @@
       .modal-variants-grid { grid-template-columns: 1fr; }
     }
 
+    /* ─── Progress Indicators ─────────────────────────────────────────
+       Three types:
+         1. linear   — 4px horizontal track + fill, determinate
+         2. circular — 48×48 SVG arc, 4px stroke, determinate
+         3. brand    — pulsing ůnica mark badge, 64px ↔ 48px
+    ─────────────────────────────────────────────────────────────── */
+
+    /* ── Preview shell ── */
+    .prog-preview-canvas {
+      background: var(--doc-surface-preview);
+      padding: var(--space-1000) var(--space-800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .prog-phone-shell {
+      width: 320px;
+      height: 300px;
+      border-radius: 24px;
+      background: var(--color-background-page);
+      box-shadow: 0 1px 8px 0 rgba(8, 5, 13, 0.25);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    [data-theme="dark"] .prog-phone-shell {
+      box-shadow: none;
+      border: var(--border-width-default) solid var(--color-border-default);
+    }
+
+    /* ── Linear bar ── */
+    .prog-linear-wrap {
+      width: calc(100% - 64px);
+    }
+    .prog-linear-track {
+      width: 100%;
+      height: 4px;
+      background: var(--color-border-subtle);
+      border-radius: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+    .prog-linear-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--color-background-contrast);
+      border-radius: inherit;
+      width: 100%;
+      transform-origin: left center;
+    }
+
+    /* Preview — looping fill 0 → 75% → fade → repeat */
+    @keyframes prog-lin-fill {
+      0%   { transform: scaleX(0);    }
+      62%  { transform: scaleX(0.75); }
+      80%  { transform: scaleX(0.75); }
+      100% { transform: scaleX(0);    }
+    }
+    @keyframes prog-lin-fade {
+      0%, 3%         { opacity: 0; }
+      7%, 77%        { opacity: 1; }
+      92%, 100%      { opacity: 0; }
+    }
+    .prog-linear-fill--anim {
+      animation:
+        prog-lin-fill 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite,
+        prog-lin-fade 2.8s ease-in-out infinite;
+    }
+
+    /* Static fills for variants grid */
+    .prog-linear-static {
+      width: 200px;
+      height: 4px;
+      background: var(--color-border-subtle);
+      border-radius: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+    .prog-linear-static-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      background: var(--color-background-contrast);
+      border-radius: inherit;
+    }
+
+    /* ── Circular arc ── */
+    .prog-circular-svg {
+      display: block;
+      transform: rotate(-90deg); /* arc starts at 12 o'clock */
+    }
+    .prog-circular-track {
+      fill: none;
+      stroke: var(--color-border-subtle);
+    }
+    .prog-circular-fill {
+      fill: none;
+      stroke: var(--color-background-contrast);
+      stroke-linecap: round;
+      stroke-dasharray: 125.66; /* circumference: 2π×20 */
+      stroke-dashoffset: 125.66; /* default: 0% */
+    }
+
+    /* Preview — looping fill 0 → 75% → fade → repeat */
+    @keyframes prog-arc-fill {
+      0%   { stroke-dashoffset: 125.66; }
+      62%  { stroke-dashoffset: 31.42;  } /* 75% filled */
+      80%  { stroke-dashoffset: 31.42;  }
+      100% { stroke-dashoffset: 125.66; }
+    }
+    @keyframes prog-arc-fade {
+      0%, 3%         { opacity: 0; }
+      7%, 77%        { opacity: 1; }
+      92%, 100%      { opacity: 0; }
+    }
+    .prog-circular-fill--anim {
+      animation:
+        prog-arc-fill 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite,
+        prog-arc-fade 2.8s ease-in-out infinite;
+    }
+
+    /* ── Brand loader ── */
+    .prog-brand-loader {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-background-contrast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .prog-brand-loader svg {
+      color: var(--color-action-inverse-default);
+    }
+    @keyframes prog-brand-pulse {
+      0%, 100% { transform: scale(1);    }
+      50%       { transform: scale(0.75); }
+    }
+    .prog-brand-loader--anim {
+      animation: prog-brand-pulse 2044ms cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    /* ── Variants grid ── */
+    .prog-variants-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-700);
+      margin-bottom: var(--space-800);
+    }
+    .prog-variant-tile {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-400);
+    }
+    .prog-variant-swatch {
+      background: var(--doc-surface-preview);
+      border-radius: var(--border-radius-m);
+      padding: var(--space-600) var(--space-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 148px;
+      min-height: 64px;
+    }
+    .prog-variant-swatch--wide {
+      min-width: 200px;
+    }
+
   </style>
 </head>
 <body>
@@ -10622,7 +10791,295 @@
 
 
     </div>
-    <div class="page-panel" id="page-progress"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Progress Indicators</h2><p class="section-description">Linear and circular progress bars, determinate and indeterminate.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-progress">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Feedback</p>
+        <h1 class="comp-title">Progress Indicators</h1>
+        <p class="comp-description">Three ways to communicate loading state — a linear bar for page and section loading, a circular arc for contained loading zones, and the brand loader for full-screen splash contexts. All are determinate, communicating progress toward a known endpoint.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile · Web</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=836-43101" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <!-- Type switcher -->
+        <div class="btn-controls">
+          <div class="dropdown" id="prog-type-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="prog-type-label">Linear</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Indicator type">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="linear"   tabindex="0">Linear</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="circular" tabindex="0">Circular</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="brand"    tabindex="0">Brand Loader</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Phone shells — one per type, JS toggles visibility -->
+        <div class="prog-preview-canvas">
+          <div class="prog-phone-shell">
+
+            <!-- Linear -->
+            <div id="prog-linear-shell" class="prog-linear-wrap">
+              <div class="prog-linear-track" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100">
+                <div class="prog-linear-fill prog-linear-fill--anim"></div>
+              </div>
+            </div>
+
+            <!-- Circular -->
+            <div id="prog-circular-shell" style="display:none">
+              <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100">
+                <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
+                <circle class="prog-circular-fill prog-circular-fill--anim" cx="24" cy="24" r="20" stroke-width="4"/>
+              </svg>
+            </div>
+
+            <!-- Brand Loader -->
+            <div id="prog-brand-shell" style="display:none">
+              <div class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading">
+                <svg width="24" height="24" viewBox="0 0 16.0068 16.8857" fill="currentColor" aria-hidden="true">
+                  <path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/>
+                </svg>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Show / hide code -->
+        <button class="code-reveal-btn" id="prog-code-toggle" aria-expanded="false" aria-controls="prog-code-reveal" onclick="toggleCodeReveal(this,'prog-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="prog-code-reveal" hidden>
+
+          <!-- Linear code -->
+          <div id="prog-code-linear">
+            <div class="code-block">
+              <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+              <pre><code class="language-html">&lt;!-- Linear progress bar --&gt;
+&lt;div class="progress-linear" role="progressbar"
+     aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"
+     aria-label="Loading"&gt;
+  &lt;div class="progress-linear-fill" style="width: 65%"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- Circular code -->
+          <div id="prog-code-circular" style="display:none">
+            <div class="code-block">
+              <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+              <pre><code class="language-html">&lt;!-- Circular progress arc --&gt;
+&lt;svg class="progress-circular" viewBox="0 0 48 48" width="48" height="48"
+     role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"
+     aria-label="Loading"&gt;
+  &lt;circle class="progress-circular-track" cx="24" cy="24" r="20" stroke-width="4"/&gt;
+  &lt;circle class="progress-circular-fill"  cx="24" cy="24" r="20" stroke-width="4"
+          stroke-dasharray="125.66"
+          stroke-dashoffset="43.98"/&gt; &lt;!-- 125.66 × (1 - 0.65) --&gt;
+&lt;/svg&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- Brand code -->
+          <div id="prog-code-brand" style="display:none">
+            <div class="code-block">
+              <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+              <pre><code class="language-html">&lt;!-- Brand loader --&gt;
+&lt;div class="progress-brand" role="status" aria-label="Loading"&gt;
+  &lt;svg width="24" height="24" viewBox="0 0 16.0068 16.8857"
+       fill="currentColor" aria-hidden="true"&gt;
+    &lt;path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857
+             8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794
+             14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349
+             2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238
+             L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5
+             1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794
+             4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857
+             0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0
+             6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874
+             0.000165446 16.0068 0C16.0068 0 16.0068 7.44604
+             16.0068 8.89355Z"/&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           2. VARIANTS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+
+        <!-- Linear -->
+        <p class="avatar-group-label" style="margin-bottom:var(--space-400)">Linear — 25% / 50% / 75% / 100%</p>
+        <div class="prog-variants-row">
+
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">25%</p>
+            <div class="prog-variant-swatch prog-variant-swatch--wide">
+              <div class="prog-linear-static">
+                <div class="prog-linear-static-fill" style="width:25%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">50%</p>
+            <div class="prog-variant-swatch prog-variant-swatch--wide">
+              <div class="prog-linear-static">
+                <div class="prog-linear-static-fill" style="width:50%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">75%</p>
+            <div class="prog-variant-swatch prog-variant-swatch--wide">
+              <div class="prog-linear-static">
+                <div class="prog-linear-static-fill" style="width:75%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">100%</p>
+            <div class="prog-variant-swatch prog-variant-swatch--wide">
+              <div class="prog-linear-static">
+                <div class="prog-linear-static-fill" style="width:100%"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Circular -->
+        <p class="avatar-group-label" style="margin-bottom:var(--space-400)">Circular — 25% / 50% / 75% / 100%</p>
+        <div class="prog-variants-row">
+
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">25%</p>
+            <div class="prog-variant-swatch">
+              <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
+                <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
+                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:94.25"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">50%</p>
+            <div class="prog-variant-swatch">
+              <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
+                <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
+                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:62.83"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">75%</p>
+            <div class="prog-variant-swatch">
+              <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
+                <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
+                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:31.42"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">100%</p>
+            <div class="prog-variant-swatch">
+              <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
+                <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
+                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:0"/>
+              </svg>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Brand Loader -->
+        <p class="avatar-group-label" style="margin-bottom:var(--space-400)">Brand Loader</p>
+        <div class="prog-variants-row">
+          <div class="prog-variant-tile">
+            <p class="avatar-group-label">Pulse</p>
+            <div class="prog-variant-swatch">
+              <div class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading">
+                <svg width="24" height="24" viewBox="0 0 16.0068 16.8857" fill="currentColor" aria-hidden="true">
+                  <path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           3. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Pattern</th><th>Component</th><th>Guidance</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="td-mono">role="progressbar"</td><td>Linear · Circular</td><td>Apply to the track element. Screen readers announce this as a progress indicator; avoid wrapping a <code class="inline-code">&lt;div&gt;</code> without a role.</td></tr>
+              <tr><td class="td-mono">aria-valuenow / aria-valuemin / aria-valuemax</td><td>Linear · Circular</td><td>Required for determinate progress. <code class="inline-code">aria-valuenow</code> reflects the current value (0–100). Omit only if the end value is truly unknown.</td></tr>
+              <tr><td class="td-mono">aria-label</td><td>All</td><td>Describe what is loading — e.g. <code class="inline-code">aria-label="Uploading file"</code>. A generic "Loading" is acceptable when context makes the target obvious.</td></tr>
+              <tr><td class="td-mono">role="status"</td><td>Brand Loader</td><td>Use <code class="inline-code">role="status"</code> on the brand loader rather than <code class="inline-code">progressbar</code>. It is a polite live region that announces when the loader appears without interrupting the user.</td></tr>
+              <tr><td>Motion</td><td>All</td><td>Wrap animations in <code class="inline-code">@media (prefers-reduced-motion: reduce)</code> to disable or substitute a static state for users who have opted out of motion.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           4. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Property</th><th>Values</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Type</td><td>Linear · Circular · Brand Loader</td><td>Linear for page and section loading. Circular for contained zones (cards, dialogs). Brand Loader for full-screen splash screens only.</td></tr>
+              <tr><td>Value</td><td>0 – 100</td><td>Expressed as a percentage. Drive the linear fill via <code class="inline-code">width: X%</code>; the circular fill via <code class="inline-code">stroke-dashoffset: 125.66 × (1 − X/100)</code>.</td></tr>
+              <tr><td>Size (Circular)</td><td>48 × 48 px</td><td>Fixed canvas. Stroke weight is always 4px. Do not resize the SVG viewBox — adjust display size via <code class="inline-code">width</code> and <code class="inline-code">height</code> attributes.</td></tr>
+              <tr><td>Size (Brand Loader)</td><td>64 px expanded · 48 px contracted</td><td>The pulse animation cycles between these two sizes via CSS scale. Never render it smaller than 48px at rest.</td></tr>
+              <tr><td>Track color</td><td>color-border-subtle</td><td>The inactive track background. Resolves to the same subtle gray in both light and dark modes.</td></tr>
+              <tr><td>Fill color</td><td>color-background-contrast</td><td>Near-black in light mode; cream/white in dark mode. Maintains high contrast against the track in both themes automatically.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /#page-progress -->
     <div class="page-panel" id="page-scrim">
 
       <!-- ── Component header ─────────────────── -->
@@ -17074,6 +17531,35 @@ ${accessoryMarkup}
 
       // Initial render — Portraits scene
       show(2);
+    })();
+
+    /* ── Progress Indicators ────────────────────── */
+    (function initProgress() {
+      var shells = {
+        linear:   document.getElementById('prog-linear-shell'),
+        circular: document.getElementById('prog-circular-shell'),
+        brand:    document.getElementById('prog-brand-shell')
+      };
+      var codeBlocks = {
+        linear:   document.getElementById('prog-code-linear'),
+        circular: document.getElementById('prog-code-circular'),
+        brand:    document.getElementById('prog-code-brand')
+      };
+
+      function setType(t) {
+        Object.keys(shells).forEach(function(k) {
+          var el = shells[k];
+          if (el) el.style.display = k === t ? '' : 'none';
+        });
+        Object.keys(codeBlocks).forEach(function(k) {
+          var el = codeBlocks[k];
+          if (el) el.style.display = k === t ? '' : 'none';
+        });
+      }
+
+      initDropdown(document.getElementById('prog-type-picker'), function(v) {
+        setType(v);
+      });
     })();
 
 
