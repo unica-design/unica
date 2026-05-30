@@ -6648,6 +6648,10 @@
       justify-content: center;
       flex-shrink: 0;
     }
+    /* Light / dark logo swap */
+    .prog-logo-dm { display: none; }
+    [data-theme="dark"] .prog-logo-lm { display: none; }
+    [data-theme="dark"] .prog-logo-dm { display: block; }
 
     @keyframes prog-brand-pulse {
       0%, 100% { transform: scale(1);    }
@@ -10923,7 +10927,8 @@
             <!-- Brand Loader -->
             <div id="prog-brand-shell" style="display:none">
               <div class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading">
-                <img src="assets/logo.png" width="24" height="24" alt="" aria-hidden="true">
+                <img class="prog-logo-lm" src="assets/logo.png"           width="24" height="24" alt="" aria-hidden="true">
+                <img class="prog-logo-dm" src="assets/logo-dark-mode.png" width="24" height="24" alt="" aria-hidden="true">
               </div>
             </div>
 
@@ -11029,7 +11034,8 @@
             <p class="avatar-group-label">Brand Loader</p>
             <div class="prog-variant-swatch">
               <div class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading">
-                <img src="assets/logo.png" width="24" height="24" alt="" aria-hidden="true">
+                <img class="prog-logo-lm" src="assets/logo.png"           width="24" height="24" alt="" aria-hidden="true">
+                <img class="prog-logo-dm" src="assets/logo-dark-mode.png" width="24" height="24" alt="" aria-hidden="true">
               </div>
             </div>
           </div>
@@ -17556,10 +17562,12 @@ ${accessoryMarkup}
       var uploadInput   = document.getElementById('prog-upload-input');
       var changeLogoBtn = document.getElementById('prog-change-logo');
 
-      // All brand loader <img> tags (preview + variants tile)
-      var brandImgs      = document.querySelectorAll('.prog-brand-loader img');
-      var defaultLogoSrc = 'assets/logo.png';
-      var userLogoSrc    = null; // data URL once uploaded
+      // All brand loader img tags — split by light/dark
+      var brandImgsLm    = document.querySelectorAll('.prog-brand-loader .prog-logo-lm');
+      var brandImgsDm    = document.querySelectorAll('.prog-brand-loader .prog-logo-dm');
+      var defaultLogoLm  = 'assets/logo.png';
+      var defaultLogoDm  = 'assets/logo-dark-mode.png';
+      var userLogoSrc    = null; // data URL once uploaded (used for both modes)
 
       // ── Helpers ───────────────────────────────────────────────────────
       function restartAnim(shellEl) {
@@ -17572,7 +17580,9 @@ ${accessoryMarkup}
       }
 
       function applyLogo(src) {
-        brandImgs.forEach(function(img) { img.src = src; });
+        // src = null means revert to defaults
+        brandImgsLm.forEach(function(img) { img.src = src || defaultLogoLm; });
+        brandImgsDm.forEach(function(img) { img.src = src || defaultLogoDm; });
       }
 
       // ── Type picker ───────────────────────────────────────────────────
@@ -17615,7 +17625,7 @@ ${accessoryMarkup}
           }
         } else {
           // Revert to ůnica placeholder
-          applyLogo(defaultLogoSrc);
+          applyLogo(null);
           uploadZone.style.display    = 'none';
           changeLogoBtn.style.display = 'none';
         }
