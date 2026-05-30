@@ -6896,6 +6896,7 @@
     flex-shrink: 0; border-radius: var(--corner-radius-round); padding: 0;
   }
   .stepper--sm .stepper-btn { width: 48px; height: 48px; }
+  .stepper--md .stepper-btn { width: 48px; height: 48px; }
   .stepper--lg .stepper-btn { width: 60px; height: 60px; }
   .stepper-btn-pill {
     display: flex; align-items: center; justify-content: center;
@@ -6905,6 +6906,7 @@
     transition: background 150ms ease, transform 150ms ease;
   }
   .stepper--sm .stepper-btn-pill { width: 32px; height: 32px; }
+  .stepper--md .stepper-btn-pill { width: 40px; height: 40px; }
   .stepper--lg .stepper-btn-pill { width: 48px; height: 48px; }
   .stepper-btn:hover  .stepper-btn-pill { background: var(--color-action-hover-subtle); }
   .stepper-btn:active .stepper-btn-pill { background: var(--color-action-active-subtle); transform: scale(0.94); }
@@ -6921,7 +6923,8 @@
   }
   .stepper-field::-webkit-inner-spin-button,
   .stepper-field::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-  .stepper--sm .stepper-field { height: 40px; padding: 0 8px; font-size: var(--font-size-body-l); min-width: 60px; }
+  .stepper--sm .stepper-field { height: 40px; padding: 0 8px;  font-size: var(--font-size-body-l);    min-width: 60px; }
+  .stepper--md .stepper-field { height: 48px; padding: 0 8px;  font-size: var(--font-size-heading-m); min-width: 68px; }
   .stepper--lg .stepper-field { height: 56px; padding: 0 12px; font-size: var(--font-size-display-s); min-width: 80px; }
 
   </style>
@@ -10382,8 +10385,9 @@
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown-menu" role="listbox" aria-label="Stepper size">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="small" tabindex="0">Small</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="large" tabindex="0">Large</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="small"  tabindex="0">Small</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="medium" tabindex="0">Medium</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="large"  tabindex="0">Large</li>
             </ul>
           </div>
         </div>
@@ -10472,6 +10476,26 @@
             </div>
           </div>
 
+          <!-- Medium -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Medium</div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);transform:scale(0.94);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-radius:var(--corner-radius-round);"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1" disabled><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+            </div>
+          </div>
+
           <!-- Large -->
           <div class="states-matrix-row">
             <div class="states-matrix-label">Large</div>
@@ -10551,7 +10575,7 @@
                 <td class="td-mono">size</td>
                 <td class="td-type">enum</td>
                 <td class="td-subtle">small</td>
-                <td>One of <code>small</code> · <code>large</code>. Small: 32px buttons, 40px field, 18px text. Large: 48px buttons, 56px field, 32px text.</td>
+                <td>One of <code>small</code> · <code>medium</code> · <code>large</code>. Small: 32px buttons, 40px field, 18px text. Medium: 40px buttons, 48px field, 24px text. Large: 48px buttons, 56px field, 32px text.</td>
               </tr>
               <tr>
                 <td class="td-mono">value</td>
@@ -18464,7 +18488,8 @@ ${accessoryMarkup}
       });
 
       initDropdown(document.getElementById('step-size-picker'), function(size) {
-        stepper.className = 'stepper stepper--' + (size === 'large' ? 'lg' : 'sm');
+        var mod = size === 'large' ? 'lg' : size === 'medium' ? 'md' : 'sm';
+        stepper.className = 'stepper stepper--' + mod;
       });
 
       syncButtons();
