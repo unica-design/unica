@@ -17741,7 +17741,7 @@ ${accessoryMarkup}
     <img src="assets/${s.photo}" alt="" style="object-position:${objPos}">
     <div class="card-media-nav" aria-label="Navigation">
       <button class="card-media-nav-btn" aria-label="Back">${ICO_ARROW_LEFT}</button>
-      <button class="card-media-nav-btn card-media-fav" aria-label="Add to favourites" aria-pressed="false">${ICO_HEART_OUTLINE}</button>
+      <button class="card-media-nav-btn card-media-nav-btn--fav" aria-label="Add to favourites" aria-pressed="false">${ICO_HEART_OUTLINE}</button>
     </div>
   </div>
   <div class="card-media-content">
@@ -17863,9 +17863,12 @@ ${accessoryMarkup}
         if (labelEl) labelEl.textContent = scene.label;
         if (descEl)  descEl.textContent  = scene.desc;
         // wire fav buttons — swap SVG on toggle
-        content.querySelectorAll('.card-media-fav').forEach(b => {
+        content.querySelectorAll('.card-media-fav, .card-media-nav-btn--fav').forEach(b => {
           b.addEventListener('click', () => {
-            const on = b.classList.toggle('card-media-fav--active');
+            const isNav = b.classList.contains('card-media-nav-btn--fav');
+            const on = isNav
+              ? b.classList.toggle('card-media-nav-btn--active')
+              : b.classList.toggle('card-media-fav--active');
             b.setAttribute('aria-pressed', String(on));
             b.innerHTML = on ? ICO_HEART_FILLED : ICO_HEART_OUTLINE;
           });
