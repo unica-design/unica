@@ -6586,22 +6586,13 @@
       transform-origin: left center;
     }
 
-    /* Preview — looping fill 0 → 75% → fade → repeat */
+    /* Preview — fill once from 0 → 75%, hold */
     @keyframes prog-lin-fill {
-      0%   { transform: scaleX(0);    }
-      62%  { transform: scaleX(0.75); }
-      80%  { transform: scaleX(0.75); }
-      100% { transform: scaleX(0);    }
-    }
-    @keyframes prog-lin-fade {
-      0%, 3%         { opacity: 0; }
-      7%, 77%        { opacity: 1; }
-      92%, 100%      { opacity: 0; }
+      from { transform: scaleX(0);    }
+      to   { transform: scaleX(0.75); }
     }
     .prog-linear-fill--anim {
-      animation:
-        prog-lin-fill 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite,
-        prog-lin-fade 2.8s ease-in-out infinite;
+      animation: prog-lin-fill 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     /* Static fills for variants grid */
@@ -6637,38 +6628,23 @@
       stroke-dashoffset: 125.66; /* default: 0% */
     }
 
-    /* Preview — looping fill 0 → 75% → fade → repeat */
+    /* Preview — fill once from 0 → 75%, hold */
     @keyframes prog-arc-fill {
-      0%   { stroke-dashoffset: 125.66; }
-      62%  { stroke-dashoffset: 31.42;  } /* 75% filled */
-      80%  { stroke-dashoffset: 31.42;  }
-      100% { stroke-dashoffset: 125.66; }
-    }
-    @keyframes prog-arc-fade {
-      0%, 3%         { opacity: 0; }
-      7%, 77%        { opacity: 1; }
-      92%, 100%      { opacity: 0; }
+      from { stroke-dashoffset: 125.66; }
+      to   { stroke-dashoffset: 31.42;  } /* 75% */
     }
     .prog-circular-fill--anim {
-      animation:
-        prog-arc-fill 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite,
-        prog-arc-fade 2.8s ease-in-out infinite;
+      animation: prog-arc-fill 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     /* ── Brand loader ── */
     .prog-brand-loader {
-      width: 64px;
-      height: 64px;
       border-radius: 50%;
-      background: var(--color-background-contrast);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
       flex-shrink: 0;
+      display: block;
     }
-    .prog-brand-loader svg {
-      color: var(--color-action-inverse-default);
-    }
+
     @keyframes prog-brand-pulse {
       0%, 100% { transform: scale(1);    }
       50%       { transform: scale(0.75); }
@@ -10849,11 +10825,7 @@
 
             <!-- Brand Loader -->
             <div id="prog-brand-shell" style="display:none">
-              <div class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading">
-                <svg width="24" height="24" viewBox="0 0 16.0068 16.8857" fill="currentColor" aria-hidden="true">
-                  <path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/>
-                </svg>
-              </div>
+              <img src="assets/logo.png" width="64" height="64" class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading" alt="">
             </div>
 
           </div>
@@ -10929,107 +10901,38 @@
         <h2 class="doc-section-title">Variants</h2>
         <hr class="doc-rule">
 
-        <!-- Linear -->
-        <p class="avatar-group-label" style="margin-bottom:var(--space-400)">Linear — 25% / 50% / 75% / 100%</p>
         <div class="prog-variants-row">
 
+          <!-- Linear — mid-load state -->
           <div class="prog-variant-tile">
-            <p class="avatar-group-label">25%</p>
+            <p class="avatar-group-label">Linear</p>
             <div class="prog-variant-swatch prog-variant-swatch--wide">
               <div class="prog-linear-static">
-                <div class="prog-linear-static-fill" style="width:25%"></div>
+                <div class="prog-linear-static-fill" style="width:65%"></div>
               </div>
             </div>
           </div>
 
+          <!-- Circular — mid-load state -->
           <div class="prog-variant-tile">
-            <p class="avatar-group-label">50%</p>
-            <div class="prog-variant-swatch prog-variant-swatch--wide">
-              <div class="prog-linear-static">
-                <div class="prog-linear-static-fill" style="width:50%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="prog-variant-tile">
-            <p class="avatar-group-label">75%</p>
-            <div class="prog-variant-swatch prog-variant-swatch--wide">
-              <div class="prog-linear-static">
-                <div class="prog-linear-static-fill" style="width:75%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="prog-variant-tile">
-            <p class="avatar-group-label">100%</p>
-            <div class="prog-variant-swatch prog-variant-swatch--wide">
-              <div class="prog-linear-static">
-                <div class="prog-linear-static-fill" style="width:100%"></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Circular -->
-        <p class="avatar-group-label" style="margin-bottom:var(--space-400)">Circular — 25% / 50% / 75% / 100%</p>
-        <div class="prog-variants-row">
-
-          <div class="prog-variant-tile">
-            <p class="avatar-group-label">25%</p>
+            <p class="avatar-group-label">Circular</p>
             <div class="prog-variant-swatch">
               <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
                 <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
-                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:94.25"/>
+                <!-- 65% filled: 125.66 × (1 − 0.65) = 43.98 -->
+                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:43.98"/>
               </svg>
             </div>
           </div>
 
+          <!-- Brand Loader — pulsing -->
           <div class="prog-variant-tile">
-            <p class="avatar-group-label">50%</p>
+            <p class="avatar-group-label">Brand Loader</p>
             <div class="prog-variant-swatch">
-              <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
-                <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
-                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:62.83"/>
-              </svg>
+              <img src="assets/logo.png" width="64" height="64" class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading" alt="">
             </div>
           </div>
 
-          <div class="prog-variant-tile">
-            <p class="avatar-group-label">75%</p>
-            <div class="prog-variant-swatch">
-              <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
-                <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
-                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:31.42"/>
-              </svg>
-            </div>
-          </div>
-
-          <div class="prog-variant-tile">
-            <p class="avatar-group-label">100%</p>
-            <div class="prog-variant-swatch">
-              <svg class="prog-circular-svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
-                <circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4"/>
-                <circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4" style="stroke-dashoffset:0"/>
-              </svg>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Brand Loader -->
-        <p class="avatar-group-label" style="margin-bottom:var(--space-400)">Brand Loader</p>
-        <div class="prog-variants-row">
-          <div class="prog-variant-tile">
-            <p class="avatar-group-label">Pulse</p>
-            <div class="prog-variant-swatch">
-              <div class="prog-brand-loader prog-brand-loader--anim" role="status" aria-label="Loading">
-                <svg width="24" height="24" viewBox="0 0 16.0068 16.8857" fill="currentColor" aria-hidden="true">
-                  <path d="M16.0068 8.89355H16.0029C15.9988 13.3083 12.4187 16.8857 8.00293 16.8857V15.3857C11.5906 15.3857 14.4994 12.4794 14.5029 8.89258L14.5039 7.39355H14.5068V1.65332C12.2349 2.12159 10.3418 3.63161 9.35254 5.66699L8.00391 8.44238L6.6543 5.66699C5.66498 3.63149 3.77208 2.12149 1.5 1.65332V7.39355H1.50195L1.50293 8.89258C1.50641 12.4794 4.41525 15.3857 8.00293 15.3857V16.8857C3.58721 16.8857 0.00703772 13.3083 0.00292969 8.89355H0V0C3.51972 0 6.56219 2.04446 8.00391 5.01074C9.44561 2.04469 12.4874 0.000165446 16.0068 0C16.0068 0 16.0068 7.44604 16.0068 8.89355Z"/>
-                </svg>
-              </div>
-            </div>
-          </div>
         </div>
 
       </div>
@@ -17546,10 +17449,25 @@ ${accessoryMarkup}
         brand:    document.getElementById('prog-code-brand')
       };
 
+      function restartAnim(shellEl) {
+        if (!shellEl) return;
+        shellEl.querySelectorAll('.prog-linear-fill--anim, .prog-circular-fill--anim').forEach(function(a) {
+          a.style.animation = 'none';
+          void a.offsetWidth; // force reflow
+          a.style.animation = '';
+        });
+      }
+
       function setType(t) {
         Object.keys(shells).forEach(function(k) {
           var el = shells[k];
-          if (el) el.style.display = k === t ? '' : 'none';
+          if (!el) return;
+          if (k === t) {
+            el.style.display = '';
+            if (t !== 'brand') restartAnim(el); // re-trigger once animation
+          } else {
+            el.style.display = 'none';
+          }
         });
         Object.keys(codeBlocks).forEach(function(k) {
           var el = codeBlocks[k];
