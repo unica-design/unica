@@ -6682,6 +6682,13 @@
     .prog-variant-swatch--wide {
       min-width: 200px;
     }
+    @media (max-width: 640px) {
+      .prog-variants-row { flex-direction: column; }
+      .prog-variant-tile { width: 100%; }
+      .prog-variant-swatch,
+      .prog-variant-swatch--wide { min-width: 0; width: 100%; }
+      .prog-linear-static { width: 100%; }
+    }
 
   </style>
 </head>
