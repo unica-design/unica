@@ -219,9 +219,9 @@
   --color-background-page:             var(--primitive-ink-900);
   --color-background-section:          var(--primitive-ink-800);
   --color-background-container:        var(--primitive-ink-700);
-  --color-background-success:          var(--primitive-mint-300);
-  --color-background-warning:          var(--primitive-apricot-300);
-  --color-background-danger:           var(--primitive-berry-300);
+  --color-background-success:          var(--primitive-mint-1000);
+  --color-background-warning:          var(--primitive-apricot-1000);
+  --color-background-danger:           var(--primitive-berry-1000);
   --color-background-neutral:          var(--primitive-ink-600);
   --color-background-disabled:         var(--primitive-ink-800);
   --color-background-contrast:         var(--primitive-cafe-0);
@@ -264,9 +264,9 @@
   --color-inverse:  var(--primitive-ink-900);
 
   /* --- System --- */
-  --color-success: var(--primitive-mint-400);
-  --color-warning: var(--primitive-apricot-400);
-  --color-danger:  var(--primitive-berry-400);
+  --color-success: var(--primitive-mint-200);
+  --color-warning: var(--primitive-apricot-200);
+  --color-danger:  var(--primitive-berry-200);
   --color-info:    var(--primitive-ink-100);
 
 }
