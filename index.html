@@ -6900,17 +6900,23 @@
   .stepper--lg .stepper-btn { width: 60px; height: 60px; }
   .stepper-btn-pill {
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid var(--color-border-strong);
+    border: 1.5px solid var(--color-border-strong);
     border-radius: var(--corner-radius-round);
     flex-shrink: 0; color: var(--color-content-default);
-    transition: background 150ms ease, transform 150ms ease;
+    transition: background 150ms ease, border-radius 150ms ease, border-color 150ms ease, color 150ms ease;
   }
   .stepper--sm .stepper-btn-pill { width: 32px; height: 32px; }
   .stepper--md .stepper-btn-pill { width: 40px; height: 40px; }
   .stepper--lg .stepper-btn-pill { width: 48px; height: 48px; }
-  .stepper-btn:hover  .stepper-btn-pill { background: var(--color-action-hover-subtle); }
-  .stepper-btn:active .stepper-btn-pill { background: var(--color-action-active-subtle); transform: scale(0.94); }
-  .stepper-btn:disabled { cursor: not-allowed; opacity: 0.38; }
+  /* Match btn-outlined interaction states exactly */
+  .stepper-btn:hover:not(:disabled)  .stepper-btn-pill { background: var(--color-action-hover-subtle);  border-radius: var(--corner-radius-m); }
+  .stepper-btn:active:not(:disabled) .stepper-btn-pill { background: var(--color-action-active-subtle); border-radius: var(--corner-radius-round); }
+  .stepper-btn:disabled { cursor: not-allowed; }
+  .stepper-btn:disabled .stepper-btn-pill {
+    background: var(--color-background-disabled);
+    border-color: var(--color-border-disabled);
+    color: var(--color-content-disabled);
+  }
   .stepper-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
   .stepper-field {
     background: var(--color-background-page);
@@ -10463,10 +10469,10 @@
               <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
-              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);border-radius:var(--corner-radius-m);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
-              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);transform:scale(0.94);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+              <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
               <div class="stepper stepper--sm"><button class="stepper-btn" tabindex="-1" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-radius:var(--corner-radius-round);"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
@@ -10483,10 +10489,10 @@
               <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
-              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);border-radius:var(--corner-radius-m);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
-              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);transform:scale(0.94);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+              <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
               <div class="stepper stepper--md"><button class="stepper-btn" tabindex="-1" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-radius:var(--corner-radius-round);"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
@@ -10503,10 +10509,10 @@
               <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
-              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-hover-subtle);border-radius:var(--corner-radius-m);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
-              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);transform:scale(0.94);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
+              <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1"><div class="stepper-btn-pill" style="background:var(--color-action-active-subtle);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
             </div>
             <div class="states-matrix-cell">
               <div class="stepper stepper--lg"><button class="stepper-btn" tabindex="-1" style="outline:2px solid var(--color-border-strong);outline-offset:2px;border-radius:var(--corner-radius-round);"><div class="stepper-btn-pill"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button></div>
