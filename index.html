@@ -6966,7 +6966,7 @@
   .tag svg { width: 16px; height: 16px; flex-shrink: 0; }
   .tag--info,
   .tag--neutral  { background: var(--color-background-container); color: var(--color-content-default); }
-  .tag--emphasis { background: var(--color-background-contrast);  color: var(--color-content-inverse); }
+  .tag--emphasis { background: var(--color-background-contrast);  color: var(--color-inverse); }
   .tag--success  { background: var(--color-background-success);   color: var(--color-success); }
   .tag--warning  { background: var(--color-background-warning);   color: var(--color-warning); }
   .tag--danger   { background: var(--color-background-danger);    color: var(--color-danger); }
@@ -8787,6 +8787,10 @@
 
         </div><!-- /.btn-controls -->
 
+        <div class="tag-preview-canvas">
+          <span class="tag tag--info" id="tag-live">Category</span>
+        </div>
+
         <div class="card-prop-bar">
           <p class="card-prop-bar-sub">Toggle optional slot visibility</p>
           <div class="card-prop-bar-toggles">
@@ -8805,10 +8809,6 @@
               <span class="switch-item-text">Trailing icon</span>
             </label>
           </div>
-        </div>
-
-        <div class="tag-preview-canvas">
-          <span class="tag tag--info" id="tag-live">Category</span>
         </div>
 
         <button class="code-reveal-btn" id="tag-code-toggle" aria-expanded="false" aria-controls="tag-code-reveal" onclick="toggleCodeReveal(this,'tag-code-reveal')">
@@ -8863,7 +8863,6 @@
                 <th>Label only</th>
                 <th>+ Leading icon</th>
                 <th>+ Trailing icon</th>
-                <th>Both icons</th>
               </tr>
             </thead>
             <tbody>
@@ -8872,14 +8871,12 @@
                 <td><span class="tag tag--info">Category</span></td>
                 <td><span class="tag tag--info"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Category</span></td>
                 <td><span class="tag tag--info">Category<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
-                <td><span class="tag tag--info"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Category<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
               </tr>
               <tr>
                 <td>Emphasis</td>
                 <td><span class="tag tag--emphasis">Category</span></td>
                 <td><span class="tag tag--emphasis"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Category</span></td>
                 <td><span class="tag tag--emphasis">Category<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
-                <td><span class="tag tag--emphasis"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Category<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
               </tr>
             </tbody>
           </table>
@@ -8894,7 +8891,6 @@
                 <th>Label only</th>
                 <th>+ Leading icon</th>
                 <th>+ Trailing icon</th>
-                <th>Both icons</th>
               </tr>
             </thead>
             <tbody>
@@ -8903,28 +8899,24 @@
                 <td><span class="tag tag--neutral">Pending</span></td>
                 <td><span class="tag tag--neutral"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Pending</span></td>
                 <td><span class="tag tag--neutral">Pending<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
-                <td><span class="tag tag--neutral"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Pending<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
               </tr>
               <tr>
                 <td>Success</td>
                 <td><span class="tag tag--success">Delivered</span></td>
                 <td><span class="tag tag--success"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Delivered</span></td>
                 <td><span class="tag tag--success">Delivered<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
-                <td><span class="tag tag--success"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Delivered<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
               </tr>
               <tr>
                 <td>Warning</td>
                 <td><span class="tag tag--warning">Delayed</span></td>
                 <td><span class="tag tag--warning"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Delayed</span></td>
                 <td><span class="tag tag--warning">Delayed<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
-                <td><span class="tag tag--warning"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Delayed<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
               </tr>
               <tr>
                 <td>Danger</td>
                 <td><span class="tag tag--danger">Cancelled</span></td>
                 <td><span class="tag tag--danger"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Cancelled</span></td>
                 <td><span class="tag tag--danger">Cancelled<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
-                <td><span class="tag tag--danger"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Cancelled<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
               </tr>
             </tbody>
           </table>
@@ -9008,79 +9000,6 @@
         </div>
       </div><!-- /.doc-section Properties -->
 
-      <script>
-      (function initTagsPreview() {
-        var tagLive      = document.getElementById('tag-live');
-        var infoPicker   = document.getElementById('tag-info-variant-picker');
-        var statusPicker = document.getElementById('tag-status-variant-picker');
-        var leadSwitch   = document.getElementById('tag-lead-switch');
-        var trailSwitch  = document.getElementById('tag-trail-switch');
-        if (!tagLive) return;
-
-        var state = { variant: 'info', lead: false, trail: false };
-
-        var ICO_LEAD  = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>';
-        var ICO_TRAIL = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg>';
-
-        var LABELS = {
-          info: 'Category', emphasis: 'Category',
-          neutral: 'Pending', success: 'Delivered', warning: 'Delayed', danger: 'Cancelled'
-        };
-
-        function render() {
-          tagLive.className = 'tag tag--' + state.variant;
-          var html = '';
-          if (state.lead)  html += ICO_LEAD;
-          html += LABELS[state.variant] || 'Label';
-          if (state.trail) html += ICO_TRAIL;
-          tagLive.innerHTML = html;
-        }
-
-        initDropdown(document.getElementById('tag-type-picker'), function(type) {
-          var isInfo = type === 'info';
-          infoPicker.hidden   = !isInfo;
-          statusPicker.hidden = isInfo;
-          if (isInfo) {
-            state.variant = 'info';
-            var infoLbl = infoPicker.querySelector('.dropdown-trigger span');
-            if (infoLbl) infoLbl.textContent = 'Default';
-            infoPicker.querySelectorAll('.dropdown-option').forEach(function(o) {
-              o.setAttribute('aria-selected', o.dataset.value === 'info' ? 'true' : 'false');
-            });
-          } else {
-            state.variant = 'neutral';
-            var statusLbl = statusPicker.querySelector('.dropdown-trigger span');
-            if (statusLbl) statusLbl.textContent = 'Neutral';
-            statusPicker.querySelectorAll('.dropdown-option').forEach(function(o) {
-              o.setAttribute('aria-selected', o.dataset.value === 'neutral' ? 'true' : 'false');
-            });
-          }
-          render();
-        });
-
-        initDropdown(infoPicker, function(variant) {
-          state.variant = variant;
-          render();
-        });
-
-        initDropdown(statusPicker, function(variant) {
-          state.variant = variant;
-          render();
-        });
-
-        leadSwitch.addEventListener('change', function() {
-          state.lead = this.checked;
-          render();
-        });
-
-        trailSwitch.addEventListener('change', function() {
-          state.trail = this.checked;
-          render();
-        });
-
-        render();
-      })();
-      </script>
 
     </div><!-- /#page-tags -->
     <div class="page-panel" id="page-link">
@@ -16193,6 +16112,79 @@
       }
     });
   }
+
+  /* ── Tags preview ── */
+  (function initTagsPreview() {
+    var tagLive      = document.getElementById('tag-live');
+    var infoPicker   = document.getElementById('tag-info-variant-picker');
+    var statusPicker = document.getElementById('tag-status-variant-picker');
+    var leadSwitch   = document.getElementById('tag-lead-switch');
+    var trailSwitch  = document.getElementById('tag-trail-switch');
+    if (!tagLive) return;
+
+    var state = { variant: 'info', lead: false, trail: false };
+
+    var ICO_LEAD  = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>';
+    var ICO_TRAIL = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg>';
+
+    var LABELS = {
+      info: 'Category', emphasis: 'Category',
+      neutral: 'Pending', success: 'Delivered', warning: 'Delayed', danger: 'Cancelled'
+    };
+
+    function render() {
+      tagLive.className = 'tag tag--' + state.variant;
+      var html = '';
+      if (state.lead)  html += ICO_LEAD;
+      html += LABELS[state.variant] || 'Label';
+      if (state.trail) html += ICO_TRAIL;
+      tagLive.innerHTML = html;
+    }
+
+    initDropdown(document.getElementById('tag-type-picker'), function(type) {
+      var isInfo = type === 'info';
+      infoPicker.hidden   = !isInfo;
+      statusPicker.hidden = isInfo;
+      if (isInfo) {
+        state.variant = 'info';
+        var infoLbl = infoPicker.querySelector('.dropdown-trigger span');
+        if (infoLbl) infoLbl.textContent = 'Default';
+        infoPicker.querySelectorAll('.dropdown-option').forEach(function(o) {
+          o.setAttribute('aria-selected', o.dataset.value === 'info' ? 'true' : 'false');
+        });
+      } else {
+        state.variant = 'neutral';
+        var statusLbl = statusPicker.querySelector('.dropdown-trigger span');
+        if (statusLbl) statusLbl.textContent = 'Neutral';
+        statusPicker.querySelectorAll('.dropdown-option').forEach(function(o) {
+          o.setAttribute('aria-selected', o.dataset.value === 'neutral' ? 'true' : 'false');
+        });
+      }
+      render();
+    });
+
+    initDropdown(infoPicker, function(variant) {
+      state.variant = variant;
+      render();
+    });
+
+    initDropdown(statusPicker, function(variant) {
+      state.variant = variant;
+      render();
+    });
+
+    leadSwitch.addEventListener('change', function() {
+      state.lead = this.checked;
+      render();
+    });
+
+    trailSwitch.addEventListener('change', function() {
+      state.trail = this.checked;
+      render();
+    });
+
+    render();
+  })();
 
   /* ── Icon Picker (visual grid variant of dropdown) ── */
   function initIconPicker(el, onSelect, opts) {
