@@ -6899,6 +6899,85 @@
     .sc-variant-swatch { min-width: 0; width: 100%; }
   }
 
+  /* ── Tabs ──────────────────────────────────────────────── */
+  .tabs-preview-canvas {
+    background: var(--doc-surface-preview);
+    padding: var(--space-1000) var(--space-800);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: var(--corner-radius-m);
+    overflow: hidden;
+  }
+  .tabs {
+    display: inline-flex;
+    border-bottom: var(--border-width-default) solid var(--color-border-default);
+  }
+  .tab-item {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-200);
+    height: 48px;
+    padding: 0 var(--space-300);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-content-subtle);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--font-leading-body-m);
+    white-space: nowrap;
+    user-select: none; -webkit-user-select: none;
+    transition: color 150ms ease;
+    outline: none;
+  }
+  /* Animated underline — grows from left, jelly spring */
+  .tab-item::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: var(--space-300);
+    width: 0;
+    height: 2px;
+    background: var(--color-content-default);
+    border-radius: var(--corner-radius-xxs);
+    transition: width 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .tab-item[aria-selected="true"] {
+    color: var(--color-content-default);
+  }
+  .tab-item[aria-selected="true"]::after {
+    width: calc(100% - var(--space-300) * 2);
+  }
+  .tab-item:hover:not(:disabled) {
+    color: var(--color-content-default);
+  }
+  .tab-item:focus-visible {
+    outline: 2px solid var(--color-action-default);
+    outline-offset: 2px;
+    border-radius: var(--corner-radius-xxs);
+  }
+  .tab-item:disabled {
+    color: var(--color-content-disabled);
+    cursor: not-allowed;
+  }
+  /* Top-icon variant */
+  .tabs--top-icon .tab-item {
+    flex-direction: column;
+    height: 60px;
+    gap: 4px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .tab-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; flex-shrink: 0;
+    color: inherit;
+  }
+  .tab-icon svg { width: 100%; height: 100%; }
+
   /* ── Stepper ────────────────────────────────────────────── */
   .stepper-preview-canvas {
     background: var(--doc-surface-preview);
@@ -11195,7 +11274,216 @@
       </div>
 
     </div><!-- /page-bottom-nav -->
-    <div class="page-panel" id="page-tabs"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Tabs</h2><p class="section-description">Horizontal tabs for switching between related views.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-tabs">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Navigation</p>
+        <h1 class="comp-title">Tabs</h1>
+        <p class="comp-description">Tabs distribute related content across discrete sections on a single screen. One tab is always active and its panel is shown; switching hides the previous panel and reveals the new one. Unlike a segmented control, tabs are for navigation — not filtering — and their panels do not share state.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile · Web</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=708-5403" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="btn-controls">
+
+          <!-- Tab count -->
+          <div class="dropdown" id="tabs-count-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span>3 tabs</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Number of tabs">
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="2" tabindex="0">2 tabs</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="3" tabindex="0">3 tabs</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="4" tabindex="0">4 tabs</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="5" tabindex="0">5 tabs</li>
+            </ul>
+          </div>
+
+          <!-- Icon style -->
+          <div class="dropdown" id="tabs-icon-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span>Label only</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Icon style">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="label"   tabindex="0">Label only</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="leading" tabindex="0">Leading icon</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="top"     tabindex="0">Top icon</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="tabs-preview-canvas">
+          <div id="tabs-live" role="tablist" aria-label="Tabs preview" class="tabs"></div>
+        </div>
+
+        <button class="code-reveal-btn" id="tabs-code-toggle" aria-expanded="false" aria-controls="tabs-code-reveal" onclick="toggleCodeReveal(this,'tabs-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="tabs-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;!-- Tab strip --&gt;
+&lt;div class="tabs" role="tablist" aria-label="Content sections"&gt;
+  &lt;button class="tab-item" role="tab" aria-selected="true"  aria-controls="panel-overview"  id="tab-overview" &gt;Overview&lt;/button&gt;
+  &lt;button class="tab-item" role="tab" aria-selected="false" aria-controls="panel-details"   id="tab-details"  &gt;Details&lt;/button&gt;
+  &lt;button class="tab-item" role="tab" aria-selected="false" aria-controls="panel-reviews"   id="tab-reviews"  &gt;Reviews&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Tab panels --&gt;
+&lt;div id="panel-overview" role="tabpanel" aria-labelledby="tab-overview"&gt;...&lt;/div&gt;
+&lt;div id="panel-details"  role="tabpanel" aria-labelledby="tab-details"  hidden&gt;...&lt;/div&gt;
+&lt;div id="panel-reviews"  role="tabpanel" aria-labelledby="tab-reviews"  hidden&gt;...&lt;/div&gt;
+
+&lt;!-- With leading icon --&gt;
+&lt;div class="tabs" role="tablist" aria-label="Content sections"&gt;
+  &lt;button class="tab-item" role="tab" aria-selected="true"&gt;
+    &lt;span class="tab-icon" aria-hidden="true"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none"&gt;&lt;use href="#ico-unica"/&gt;&lt;/svg&gt;&lt;/span&gt;
+    Overview
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+      </div><!-- /.doc-section Preview -->
+
+      <!-- ══════════════════════════════════════════
+           2. STATES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">States</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">All interactive states for a tab item. The underline selector only appears on the selected tab; hover shifts the label to default weight as a preview of selection.</p>
+
+        <div class="states-matrix">
+          <div class="states-matrix-head">
+            <div class="states-matrix-head-spacer"></div>
+            <div class="states-matrix-head-cell">Default</div>
+            <div class="states-matrix-head-cell">Selected</div>
+            <div class="states-matrix-head-cell">Hover</div>
+            <div class="states-matrix-head-cell">Focused</div>
+            <div class="states-matrix-head-cell">Disabled</div>
+          </div>
+
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Tab item</div>
+            <div class="states-matrix-cell">
+              <div class="tabs"><button class="tab-item" role="tab" aria-selected="false" tabindex="-1">Label</button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="tabs"><button class="tab-item" role="tab" aria-selected="true" tabindex="-1">Label</button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="tabs"><button class="tab-item" role="tab" aria-selected="false" tabindex="-1" style="color:var(--color-content-default);">Label</button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="tabs"><button class="tab-item" role="tab" aria-selected="false" tabindex="-1" style="outline:2px solid var(--color-action-default);outline-offset:2px;border-radius:var(--corner-radius-xxs);">Label</button></div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="tabs"><button class="tab-item" role="tab" aria-selected="false" tabindex="-1" disabled>Label</button></div>
+            </div>
+          </div>
+
+        </div><!-- /.states-matrix -->
+
+      </div><!-- /.doc-section States -->
+
+      <!-- ══════════════════════════════════════════
+           3. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Tabs follow the ARIA tablist pattern. The strip is a <code>tablist</code>, each button is a <code>tab</code>, and each content region is a <code>tabpanel</code>. Only the active tab is reachable by Tab key — arrow keys navigate between tabs.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Concern</th><th>Implementation</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Roles</td>
+                <td>Tab strip receives <code>role="tablist"</code>; each tab receives <code>role="tab"</code>; each panel receives <code>role="tabpanel"</code>.</td>
+              </tr>
+              <tr>
+                <td>Selection state</td>
+                <td>Active tab carries <code>aria-selected="true"</code>; all others carry <code>aria-selected="false"</code>. Do not remove inactive tabs from the DOM — use <code>hidden</code> on their panels instead.</td>
+              </tr>
+              <tr>
+                <td>Keyboard</td>
+                <td><kbd>←</kbd> / <kbd>→</kbd> arrow keys move focus between tabs with wrapping. <kbd>Home</kbd> / <kbd>End</kbd> jump to first / last. <kbd>Enter</kbd> or <kbd>Space</kbd> activates the focused tab.</td>
+              </tr>
+              <tr>
+                <td>Tab / panel linkage</td>
+                <td>Each tab carries <code>aria-controls="panel-id"</code> pointing to its panel; each panel carries <code>aria-labelledby="tab-id"</code> pointing back to its tab.</td>
+              </tr>
+              <tr>
+                <td>Tablist label</td>
+                <td>Provide <code>aria-label</code> or <code>aria-labelledby</code> on the <code>tablist</code> to describe the set (e.g. <code>aria-label="Product details"</code>).</td>
+              </tr>
+              <tr>
+                <td>Icons</td>
+                <td>Leading and top icons are decorative. Always add <code>aria-hidden="true"</code> and ensure the text label provides the accessible name.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Accessibility -->
+
+      <!-- ══════════════════════════════════════════
+           4. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Configurable properties on the Tabs component.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">tabs</td>
+                <td class="td-type">2 – 5</td>
+                <td class="td-subtle">3</td>
+                <td>Number of tab items in the strip. Each tab hugs its label; tabs do not share equal width unless forced by a container grid.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">iconStyle</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">label only</td>
+                <td>One of <code>label only</code> · <code>leading icon</code> · <code>top icon</code>. Leading icon renders a 20×20 icon beside the label; top icon renders it above the label, increasing tab height to 60px.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">selected</td>
+                <td class="td-type">number</td>
+                <td class="td-subtle">0</td>
+                <td>Zero-based index of the initially selected tab. Controlled via <code>aria-selected</code> on each <code>tab</code> element.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">disabled</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Per-tab property. Disabled tabs are skipped during arrow-key navigation and cannot be selected.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Properties -->
+
+    </div><!-- /#page-tabs -->
     <div class="page-panel" id="page-date-tabs">
 
       <!-- ── Header ─────────────────────────────── -->
@@ -16180,6 +16468,66 @@
 
     trailSwitch.addEventListener('change', function() {
       state.trail = this.checked;
+      render();
+    });
+
+    render();
+  })();
+
+  /* ── Tabs preview ── */
+  (function initTabsPreview() {
+    var live       = document.getElementById('tabs-live');
+    var countPicker = document.getElementById('tabs-count-picker');
+    var iconPicker  = document.getElementById('tabs-icon-picker');
+    if (!live) return;
+
+    var LABELS = ['Overview', 'Details', 'Reviews', 'Settings', 'History'];
+    var state  = { count: 3, iconStyle: 'label', selected: 0 };
+
+    var ICON_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>';
+
+    function render() {
+      live.className = 'tabs' + (state.iconStyle === 'top' ? ' tabs--top-icon' : '');
+      live.innerHTML = '';
+      for (var i = 0; i < state.count; i++) {
+        var btn = document.createElement('button');
+        btn.className = 'tab-item';
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-selected', i === state.selected ? 'true' : 'false');
+        btn.dataset.index = i;
+
+        if (state.iconStyle === 'leading') {
+          var ico = document.createElement('span');
+          ico.className = 'tab-icon';
+          ico.innerHTML = ICON_SVG;
+          btn.appendChild(ico);
+          btn.appendChild(document.createTextNode(LABELS[i]));
+        } else if (state.iconStyle === 'top') {
+          var ico2 = document.createElement('span');
+          ico2.className = 'tab-icon';
+          ico2.innerHTML = ICON_SVG;
+          btn.appendChild(ico2);
+          btn.appendChild(document.createTextNode(LABELS[i]));
+        } else {
+          btn.textContent = LABELS[i];
+        }
+
+        btn.addEventListener('click', function() {
+          state.selected = parseInt(this.dataset.index, 10);
+          render();
+        });
+        live.appendChild(btn);
+      }
+    }
+
+    initDropdown(countPicker, function(val) {
+      state.count    = parseInt(val, 10);
+      state.selected = 0;
+      render();
+    });
+
+    initDropdown(iconPicker, function(val) {
+      state.iconStyle = val;
       render();
     });
 
