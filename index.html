@@ -3652,7 +3652,7 @@
       border-radius: var(--corner-radius-m);
     }
     .btn-filled.btn--small:hover:not(:disabled) {
-      border-radius: var(--corner-radius-xs);
+      border-radius: var(--corner-radius-s);
     }
     .btn-filled:active:not(:disabled) {
       background: var(--color-action-active);
@@ -3679,7 +3679,7 @@
       border-radius: var(--corner-radius-m);
     }
     .btn-filled-reversed.btn--small:hover:not(:disabled) {
-      border-radius: var(--corner-radius-xs);
+      border-radius: var(--corner-radius-s);
     }
     .btn-filled-reversed:active:not(:disabled) {
       background: var(--color-action-inverse-active);
@@ -3705,6 +3705,9 @@
       background: var(--color-action-hover-subtle);
       border-radius: var(--corner-radius-m);
     }
+    .btn-outlined.btn--small:hover:not(:disabled) {
+      border-radius: var(--corner-radius-s);
+    }
     .btn-outlined:active:not(:disabled) {
       background: var(--color-action-active-subtle);
       border-radius: var(--corner-radius-round);
@@ -3728,6 +3731,9 @@
     .btn-outlined-reversed:hover:not(:disabled) {
       background: var(--color-action-inverse-hover-subtle);
       border-radius: var(--corner-radius-m);
+    }
+    .btn-outlined-reversed.btn--small:hover:not(:disabled) {
+      border-radius: var(--corner-radius-s);
     }
     .btn-outlined-reversed:active:not(:disabled) {
       background: var(--color-action-inverse-active-subtle);
@@ -3753,6 +3759,9 @@
       background: var(--color-action-hover-subtle);
       border-radius: var(--corner-radius-m);
     }
+    .btn-clear.btn--small:hover:not(:disabled) {
+      border-radius: var(--corner-radius-s);
+    }
     .btn-clear:active:not(:disabled) {
       background: var(--color-action-active-subtle);
       border-radius: var(--corner-radius-round);
@@ -3774,6 +3783,9 @@
     .btn-clear-reversed:hover:not(:disabled) {
       background: var(--color-action-inverse-hover-subtle);
       border-radius: var(--corner-radius-m);
+    }
+    .btn-clear-reversed.btn--small:hover:not(:disabled) {
+      border-radius: var(--corner-radius-s);
     }
     .btn-clear-reversed:active:not(:disabled) {
       background: var(--color-action-inverse-active-subtle);
@@ -3849,14 +3861,14 @@
       border-radius: var(--corner-radius-m);
     }
     .btn-scta-fill.btn--small:hover:not(:disabled) {
-      border-radius: 12px;
+      border-radius: var(--corner-radius-s);
     }
     .btn-scta-fill:hover:not(:disabled) .btn-scta-badge {
-      border-radius: 12px;
+      border-radius: var(--corner-radius-s);
       transform: scale(0.875);
     }
     .btn-scta-fill.btn--small:hover:not(:disabled) .btn-scta-badge {
-      border-radius: 8px;
+      border-radius: var(--corner-radius-xs);
     }
     .btn-scta-fill:active:not(:disabled) {
       background: var(--color-action-active);
@@ -3895,9 +3907,15 @@
       background: var(--color-action-inverse-hover);
       border-radius: var(--corner-radius-m);
     }
+    .btn-scta-reversed.btn--small:hover:not(:disabled) {
+      border-radius: var(--corner-radius-s);
+    }
     .btn-scta-reversed:hover:not(:disabled) .btn-scta-badge {
-      border-radius: 12px;
+      border-radius: var(--corner-radius-s);
       transform: scale(0.875);
+    }
+    .btn-scta-reversed.btn--small:hover:not(:disabled) .btn-scta-badge {
+      border-radius: var(--corner-radius-xs);
     }
     .btn-scta-reversed:active:not(:disabled) {
       background: var(--color-action-inverse-active);
