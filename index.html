@@ -2095,6 +2095,7 @@
 
     /* ── Dropdown (global) ──────────────────────── */
     .dropdown { position: relative; display: inline-block; }
+    .dropdown[hidden] { display: none; }
 
     /* Trigger matches .comp-badge sizing exactly */
     .dropdown-trigger {
@@ -6933,6 +6934,31 @@
   .stepper--md .stepper-field { height: 48px; padding: 0 8px;  font-size: var(--font-size-heading-m); min-width: 68px; }
   .stepper--lg .stepper-field { height: 56px; padding: 0 12px; font-size: var(--font-size-display-s); min-width: 80px; }
 
+
+  /* ── Tags ─────────────────────────────────────── */
+  .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    height: 24px; padding: 0 8px;
+    border-radius: var(--corner-radius-xs);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-xs);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1; white-space: nowrap; flex-shrink: 0;
+  }
+  .tag svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .tag--info,
+  .tag--neutral  { background: var(--color-background-container); color: var(--color-content-default); }
+  .tag--emphasis { background: var(--color-background-contrast);  color: var(--color-content-inverse); }
+  .tag--success  { background: var(--color-background-success);   color: var(--color-success); }
+  .tag--warning  { background: var(--color-background-warning);   color: var(--color-warning); }
+  .tag--danger   { background: var(--color-background-danger);    color: var(--color-danger); }
+  .tag-preview-canvas {
+    background: var(--doc-surface-preview);
+    padding: var(--space-1000) var(--space-800);
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; flex-wrap: wrap; min-height: 96px;
+  }
+
   </style>
 </head>
 <body>
@@ -8678,7 +8704,366 @@
       </script>
 
     </div><!-- /#page-chips -->
-    <div class="page-panel" id="page-tags"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Actions</p><h2 class="section-title">Tags</h2><p class="section-description">Label-style elements for categorization and metadata.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-tags">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Display</p>
+        <h1 class="comp-title">Tags</h1>
+        <p class="comp-description">Compact read-only labels used to categorize, annotate, or communicate status at a glance. Tags come in two families: <strong>Information</strong> tags communicate content type or category, while <strong>Status</strong> tags reflect system or workflow state using semantic colour. Both support optional leading and trailing icons.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile · Web</span>
+          <a class="comp-badge" href="https://www.figma.com/design/6a9exH34OJFXMn073PH4sG/%C5%AFnica-Design-System?node-id=650-10642" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="btn-controls">
+
+          <!-- Type picker -->
+          <div class="dropdown" id="tag-type-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span>Info</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Tag type">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="info"   tabindex="0">Info</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="status" tabindex="0">Status</li>
+            </ul>
+          </div>
+
+          <!-- Info variant picker -->
+          <div class="dropdown" id="tag-info-variant-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span>Default</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Info variant">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="info"     tabindex="0">Default</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="emphasis" tabindex="0">Emphasis</li>
+            </ul>
+          </div>
+
+          <!-- Status variant picker (hidden until type = status) -->
+          <div class="dropdown" id="tag-status-variant-picker" hidden>
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span>Neutral</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Status variant">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="neutral" tabindex="0">Neutral</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="success" tabindex="0">Success</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="warning" tabindex="0">Warning</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="danger"  tabindex="0">Danger</li>
+            </ul>
+          </div>
+
+        </div><!-- /.btn-controls -->
+
+        <div class="card-prop-bar">
+          <p class="card-prop-bar-sub">Toggle optional slot visibility</p>
+          <div class="card-prop-bar-toggles">
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="tag-lead-switch">
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Leading icon</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="tag-trail-switch">
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Trailing icon</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="tag-preview-canvas">
+          <span class="tag tag--info" id="tag-live">Category</span>
+        </div>
+
+        <button class="code-reveal-btn" id="tag-code-toggle" aria-expanded="false" aria-controls="tag-code-reveal" onclick="toggleCodeReveal(this,'tag-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="tag-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;!-- Information — default --&gt;
+&lt;span class="tag tag--info"&gt;Category&lt;/span&gt;
+
+&lt;!-- Information — emphasis --&gt;
+&lt;span class="tag tag--emphasis"&gt;Category&lt;/span&gt;
+
+&lt;!-- Status variants --&gt;
+&lt;span class="tag tag--neutral"&gt;Pending&lt;/span&gt;
+&lt;span class="tag tag--success"&gt;Delivered&lt;/span&gt;
+&lt;span class="tag tag--warning"&gt;Delayed&lt;/span&gt;
+&lt;span class="tag tag--danger"&gt;Cancelled&lt;/span&gt;
+
+&lt;!-- With leading icon --&gt;
+&lt;span class="tag tag--success"&gt;
+  &lt;svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"&gt;&lt;use href="#ico-bell"/&gt;&lt;/svg&gt;
+  Delivered
+&lt;/span&gt;
+
+&lt;!-- With trailing icon --&gt;
+&lt;span class="tag tag--info"&gt;
+  Category
+  &lt;svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"&gt;&lt;use href="#ico-arrow"/&gt;&lt;/svg&gt;
+&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+
+      </div><!-- /.doc-section Preview -->
+
+      <!-- ══════════════════════════════════════════
+           2. VARIANTS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Tags carry no interactive states — they are read-only labels. All visual variety comes from the type, the colour variant, and the optional icon slots.</p>
+
+        <p class="avatar-group-label" style="margin-bottom: var(--space-400);">Information</p>
+        <div class="table-wrap">
+          <table class="variants-table">
+            <thead>
+              <tr>
+                <th>Variant</th>
+                <th>Label only</th>
+                <th>+ Leading icon</th>
+                <th>+ Trailing icon</th>
+                <th>Both icons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Default</td>
+                <td><span class="tag tag--info">Category</span></td>
+                <td><span class="tag tag--info"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Category</span></td>
+                <td><span class="tag tag--info">Category<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+                <td><span class="tag tag--info"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Category<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+              </tr>
+              <tr>
+                <td>Emphasis</td>
+                <td><span class="tag tag--emphasis">Category</span></td>
+                <td><span class="tag tag--emphasis"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Category</span></td>
+                <td><span class="tag tag--emphasis">Category<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+                <td><span class="tag tag--emphasis"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Category<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="avatar-group-label" style="margin: var(--space-700) 0 var(--space-400);">Status</p>
+        <div class="table-wrap">
+          <table class="variants-table">
+            <thead>
+              <tr>
+                <th>Variant</th>
+                <th>Label only</th>
+                <th>+ Leading icon</th>
+                <th>+ Trailing icon</th>
+                <th>Both icons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Neutral</td>
+                <td><span class="tag tag--neutral">Pending</span></td>
+                <td><span class="tag tag--neutral"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Pending</span></td>
+                <td><span class="tag tag--neutral">Pending<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+                <td><span class="tag tag--neutral"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Pending<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+              </tr>
+              <tr>
+                <td>Success</td>
+                <td><span class="tag tag--success">Delivered</span></td>
+                <td><span class="tag tag--success"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Delivered</span></td>
+                <td><span class="tag tag--success">Delivered<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+                <td><span class="tag tag--success"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Delivered<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+              </tr>
+              <tr>
+                <td>Warning</td>
+                <td><span class="tag tag--warning">Delayed</span></td>
+                <td><span class="tag tag--warning"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Delayed</span></td>
+                <td><span class="tag tag--warning">Delayed<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+                <td><span class="tag tag--warning"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Delayed<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+              </tr>
+              <tr>
+                <td>Danger</td>
+                <td><span class="tag tag--danger">Cancelled</span></td>
+                <td><span class="tag tag--danger"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Cancelled</span></td>
+                <td><span class="tag tag--danger">Cancelled<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+                <td><span class="tag tag--danger"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>Cancelled<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /.doc-section Variants -->
+
+      <!-- ══════════════════════════════════════════
+           3. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Tags are purely informational and carry no interactive affordances. Their semantics come from placement, colour, and text content — not from role attributes alone.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Concern</th><th>Implementation</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Element</td>
+                <td>Use <code>&lt;span&gt;</code> for inline tags and <code>&lt;li&gt;</code> inside a <code>&lt;ul&gt;</code> when rendering a group of tags. Never use <code>&lt;button&gt;</code> unless the tag is interactive — use Chips instead.</td>
+              </tr>
+              <tr>
+                <td>Icons</td>
+                <td>All icons inside tags are decorative. Always add <code>aria-hidden="true"</code>. Never use an icon alone to convey meaning — always pair with a visible text label.</td>
+              </tr>
+              <tr>
+                <td>Status colour</td>
+                <td>Colour alone must never be the sole differentiator. The text label (e.g. "Delivered", "Cancelled") communicates the same information as the colour, satisfying WCAG 1.4.1 (Use of Colour).</td>
+              </tr>
+              <tr>
+                <td>Contrast</td>
+                <td>All foreground–background combinations meet WCAG AA for small text (4.5:1 minimum). Verify custom themes for compliance before shipping.</td>
+              </tr>
+              <tr>
+                <td>Groups</td>
+                <td>When multiple tags appear together as a collection, wrap them in a container with a label — e.g. <code>&lt;ul role="list" aria-label="Applied filters"&gt;</code> — so assistive technology announces the group context.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Accessibility -->
+
+      <!-- ══════════════════════════════════════════
+           4. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Configurable properties shared across both tag families.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">type</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">—</td>
+                <td>Information: <code>tag--info</code> · <code>tag--emphasis</code>. Status: <code>tag--neutral</code> · <code>tag--success</code> · <code>tag--warning</code> · <code>tag--danger</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">label</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Required visible text. Never render an icon-only tag — at minimum a visually-hidden label must be present for screen readers.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">leadingIcon</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Renders a 16×16 icon before the label. Must include <code>aria-hidden="true"</code>. Icon is swappable; defaults to the leading icon slot in the Figma component.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">trailingIcon</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Renders a 16×16 icon after the label. Must include <code>aria-hidden="true"</code>. Icon is swappable; defaults to the trailing icon slot in the Figma component.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Properties -->
+
+      <script>
+      (function initTagsPreview() {
+        var tagLive      = document.getElementById('tag-live');
+        var infoPicker   = document.getElementById('tag-info-variant-picker');
+        var statusPicker = document.getElementById('tag-status-variant-picker');
+        var leadSwitch   = document.getElementById('tag-lead-switch');
+        var trailSwitch  = document.getElementById('tag-trail-switch');
+        if (!tagLive) return;
+
+        var state = { variant: 'info', lead: false, trail: false };
+
+        var ICO_LEAD  = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg>';
+        var ICO_TRAIL = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow"/></svg>';
+
+        var LABELS = {
+          info: 'Category', emphasis: 'Category',
+          neutral: 'Pending', success: 'Delivered', warning: 'Delayed', danger: 'Cancelled'
+        };
+
+        function render() {
+          tagLive.className = 'tag tag--' + state.variant;
+          var html = '';
+          if (state.lead)  html += ICO_LEAD;
+          html += LABELS[state.variant] || 'Label';
+          if (state.trail) html += ICO_TRAIL;
+          tagLive.innerHTML = html;
+        }
+
+        initDropdown(document.getElementById('tag-type-picker'), function(type) {
+          var isInfo = type === 'info';
+          infoPicker.hidden   = !isInfo;
+          statusPicker.hidden = isInfo;
+          if (isInfo) {
+            state.variant = 'info';
+            var infoLbl = infoPicker.querySelector('.dropdown-trigger span');
+            if (infoLbl) infoLbl.textContent = 'Default';
+            infoPicker.querySelectorAll('.dropdown-option').forEach(function(o) {
+              o.setAttribute('aria-selected', o.dataset.value === 'info' ? 'true' : 'false');
+            });
+          } else {
+            state.variant = 'neutral';
+            var statusLbl = statusPicker.querySelector('.dropdown-trigger span');
+            if (statusLbl) statusLbl.textContent = 'Neutral';
+            statusPicker.querySelectorAll('.dropdown-option').forEach(function(o) {
+              o.setAttribute('aria-selected', o.dataset.value === 'neutral' ? 'true' : 'false');
+            });
+          }
+          render();
+        });
+
+        initDropdown(infoPicker, function(variant) {
+          state.variant = variant;
+          render();
+        });
+
+        initDropdown(statusPicker, function(variant) {
+          state.variant = variant;
+          render();
+        });
+
+        leadSwitch.addEventListener('change', function() {
+          state.lead = this.checked;
+          render();
+        });
+
+        trailSwitch.addEventListener('change', function() {
+          state.trail = this.checked;
+          render();
+        });
+
+        render();
+      })();
+      </script>
+
+    </div><!-- /#page-tags -->
     <div class="page-panel" id="page-link">
 
       <!-- ── Component header ─────────────────── -->
