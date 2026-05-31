@@ -6902,14 +6902,13 @@
   /* ── Tabs ──────────────────────────────────────────────── */
   .tabs-preview-canvas {
     background: var(--doc-surface-preview);
-    padding: var(--space-1000) var(--space-800);
-    display: flex; align-items: center; justify-content: center;
-    border-radius: var(--corner-radius-m);
-    overflow: hidden;
+    padding: var(--space-800) var(--space-800) 0;
+    display: flex; align-items: flex-end; justify-content: center;
+    border-radius: var(--corner-radius-m) var(--corner-radius-m) 0 0;
+    border-bottom: var(--border-width-default) solid var(--color-border-default);
   }
   .tabs {
     display: inline-flex;
-    border-bottom: var(--border-width-default) solid var(--color-border-default);
   }
   .tab-item {
     position: relative;
@@ -6937,7 +6936,7 @@
   .tab-item::after {
     content: '';
     position: absolute;
-    bottom: -1px;
+    bottom: 0;
     left: var(--space-300);
     width: 0;
     height: 2px;
@@ -6977,6 +6976,16 @@
     color: inherit;
   }
   .tab-icon svg { width: 100%; height: 100%; }
+  .tab-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 18px; height: 18px; padding: 0 5px;
+    border-radius: var(--corner-radius-round);
+    background: var(--color-background-contrast);
+    color: var(--color-inverse);
+    font-size: 11px; font-weight: var(--font-weight-semibold);
+    line-height: 1; flex-shrink: 0;
+    border: 1.5px solid var(--color-background-page);
+  }
 
   /* ── Stepper ────────────────────────────────────────────── */
   .stepper-preview-canvas {
@@ -11312,23 +11321,37 @@
             </ul>
           </div>
 
-          <!-- Icon style -->
-          <div class="dropdown" id="tabs-icon-picker">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span>Label only</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Icon style">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="label"   tabindex="0">Label only</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="leading" tabindex="0">Leading icon</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="top"     tabindex="0">Top icon</li>
-            </ul>
-          </div>
-
         </div>
 
         <div class="tabs-preview-canvas">
           <div id="tabs-live" role="tablist" aria-label="Tabs preview" class="tabs"></div>
+        </div>
+
+        <div class="card-prop-bar">
+          <p class="card-prop-bar-sub">Toggle optional slot visibility</p>
+          <div class="card-prop-bar-toggles">
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="tabs-lead-switch">
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Leading icon</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="tabs-top-switch">
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Top icon</span>
+            </label>
+            <label class="switch-item" id="tabs-badge-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="tabs-badge-switch">
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Badge</span>
+            </label>
+          </div>
         </div>
 
         <button class="code-reveal-btn" id="tabs-code-toggle" aria-expanded="false" aria-controls="tabs-code-reveal" onclick="toggleCodeReveal(this,'tabs-code-reveal')">
@@ -11461,10 +11484,22 @@
                 <td>Number of tab items in the strip. Each tab hugs its label; tabs do not share equal width unless forced by a container grid.</td>
               </tr>
               <tr>
-                <td class="td-mono">iconStyle</td>
-                <td class="td-type">enum</td>
-                <td class="td-subtle">label only</td>
-                <td>One of <code>label only</code> · <code>leading icon</code> · <code>top icon</code>. Leading icon renders a 20×20 icon beside the label; top icon renders it above the label, increasing tab height to 60px.</td>
+                <td class="td-mono">leadingIcon</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Renders a 20×20 icon before the label on every tab. Mutually exclusive with <code>topIcon</code>. Mark the icon <code>aria-hidden="true"</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">topIcon</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Renders a 20×20 icon above the label, stacking vertically. Mutually exclusive with <code>leadingIcon</code>. Increases tab height to 60px. Badge is not available in this configuration.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge</td>
+                <td class="td-type">boolean | number</td>
+                <td class="td-subtle">false</td>
+                <td>Shows a small numeric badge after the label (or after the leading icon). Not available when <code>topIcon</code> is true. Annotate with <code>aria-label</code> if the count is meaningful to screen readers.</td>
               </tr>
               <tr>
                 <td class="td-mono">selected</td>
@@ -16476,18 +16511,28 @@
 
   /* ── Tabs preview ── */
   (function initTabsPreview() {
-    var live       = document.getElementById('tabs-live');
+    var live        = document.getElementById('tabs-live');
     var countPicker = document.getElementById('tabs-count-picker');
-    var iconPicker  = document.getElementById('tabs-icon-picker');
+    var leadSwitch  = document.getElementById('tabs-lead-switch');
+    var topSwitch   = document.getElementById('tabs-top-switch');
+    var badgeSwitch = document.getElementById('tabs-badge-switch');
+    var badgeItem   = document.getElementById('tabs-badge-item');
     if (!live) return;
 
     var LABELS = ['Overview', 'Details', 'Reviews', 'Settings', 'History'];
-    var state  = { count: 3, iconStyle: 'label', selected: 0 };
+    var BADGE_COUNTS = [3, null, 12, null, 1];
+    var state = { count: 3, lead: false, top: false, badge: false, selected: 0 };
 
     var ICON_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>';
 
+    function updateBadgeVisibility() {
+      // Badge not available with top icon
+      badgeItem.style.opacity = state.top ? '0.4' : '';
+      badgeItem.style.pointerEvents = state.top ? 'none' : '';
+    }
+
     function render() {
-      live.className = 'tabs' + (state.iconStyle === 'top' ? ' tabs--top-icon' : '');
+      live.className = 'tabs' + (state.top ? ' tabs--top-icon' : '');
       live.innerHTML = '';
       for (var i = 0; i < state.count; i++) {
         var btn = document.createElement('button');
@@ -16496,20 +16541,22 @@
         btn.setAttribute('aria-selected', i === state.selected ? 'true' : 'false');
         btn.dataset.index = i;
 
-        if (state.iconStyle === 'leading') {
+        // Icon
+        if (state.lead || state.top) {
           var ico = document.createElement('span');
           ico.className = 'tab-icon';
           ico.innerHTML = ICON_SVG;
           btn.appendChild(ico);
-          btn.appendChild(document.createTextNode(LABELS[i]));
-        } else if (state.iconStyle === 'top') {
-          var ico2 = document.createElement('span');
-          ico2.className = 'tab-icon';
-          ico2.innerHTML = ICON_SVG;
-          btn.appendChild(ico2);
-          btn.appendChild(document.createTextNode(LABELS[i]));
-        } else {
-          btn.textContent = LABELS[i];
+        }
+        btn.appendChild(document.createTextNode(LABELS[i]));
+
+        // Badge (only with label-only or leading icon)
+        if (state.badge && !state.top && BADGE_COUNTS[i]) {
+          var badge = document.createElement('span');
+          badge.className = 'tab-badge';
+          badge.setAttribute('aria-label', BADGE_COUNTS[i] + ' unread');
+          badge.textContent = BADGE_COUNTS[i];
+          btn.appendChild(badge);
         }
 
         btn.addEventListener('click', function() {
@@ -16526,11 +16573,29 @@
       render();
     });
 
-    initDropdown(iconPicker, function(val) {
-      state.iconStyle = val;
+    leadSwitch.addEventListener('change', function() {
+      state.lead = this.checked;
+      if (state.lead) { state.top = false; topSwitch.checked = false; }
+      updateBadgeVisibility();
       render();
     });
 
+    topSwitch.addEventListener('change', function() {
+      state.top = this.checked;
+      if (state.top) {
+        state.lead = false; leadSwitch.checked = false;
+        state.badge = false; badgeSwitch.checked = false;
+      }
+      updateBadgeVisibility();
+      render();
+    });
+
+    badgeSwitch.addEventListener('change', function() {
+      state.badge = this.checked;
+      render();
+    });
+
+    updateBadgeVisibility();
     render();
   })();
 
