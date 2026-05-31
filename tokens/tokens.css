@@ -325,8 +325,9 @@
 :root {
 
   --corner-radius-square: 0px;
-  --corner-radius-xs:     4px;
-  --corner-radius-s:      8px;
+  --corner-radius-xxs:    4px;
+  --corner-radius-xs:     8px;
+  --corner-radius-s:      12px;
   --corner-radius-m:      16px;
   --corner-radius-l:      24px;
   --corner-radius-xl:     32px;
