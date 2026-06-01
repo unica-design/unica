@@ -6902,10 +6902,9 @@
   /* ── Tabs ──────────────────────────────────────────────── */
   .tabs-preview-canvas {
     background: var(--doc-surface-preview);
-    padding: var(--space-800) var(--space-800) 0;
-    display: flex; align-items: flex-end; justify-content: center;
-    border-radius: var(--corner-radius-m) var(--corner-radius-m) 0 0;
-    border-bottom: var(--border-width-default) solid var(--color-border-default);
+    padding: var(--space-800);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: var(--corner-radius-m);
   }
   .tabs {
     display: inline-flex;
@@ -6932,23 +6931,25 @@
     transition: color 150ms ease;
     outline: none;
   }
-  /* Animated underline — grows from left, jelly spring */
+  /* Animated underline — scaleX from left so the spring can genuinely overshoot */
   .tab-item::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: var(--space-300);
-    width: 0;
+    width: calc(100% - var(--space-300) * 2);
     height: 2px;
     background: var(--color-content-default);
     border-radius: var(--corner-radius-xxs);
-    transition: width 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .tab-item[aria-selected="true"] {
     color: var(--color-content-default);
   }
   .tab-item[aria-selected="true"]::after {
-    width: calc(100% - var(--space-300) * 2);
+    transform: scaleX(1);
   }
   .tab-item:hover:not(:disabled) {
     color: var(--color-content-default);
@@ -11404,7 +11405,7 @@
           </div>
 
           <div class="states-matrix-row">
-            <div class="states-matrix-label">Tab item</div>
+            <div class="states-matrix-label">Tab</div>
             <div class="states-matrix-cell">
               <div class="tabs"><button class="tab-item" role="tab" aria-selected="false" tabindex="-1">Label</button></div>
             </div>
