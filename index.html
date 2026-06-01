@@ -6931,25 +6931,22 @@
     transition: color 150ms ease;
     outline: none;
   }
-  /* Animated underline — scaleX from left so the spring can genuinely overshoot */
-  .tab-item::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: var(--space-300);
-    width: calc(100% - var(--space-300) * 2);
-    height: 2px;
-    background: var(--color-content-default);
-    border-radius: var(--corner-radius-xxs);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
   .tab-item[aria-selected="true"] {
     color: var(--color-content-default);
   }
-  .tab-item[aria-selected="true"]::after {
-    transform: scaleX(1);
+  /* Single shared slider — slides between tabs like the segment pill */
+  .tab-slider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-content-default);
+    border-radius: var(--corner-radius-xxs);
+    pointer-events: none;
+    will-change: left, width;
+    transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                width 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .tab-item:hover:not(:disabled) {
     color: var(--color-content-default);
@@ -16520,81 +16517,87 @@
     var badgeItem   = document.getElementById('tabs-badge-item');
     if (!live) return;
 
-    var LABELS = ['Overview', 'Details', 'Reviews', 'Settings', 'History'];
+    var LABELS      = ['Overview', 'Details', 'Reviews', 'Settings', 'History'];
     var BADGE_COUNTS = [3, null, 12, null, 1];
     var state = { count: 3, lead: false, top: false, badge: false, selected: 0 };
-
     var ICON_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>';
+    var PAD = 12; /* --space-300 */
 
     function updateBadgeVisibility() {
-      // Badge not available with top icon
-      badgeItem.style.opacity = state.top ? '0.4' : '';
+      badgeItem.style.opacity       = state.top ? '0.4' : '';
       badgeItem.style.pointerEvents = state.top ? 'none' : '';
     }
 
-    function render() {
-      live.className = 'tabs' + (state.top ? ' tabs--top-icon' : '');
-      live.innerHTML = '';
-      for (var i = 0; i < state.count; i++) {
-        var btn = document.createElement('button');
-        btn.className = 'tab-item';
-        btn.setAttribute('role', 'tab');
-        btn.setAttribute('aria-selected', i === state.selected ? 'true' : 'false');
-        btn.dataset.index = i;
-
-        // Icon
-        if (state.lead || state.top) {
-          var ico = document.createElement('span');
-          ico.className = 'tab-icon';
-          ico.innerHTML = ICON_SVG;
-          btn.appendChild(ico);
-        }
-        btn.appendChild(document.createTextNode(LABELS[i]));
-
-        // Badge (only with label-only or leading icon)
-        if (state.badge && !state.top && BADGE_COUNTS[i]) {
-          var badge = document.createElement('span');
-          badge.className = 'tab-badge';
-          badge.setAttribute('aria-label', BADGE_COUNTS[i] + ' unread');
-          badge.textContent = BADGE_COUNTS[i];
-          btn.appendChild(badge);
-        }
-
-        btn.addEventListener('click', function() {
-          state.selected = parseInt(this.dataset.index, 10);
-          render();
-        });
-        live.appendChild(btn);
+    /* Reposition the shared slider without a DOM rebuild (enables CSS transition) */
+    function updateSlider(instant) {
+      var slider = live.querySelector('.tab-slider');
+      var tab    = live.querySelectorAll('.tab-item')[state.selected];
+      if (!slider || !tab) return;
+      var left  = tab.offsetLeft + PAD;
+      var width = tab.offsetWidth - PAD * 2;
+      if (instant) {
+        slider.style.transition = 'none';
+        slider.style.left  = left  + 'px';
+        slider.style.width = width + 'px';
+        /* Force reflow so the instant position is committed before transition re-enables */
+        slider.offsetWidth; // eslint-disable-line no-unused-expressions
+        slider.style.transition = '';
+      } else {
+        slider.style.left  = left  + 'px';
+        slider.style.width = width + 'px';
       }
     }
 
-    initDropdown(countPicker, function(val) {
-      state.count    = parseInt(val, 10);
-      state.selected = 0;
-      render();
-    });
+    /* Update aria-selected + animate slider — no DOM rebuild so transition runs */
+    function updateSelected() {
+      live.querySelectorAll('.tab-item').forEach(function(btn) {
+        btn.setAttribute('aria-selected', btn.dataset.index === String(state.selected) ? 'true' : 'false');
+      });
+      updateSlider(false);
+    }
+
+    /* Full rebuild — called when count / icon / badge options change */
+    function render() {
+      if (state.selected >= state.count) state.selected = 0;
+      live.className = 'tabs' + (state.top ? ' tabs--top-icon' : '');
+      var html = '<span class="tab-slider" aria-hidden="true"></span>';
+      for (var i = 0; i < state.count; i++) {
+        var sel = i === state.selected ? 'true' : 'false';
+        html += '<button class="tab-item" role="tab" aria-selected="' + sel + '" data-index="' + i + '">';
+        if (state.lead || state.top) html += '<span class="tab-icon">' + ICON_SVG + '</span>';
+        html += LABELS[i];
+        if (state.badge && !state.top && BADGE_COUNTS[i]) {
+          html += '<span class="tab-badge" aria-label="' + BADGE_COUNTS[i] + ' unread">' + BADGE_COUNTS[i] + '</span>';
+        }
+        html += '</button>';
+      }
+      live.innerHTML = html;
+
+      /* Position slider instantly after layout — no animated jump from 0 */
+      requestAnimationFrame(function() { updateSlider(true); });
+
+      /* Clicks update state + animate slider (no full rebuild) */
+      live.querySelectorAll('.tab-item').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          state.selected = parseInt(this.dataset.index, 10);
+          updateSelected();
+        });
+      });
+    }
+
+    initDropdown(countPicker, function(val) { state.count = parseInt(val, 10); state.selected = 0; render(); });
 
     leadSwitch.addEventListener('change', function() {
       state.lead = this.checked;
       if (state.lead) { state.top = false; topSwitch.checked = false; }
-      updateBadgeVisibility();
-      render();
+      updateBadgeVisibility(); render();
     });
-
     topSwitch.addEventListener('change', function() {
       state.top = this.checked;
-      if (state.top) {
-        state.lead = false; leadSwitch.checked = false;
-        state.badge = false; badgeSwitch.checked = false;
-      }
-      updateBadgeVisibility();
-      render();
+      if (state.top) { state.lead = false; leadSwitch.checked = false; state.badge = false; badgeSwitch.checked = false; }
+      updateBadgeVisibility(); render();
     });
-
-    badgeSwitch.addEventListener('change', function() {
-      state.badge = this.checked;
-      render();
-    });
+    badgeSwitch.addEventListener('change', function() { state.badge = this.checked; render(); });
 
     updateBadgeVisibility();
     render();
@@ -19231,8 +19234,15 @@ ${accessoryMarkup}
           html += '</button>';
         }
         track.innerHTML = html;
-        /* Position slider after layout is painted */
-        requestAnimationFrame(updateSlider);
+        /* Position slider instantly after layout — prevents animated jump from 0 */
+        requestAnimationFrame(function() {
+          var slider = track.querySelector('.sc-ctrl-slider');
+          if (!slider) return;
+          slider.style.transition = 'none';
+          updateSlider();
+          slider.offsetWidth; // force reflow
+          slider.style.transition = '';
+        });
         /* Wire clicks — use updateSelected so slider can animate instead of a full re-render */
         track.querySelectorAll('.sc-ctrl-tab').forEach(function(btn) {
           btn.addEventListener('click', function() {
