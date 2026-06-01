@@ -6908,9 +6908,9 @@
   }
   .tabs {
     display: inline-flex;
+    position: relative;
   }
   .tab-item {
-    position: relative;
     display: inline-flex;
     flex-direction: row;
     align-items: center;
@@ -11407,7 +11407,7 @@
               <div class="tabs"><button class="tab-item" role="tab" aria-selected="false" tabindex="-1">Label</button></div>
             </div>
             <div class="states-matrix-cell">
-              <div class="tabs"><button class="tab-item" role="tab" aria-selected="true" tabindex="-1">Label</button></div>
+              <div class="tabs"><button class="tab-item" role="tab" aria-selected="true" tabindex="-1">Label</button><span class="tab-slider" style="left:12px;width:calc(100% - 24px)" aria-hidden="true"></span></div>
             </div>
             <div class="states-matrix-cell">
               <div class="tabs"><button class="tab-item" role="tab" aria-selected="false" tabindex="-1" style="color:var(--color-content-default);">Label</button></div>
