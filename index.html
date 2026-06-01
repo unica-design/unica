@@ -6934,7 +6934,7 @@
   .tab-item[aria-selected="true"] {
     color: var(--color-content-default);
   }
-  /* Single shared slider — slides between tabs like the segment pill */
+  /* Single shared slider — JS owns all transitions */
   .tab-slider {
     position: absolute;
     bottom: 0;
@@ -6945,8 +6945,6 @@
     border-radius: var(--corner-radius-xxs);
     pointer-events: none;
     will-change: left, width;
-    transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
-                width 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .tab-item:hover:not(:disabled) {
     color: var(--color-content-default);
@@ -16522,30 +16520,42 @@
     var state = { count: 3, lead: false, top: false, badge: false, selected: 0 };
     var ICON_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>';
     var PAD = 12; /* --space-300 */
+    var expandTimer = null;
 
     function updateBadgeVisibility() {
       badgeItem.style.opacity       = state.top ? '0.4' : '';
       badgeItem.style.pointerEvents = state.top ? 'none' : '';
     }
 
-    /* Reposition the shared slider without a DOM rebuild (enables CSS transition) */
+    /* Two-phase: squish + travel → spring expand at destination */
     function updateSlider(instant) {
       var slider = live.querySelector('.tab-slider');
       var tab    = live.querySelectorAll('.tab-item')[state.selected];
       if (!slider || !tab) return;
+      if (expandTimer) { clearTimeout(expandTimer); expandTimer = null; }
+
       var left  = tab.offsetLeft + PAD;
       var width = tab.offsetWidth - PAD * 2;
+
       if (instant) {
         slider.style.transition = 'none';
         slider.style.left  = left  + 'px';
         slider.style.width = width + 'px';
-        /* Force reflow so the instant position is committed before transition re-enables */
-        slider.offsetWidth; // eslint-disable-line no-unused-expressions
+        slider.offsetWidth; /* force reflow */
         slider.style.transition = '';
-      } else {
-        slider.style.left  = left  + 'px';
-        slider.style.width = width + 'px';
+        return;
       }
+
+      /* Phase 1 — slide to destination while squishing to a pill */
+      slider.style.transition = 'left 200ms ease, width 110ms ease-in';
+      slider.style.left  = left + 'px';
+      slider.style.width = '6px';
+
+      /* Phase 2 — spring-expand at destination */
+      expandTimer = setTimeout(function() {
+        slider.style.transition = 'width 320ms cubic-bezier(0.34, 1.56, 0.64, 1)';
+        slider.style.width = width + 'px';
+      }, 130);
     }
 
     /* Update aria-selected + animate slider — no DOM rebuild so transition runs */
