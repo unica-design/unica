@@ -6983,6 +6983,106 @@
     border: 1.5px solid var(--color-background-page);
   }
 
+  /* ── Toast ─────────────────────────────────────────────── */
+  .toast-preview-canvas {
+    background: var(--doc-surface-preview);
+    padding: var(--space-1000) var(--space-800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+  }
+  .toast {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-400);
+    background: var(--color-background-contrast);
+    border-radius: var(--corner-radius-l);
+    padding: var(--space-400);
+    width: 343px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .toast-media {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--corner-radius-m);
+    overflow: hidden;
+  }
+  .toast-media svg { flex-shrink: 0; }
+  .toast-media--avatar { border-radius: var(--corner-radius-round); }
+  .toast-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .toast-title {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-heading-xs);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--font-leading-heading-xs);
+    color: var(--color-inverse);
+    margin: 0;
+  }
+  .toast-message {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--font-leading-body-m);
+    color: var(--color-inverse);
+    opacity: 0.65;
+    margin: 0;
+  }
+  .toast-dismiss {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-inverse);
+    opacity: 0.65;
+    padding: 0;
+    border-radius: var(--corner-radius-xxs);
+    transition: opacity 150ms ease;
+  }
+  .toast-dismiss:hover { opacity: 1; }
+  .toast-dismiss:focus-visible {
+    outline: 2px solid rgba(255,255,255,0.6);
+    outline-offset: 2px;
+    opacity: 1;
+  }
+  /* variants grid */
+  .toast-variants-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-400);
+    padding: var(--space-800) var(--space-600);
+    background: var(--doc-surface-preview);
+    border-radius: var(--corner-radius-m);
+  }
+  .toast-variants-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-600);
+  }
+  .toast-variants-label {
+    width: 80px;
+    font-size: var(--font-size-body-s);
+    color: var(--color-content-subtle);
+    flex-shrink: 0;
+  }
+
   /* ── Stepper ────────────────────────────────────────────── */
   .stepper-preview-canvas {
     background: var(--doc-surface-preview);
@@ -11964,7 +12064,269 @@
     </div><!-- /#page-pagination -->
 
     <!-- Feedback -->
-    <div class="page-panel" id="page-toast"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Feedback</p><h2 class="section-title">Toast</h2><p class="section-description">Transient notification appearing at the bottom of the screen.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-toast">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Feedback</p>
+        <h1 class="comp-title">Toast</h1>
+        <p class="comp-description">Toasts are transient, non-blocking notifications that surface briefly to confirm an action, report a status change, or surface a short message. They appear at the bottom of the screen, do not require user interaction to dismiss, and disappear automatically after a few seconds.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile · Web</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=1128-1196" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           1. PREVIEW
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="btn-controls">
+          <!-- Leading media picker -->
+          <div class="dropdown" id="toast-media-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span>Success</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Leading media type">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="success"   tabindex="0">Success</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="attention" tabindex="0">Attention</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="danger"    tabindex="0">Danger</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="logo"      tabindex="0">Logo</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar"    tabindex="0">Avatar</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="toast-preview-canvas">
+          <div id="toast-live" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+
+        <div class="card-prop-bar">
+          <p class="card-prop-bar-sub">Toggle optional slot visibility</p>
+          <div class="card-prop-bar-toggles">
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="toast-media-switch" checked>
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Left accessory</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="toast-title-switch" checked>
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Title</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="toast-body-switch" checked>
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Body</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small">
+                <input type="checkbox" id="toast-dismiss-switch" checked>
+                <div class="toggle-track"><div class="toggle-handle"></div></div>
+              </div>
+              <span class="switch-item-text">Dismiss</span>
+            </label>
+          </div>
+        </div>
+
+        <button class="code-reveal-btn" id="toast-code-toggle" aria-expanded="false" aria-controls="toast-code-reveal" onclick="toggleCodeReveal(this,'toast-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="toast-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code class="language-html">&lt;!-- Toast with success media --&gt;
+&lt;div class="toast" role="status" aria-live="polite" aria-atomic="true"&gt;
+  &lt;div class="toast-media" aria-hidden="true"&gt;
+    &lt;svg width="32" height="32" viewBox="0 0 32 32" fill="none"&gt;
+      &lt;circle cx="16" cy="16" r="16" fill="rgba(111,247,204,0.15)"/&gt;
+      &lt;path d="M10 16.5L14 20.5L22 12" stroke="#6FF7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div class="toast-body"&gt;
+    &lt;p class="toast-title"&gt;Title&lt;/p&gt;
+    &lt;p class="toast-message"&gt;An in-app message&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;button class="toast-dismiss" aria-label="Dismiss"&gt;
+    &lt;svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"&gt;
+      &lt;path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/&gt;
+    &lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+      </div><!-- /.doc-section Preview -->
+
+      <!-- ══════════════════════════════════════════
+           2. VARIANTS
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">The left accessory slot accepts five media types. Each carries semantic weight: success, attention, and danger map to system states; logo and avatar are used for brand or account context.</p>
+
+        <div class="toast-variants-grid">
+
+          <div class="toast-variants-row">
+            <span class="toast-variants-label">Success</span>
+            <div class="toast" role="status" style="flex:1;max-width:343px;">
+              <div class="toast-media" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="rgba(111,247,204,0.15)"/><path d="M10 16.5L14 20.5L22 12" stroke="#6FF7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="toast-body"><p class="toast-title">Changes saved</p><p class="toast-message">Your edits have been saved.</p></div>
+              <button class="toast-dismiss" aria-label="Dismiss"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+
+          <div class="toast-variants-row">
+            <span class="toast-variants-label">Attention</span>
+            <div class="toast" role="status" style="flex:1;max-width:343px;">
+              <div class="toast-media" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="rgba(252,196,164,0.15)"/><path d="M16 10v7M16 21v1" stroke="#FCC4A4" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div class="toast-body"><p class="toast-title">Heads up</p><p class="toast-message">This action may affect others.</p></div>
+              <button class="toast-dismiss" aria-label="Dismiss"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+
+          <div class="toast-variants-row">
+            <span class="toast-variants-label">Danger</span>
+            <div class="toast" role="status" style="flex:1;max-width:343px;">
+              <div class="toast-media" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="rgba(252,189,210,0.15)"/><path d="M11 11L21 21M21 11L11 21" stroke="#FCBDD2" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div class="toast-body"><p class="toast-title">Something went wrong</p><p class="toast-message">Please try again later.</p></div>
+              <button class="toast-dismiss" aria-label="Dismiss"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+
+          <div class="toast-variants-row">
+            <span class="toast-variants-label">Logo</span>
+            <div class="toast" role="status" style="flex:1;max-width:343px;">
+              <div class="toast-media" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="rgba(255,255,255,0.1)"/><use href="#ico-unica" x="6" y="6" width="20" height="20" style="color:rgba(255,255,255,0.8)"/></svg>
+              </div>
+              <div class="toast-body"><p class="toast-title">New update available</p><p class="toast-message">Version 2.4 is ready to install.</p></div>
+              <button class="toast-dismiss" aria-label="Dismiss"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+
+          <div class="toast-variants-row">
+            <span class="toast-variants-label">Avatar</span>
+            <div class="toast" role="status" style="flex:1;max-width:343px;">
+              <div class="toast-media toast-media--avatar" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(255,255,255,0.12)"/><circle cx="24" cy="20" r="7" fill="rgba(255,255,255,0.4)"/><path d="M8 42c0-8.837 7.163-14 16-14s16 5.163 16 14" fill="rgba(255,255,255,0.4)"/></svg>
+              </div>
+              <div class="toast-body"><p class="toast-title">Alex left a comment</p><p class="toast-message">Great work on the new layout!</p></div>
+              <button class="toast-dismiss" aria-label="Dismiss"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+
+        </div><!-- /.toast-variants-grid -->
+
+      </div><!-- /.doc-section Variants -->
+
+      <!-- ══════════════════════════════════════════
+           3. ACCESSIBILITY
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Toasts surface information without interrupting focus. They use <code>role="status"</code> with <code>aria-live="polite"</code> so screen readers announce them at the next natural pause, and <code>aria-atomic="true"</code> ensures the full message is read when the content updates.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Concern</th><th>Implementation</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Live region</td>
+                <td>The toast container carries <code>role="status"</code>, <code>aria-live="polite"</code>, and <code>aria-atomic="true"</code>. This ensures screen readers announce the full message at the next opportunity without interrupting the user mid-sentence.</td>
+              </tr>
+              <tr>
+                <td>Dismiss button</td>
+                <td>The close button must have an accessible name: <code>aria-label="Dismiss"</code>. It is always reachable by keyboard even when focus remains in the triggering context.</td>
+              </tr>
+              <tr>
+                <td>Media icons</td>
+                <td>Left accessory icons (success, attention, danger, logo, avatar) are decorative. Mark them <code>aria-hidden="true"</code> — the semantic meaning must also be conveyed through the message text.</td>
+              </tr>
+              <tr>
+                <td>Auto-dismiss timing</td>
+                <td>Toasts should persist for a minimum of 5 seconds before auto-dismissing, giving users with cognitive or motor difficulties enough time to read and react. Dismiss early if the user interacts with it.</td>
+              </tr>
+              <tr>
+                <td>Motion</td>
+                <td>Entrance and exit animations should respect <code>prefers-reduced-motion</code>. When reduced motion is active, replace slide/fade transitions with a simple opacity change.</td>
+              </tr>
+              <tr>
+                <td>Focus management</td>
+                <td>Do not move focus to the toast on appearance — this would disrupt the current user flow. Focus only moves to the toast if the user explicitly navigates to it via keyboard.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Accessibility -->
+
+      <!-- ══════════════════════════════════════════
+           4. PROPERTIES
+           ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Configurable properties on the Toast component.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">leadingMedia</td>
+                <td class="td-type">logo · avatar · success · attention · danger</td>
+                <td class="td-subtle">success</td>
+                <td>The media type shown in the left accessory slot. Semantic variants (success, attention, danger) communicate system state with colour. Logo and avatar provide brand or account context.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">leftAccessory</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Shows or hides the left accessory slot. When hidden, the toast body text shifts to fill the full width.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">title</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Toggles the title line. When both title and body are shown, the title is semibold and the body sits below at reduced opacity. When only one is shown, it renders in the title style.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">body</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Toggles the body text line. Typically a brief description or follow-up to the title.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">dismiss</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Shows or hides the dismiss (×) button. When hidden, the toast must auto-dismiss after a timeout — do not leave a toast with no way to remove it.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /.doc-section Properties -->
+
+    </div><!-- /#page-toast -->
     <div class="page-panel" id="page-badge">
 
       <!-- ── Component header ─────────────────── -->
@@ -16610,6 +16972,57 @@
     badgeSwitch.addEventListener('change', function() { state.badge = this.checked; render(); });
 
     updateBadgeVisibility();
+    render();
+  })();
+
+  /* ── Toast preview ── */
+  (function initToastPreview() {
+    var live         = document.getElementById('toast-live');
+    var mediaPicker  = document.getElementById('toast-media-picker');
+    var mediaSwitch  = document.getElementById('toast-media-switch');
+    var titleSwitch  = document.getElementById('toast-title-switch');
+    var bodySwitch   = document.getElementById('toast-body-switch');
+    var dismissSwitch = document.getElementById('toast-dismiss-switch');
+    if (!live) return;
+
+    var state = { media: 'success', showMedia: true, showTitle: true, showBody: true, showDismiss: true };
+
+    var CLOSE_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+
+    var MEDIA_SVG = {
+      success:   '<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="rgba(111,247,204,0.15)"/><path d="M10 16.5L14 20.5L22 12" stroke="#6FF7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      attention: '<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="rgba(252,196,164,0.15)"/><path d="M16 10v7M16 21v1" stroke="#FCC4A4" stroke-width="2" stroke-linecap="round"/></svg>',
+      danger:    '<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="rgba(252,189,210,0.15)"/><path d="M11 11L21 21M21 11L11 21" stroke="#FCBDD2" stroke-width="2" stroke-linecap="round"/></svg>',
+      logo:      '<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="rgba(255,255,255,0.1)"/><use href="#ico-unica" x="6" y="6" width="20" height="20" style="color:rgba(255,255,255,0.8)"/></svg>',
+      avatar:    '<svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(255,255,255,0.12)"/><circle cx="24" cy="20" r="7" fill="rgba(255,255,255,0.4)"/><path d="M8 42c0-8.837 7.163-14 16-14s16 5.163 16 14" fill="rgba(255,255,255,0.4)"/></svg>'
+    };
+
+    var TITLE_TEXT = { success: 'Changes saved', attention: 'Heads up', danger: 'Something went wrong', logo: 'New update available', avatar: 'Alex left a comment' };
+    var BODY_TEXT  = { success: 'Your edits have been saved.', attention: 'This action may affect others.', danger: 'Please try again later.', logo: 'Version 2.4 is ready to install.', avatar: 'Great work on the new layout!' };
+
+    function render() {
+      var html = '';
+      if (state.showMedia) {
+        var cls = state.media === 'avatar' ? ' toast-media--avatar' : '';
+        html += '<div class="toast-media' + cls + '" aria-hidden="true">' + MEDIA_SVG[state.media] + '</div>';
+      }
+      html += '<div class="toast-body">';
+      if (state.showTitle) html += '<p class="toast-title">' + TITLE_TEXT[state.media] + '</p>';
+      if (state.showBody)  html += '<p class="toast-message">' + BODY_TEXT[state.media] + '</p>';
+      if (!state.showTitle && !state.showBody) html += '<p class="toast-title">' + TITLE_TEXT[state.media] + '</p>';
+      html += '</div>';
+      if (state.showDismiss) {
+        html += '<button class="toast-dismiss" aria-label="Dismiss">' + CLOSE_SVG + '</button>';
+      }
+      live.innerHTML = html;
+    }
+
+    initDropdown(mediaPicker, function(val) { state.media = val; render(); });
+    mediaSwitch.addEventListener('change',  function() { state.showMedia   = this.checked; render(); });
+    titleSwitch.addEventListener('change',  function() { state.showTitle   = this.checked; render(); });
+    bodySwitch.addEventListener('change',   function() { state.showBody    = this.checked; render(); });
+    dismissSwitch.addEventListener('change',function() { state.showDismiss = this.checked; render(); });
+
     render();
   })();
 
