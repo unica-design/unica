@@ -7128,10 +7128,28 @@
   .toast-in-phone--anim-bottom {
     animation: toast-enter-bottom 440ms cubic-bezier(0.34,1.15,0.64,1) both;
   }
+  @keyframes toast-exit-top {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-110%); }
+  }
+  @keyframes toast-exit-bottom {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(110%); }
+  }
+  .toast-in-phone--exit-top {
+    animation: toast-exit-top 240ms cubic-bezier(0.4,0,1,1) both;
+  }
+  .toast-in-phone--exit-bottom {
+    animation: toast-exit-bottom 240ms cubic-bezier(0.4,0,1,1) both;
+  }
   @media (prefers-reduced-motion: reduce) {
     .toast-in-phone--anim-top,
     .toast-in-phone--anim-bottom { animation: none; opacity: 1; }
+    .toast-in-phone--exit-top,
+    .toast-in-phone--exit-bottom { animation: none; }
   }
+  /* Compact radius — applied when media is hidden and content is single-line */
+  .toast--compact-radius { border-radius: var(--corner-radius-m); }
   /* variants grid */
   .toast-variants-grid {
     display: flex;
@@ -7231,6 +7249,238 @@
     gap: 12px; flex-wrap: wrap; min-height: 96px;
   }
 
+
+  /* ── Text Fields & Selects ──────────────────────────────────────── */
+
+  /* Preview: two phone shells */
+  .tf-preview-wrap {
+    background: var(--doc-surface-preview);
+    padding: var(--space-800) var(--space-600);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-700);
+    flex-wrap: wrap;
+  }
+
+  .tf-phone-shell {
+    width: 320px;
+    background: var(--color-background-page);
+    border-radius: 28px;
+    box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
+    overflow: hidden;
+    padding: 32px 20px 36px;
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .tf-phone-shell {
+    box-shadow: none;
+    border: var(--border-width-default) solid var(--color-border-default);
+  }
+
+  .tf-phone-title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    margin-bottom: var(--space-500);
+  }
+
+  /* Molecule: label + field + caption */
+  .tf-molecule {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .tf-molecule + .tf-molecule { margin-top: var(--space-300); }
+
+  .tf-molecule-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-300);
+    margin-bottom: var(--space-300);
+  }
+  .tf-molecule-group .tf-molecule { margin-top: 0; }
+
+  .tf-label {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    line-height: var(--font-leading-body-s);
+  }
+
+  /* Field: the input box */
+  .tf-field {
+    height: 48px;
+    border-radius: var(--corner-radius-m);
+    border: var(--border-width-default) solid var(--color-border-default);
+    background: var(--color-background-page);
+    display: flex;
+    align-items: center;
+    padding: 0 16px 0 12px;
+    gap: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, border-width 0.15s ease;
+  }
+
+  .tf-field--active,
+  .tf-field--typing {
+    border-width: var(--border-width-strong);
+    border-color: var(--color-border-strong);
+  }
+  .tf-field--error {
+    border-width: var(--border-width-strong);
+    border-color: var(--color-danger);
+  }
+  .tf-field--disabled {
+    background: var(--color-background-disabled);
+    border-color: var(--color-border-disabled);
+  }
+
+  /* Field inner text variants */
+  .tf-field-text {
+    flex: 1;
+    font-size: var(--font-size-body-m);
+    color: var(--color-content-default);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .tf-field-placeholder {
+    flex: 1;
+    font-size: var(--font-size-body-m);
+    color: var(--color-content-subtle);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .tf-field--disabled .tf-field-text,
+  .tf-field--disabled .tf-field-placeholder {
+    color: var(--color-content-disabled);
+  }
+  .tf-field-dots {
+    flex: 1;
+    font-size: var(--font-size-body-m);
+    color: var(--color-content-default);
+    letter-spacing: 0.22em;
+    line-height: 1;
+  }
+
+  /* Blinking cursor for active / typing */
+  .tf-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 18px;
+    background: var(--color-content-default);
+    flex-shrink: 0;
+    border-radius: 1px;
+    animation: tf-blink 1s step-end infinite;
+  }
+  @keyframes tf-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* Caption */
+  .tf-caption {
+    font-size: var(--font-size-body-xs);
+    color: var(--color-content-subtle);
+    min-height: 16px;
+  }
+  .tf-caption--error { color: var(--color-danger); }
+
+  /* Select caret */
+  .tf-caret {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-content-default);
+  }
+  .tf-field--disabled .tf-caret { color: var(--color-content-disabled); }
+
+  /* Eye toggle */
+  .tf-eye-btn {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-content-subtle);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    border-radius: 4px;
+    transition: color 0.12s ease;
+  }
+  .tf-eye-btn:hover { color: var(--color-content-default); }
+  .tf-field--disabled .tf-eye-btn {
+    color: var(--color-content-disabled);
+    pointer-events: none;
+  }
+
+  /* States documentation grid */
+  .tf-states-wrap {
+    background: var(--doc-surface-preview);
+    padding: var(--space-700) var(--space-600);
+    border-radius: var(--corner-radius-m);
+  }
+  .tf-states-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-700) var(--space-600);
+  }
+  .tf-states-grid--4col { grid-template-columns: repeat(4, 1fr); }
+
+  .tf-state-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-300);
+  }
+  .tf-state-tag {
+    font-size: var(--doc-label-size);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--doc-label-tracking);
+    text-transform: uppercase;
+    color: var(--color-content-subtle);
+  }
+
+  /* Subsection header inside Variants */
+  .tf-subsection { margin: var(--space-900) 0 var(--space-600); }
+  .tf-subsection-title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    padding-bottom: var(--space-300);
+    border-bottom: var(--border-width-default) solid var(--doc-rule-subtle);
+    margin-bottom: var(--space-400);
+  }
+  .tf-subsection-desc {
+    font-size: var(--font-size-body-s);
+    color: var(--color-content-subtle);
+    line-height: var(--font-leading-body-m);
+    max-width: 500px;
+  }
+
+  /* Password variants grid (2 col) */
+  .tf-pw-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-600);
+  }
+
+  @media (max-width: 700px) {
+    .tf-states-grid           { grid-template-columns: 1fr 1fr; }
+    .tf-states-grid--4col     { grid-template-columns: 1fr 1fr; }
+    .tf-pw-grid               { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 460px) {
+    .tf-states-grid           { grid-template-columns: 1fr; }
+    .tf-states-grid--4col     { grid-template-columns: 1fr; }
+  }
+
   </style>
 </head>
 <body>
@@ -7307,6 +7557,14 @@
       <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
 
+    <!-- eye show: open eye + pupil rings — Figma export 481:5422 @2x -->
+    <symbol id="ico-eye-show" viewBox="0 0 48 48">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9915 34.3485C19.6243 34.3485 15.3399 31.6601 11.8818 28.4752C10.2063 26.9321 8.84125 25.3797 7.89484 24.2108C7.84097 24.1443 7.78852 24.079 7.73751 24.0152C7.78852 23.9514 7.84097 23.8862 7.89484 23.8196C8.84125 22.6507 10.2063 21.0983 11.8818 19.5553C15.3399 16.3704 19.6243 13.6819 23.9915 13.6819C28.3587 13.6819 32.6432 16.3704 36.1013 19.5553C37.7768 21.0983 39.1418 22.6507 40.0882 23.8196C40.1421 23.8862 40.1946 23.9514 40.2456 24.0152C40.1946 24.079 40.1421 24.1443 40.0882 24.2108C39.1418 25.3797 37.7768 26.9321 36.1013 28.4752C32.6432 31.6601 28.3587 34.3485 23.9915 34.3485ZM23.9915 10.6819C12.9459 10.6819 3.99155 24.0152 3.99155 24.0152C3.99155 24.0152 12.9458 37.3485 23.9915 37.3485C35.0372 37.3485 43.9915 24.0152 43.9915 24.0152C43.9915 24.0152 35.0372 10.6819 23.9915 10.6819ZM27 24C27 25.6569 25.6569 27 24 27C22.3431 27 21 25.6569 21 24C21 22.3431 22.3431 21 24 21C25.6569 21 27 22.3431 27 24ZM30 24C30 27.3137 27.3137 30 24 30C20.6863 30 18 27.3137 18 24C18 20.6863 20.6863 18 24 18C27.3137 18 30 20.6863 30 24Z" fill="currentColor"/>
+    </symbol>
+    <!-- eye hide: eye with slash — Figma export 481:5519 @2x -->
+    <symbol id="ico-eye-hide" viewBox="0 0 48 48">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M43.2637 13.7686C43.9514 14.2305 44.1346 15.1624 43.6727 15.8502L42.4274 15.0139C43.6727 15.8502 43.6724 15.8506 43.6721 15.851L43.6714 15.8521L43.6693 15.8552L43.6629 15.8647L43.641 15.8968C43.6224 15.9239 43.5959 15.9624 43.5616 16.0114C43.493 16.1095 43.3933 16.2501 43.264 16.427C43.0055 16.7807 42.6282 17.2806 42.1445 17.8782C41.1787 19.071 39.7791 20.6644 38.0439 22.2625C37.3254 22.9243 36.5384 23.5969 35.6907 24.2467L38.0607 26.6166C38.6464 27.2024 38.6464 28.1522 38.0607 28.738C37.4749 29.3238 36.5251 29.3238 35.9393 28.738L33.1745 25.9731C31.8592 26.7702 30.4424 27.4637 28.9449 27.9649L30.1863 32.5976C30.4007 33.3978 29.9258 34.2203 29.1256 34.4347C28.3254 34.6492 27.5029 34.1743 27.2885 33.3741L26.0255 28.6606C25.3589 28.7544 24.6804 28.8045 23.9915 28.8045C23.3083 28.8045 22.6352 28.7552 21.9739 28.6629L20.7115 33.3741C20.4971 34.1743 19.6746 34.6492 18.8744 34.4347C18.0742 34.2203 17.5993 33.3978 17.8137 32.5976L19.0537 27.9701C17.5544 27.4699 16.136 26.7766 14.8191 25.9795L12.0607 28.738C11.4749 29.3238 10.5251 29.3238 9.93934 28.738C9.35355 28.1522 9.35355 27.2024 9.93934 26.6166L12.3019 24.2541C11.4506 23.602 10.6604 22.9267 9.93919 22.2625C8.20397 20.6644 6.80433 19.071 5.8386 17.8782C5.35481 17.2806 4.97752 16.7807 4.71907 16.427C4.58979 16.2501 4.49007 16.1095 4.42148 16.0114C4.38718 15.9624 4.36064 15.9239 4.34206 15.8968L4.32018 15.8647L4.31375 15.8552L4.31168 15.8521L4.31093 15.851C4.31063 15.8506 4.31037 15.8502 5.55561 15.0139L4.31037 15.8502C3.8485 15.1624 4.03161 14.2305 4.71934 13.7686C5.40689 13.3069 6.3385 13.4898 6.80049 14.1771L41.5627 13.7877L6.80086 14.1776L6.80309 14.1809L6.81715 14.2015C6.83042 14.2209 6.85148 14.2514 6.88012 14.2924C6.9374 14.3743 7.02496 14.4978 7.14127 14.657C7.37398 14.9755 7.72108 15.4357 8.1702 15.9904C9.07029 17.1021 10.3705 18.5813 11.9715 20.0558C15.2272 23.0543 19.4784 25.8045 23.9915 25.8045C28.5046 25.8045 32.7559 23.0543 36.0115 20.0558C37.6125 18.5813 38.9128 17.1021 39.8129 15.9904C40.262 15.4357 40.6091 14.9755 40.8418 14.657C40.9581 14.4978 41.0457 14.3743 41.1029 14.2924C41.1316 14.2514 41.1526 14.2209 41.1659 14.2015L41.18 14.1809L41.1822 14.1776L41.1826 14.1771C41.2878 14.0206 41.4173 13.8902 41.5627 13.7877L43.2637 13.7686ZM41.5628 13.7877L43.2637 13.7686C42.7327 13.412 42.0562 13.4399 41.5628 13.7877Z" fill="currentColor"/>
+    </symbol>
     <!-- Cushion: concave organic shape, normalized to 0–1 objectBoundingBox -->
     <clipPath id="avatar-clip-cushion" clipPathUnits="objectBoundingBox">
       <path d="M0.9363 0.4335 C0.9157 0.4753 0.9157 0.5247 0.9363 0.5665 C1.0142 0.7249 1.0240 0.8703 0.9471 0.9471 C0.8703 1.0240 0.7249 1.0142 0.5665 0.9363 C0.5247 0.9157 0.4753 0.9157 0.4335 0.9363 C0.2751 1.0142 0.1297 1.0240 0.0529 0.9471 C-0.0240 0.8703 -0.0142 0.7249 0.0637 0.5665 C0.0843 0.5247 0.0843 0.4753 0.0637 0.4335 C-0.0142 0.2751 -0.0240 0.1297 0.0529 0.0529 C0.1297 -0.0240 0.2751 -0.0142 0.4335 0.0637 C0.4753 0.0843 0.5247 0.0843 0.5665 0.0637 C0.7249 -0.0142 0.8703 -0.0240 0.9471 0.0529 C1.0240 0.1297 1.0142 0.2751 0.9363 0.4335 Z"/>
@@ -9548,7 +9806,321 @@
     </div><!-- /#page-link -->
 
     <!-- Forms -->
-    <div class="page-panel" id="page-text-fields"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Text Fields &amp; Selects</h2><p class="section-description">Input, textarea, and select — all states and sizes.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-text-fields">
+
+      <!-- ── Component header ─────────────────────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Forms</p>
+        <h1 class="comp-title">Text Fields &amp; Selects</h1>
+        <p class="comp-description">Single-line inputs for text entry, select dropdowns, and a password variant with a visibility toggle. All share the same structural molecule: an optional label, the field itself, and an optional caption.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=343-1383" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── 1. Preview ────────────────────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="tf-preview-wrap">
+
+          <!-- Phone 1 · Shipping Address -->
+          <div class="tf-phone-shell">
+            <p class="tf-phone-title">Shipping Address</p>
+
+            <div class="tf-molecule-group">
+              <div class="tf-molecule">
+                <label class="tf-label">First name</label>
+                <div class="tf-field">
+                  <span class="tf-field-placeholder">First name</span>
+                </div>
+              </div>
+              <div class="tf-molecule">
+                <label class="tf-label">Last name</label>
+                <div class="tf-field">
+                  <span class="tf-field-placeholder">Last name</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tf-molecule">
+              <label class="tf-label">Address</label>
+              <div class="tf-field tf-field--typing">
+                <span class="tf-field-text">123 Oliva Street</span>
+                <span class="tf-cursor" aria-hidden="true"></span>
+              </div>
+            </div>
+
+            <div class="tf-molecule">
+              <label class="tf-label">City</label>
+              <div class="tf-field">
+                <span class="tf-field-placeholder">City</span>
+              </div>
+            </div>
+
+            <div class="tf-molecule">
+              <label class="tf-label">Country</label>
+              <div class="tf-field">
+                <span class="tf-field-placeholder">Select a country</span>
+                <span class="tf-caret" aria-hidden="true">
+                  <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+          </div><!-- /tf-phone-shell: Shipping -->
+
+          <!-- Phone 2 · Login -->
+          <div class="tf-phone-shell">
+            <p class="tf-phone-title">Log in</p>
+
+            <div class="tf-molecule">
+              <label class="tf-label">Email</label>
+              <div class="tf-field">
+                <span class="tf-field-text">olivia@example.com</span>
+              </div>
+            </div>
+
+            <div class="tf-molecule">
+              <label class="tf-label">Password</label>
+              <div class="tf-field" id="tf-preview-pw-field">
+                <span class="tf-field-dots" id="tf-preview-pw-val">••••••••</span>
+                <button class="tf-eye-btn" id="tf-preview-pw-btn" aria-label="Show password" type="button">
+                  <svg width="20" height="20" viewBox="0 0 48 48" fill="none" aria-hidden="true"><use href="#ico-eye-show"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <button class="btn btn-filled btn--large" style="width:100%;margin-top:var(--space-500);" type="button">Log in</button>
+          </div><!-- /tf-phone-shell: Login -->
+
+        </div><!-- /.tf-preview-wrap -->
+      </div><!-- /doc-section: Preview -->
+
+      <!-- ── 2. Variants & States ─────────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants &amp; States</h2>
+        <hr class="doc-rule">
+
+        <!-- ── Text Field ── -->
+        <div class="tf-subsection">
+          <h3 class="tf-subsection-title">Text Field</h3>
+          <p class="tf-subsection-desc">Label, field, and caption form the composite molecule. Six states cover the full lifecycle of a text input.</p>
+        </div>
+
+        <div class="tf-states-wrap">
+          <div class="tf-states-grid">
+            <!-- Default -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Default</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Label</label>
+                <div class="tf-field">
+                  <span class="tf-field-placeholder">Placeholder</span>
+                </div>
+                <span class="tf-caption">Caption text</span>
+              </div>
+            </div>
+            <!-- Active -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Active</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Label</label>
+                <div class="tf-field tf-field--active">
+                  <span class="tf-field-placeholder">Placeholder</span>
+                  <span class="tf-cursor" aria-hidden="true"></span>
+                </div>
+                <span class="tf-caption">Caption text</span>
+              </div>
+            </div>
+            <!-- Typing -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Typing</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Label</label>
+                <div class="tf-field tf-field--typing">
+                  <span class="tf-field-text">Input value</span>
+                  <span class="tf-cursor" aria-hidden="true"></span>
+                </div>
+                <span class="tf-caption">Caption text</span>
+              </div>
+            </div>
+            <!-- Filled -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Filled</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Label</label>
+                <div class="tf-field">
+                  <span class="tf-field-text">Input value</span>
+                </div>
+                <span class="tf-caption">Caption text</span>
+              </div>
+            </div>
+            <!-- Error -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Error</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Label</label>
+                <div class="tf-field tf-field--error">
+                  <span class="tf-field-text">Input value</span>
+                </div>
+                <span class="tf-caption tf-caption--error">Something went wrong</span>
+              </div>
+            </div>
+            <!-- Disabled -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Disabled</span>
+              <div class="tf-molecule">
+                <label class="tf-label" style="color:var(--color-content-disabled);">Label</label>
+                <div class="tf-field tf-field--disabled">
+                  <span class="tf-field-placeholder">Placeholder</span>
+                </div>
+                <span class="tf-caption" style="color:var(--color-content-disabled);">Caption text</span>
+              </div>
+            </div>
+          </div><!-- /.tf-states-grid -->
+        </div><!-- /.tf-states-wrap: text field -->
+
+        <!-- ── Select Field ── -->
+        <div class="tf-subsection">
+          <h3 class="tf-subsection-title">Select Field</h3>
+          <p class="tf-subsection-desc">Same molecule as the text field with a caret-down icon in the trailing position. No typing state — values come from a predefined list. The caret rotates 180° when the dropdown is open.</p>
+        </div>
+
+        <div class="tf-states-wrap">
+          <div class="tf-states-grid tf-states-grid--4col">
+            <!-- Default -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Default</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Label</label>
+                <div class="tf-field">
+                  <span class="tf-field-placeholder">Placeholder</span>
+                  <span class="tf-caret" aria-hidden="true">
+                    <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+                <span class="tf-caption">Caption text</span>
+              </div>
+            </div>
+            <!-- Active / open -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Active</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Label</label>
+                <div class="tf-field tf-field--active">
+                  <span class="tf-field-placeholder">Placeholder</span>
+                  <span class="tf-caret" aria-hidden="true" style="transform:rotate(180deg);">
+                    <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+                <span class="tf-caption">Caption text</span>
+              </div>
+            </div>
+            <!-- Error -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Error</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Label</label>
+                <div class="tf-field tf-field--error">
+                  <span class="tf-field-text">Selected value</span>
+                  <span class="tf-caret" aria-hidden="true">
+                    <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+                <span class="tf-caption tf-caption--error">Something went wrong</span>
+              </div>
+            </div>
+            <!-- Disabled -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Disabled</span>
+              <div class="tf-molecule">
+                <label class="tf-label" style="color:var(--color-content-disabled);">Label</label>
+                <div class="tf-field tf-field--disabled">
+                  <span class="tf-field-placeholder">Placeholder</span>
+                  <span class="tf-caret" aria-hidden="true">
+                    <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+                <span class="tf-caption" style="color:var(--color-content-disabled);">Caption text</span>
+              </div>
+            </div>
+          </div><!-- /.tf-states-grid--4col -->
+        </div><!-- /.tf-states-wrap: select field -->
+
+        <!-- ── Password Field ── -->
+        <div class="tf-subsection">
+          <h3 class="tf-subsection-title">Password Field</h3>
+          <p class="tf-subsection-desc">A text field variant with a trailing eye icon that toggles between hidden (masked with dots) and visible (plain text). Inherits all text field states.</p>
+        </div>
+
+        <div class="tf-states-wrap">
+          <div class="tf-pw-grid">
+            <!-- Password hidden (dots) -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Password = hide</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Password</label>
+                <div class="tf-field" id="tf-var-pw-field-a">
+                  <span class="tf-field-dots" id="tf-var-pw-val-a">••••••••</span>
+                  <button class="tf-eye-btn" aria-label="Show password" type="button" data-tf-pw-target="tf-var-pw-val-a">
+                    <svg width="20" height="20" viewBox="0 0 48 48" fill="none" aria-hidden="true"><use href="#ico-eye-show"/></svg>
+                  </button>
+                </div>
+                <span class="tf-caption">Caption text</span>
+              </div>
+            </div>
+            <!-- Password visible -->
+            <div class="tf-state-item">
+              <span class="tf-state-tag">Password = show</span>
+              <div class="tf-molecule">
+                <label class="tf-label">Password</label>
+                <div class="tf-field" id="tf-var-pw-field-b">
+                  <span class="tf-field-text" id="tf-var-pw-val-b">password123</span>
+                  <button class="tf-eye-btn" aria-label="Hide password" type="button" data-tf-pw-target="tf-var-pw-val-b">
+                    <svg width="20" height="20" viewBox="0 0 48 48" fill="none" aria-hidden="true"><use href="#ico-eye-hide"/></svg>
+                  </button>
+                </div>
+                <span class="tf-caption">Caption text</span>
+              </div>
+            </div>
+          </div><!-- /.tf-pw-grid -->
+        </div><!-- /.tf-states-wrap: password -->
+
+      </div><!-- /doc-section: Variants -->
+
+      <script>
+        /* ── Password field visibility toggle ── */
+        (function() {
+          function tfTogglePw(btn) {
+            var valId  = btn.getAttribute('data-tf-pw-target');
+            var valEl  = document.getElementById(valId);
+            var hidden = valEl.classList.contains('tf-field-dots');
+            if (hidden) {
+              valEl.className   = 'tf-field-text';
+              valEl.textContent = 'password123';
+              btn.setAttribute('aria-label', 'Hide password');
+              btn.querySelector('use').setAttribute('href', '#ico-eye-hide');
+            } else {
+              valEl.className   = 'tf-field-dots';
+              valEl.textContent = '••••••••';
+              btn.setAttribute('aria-label', 'Show password');
+              btn.querySelector('use').setAttribute('href', '#ico-eye-show');
+            }
+          }
+
+          /* Wire up all eye buttons in the text-fields page */
+          var btns = document.querySelectorAll('#page-text-fields .tf-eye-btn');
+          btns.forEach(function(btn) {
+            btn.addEventListener('click', function() { tfTogglePw(this); });
+          });
+        })();
+      </script>
+
+    </div><!-- /#page-text-fields -->
     <div class="page-panel" id="page-search-field"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Search Field</h2><p class="section-description">Inline search input with icon and clear action.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-checkbox">
 
@@ -17110,6 +17682,8 @@
       phoneInner.classList.toggle('toast-in-phone--bottom', state.pos === 'bottom');
     }
 
+    var dismissExitTimer = null;
+
     function render(animate) {
       var html = '';
       if (state.showMedia) html += MEDIA_HTML[state.media];
@@ -17120,8 +17694,27 @@
       html += '</div>';
       if (state.showDismiss) html += '<button class="toast-dismiss" aria-label="Dismiss">' + CLOSE_SVG + '</button>';
       live.innerHTML = html;
+
+      /* Adaptive corner radius: shrink one token when content collapses */
+      var compact = !state.showMedia && (!state.showTitle || !state.showBody);
+      live.classList.toggle('toast--compact-radius', compact);
+
       if (animate !== false) triggerAnim();
     }
+
+    /* Dismiss button re-animation via event delegation */
+    live.addEventListener('click', function(e) {
+      if (!e.target.closest('.toast-dismiss')) return;
+      if (dismissExitTimer) return; /* guard against double-click */
+      var exitCls = state.pos === 'top' ? 'toast-in-phone--exit-top' : 'toast-in-phone--exit-bottom';
+      phoneInner.classList.remove('toast-in-phone--anim-top', 'toast-in-phone--anim-bottom');
+      phoneInner.classList.add(exitCls);
+      dismissExitTimer = setTimeout(function() {
+        phoneInner.classList.remove(exitCls);
+        dismissExitTimer = null;
+        render(); /* re-render with entry animation */
+      }, 520);
+    });
 
     initDropdown(mediaPicker, function(val) { state.media = val; render(); });
     initDropdown(posPicker,   function(val) { state.pos   = val; updatePosition(); triggerAnim(); });
