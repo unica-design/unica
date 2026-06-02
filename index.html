@@ -7613,9 +7613,9 @@
     transition: background 120ms ease;
   }
   .list-cell--nav:hover .list-cell__state-layer,
-  .list-cell--hover     .list-cell__state-layer { background: var(--color-action-hover-subtle); }
+  .list-cell--hover     .list-cell__state-layer { background: var(--color-background-selection); }
   .list-cell--nav:active .list-cell__state-layer,
-  .list-cell--pressed    .list-cell__state-layer { background: var(--color-action-hover-subtle); filter: brightness(0.92); }
+  .list-cell--pressed    .list-cell__state-layer { background: var(--color-background-selection); }
   .list-cell--focused .list-cell__state-layer {
     outline: 2px solid var(--color-border-strong);
     outline-offset: 1px;
@@ -7770,6 +7770,18 @@
   #ls-leading-picker #ls-leading-label { display: inline-flex; align-items: center; gap: 6px; }
   #ls-leading-picker .dropdown-option  { display: flex; align-items: center; gap: 6px; }
   #ls-leading-picker .dropdown-trigger { padding-left: 8px; }
+
+  /* Icon-bullet color sub-picker */
+  #ls-ib-color-picker .dropdown-trigger,
+  #ls-ib-color-picker #ls-ib-color-label { display: inline-flex; align-items: center; gap: 6px; }
+  #ls-ib-color-picker .dropdown-option   { display: flex; align-items: center; gap: 6px; }
+  #ls-ib-color-picker .dropdown-trigger  { padding-left: 8px; }
+
+  /* Avatar sub-picker */
+  #ls-avatar-picker .dropdown-trigger,
+  #ls-avatar-picker #ls-avatar-label { display: inline-flex; align-items: center; gap: 6px; }
+  #ls-avatar-picker .dropdown-option  { display: flex; align-items: center; gap: 6px; }
+  #ls-avatar-picker .dropdown-trigger { padding-left: 8px; }
 
   </style>
 </head>
@@ -16831,7 +16843,36 @@
               <li class="dropdown-option" role="option" aria-selected="false" data-value="none"        tabindex="0">None</li>
               <li class="dropdown-option" role="option" aria-selected="true"  data-value="icon"        tabindex="0"><svg width="14" height="14" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>Icon</li>
               <li class="dropdown-option" role="option" aria-selected="false" data-value="icon-bullet" tabindex="0"><div class="icon-bullet icon-bullet--small icon-bullet--ink" style="width:20px;height:20px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ico-bell"/></svg></div>Icon Bullet</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar"      tabindex="0"><div class="avatar avatar--circle" style="width:20px;height:20px;min-width:20px;background:var(--primitive-pool-300);color:var(--primitive-ink-900);font-size:7px;font-weight:600;" aria-hidden="true"><span class="avatar-initials">JD</span></div>Avatar</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar"      tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt="" aria-hidden="true">Avatar</li>
+            </ul>
+          </div>
+          <!-- Icon-bullet color sub-picker (shown only when leading = icon-bullet) -->
+          <div class="dropdown" id="ls-ib-color-picker" style="display:none">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="ls-ib-color-label"><span class="cb-color-dot" style="background:var(--primitive-violet-300)"></span>Violet</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Icon bullet color">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="violet"  tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-violet-300)"></span>Violet</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="berry"   tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-berry-300)"></span>Berry</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="mint"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-mint-300)"></span>Mint</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="pool"    tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-pool-300)"></span>Pool</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="apricot" tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-apricot-300)"></span>Apricot</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="citron"  tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-citron-300)"></span>Citron</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="ink"     tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-ink-900)"></span>Ink</li>
+            </ul>
+          </div>
+          <!-- Avatar sub-picker (shown only when leading = avatar) -->
+          <div class="dropdown" id="ls-avatar-picker" style="display:none">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="ls-avatar-label"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt="">Sofia</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Avatar">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="avatar-1.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt="">Sofia</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-2.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-2.png" alt="">Marcus</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-3.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-3.png" alt="">Andre</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-4.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-4.png" alt="">Kai</li>
             </ul>
           </div>
           <!-- Trailing action (shown only in Action mode) -->
@@ -17700,13 +17741,15 @@
 
         /* ── State ──────────────────────────────────── */
         var state = {
-          type:     'nav',    // 'nav' | 'action'
-          leading:  'icon',   // 'none' | 'icon' | 'icon-bullet' | 'avatar'
-          trailing: 'radio',  // 'radio' | 'checkbox' | 'switch' | 'button' | 'stepper'
-          overline: false,
-          caption:  true,
-          divider:  true,
-          caret:    true
+          type:      'nav',         // 'nav' | 'action'
+          leading:   'icon',        // 'none' | 'icon' | 'icon-bullet' | 'avatar'
+          trailing:  'radio',       // 'radio' | 'checkbox' | 'switch' | 'button' | 'stepper'
+          ibColor:   'violet',      // icon-bullet color
+          avatarSrc: 'avatar-1.png', // avatar filename
+          overline:  false,
+          caption:   true,
+          divider:   true,
+          caret:     true
         };
 
         /* ── Trailing HTML constants ─────────────────── */
@@ -17718,13 +17761,10 @@
 
         /* ── Leading HTML builder ───────────────────── */
         function leadingHtml(cell, mode) {
-          var icon    = (cell && cell.dataset.icon)       || 'bell';
-          var init    = (cell && cell.dataset.initials)   || 'AB';
-          var bg      = (cell && cell.dataset.avatarBg)   || 'var(--primitive-pool-300)';
-          var color   = (cell && cell.dataset.avatarColor) || 'var(--primitive-ink-900)';
+          var icon = (cell && cell.dataset.icon) || 'bell';
           if (mode === 'icon')        return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-' + icon + '"/></svg>';
-          if (mode === 'icon-bullet') return '<div class="icon-bullet icon-bullet--small icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-' + icon + '"/></svg></div>';
-          if (mode === 'avatar')      return '<div class="avatar avatar--medium avatar--circle" style="background:' + bg + ';color:' + color + ';" aria-hidden="true"><span class="avatar-initials">' + init + '</span></div>';
+          if (mode === 'icon-bullet') return '<div class="icon-bullet icon-bullet--small icon-bullet--' + state.ibColor + '" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-' + icon + '"/></svg></div>';
+          if (mode === 'avatar')      return '<img class="avatar avatar--medium avatar--circle" src="assets/avatars/' + state.avatarSrc + '" alt="" aria-hidden="true" style="object-fit:cover;">';
           return '';
         }
 
@@ -17762,6 +17802,14 @@
           // Show/hide trailing picker for action only
           var trailPicker = document.getElementById('ls-trailing-picker');
           if (trailPicker) trailPicker.style.display = state.type === 'action' ? '' : 'none';
+
+          // Show/hide icon-bullet color picker
+          var ibColorPicker = document.getElementById('ls-ib-color-picker');
+          if (ibColorPicker) ibColorPicker.style.display = state.leading === 'icon-bullet' ? '' : 'none';
+
+          // Show/hide avatar picker
+          var avatarPicker = document.getElementById('ls-avatar-picker');
+          if (avatarPicker) avatarPicker.style.display = state.leading === 'avatar' ? '' : 'none';
 
           // Update code snippet
           updateCode();
@@ -17870,6 +17918,18 @@
         /* ── Wire: Trailing dropdown ────────────────── */
         initDrop('ls-trailing-picker', 'ls-trailing-label', function(val){
           state.trailing = val;
+          render();
+        });
+
+        /* ── Wire: Icon-bullet color dropdown ───────── */
+        initDrop('ls-ib-color-picker', 'ls-ib-color-label', function(val){
+          state.ibColor = val;
+          render();
+        });
+
+        /* ── Wire: Avatar picker dropdown ───────────── */
+        initDrop('ls-avatar-picker', 'ls-avatar-label', function(val){
+          state.avatarSrc = val;
           render();
         });
 
