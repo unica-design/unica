@@ -7580,6 +7580,189 @@
     .tf-pw-grid               { grid-template-columns: 1fr; }
   }
 
+  /* ─────────────────────────────────────────
+     LIST CELL
+  ───────────────────────────────────────── */
+
+  .list-cell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: var(--space-200);
+    background: var(--color-background-page);
+  }
+  .list-cell--nav,
+  .list-cell--action { cursor: pointer; }
+
+  /* Divider — absolute, 24px inset L/R */
+  .list-cell__divider {
+    position: absolute;
+    bottom: 0;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: var(--color-border-subtle);
+    pointer-events: none;
+  }
+
+  /* State layer (inner rounded zone that receives hover/pressed bg) */
+  .list-cell__state-layer {
+    flex: 1;
+    min-width: 0;
+    padding: var(--space-200);
+    border-radius: var(--corner-radius-m);
+    transition: background 120ms ease;
+  }
+  .list-cell--nav:hover    .list-cell__state-layer,
+  .list-cell--action:hover .list-cell__state-layer,
+  .list-cell--hover        .list-cell__state-layer { background: var(--color-action-hover-subtle); }
+  .list-cell--nav:active    .list-cell__state-layer,
+  .list-cell--action:active .list-cell__state-layer,
+  .list-cell--pressed       .list-cell__state-layer { background: var(--color-action-hover-subtle); filter: brightness(0.92); }
+  .list-cell--focused .list-cell__state-layer {
+    outline: 2px solid var(--color-border-strong);
+    outline-offset: 1px;
+  }
+  .list-cell--disabled { pointer-events: none; }
+  .list-cell--disabled .list-cell__state-layer { opacity: 0.38; }
+
+  /* Content row */
+  .list-cell__content {
+    display: flex;
+    align-items: center;
+    gap: 16px;   /* spacer/d */
+    width: 100%;
+  }
+  .list-cell__leading { flex-shrink: 0; display: flex; align-items: center; }
+
+  /* Text block */
+  .list-cell__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .list-cell__overline {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    line-height: var(--font-leading-body-s);
+    color: var(--color-content-default);
+  }
+  .list-cell__label {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--font-leading-body-l);
+    color: var(--color-content-default);
+  }
+  .list-cell__caption {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    line-height: var(--font-leading-body-s);
+    color: var(--color-content-subtle);
+  }
+
+  /* Trailing slot */
+  .list-cell__trailing { flex-shrink: 0; display: flex; align-items: center; }
+  .list-cell__caret { color: var(--color-content-subtle); }
+
+  /* List group container */
+  .list-group { background: var(--color-background-page); border-radius: var(--corner-radius-l); overflow: hidden; }
+
+  /* Section header inside a phone list */
+  .list-group-header {
+    padding: var(--space-500) var(--space-400) var(--space-200);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-content-subtle);
+  }
+
+  /* ── List page: phone preview ── */
+  .ls-fs-wrap {
+    background: var(--doc-surface-preview);
+    padding: var(--space-1000) var(--space-800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ls-fs-phone {
+    position: relative;
+    width: 375px;
+    height: 812px;
+    background: var(--color-background-page);
+    border-radius: 24px;
+    box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
+    overflow: hidden;
+  }
+  [data-theme="dark"] .ls-fs-phone {
+    box-shadow: none;
+    border: var(--border-width-default) solid var(--color-border-default);
+  }
+  .ls-screen {
+    height: 100%; overflow-y: auto;
+    padding: 88px 0 56px;
+    display: none; box-sizing: border-box; scrollbar-width: none;
+  }
+  .ls-screen::-webkit-scrollbar { display: none; }
+  .ls-screen--active { display: block; }
+  .ls-screen-heading {
+    font-family: var(--font-family-serif);
+    font-size: var(--font-size-display-s);
+    font-weight: 800;
+    line-height: var(--font-leading-display-s);
+    color: var(--color-content-default);
+    margin: 0 0 var(--space-500) 0;
+    padding: 0 var(--space-400);
+  }
+
+  /* ── List page: variants grid ── */
+  .ls-states-wrap {
+    background: var(--doc-surface-preview);
+    padding: var(--space-700) var(--space-600);
+    border-radius: var(--corner-radius-m);
+    margin-top: var(--space-600);
+  }
+  .ls-states-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-600);
+  }
+  .ls-states-grid--5col { grid-template-columns: repeat(5, 1fr); }
+  .ls-state-item { display: flex; flex-direction: column; gap: var(--space-300); }
+  .ls-state-tag {
+    font-size: var(--doc-label-size);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--doc-label-tracking);
+    text-transform: uppercase;
+    color: var(--color-content-subtle);
+  }
+  /* Rounded container for an isolated cell demo */
+  .ls-cell-wrap { background: var(--color-background-page); border-radius: var(--corner-radius-m); overflow: hidden; }
+
+  /* Subsection headers */
+  .ls-subsection { margin: var(--space-900) 0 0; }
+  .ls-subsection-title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    padding-bottom: var(--space-300);
+    border-bottom: var(--border-width-default) solid var(--doc-rule-subtle);
+    margin-bottom: var(--space-300);
+  }
+  .ls-subsection-desc {
+    font-size: var(--font-size-body-s);
+    color: var(--color-content-subtle);
+    line-height: var(--font-leading-body-m);
+    max-width: 560px;
+  }
+
+  @media (max-width: 860px) {
+    .ls-states-grid       { grid-template-columns: repeat(2, 1fr); }
+    .ls-states-grid--5col { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .ls-states-grid       { grid-template-columns: 1fr; }
+    .ls-states-grid--5col { grid-template-columns: 1fr; }
+  }
+
   </style>
 </head>
 <body>
@@ -7661,6 +7844,9 @@
       <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9915 34.3485C19.6243 34.3485 15.3399 31.6601 11.8818 28.4752C10.2063 26.9321 8.84125 25.3797 7.89484 24.2108C7.84097 24.1443 7.78852 24.079 7.73751 24.0152C7.78852 23.9514 7.84097 23.8862 7.89484 23.8196C8.84125 22.6507 10.2063 21.0983 11.8818 19.5553C15.3399 16.3704 19.6243 13.6819 23.9915 13.6819C28.3587 13.6819 32.6432 16.3704 36.1013 19.5553C37.7768 21.0983 39.1418 22.6507 40.0882 23.8196C40.1421 23.8862 40.1946 23.9514 40.2456 24.0152C40.1946 24.079 40.1421 24.1443 40.0882 24.2108C39.1418 25.3797 37.7768 26.9321 36.1013 28.4752C32.6432 31.6601 28.3587 34.3485 23.9915 34.3485ZM23.9915 10.6819C12.9459 10.6819 3.99155 24.0152 3.99155 24.0152C3.99155 24.0152 12.9458 37.3485 23.9915 37.3485C35.0372 37.3485 43.9915 24.0152 43.9915 24.0152C43.9915 24.0152 35.0372 10.6819 23.9915 10.6819ZM27 24C27 25.6569 25.6569 27 24 27C22.3431 27 21 25.6569 21 24C21 22.3431 22.3431 21 24 21C25.6569 21 27 22.3431 27 24ZM30 24C30 27.3137 27.3137 30 24 30C20.6863 30 18 27.3137 18 24C18 20.6863 20.6863 18 24 18C27.3137 18 30 20.6863 30 24Z" fill="currentColor"/>
     </symbol>
     <!-- eye hide: eye with slash — Figma export 481:5519 @2x -->
+    <symbol id="ico-caret-right" viewBox="0 0 24 24" fill="none">
+      <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
     <symbol id="ico-eye-hide" viewBox="0 0 48 48">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M43.2637 13.7686C43.9514 14.2305 44.1346 15.1624 43.6727 15.8502L42.4274 15.0139C43.6727 15.8502 43.6724 15.8506 43.6721 15.851L43.6714 15.8521L43.6693 15.8552L43.6629 15.8647L43.641 15.8968C43.6224 15.9239 43.5959 15.9624 43.5616 16.0114C43.493 16.1095 43.3933 16.2501 43.264 16.427C43.0055 16.7807 42.6282 17.2806 42.1445 17.8782C41.1787 19.071 39.7791 20.6644 38.0439 22.2625C37.3254 22.9243 36.5384 23.5969 35.6907 24.2467L38.0607 26.6166C38.6464 27.2024 38.6464 28.1522 38.0607 28.738C37.4749 29.3238 36.5251 29.3238 35.9393 28.738L33.1745 25.9731C31.8592 26.7702 30.4424 27.4637 28.9449 27.9649L30.1863 32.5976C30.4007 33.3978 29.9258 34.2203 29.1256 34.4347C28.3254 34.6492 27.5029 34.1743 27.2885 33.3741L26.0255 28.6606C25.3589 28.7544 24.6804 28.8045 23.9915 28.8045C23.3083 28.8045 22.6352 28.7552 21.9739 28.6629L20.7115 33.3741C20.4971 34.1743 19.6746 34.6492 18.8744 34.4347C18.0742 34.2203 17.5993 33.3978 17.8137 32.5976L19.0537 27.9701C17.5544 27.4699 16.136 26.7766 14.8191 25.9795L12.0607 28.738C11.4749 29.3238 10.5251 29.3238 9.93934 28.738C9.35355 28.1522 9.35355 27.2024 9.93934 26.6166L12.3019 24.2541C11.4506 23.602 10.6604 22.9267 9.93919 22.2625C8.20397 20.6644 6.80433 19.071 5.8386 17.8782C5.35481 17.2806 4.97752 16.7807 4.71907 16.427C4.58979 16.2501 4.49007 16.1095 4.42148 16.0114C4.38718 15.9624 4.36064 15.9239 4.34206 15.8968L4.32018 15.8647L4.31375 15.8552L4.31168 15.8521L4.31093 15.851C4.31063 15.8506 4.31037 15.8502 5.55561 15.0139L4.31037 15.8502C3.8485 15.1624 4.03161 14.2305 4.71934 13.7686C5.40689 13.3069 6.3385 13.4898 6.80049 14.1771L41.5627 13.7877L6.80086 14.1776L6.80309 14.1809L6.81715 14.2015C6.83042 14.2209 6.85148 14.2514 6.88012 14.2924C6.9374 14.3743 7.02496 14.4978 7.14127 14.657C7.37398 14.9755 7.72108 15.4357 8.1702 15.9904C9.07029 17.1021 10.3705 18.5813 11.9715 20.0558C15.2272 23.0543 19.4784 25.8045 23.9915 25.8045C28.5046 25.8045 32.7559 23.0543 36.0115 20.0558C37.6125 18.5813 38.9128 17.1021 39.8129 15.9904C40.262 15.4357 40.6091 14.9755 40.8418 14.657C40.9581 14.4978 41.0457 14.3743 41.1029 14.2924C41.1316 14.2514 41.1526 14.2209 41.1659 14.2015L41.18 14.1809L41.1822 14.1776L41.1826 14.1771C41.2878 14.0206 41.4173 13.8902 41.5627 13.7877L43.2637 13.7686ZM41.5628 13.7877L43.2637 13.7686C42.7327 13.412 42.0562 13.4399 41.5628 13.7877Z" fill="currentColor"/>
     </symbol>
@@ -16599,7 +16785,898 @@
       </div><!-- /accessibility -->
 
     </div><!-- /#page-card-multi -->
-    <div class="page-panel" id="page-list"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List</h2><p class="section-description">Vertical list of items with optional icons, metadata, and actions.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-list">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Content</p>
+        <h1 class="comp-title">List</h1>
+        <p class="comp-description">Stacked rows for displaying structured information on mobile viewports. List cells come in two types: <strong>Navigation</strong> cells navigate to a new screen on tap, and <strong>Action</strong> cells trigger an in-place control — radio, checkbox, switch, button, or stepper.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=342-1382" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ── 1. Preview ────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="btn-controls">
+          <div class="dropdown" id="ls-screen-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="ls-screen-label">Settings</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Example screen">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="settings"  tabindex="0">Settings</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="frequency" tabindex="0">Notification frequency</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ls-fs-wrap">
+          <div class="ls-fs-phone">
+
+            <!-- Screen 1: Settings — navigation cells -->
+            <div class="ls-screen ls-screen--active" id="ls-screen-settings">
+              <h2 class="ls-screen-heading">Settings</h2>
+
+              <div class="list-group-header">Preferences</div>
+              <div class="list-group">
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Notifications</span>
+                        <span class="list-cell__caption">Push, email, and SMS</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Appearance</span>
+                        <span class="list-cell__caption">Light, dark, and auto</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Language</span>
+                        <span class="list-cell__caption">English (US)</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="list-group-header">Account</div>
+              <div class="list-group">
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Privacy</span>
+                        <span class="list-cell__caption">Data and permissions</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Accessibility</span>
+                        <span class="list-cell__caption">Display and motion</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-message"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Help &amp; Support</span>
+                        <span class="list-cell__caption">FAQs and contact us</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">About</span>
+                        <span class="list-cell__caption">ůnica v1.0.0</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /ls-screen-settings -->
+
+            <!-- Screen 2: Notification frequency — action / radio -->
+            <div class="ls-screen" id="ls-screen-frequency">
+              <h2 class="ls-screen-heading">Notification frequency</h2>
+
+              <div class="list-group">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Immediately</span>
+                        <span class="list-cell__caption">Sent as soon as events happen</span>
+                      </div>
+                      <div class="list-cell__trailing">
+                        <span class="radio"><input type="radio" name="ls-freq" checked aria-label="Immediately"><span class="radio-circle"><span class="radio-dot"></span></span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Hourly</span>
+                        <span class="list-cell__caption">Batched every 60 minutes</span>
+                      </div>
+                      <div class="list-cell__trailing">
+                        <span class="radio"><input type="radio" name="ls-freq" aria-label="Hourly"><span class="radio-circle"><span class="radio-dot"></span></span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Daily</span>
+                        <span class="list-cell__caption">One digest each morning</span>
+                      </div>
+                      <div class="list-cell__trailing">
+                        <span class="radio"><input type="radio" name="ls-freq" aria-label="Daily"><span class="radio-circle"><span class="radio-dot"></span></span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__divider"></div>
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Weekly</span>
+                        <span class="list-cell__caption">Summary every Monday</span>
+                      </div>
+                      <div class="list-cell__trailing">
+                        <span class="radio"><input type="radio" name="ls-freq" aria-label="Weekly"><span class="radio-circle"><span class="radio-dot"></span></span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-cell list-cell--action list-cell--disabled">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text">
+                        <span class="list-cell__label">Never</span>
+                        <span class="list-cell__caption">Not available on your plan</span>
+                      </div>
+                      <div class="list-cell__trailing">
+                        <span class="radio"><input type="radio" name="ls-freq" disabled aria-label="Never (disabled)"><span class="radio-circle"><span class="radio-dot"></span></span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /ls-screen-frequency -->
+
+          </div><!-- /.ls-fs-phone -->
+        </div><!-- /.ls-fs-wrap -->
+      </div><!-- /doc-section: Preview -->
+
+
+      <!-- ── 2. Variants & States ─────────────────────────────── -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants &amp; States</h2>
+        <hr class="doc-rule">
+
+        <!-- ── Navigation ── -->
+        <div class="ls-subsection">
+          <h3 class="ls-subsection-title">Navigation</h3>
+          <p class="ls-subsection-desc">Tapping a navigation cell moves the user to a new screen. An optional trailing caret reinforces the navigation affordance.</p>
+        </div>
+
+        <p class="ls-state-tag" style="margin-bottom:var(--space-300);">Leading media</p>
+        <div class="ls-states-wrap">
+          <div class="ls-states-grid">
+
+            <!-- Icon -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Icon bullet -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon Bullet</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading">
+                        <div class="icon-bullet icon-bullet--small icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      </div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Avatar -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Avatar</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading">
+                        <div class="avatar avatar--medium avatar--circle" style="background:var(--primitive-pool-300);color:var(--primitive-ink-900);" aria-hidden="true"><span class="avatar-initials">JD</span></div>
+                      </div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- None -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">None</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /.ls-states-grid -->
+        </div><!-- /.ls-states-wrap: leading media -->
+
+        <p class="ls-state-tag" style="margin:var(--space-700) 0 var(--space-300);">States</p>
+        <div class="ls-states-wrap">
+          <div class="ls-states-grid ls-states-grid--5col">
+
+            <!-- Default -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Default</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hover -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Hover</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav list-cell--hover">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pressed -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Pressed</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav list-cell--pressed">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Focused -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Focused</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav list-cell--focused">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Disabled -->
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Disabled</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--nav list-cell--disabled">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text">
+                        <span class="list-cell__overline">Overline</span>
+                        <span class="list-cell__label">Label</span>
+                        <span class="list-cell__caption">Caption</span>
+                      </div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /.ls-states-grid--5col states -->
+        </div><!-- /.ls-states-wrap: nav states -->
+
+
+        <!-- ── Action ── -->
+        <div class="ls-subsection">
+          <h3 class="ls-subsection-title">Action</h3>
+          <p class="ls-subsection-desc">Action cells carry an interactive control in the trailing position. The cell itself acts as the touch target for the control.</p>
+        </div>
+
+        <!-- Radio -->
+        <p class="ls-state-tag" style="margin-bottom:var(--space-300);">Radio</p>
+        <div class="ls-states-wrap">
+          <div class="ls-states-grid">
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-v-r1" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon Bullet</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="icon-bullet icon-bullet--small icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg></div></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-v-r2" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Avatar</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="avatar avatar--medium avatar--circle" style="background:var(--primitive-pool-300);color:var(--primitive-ink-900);" aria-hidden="true"><span class="avatar-initials">JD</span></div></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-v-r3" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">None</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-v-r4" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /radio -->
+
+        <!-- Checkbox -->
+        <p class="ls-state-tag" style="margin:var(--space-700) 0 var(--space-300);">Checkbox</p>
+        <div class="ls-states-wrap">
+          <div class="ls-states-grid">
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="checkbox"><input type="checkbox" aria-label="Option"><span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon Bullet</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="icon-bullet icon-bullet--small icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg></div></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="checkbox"><input type="checkbox" aria-label="Option"><span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Avatar</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="avatar avatar--medium avatar--circle" style="background:var(--primitive-berry-300);color:var(--primitive-ink-900);" aria-hidden="true"><span class="avatar-initials">AK</span></div></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="checkbox"><input type="checkbox" checked aria-label="Option"><span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">None</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="checkbox"><input type="checkbox" aria-label="Option"><span class="checkbox-box"><svg class="checkbox-check" viewBox="0 0 10.7398 8.33382" fill="none"><path d="M9.44038 0.240068C9.72214 -0.0635401 10.1963 -0.0817123 10.5 0.200029C10.8034 0.481649 10.8213 0.955964 10.54 1.2596L4.5146 7.75179L3.97456 8.33382L3.42378 7.76155L0.208937 4.41585C-0.0778684 4.11718 -0.0681694 3.64225 0.230422 3.3553C0.529095 3.0685 1.00403 3.0782 1.29097 3.37679L3.95503 6.14925L6.42769 3.48616L9.44038 0.240068Z" fill="currentColor"/></svg><span class="checkbox-dash"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /checkbox -->
+
+        <!-- Switch -->
+        <p class="ls-state-tag" style="margin:var(--space-700) 0 var(--space-300);">Switch</p>
+        <div class="ls-states-wrap">
+          <div class="ls-states-grid">
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><label class="toggle-switch"><input type="checkbox" role="switch" checked aria-label="Setting"><span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon"><svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg><svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg></span></span></span></label></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon Bullet</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="icon-bullet icon-bullet--small icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-moon"/></svg></div></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><label class="toggle-switch"><input type="checkbox" role="switch" aria-label="Setting"><span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon"><svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg><svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg></span></span></span></label></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Avatar</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="avatar avatar--medium avatar--circle" style="background:var(--primitive-mint-300);color:var(--primitive-ink-900);" aria-hidden="true"><span class="avatar-initials">MR</span></div></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><label class="toggle-switch"><input type="checkbox" role="switch" checked aria-label="Setting"><span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon"><svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg><svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg></span></span></span></label></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">None</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><label class="toggle-switch"><input type="checkbox" role="switch" aria-label="Setting"><span class="toggle-track"><span class="toggle-handle"><span class="toggle-icon"><svg class="icon-check" width="12" height="12" viewBox="120 56 48 48" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M160.305 65.1024C161.432 63.8879 163.329 63.8153 164.544 64.9422C165.757 66.0687 165.829 67.966 164.704 69.1805L140.602 95.1493L138.442 97.4774L136.239 95.1883L123.379 81.8055C122.232 80.6108 122.271 78.7111 123.465 77.5633C124.66 76.4161 126.56 76.4549 127.708 77.6493L138.364 88.7391L148.254 78.0868L160.305 65.1024Z" fill="currentColor"/></svg><svg class="icon-x" width="12" height="12" viewBox="56 56 48 48" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M65.7741 98.467C64.6026 99.6386 62.7035 99.6385 61.532 98.467C60.3604 97.2954 60.3604 95.3964 61.532 94.2248L75.7546 80.0022L61.532 65.7756C60.3604 64.604 60.3604 62.705 61.532 61.5334C62.7035 60.3619 64.6026 60.3619 65.7741 61.5334L80.0007 75.7561L94.2234 61.5334C95.3949 60.3619 97.294 60.3619 98.4656 61.5334C99.637 62.705 99.6371 64.6041 98.4656 65.7756L84.2468 80.0022L98.4656 94.2248C99.6371 95.3964 99.6371 97.2955 98.4656 98.467C97.294 99.6386 95.3949 99.6385 94.2234 98.467L80.0007 84.2483L65.7741 98.467Z" fill="currentColor"/></svg></span></span></span></label></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /switch -->
+
+        <!-- Button -->
+        <p class="ls-state-tag" style="margin:var(--space-700) 0 var(--space-300);">Button</p>
+        <div class="ls-states-wrap">
+          <div class="ls-states-grid">
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><button class="btn btn-outlined" type="button" style="height:32px;padding:0 var(--space-300);font-size:var(--font-size-body-s);">Add</button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon Bullet</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="icon-bullet icon-bullet--small icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-heart"/></svg></div></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><button class="btn btn-outlined" type="button" style="height:32px;padding:0 var(--space-300);font-size:var(--font-size-body-s);">Add</button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Avatar</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="avatar avatar--medium avatar--circle" style="background:var(--primitive-apricot-300);color:var(--primitive-ink-900);" aria-hidden="true"><span class="avatar-initials">TS</span></div></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><button class="btn btn-outlined" type="button" style="height:32px;padding:0 var(--space-300);font-size:var(--font-size-body-s);">Add</button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">None</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><button class="btn btn-outlined" type="button" style="height:32px;padding:0 var(--space-300);font-size:var(--font-size-body-s);">Add</button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /button -->
+
+        <!-- Stepper -->
+        <p class="ls-state-tag" style="margin:var(--space-700) 0 var(--space-300);">Stepper</p>
+        <div class="ls-states-wrap">
+          <div class="ls-states-grid">
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-fire"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing">
+                        <div class="stepper stepper--sm" role="group" aria-label="Quantity">
+                          <button class="stepper-btn ls-step-btn" data-dir="-1" aria-label="Decrease"><div class="stepper-btn-pill btn btn-outlined"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+                          <input class="stepper-field" type="number" value="1" min="0" max="99" inputmode="numeric" aria-label="Value" style="width:48px;">
+                          <button class="stepper-btn ls-step-btn" data-dir="1" aria-label="Increase"><div class="stepper-btn-pill btn btn-outlined"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Icon Bullet</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="icon-bullet icon-bullet--small icon-bullet--ink" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-fire"/></svg></div></div>
+                      <div class="list-cell__text"><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing">
+                        <div class="stepper stepper--sm" role="group" aria-label="Quantity">
+                          <button class="stepper-btn ls-step-btn" data-dir="-1" aria-label="Decrease"><div class="stepper-btn-pill btn btn-outlined"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+                          <input class="stepper-field" type="number" value="2" min="0" max="99" inputmode="numeric" aria-label="Value" style="width:48px;">
+                          <button class="stepper-btn ls-step-btn" data-dir="1" aria-label="Increase"><div class="stepper-btn-pill btn btn-outlined"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Avatar</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><div class="avatar avatar--medium avatar--circle" style="background:var(--primitive-citron-300);color:var(--primitive-ink-900);" aria-hidden="true"><span class="avatar-initials">PW</span></div></div>
+                      <div class="list-cell__text"><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing">
+                        <div class="stepper stepper--sm" role="group" aria-label="Quantity">
+                          <button class="stepper-btn ls-step-btn" data-dir="-1" aria-label="Decrease"><div class="stepper-btn-pill btn btn-outlined"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+                          <input class="stepper-field" type="number" value="0" min="0" max="99" inputmode="numeric" aria-label="Value" style="width:48px;">
+                          <button class="stepper-btn ls-step-btn" data-dir="1" aria-label="Increase"><div class="stepper-btn-pill btn btn-outlined"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">None</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__text"><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing">
+                        <div class="stepper stepper--sm" role="group" aria-label="Quantity">
+                          <button class="stepper-btn ls-step-btn" data-dir="-1" aria-label="Decrease"><div class="stepper-btn-pill btn btn-outlined"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+                          <input class="stepper-field" type="number" value="3" min="0" max="99" inputmode="numeric" aria-label="Value" style="width:48px;">
+                          <button class="stepper-btn ls-step-btn" data-dir="1" aria-label="Increase"><div class="stepper-btn-pill btn btn-outlined"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /stepper -->
+
+        <!-- Action States -->
+        <p class="ls-state-tag" style="margin:var(--space-700) 0 var(--space-300);">States</p>
+        <div class="ls-states-wrap">
+          <div class="ls-states-grid ls-states-grid--5col">
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Default</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r1" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Hover</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action list-cell--hover">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r2" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Pressed</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action list-cell--pressed">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r3" checked aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Focused</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action list-cell--focused">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r4" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ls-state-item">
+              <span class="ls-state-tag">Disabled</span>
+              <div class="ls-cell-wrap">
+                <div class="list-cell list-cell--action list-cell--disabled">
+                  <div class="list-cell__state-layer">
+                    <div class="list-cell__content">
+                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r5" disabled aria-label="Option (disabled)"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /action states -->
+
+      </div><!-- /doc-section: Variants & States -->
+
+      <script>
+      (function() {
+        /* Screen picker */
+        (function() {
+          var picker  = document.getElementById('ls-screen-picker');
+          if (!picker) return;
+          var trigger = picker.querySelector('.dropdown-trigger');
+          var labelEl = document.getElementById('ls-screen-label');
+          var options = Array.from(picker.querySelectorAll('.dropdown-option'));
+          function open()  { picker.setAttribute('data-open',''); trigger.setAttribute('aria-expanded','true'); }
+          function close() { picker.removeAttribute('data-open'); trigger.setAttribute('aria-expanded','false'); }
+          trigger.addEventListener('click', function(e) { e.stopPropagation(); picker.hasAttribute('data-open') ? close() : open(); });
+          options.forEach(function(opt) {
+            opt.addEventListener('click', function() {
+              options.forEach(function(o){ o.setAttribute('aria-selected','false'); });
+              opt.setAttribute('aria-selected','true');
+              labelEl.textContent = opt.textContent.trim();
+              close();
+              document.querySelectorAll('#page-list .ls-screen').forEach(function(s){ s.classList.remove('ls-screen--active'); });
+              var target = document.getElementById('ls-screen-' + opt.dataset.value);
+              if (target) target.classList.add('ls-screen--active');
+            });
+          });
+          document.addEventListener('click', close);
+        })();
+
+        /* Stepper buttons in variants grid */
+        document.querySelectorAll('#page-list .ls-step-btn').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var stepper = btn.closest('.stepper');
+            var input   = stepper.querySelector('.stepper-field');
+            var dir     = parseInt(btn.dataset.dir, 10);
+            var val     = parseInt(input.value) || 0;
+            var min     = parseInt(input.min) || 0;
+            var max     = parseInt(input.max) || 99;
+            var next    = val + dir;
+            if (next >= min && next <= max) input.value = next;
+          });
+        });
+      })();
+      </script>
+
+    </div><!-- /#page-list -->
     <div class="page-panel" id="page-list-accordion"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Content</p><h2 class="section-title">List Accordion</h2><p class="section-description">Expandable list rows for progressive disclosure.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-avatar">
 
