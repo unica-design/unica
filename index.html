@@ -7256,26 +7256,19 @@
   /* ── Text Fields: full-screen preview ── */
   .tf-fs-wrap {
     background: var(--doc-surface-preview);
-    padding: var(--space-900) var(--space-800) var(--space-800);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-500);
-  }
-  .tf-fs-controls {
+    padding: var(--space-1000) var(--space-800);
     display: flex;
     align-items: center;
-    gap: var(--space-400);
-    align-self: flex-start;
+    justify-content: center;
   }
   .tf-fs-phone {
-    width: 375px;
-    height: 580px;
-    background: var(--color-background-page);
-    border-radius: 40px;
-    box-shadow: 0 2px 24px 0 rgba(8,5,13,0.20);
-    overflow: hidden;
     position: relative;
+    width: 375px;
+    height: 812px;
+    background: var(--color-background-page);
+    border-radius: 24px;
+    box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
+    overflow: hidden;
   }
   [data-theme="dark"] .tf-fs-phone {
     box-shadow: none;
@@ -9931,41 +9924,37 @@
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
 
-        <div class="tf-fs-wrap">
-
-          <!-- Screen picker dropdown -->
-          <div class="tf-fs-controls">
-            <div class="dropdown" id="tf-screen-picker">
-              <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-                <span id="tf-screen-label">Shipping Address</span>
-                <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <ul class="dropdown-menu" role="listbox" aria-label="Example screen">
-                <li class="dropdown-option" role="option" aria-selected="true"  data-value="shipping" tabindex="0">Shipping Address</li>
-                <li class="dropdown-option" role="option" aria-selected="false" data-value="login"    tabindex="0">Login</li>
-              </ul>
-            </div>
+        <div class="btn-controls">
+          <div class="dropdown" id="tf-screen-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="tf-screen-label">Shipping Address</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Example screen">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="shipping" tabindex="0">Shipping Address</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="login"    tabindex="0">Login</li>
+            </ul>
           </div>
+        </div>
 
-          <!-- Phone frame -->
+        <div class="tf-fs-wrap">
           <div class="tf-fs-phone">
 
             <!-- Screen 1: Shipping Address -->
             <div class="tf-screen tf-screen--active" id="tf-screen-shipping">
               <h2 class="tf-screen-heading">Shipping Address</h2>
 
-              <div class="tf-imol-row">
-                <div class="tf-imol">
-                  <label class="tf-ilabel" for="tf-s-fname">First name</label>
-                  <div class="tf-ifield">
-                    <input class="tf-iinput" id="tf-s-fname" type="text" placeholder="First name" value="ůnica">
-                  </div>
+              <div class="tf-imol">
+                <label class="tf-ilabel" for="tf-s-fname">First name</label>
+                <div class="tf-ifield">
+                  <input class="tf-iinput" id="tf-s-fname" type="text" placeholder="First name" value="ůnica">
                 </div>
-                <div class="tf-imol">
-                  <label class="tf-ilabel" for="tf-s-lname">Last name</label>
-                  <div class="tf-ifield">
-                    <input class="tf-iinput" id="tf-s-lname" type="text" placeholder="Last name" value="system">
-                  </div>
+              </div>
+
+              <div class="tf-imol">
+                <label class="tf-ilabel" for="tf-s-lname">Last name</label>
+                <div class="tf-ifield">
+                  <input class="tf-iinput" id="tf-s-lname" type="text" placeholder="Last name" value="system">
                 </div>
               </div>
 
@@ -10009,8 +9998,8 @@
             <!-- Screen 2: Login -->
             <div class="tf-screen" id="tf-screen-login">
               <div class="tf-screen-logo">
-                <img class="prog-logo-lm" src="assets/logo-dark-mode.png" width="32" height="32" alt="" aria-hidden="true">
-                <img class="prog-logo-dm" src="assets/logo.png"           width="32" height="32" alt="" aria-hidden="true">
+                <img class="prog-logo-lm" src="assets/logo.png"           width="32" height="32" alt="" aria-hidden="true">
+                <img class="prog-logo-dm" src="assets/logo-dark-mode.png" width="32" height="32" alt="" aria-hidden="true">
               </div>
 
               <div class="tf-imol">
@@ -10035,7 +10024,6 @@
             </div><!-- /tf-screen-login -->
 
           </div><!-- /.tf-fs-phone -->
-
         </div><!-- /.tf-fs-wrap -->
       </div><!-- /doc-section: Preview -->
 
