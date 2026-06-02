@@ -7768,6 +7768,11 @@
   #ls-preview-phone[data-no-caption]  .list-cell__caption  { display: none; }
   #ls-preview-phone[data-no-divider]  .list-cell__divider  { display: none; }
   #ls-preview-phone[data-no-caret]    .list-cell__caret    { display: none; }
+  /* List preview pickers — match card-multi-avatar-picker pattern */
+  #ls-leading-picker .dropdown-trigger,
+  #ls-leading-picker #ls-leading-label { display: inline-flex; align-items: center; gap: 6px; }
+  #ls-leading-picker .dropdown-option  { display: flex; align-items: center; gap: 6px; }
+  #ls-leading-picker .dropdown-trigger { padding-left: 8px; }
 
   </style>
 </head>
@@ -16811,30 +16816,40 @@
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
 
-        <!-- Type toggle (Navigation / Action) -->
-        <div class="card-seg-wrap" style="margin-bottom:var(--space-400);">
-          <div class="card-seg" role="tablist" aria-label="Cell type" id="ls-type-seg">
-            <button class="card-seg-btn active" role="tab" aria-selected="true"  data-ls-type="nav">Navigation</button>
-            <button class="card-seg-btn"        role="tab" aria-selected="false" data-ls-type="action">Action</button>
-          </div>
-        </div>
-
-        <!-- Leading + trailing controls -->
+        <!-- Controls -->
         <div class="btn-controls">
-          <div class="seg-control" id="ls-leading-ctl" role="group" aria-label="Leading media">
+          <!-- Type -->
+          <div class="seg-control" id="ls-type-ctl" role="group" aria-label="Cell type">
             <span class="seg-control-slider" aria-hidden="true"></span>
-            <button class="seg-control-btn" data-value="none"        aria-pressed="false">None</button>
-            <button class="seg-control-btn" data-value="icon"        aria-pressed="true">Icon</button>
-            <button class="seg-control-btn" data-value="icon-bullet" aria-pressed="false">Icon Bullet</button>
-            <button class="seg-control-btn" data-value="avatar"      aria-pressed="false">Avatar</button>
+            <button class="seg-control-btn" data-value="nav"    aria-pressed="true">Navigation</button>
+            <button class="seg-control-btn" data-value="action" aria-pressed="false">Action</button>
           </div>
-          <div class="seg-control" id="ls-trailing-ctl" role="group" aria-label="Trailing action" hidden>
-            <span class="seg-control-slider" aria-hidden="true"></span>
-            <button class="seg-control-btn" data-value="radio"    aria-pressed="true">Radio</button>
-            <button class="seg-control-btn" data-value="checkbox" aria-pressed="false">Checkbox</button>
-            <button class="seg-control-btn" data-value="switch"   aria-pressed="false">Switch</button>
-            <button class="seg-control-btn" data-value="button"   aria-pressed="false">Button</button>
-            <button class="seg-control-btn" data-value="stepper"  aria-pressed="false">Stepper</button>
+          <!-- Leading media -->
+          <div class="dropdown" id="ls-leading-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="ls-leading-label"><svg width="14" height="14" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>Icon</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Leading media">
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="none"        tabindex="0">None</li>
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="icon"        tabindex="0"><svg width="14" height="14" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>Icon</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="icon-bullet" tabindex="0"><div class="icon-bullet icon-bullet--small icon-bullet--ink" style="width:20px;height:20px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ico-bell"/></svg></div>Icon Bullet</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar"      tabindex="0"><div class="avatar avatar--circle" style="width:20px;height:20px;min-width:20px;background:var(--primitive-pool-300);color:var(--primitive-ink-900);font-size:7px;font-weight:600;" aria-hidden="true"><span class="avatar-initials">JD</span></div>Avatar</li>
+            </ul>
+          </div>
+          <!-- Trailing action (shown only in Action mode) -->
+          <div class="dropdown" id="ls-trailing-picker" style="display:none">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="ls-trailing-label">Radio</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Trailing action">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="radio"    tabindex="0">Radio</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="checkbox" tabindex="0">Checkbox</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="switch"   tabindex="0">Switch</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="button"   tabindex="0">Button</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="stepper"  tabindex="0">Stepper</li>
+            </ul>
           </div>
         </div>
 
@@ -17774,9 +17789,9 @@
           var caretWrap = document.getElementById('ls-prop-caret-wrap');
           if (caretWrap) caretWrap.style.display = state.type === 'action' ? 'none' : '';
 
-          // Show/hide trailing control for action only
-          var trailCtl = document.getElementById('ls-trailing-ctl');
-          if (trailCtl) trailCtl.hidden = (state.type !== 'action');
+          // Show/hide trailing picker for action only
+          var trailPicker = document.getElementById('ls-trailing-picker');
+          if (trailPicker) trailPicker.style.display = state.type === 'action' ? '' : 'none';
 
           // Update code snippet
           updateCode();
@@ -17848,26 +17863,42 @@
           });
         }
 
-        /* ── Wire: Type toggle ──────────────────────── */
-        var typebtns = Array.from(document.querySelectorAll('#ls-type-seg .card-seg-btn'));
-        typebtns.forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            typebtns.forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-            btn.classList.add('active');
-            btn.setAttribute('aria-selected','true');
-            state.type = btn.dataset.lsType;
-            render();
+        /* ── Local dropdown init ────────────────────── */
+        function initDrop(pickerId, labelId, onSelect) {
+          var picker  = document.getElementById(pickerId);
+          var labelEl = document.getElementById(labelId);
+          if (!picker || !labelEl) return;
+          var trigger = picker.querySelector('.dropdown-trigger');
+          var opts    = Array.from(picker.querySelectorAll('.dropdown-option'));
+          function open()  { picker.setAttribute('data-open',''); trigger.setAttribute('aria-expanded','true'); }
+          function close() { picker.removeAttribute('data-open'); trigger.setAttribute('aria-expanded','false'); }
+          trigger.addEventListener('click', function(e){ e.stopPropagation(); picker.hasAttribute('data-open') ? close() : open(); });
+          opts.forEach(function(opt){
+            opt.addEventListener('click', function(){
+              opts.forEach(function(o){ o.setAttribute('aria-selected','false'); });
+              opt.setAttribute('aria-selected','true');
+              labelEl.innerHTML = opt.innerHTML;
+              close();
+              onSelect(opt.dataset.value);
+            });
           });
+          document.addEventListener('click', close);
+        }
+
+        /* ── Wire: Type seg-control ─────────────────── */
+        initSeg(document.getElementById('ls-type-ctl'), function(val){
+          state.type = val;
+          render();
         });
 
-        /* ── Wire: Leading seg-control ──────────────── */
-        initSeg(document.getElementById('ls-leading-ctl'), function(val){
+        /* ── Wire: Leading dropdown ─────────────────── */
+        initDrop('ls-leading-picker', 'ls-leading-label', function(val){
           state.leading = val;
           render();
         });
 
-        /* ── Wire: Trailing seg-control ─────────────── */
-        initSeg(document.getElementById('ls-trailing-ctl'), function(val){
+        /* ── Wire: Trailing dropdown ────────────────── */
+        initDrop('ls-trailing-picker', 'ls-trailing-label', function(val){
           state.trailing = val;
           render();
         });
