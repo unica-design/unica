@@ -7277,10 +7277,15 @@
   .tf-screen {
     height: 100%;
     overflow-y: auto;
-    padding: 52px 16px 44px;
+    padding: 88px var(--space-400) var(--space-900);
     display: none;
     box-sizing: border-box;
     scrollbar-width: none;
+  }
+  #tf-screen-login {
+    padding-left: var(--space-500);
+    padding-right: var(--space-500);
+    padding-bottom: var(--space-800);
   }
   .tf-screen::-webkit-scrollbar { display: none; }
   .tf-screen--active { display: block; }
@@ -7297,15 +7302,15 @@
     border-radius: 50%;
     background: var(--color-content-default);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: var(--space-700);
+    margin-bottom: var(--space-900);
     overflow: hidden; flex-shrink: 0;
   }
 
   /* Interactive molecule */
-  .tf-imol { display: flex; flex-direction: column; gap: 4px; }
-  .tf-imol + .tf-imol { margin-top: var(--space-300); }
+  .tf-imol { display: flex; flex-direction: column; gap: var(--space-300); }
+  .tf-imol + .tf-imol { margin-top: var(--space-400); }
   .tf-imol-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-300); margin-bottom: var(--space-300); }
-  .tf-ilabel { font-size: var(--font-size-body-s); font-weight: var(--font-weight-semibold); color: var(--color-content-default); }
+  .tf-ilabel { font-size: var(--font-size-body-m); font-weight: var(--font-weight-semibold); color: var(--color-content-default); }
   .tf-ifield {
     height: 48px;
     border-radius: var(--corner-radius-m);
@@ -10016,7 +10021,7 @@
                 <a href="#" class="tf-forgot-link" onclick="return false;">forgot password?</a>
               </div>
 
-              <button class="btn btn-filled btn--large" type="button" style="width:100%;margin-top:var(--space-700);">Log in</button>
+              <button class="btn btn-filled btn--large" type="button" style="width:100%;margin-top:var(--space-900);">Log in</button>
             </div><!-- /tf-screen-login -->
 
           </div><!-- /.tf-fs-phone -->
