@@ -7777,11 +7777,6 @@
   #ls-ib-color-picker .dropdown-option   { display: flex; align-items: center; gap: 6px; }
   #ls-ib-color-picker .dropdown-trigger  { padding-left: 8px; }
 
-  /* Avatar sub-picker */
-  #ls-avatar-picker .dropdown-trigger,
-  #ls-avatar-picker #ls-avatar-label { display: inline-flex; align-items: center; gap: 6px; }
-  #ls-avatar-picker .dropdown-option  { display: flex; align-items: center; gap: 6px; }
-  #ls-avatar-picker .dropdown-trigger { padding-left: 8px; }
 
   </style>
 </head>
@@ -16862,19 +16857,6 @@
               <li class="dropdown-option" role="option" aria-selected="false" data-value="ink"     tabindex="0"><span class="cb-color-dot" style="background:var(--primitive-ink-900)"></span>Ink</li>
             </ul>
           </div>
-          <!-- Avatar sub-picker (shown only when leading = avatar) -->
-          <div class="dropdown" id="ls-avatar-picker" style="display:none">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="ls-avatar-label"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt="">Sofia</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Avatar">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="avatar-1.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-1.png" alt="">Sofia</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-2.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-2.png" alt="">Marcus</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-3.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-3.png" alt="">Andre</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="avatar-4.png" tabindex="0"><img class="card-multi-sub-avatar" src="assets/avatars/avatar-4.png" alt="">Kai</li>
-            </ul>
-          </div>
           <!-- Trailing action (shown only in Action mode) -->
           <div class="dropdown" id="ls-trailing-picker" style="display:none">
             <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
@@ -16900,7 +16882,7 @@
 
               <div class="list-group-header">Preferences</div>
               <div class="list-group">
-                <div class="list-cell list-cell--nav" data-icon="bell" data-initials="NT" data-avatar-bg="var(--primitive-pool-300)">
+                <div class="list-cell list-cell--nav" data-icon="bell" data-avatar-src="avatar-1.png">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -16910,11 +16892,11 @@
                         <span class="list-cell__label">Notifications</span>
                         <span class="list-cell__caption">Push, email, and SMS</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--nav" data-icon="moon" data-initials="AP" data-avatar-bg="var(--primitive-berry-300)">
+                <div class="list-cell list-cell--nav" data-icon="moon" data-avatar-src="avatar-2.png">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -16924,11 +16906,11 @@
                         <span class="list-cell__label">Appearance</span>
                         <span class="list-cell__caption">Light, dark, and auto</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--nav" data-icon="cloud" data-initials="LN" data-avatar-bg="var(--primitive-mint-300)">
+                <div class="list-cell list-cell--nav" data-icon="cloud">
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
                       <div class="list-cell__leading" data-ls-lead><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg></div>
@@ -16937,7 +16919,7 @@
                         <span class="list-cell__label">Language</span>
                         <span class="list-cell__caption">English (US)</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -16945,7 +16927,7 @@
 
               <div class="list-group-header">Account</div>
               <div class="list-group">
-                <div class="list-cell list-cell--nav" data-icon="leaf" data-initials="PR" data-avatar-bg="var(--primitive-violet-300)">
+                <div class="list-cell list-cell--nav" data-icon="leaf" data-avatar-src="avatar-3.png">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -16955,11 +16937,11 @@
                         <span class="list-cell__label">Privacy</span>
                         <span class="list-cell__caption">Data and permissions</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--nav" data-icon="sun" data-initials="AC" data-avatar-bg="var(--primitive-apricot-300)">
+                <div class="list-cell list-cell--nav" data-icon="sun" data-initials="S" data-avatar-bg="var(--primitive-violet-300)">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -16969,11 +16951,11 @@
                         <span class="list-cell__label">Accessibility</span>
                         <span class="list-cell__caption">Display and motion</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--nav" data-icon="message" data-initials="HS" data-avatar-bg="var(--primitive-citron-300)">
+                <div class="list-cell list-cell--nav" data-icon="message" data-avatar-src="avatar-4.png">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -16983,11 +16965,11 @@
                         <span class="list-cell__label">Help &amp; Support</span>
                         <span class="list-cell__caption">FAQs and contact us</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--nav" data-icon="unica" data-initials="AB" data-avatar-bg="var(--primitive-ink-900)" data-avatar-color="var(--primitive-cafe-0)">
+                <div class="list-cell list-cell--nav" data-icon="unica">
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
                       <div class="list-cell__leading" data-ls-lead><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg></div>
@@ -16996,7 +16978,7 @@
                         <span class="list-cell__label">About</span>
                         <span class="list-cell__caption">ůnica v1.0.0</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17008,7 +16990,7 @@
               <h2 class="ls-screen-heading">Notification frequency</h2>
 
               <div class="list-group">
-                <div class="list-cell list-cell--action" data-icon="fire" data-initials="IM" data-avatar-bg="var(--primitive-violet-300)">
+                <div class="list-cell list-cell--action" data-icon="fire" data-avatar-src="avatar-2.png">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -17022,7 +17004,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--action" data-icon="bell" data-initials="HR" data-avatar-bg="var(--primitive-pool-300)">
+                <div class="list-cell list-cell--action" data-icon="bell">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -17036,7 +17018,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--action" data-icon="moon" data-initials="DL" data-avatar-bg="var(--primitive-berry-300)">
+                <div class="list-cell list-cell--action" data-icon="moon" data-avatar-src="avatar-1.png">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -17050,7 +17032,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--action" data-icon="sun" data-initials="WK" data-avatar-bg="var(--primitive-mint-300)">
+                <div class="list-cell list-cell--action" data-icon="sun" data-avatar-src="avatar-4.png">
                   <div class="list-cell__divider"></div>
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
@@ -17064,7 +17046,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="list-cell list-cell--action list-cell--disabled" data-icon="unica" data-initials="NV" data-avatar-bg="var(--primitive-ink-900)" data-avatar-color="var(--primitive-cafe-0)">
+                <div class="list-cell list-cell--action list-cell--disabled" data-icon="unica">
                   <div class="list-cell__state-layer">
                     <div class="list-cell__content">
                       <div class="list-cell__leading" data-ls-lead></div>
@@ -17161,7 +17143,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17183,7 +17165,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17205,7 +17187,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17224,7 +17206,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17251,7 +17233,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17271,7 +17253,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17291,7 +17273,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17311,7 +17293,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17331,7 +17313,7 @@
                         <span class="list-cell__label">Label</span>
                         <span class="list-cell__caption">Caption</span>
                       </div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
                   </div>
                 </div>
@@ -17745,7 +17727,6 @@
           leading:   'icon',        // 'none' | 'icon' | 'icon-bullet' | 'avatar'
           trailing:  'radio',       // 'radio' | 'checkbox' | 'switch' | 'button' | 'stepper'
           ibColor:   'violet',      // icon-bullet color
-          avatarSrc: 'avatar-1.png', // avatar filename
           overline:  false,
           caption:   true,
           divider:   true,
@@ -17764,7 +17745,14 @@
           var icon = (cell && cell.dataset.icon) || 'bell';
           if (mode === 'icon')        return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-' + icon + '"/></svg>';
           if (mode === 'icon-bullet') return '<div class="icon-bullet icon-bullet--small icon-bullet--' + state.ibColor + '" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-' + icon + '"/></svg></div>';
-          if (mode === 'avatar')      return '<img class="avatar avatar--medium avatar--circle" src="assets/avatars/' + state.avatarSrc + '" alt="" aria-hidden="true" style="object-fit:cover;">';
+          if (mode === 'avatar') {
+            var src  = cell && cell.dataset.avatarSrc;
+            var init = cell && cell.dataset.initials;
+            var bg   = (cell && cell.dataset.avatarBg) || 'var(--primitive-pool-300)';
+            if (src)  return '<img class="avatar avatar--medium avatar--circle" src="assets/avatars/' + src + '" alt="" aria-hidden="true" style="object-fit:cover;">';
+            if (init) return '<div class="avatar avatar--medium avatar--circle" style="background:' + bg + ';color:var(--primitive-ink-900);" aria-hidden="true"><span class="avatar-initials">' + init + '</span></div>';
+            return ''; // empty — hidden by :empty CSS
+          }
           return '';
         }
 
@@ -17807,10 +17795,6 @@
           var ibColorPicker = document.getElementById('ls-ib-color-picker');
           if (ibColorPicker) ibColorPicker.style.display = state.leading === 'icon-bullet' ? '' : 'none';
 
-          // Show/hide avatar picker
-          var avatarPicker = document.getElementById('ls-avatar-picker');
-          if (avatarPicker) avatarPicker.style.display = state.leading === 'avatar' ? '' : 'none';
-
           // Update code snippet
           updateCode();
         }
@@ -17833,7 +17817,7 @@
 
           var trailSlot = '';
           if (isNav && state.caret) {
-            trailSlot = '\n      <div class="list-cell__trailing">\n        <svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-caret-right"/></svg>\n      </div>';
+            trailSlot = '\n      <div class="list-cell__trailing">\n        <svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5L16 12L9.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>\n      </div>';
           } else if (!isNav) {
             trailSlot = '\n      <div class="list-cell__trailing">\n        <!-- ' + state.trailing + ' -->\n      </div>';
           }
@@ -17927,11 +17911,6 @@
           render();
         });
 
-        /* ── Wire: Avatar picker dropdown ───────────── */
-        initDrop('ls-avatar-picker', 'ls-avatar-label', function(val){
-          state.avatarSrc = val;
-          render();
-        });
 
         /* ── Wire: Property toggles ─────────────────── */
         function wireProp(id, key) {
