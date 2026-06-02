@@ -7591,8 +7591,7 @@
     padding: var(--space-200);
     background: var(--color-background-page);
   }
-  .list-cell--nav,
-  .list-cell--action { cursor: pointer; }
+  .list-cell--nav { cursor: pointer; }
 
   /* Divider — absolute, 24px inset L/R */
   .list-cell__divider {
@@ -7613,12 +7612,10 @@
     border-radius: var(--corner-radius-m);
     transition: background 120ms ease;
   }
-  .list-cell--nav:hover    .list-cell__state-layer,
-  .list-cell--action:hover .list-cell__state-layer,
-  .list-cell--hover        .list-cell__state-layer { background: var(--color-action-hover-subtle); }
-  .list-cell--nav:active    .list-cell__state-layer,
-  .list-cell--action:active .list-cell__state-layer,
-  .list-cell--pressed       .list-cell__state-layer { background: var(--color-action-hover-subtle); filter: brightness(0.92); }
+  .list-cell--nav:hover .list-cell__state-layer,
+  .list-cell--hover     .list-cell__state-layer { background: var(--color-action-hover-subtle); }
+  .list-cell--nav:active .list-cell__state-layer,
+  .list-cell--pressed    .list-cell__state-layer { background: var(--color-action-hover-subtle); filter: brightness(0.92); }
   .list-cell--focused .list-cell__state-layer {
     outline: 2px solid var(--color-border-strong);
     outline-offset: 1px;
@@ -17646,8 +17643,9 @@
 
         <!-- Action States -->
         <p class="ls-state-tag" style="margin:var(--space-700) 0 var(--space-300);">States</p>
+        <p class="ls-subsection-desc" style="margin-bottom:var(--space-400);">Action cells carry no whole-cell hover or pressed state — only the trailing control itself is interactive. Focused and disabled apply to the cell as a container.</p>
         <div class="ls-states-wrap">
-          <div class="ls-states-grid ls-states-grid--5col">
+          <div class="ls-states-grid" style="grid-template-columns:repeat(3,1fr);">
             <div class="ls-state-item">
               <span class="ls-state-tag">Default</span>
               <div class="ls-cell-wrap">
@@ -17663,34 +17661,6 @@
               </div>
             </div>
             <div class="ls-state-item">
-              <span class="ls-state-tag">Hover</span>
-              <div class="ls-cell-wrap">
-                <div class="list-cell list-cell--action list-cell--hover">
-                  <div class="list-cell__state-layer">
-                    <div class="list-cell__content">
-                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
-                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
-                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r2" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="ls-state-item">
-              <span class="ls-state-tag">Pressed</span>
-              <div class="ls-cell-wrap">
-                <div class="list-cell list-cell--action list-cell--pressed">
-                  <div class="list-cell__state-layer">
-                    <div class="list-cell__content">
-                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
-                      <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
-                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r3" checked aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="ls-state-item">
               <span class="ls-state-tag">Focused</span>
               <div class="ls-cell-wrap">
                 <div class="list-cell list-cell--action list-cell--focused">
@@ -17698,7 +17668,7 @@
                     <div class="list-cell__content">
                       <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
                       <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
-                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r4" aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r2" checked aria-label="Option"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
                     </div>
                   </div>
                 </div>
@@ -17712,7 +17682,7 @@
                     <div class="list-cell__content">
                       <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
                       <div class="list-cell__text"><span class="list-cell__overline">Overline</span><span class="list-cell__label">Label</span><span class="list-cell__caption">Caption</span></div>
-                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r5" disabled aria-label="Option (disabled)"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
+                      <div class="list-cell__trailing"><span class="radio"><input type="radio" name="ls-s-r3" disabled aria-label="Option (disabled)"><span class="radio-circle"><span class="radio-dot"></span></span></span></div>
                     </div>
                   </div>
                 </div>
