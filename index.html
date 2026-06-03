@@ -8624,42 +8624,41 @@
     50%, 100% { opacity: 0; }
   }
 
-  /* Variants states grid */
-  .sf-states-grid {
-    display: grid;
-    grid-template-columns: 56px 1fr 1fr 1fr;
-    gap: var(--space-400) var(--space-500);
-    align-items: center;
-    max-width: 700px;
+  /* Variants & States — use standard states-matrix, 4-col (label + 3 states), no row borders */
+  #page-search-field .states-matrix-head,
+  #page-search-field .states-matrix-row {
+    grid-template-columns: 88px repeat(3, 1fr);
+    min-width: 380px;
+  }
+  #page-search-field .states-matrix-row { border-bottom: none; }
+  #page-search-field .states-matrix-cell {
+    padding: var(--space-500) var(--space-400);
+    pointer-events: none; /* prevent focus and layout shift on click */
   }
 
-  .sf-states-size-label {
-    font-family: var(--font-family-sans);
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-content-subtle);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    font-size: 11px;
-  }
-
-  .sf-states-col-label {
-    font-family: var(--font-family-sans);
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-content-subtle);
-    margin: 0;
-  }
-
-  /* Wrap for variants section (constrains search field width) */
-  .sf-variant-wrap {
-    background: var(--color-background-page);
-    border: var(--border-width-default) solid var(--color-border-subtle);
-    border-radius: var(--corner-radius-m);
-    padding: var(--space-400);
+  /* Static field mock — replaces live <input> in variant cells */
+  .sf-field-mock {
+    flex: 1;
+    min-width: 0;
     display: flex;
-    flex-direction: column;
-    gap: var(--space-300);
+    align-items: center;
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    color: var(--color-content-default);
+    line-height: 1;
+  }
+  .search-field--small .sf-field-mock { font-size: var(--font-size-body-s); }
+  .sf-field-placeholder { color: var(--color-content-subtle); }
+
+  /* Blinking cursor for active / typing states */
+  .sf-cursor {
+    display: inline-block;
+    width: 1.5px;
+    height: 1.15em;
+    background: var(--color-content-default);
+    vertical-align: middle;
+    flex-shrink: 0;
+    animation: sf-cursor-blink 1.2s step-end infinite;
   }
 
 
@@ -11683,61 +11682,66 @@
       <div class="doc-section">
         <h2 class="doc-section-title">Variants &amp; States</h2>
         <hr class="doc-rule">
-        <p class="doc-section-description">Two sizes share the same three states. The clear button appears only in the Typing state and is hidden otherwise.</p>
+        <p class="doc-section-description">Search field is available in two sizes. A delete button appears in the typing state, which clears entered text.</p>
 
-        <div class="sf-states-grid">
+        <div class="states-matrix">
 
-          <!-- Column headers -->
-          <div></div>
-          <p class="sf-states-col-label">Default</p>
-          <p class="sf-states-col-label">Active</p>
-          <p class="sf-states-col-label">Typing</p>
-
-          <!-- Large -->
-          <span class="sf-states-size-label">LARGE</span>
-          <div class="sf-variant-wrap">
-            <div class="search-field">
-              <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
-              <input class="search-field__input" type="text" placeholder="Search" tabindex="-1" readonly>
-            </div>
-          </div>
-          <div class="sf-variant-wrap">
-            <div class="search-field search-field--active">
-              <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
-              <input class="search-field__input" type="text" placeholder="Search" tabindex="-1" readonly>
-            </div>
-          </div>
-          <div class="sf-variant-wrap">
-            <div class="search-field search-field--active search-field--typing">
-              <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
-              <input class="search-field__input" type="text" value="modernist" tabindex="-1" readonly>
-              <button class="search-field__clear" tabindex="-1" aria-label="Clear">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
-              </button>
-            </div>
+          <div class="states-matrix-head">
+            <div class="states-matrix-head-spacer"></div>
+            <div class="states-matrix-head-cell">Default</div>
+            <div class="states-matrix-head-cell">Active</div>
+            <div class="states-matrix-head-cell">Typing</div>
           </div>
 
-          <!-- Small -->
-          <span class="sf-states-size-label">SMALL</span>
-          <div class="sf-variant-wrap">
-            <div class="search-field search-field--small">
-              <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
-              <input class="search-field__input" type="text" placeholder="Search" tabindex="-1" readonly>
+          <!-- Large row -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Large</div>
+            <div class="states-matrix-cell">
+              <div class="search-field" style="width:100%">
+                <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                <span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span>
+              </div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="search-field search-field--active" style="width:100%">
+                <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                <span class="sf-field-mock"><span class="sf-cursor"></span></span>
+              </div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="search-field search-field--active search-field--typing" style="width:100%">
+                <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                <span class="sf-field-mock">morning<span class="sf-cursor"></span></span>
+                <button class="search-field__clear" style="display:flex" aria-label="Clear" tabindex="-1">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+                </button>
+              </div>
             </div>
           </div>
-          <div class="sf-variant-wrap">
-            <div class="search-field search-field--small search-field--active">
-              <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
-              <input class="search-field__input" type="text" placeholder="Search" tabindex="-1" readonly>
+
+          <!-- Small row -->
+          <div class="states-matrix-row">
+            <div class="states-matrix-label">Small</div>
+            <div class="states-matrix-cell">
+              <div class="search-field search-field--small" style="width:100%">
+                <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                <span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span>
+              </div>
             </div>
-          </div>
-          <div class="sf-variant-wrap">
-            <div class="search-field search-field--small search-field--active search-field--typing">
-              <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
-              <input class="search-field__input" type="text" value="modernist" tabindex="-1" readonly>
-              <button class="search-field__clear" tabindex="-1" aria-label="Clear">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
-              </button>
+            <div class="states-matrix-cell">
+              <div class="search-field search-field--small search-field--active" style="width:100%">
+                <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                <span class="sf-field-mock"><span class="sf-cursor"></span></span>
+              </div>
+            </div>
+            <div class="states-matrix-cell">
+              <div class="search-field search-field--small search-field--active search-field--typing" style="width:100%">
+                <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                <span class="sf-field-mock">morning<span class="sf-cursor"></span></span>
+                <button class="search-field__clear" style="display:flex" aria-label="Clear" tabindex="-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -11745,7 +11749,52 @@
 
       </div><!-- /Variants & States -->
 
-      <!-- ══ 3. ACCESSIBILITY ════════════════════════════════════ -->
+      <!-- ══ 3. PROPERTIES ══════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">size</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">large</td>
+                <td>Field height. <code style="font-family:monospace;font-size:.9em">large</code> (44px) or <code style="font-family:monospace;font-size:.9em">small</code> (36px). Applied via <code style="font-family:monospace;font-size:.9em">.search-field--small</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">placeholder</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">Search</td>
+                <td>Hint text shown when the field is empty. Disappears on focus.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">state</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">default</td>
+                <td>Managed reactively. <code style="font-family:monospace;font-size:.9em">default</code> at rest · <code style="font-family:monospace;font-size:.9em">active</code> on focus (ink border, cursor) · <code style="font-family:monospace;font-size:.9em">typing</code> once text is entered (delete button appears).</td>
+              </tr>
+              <tr>
+                <td class="td-mono">disabled</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Renders the field non-interactive with muted icon and placeholder text.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">type</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">search</td>
+                <td>Always use <code style="font-family:monospace;font-size:.9em">type="search"</code> on the input to enable semantic search behaviour and OS-level gestures.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /Properties -->
+
+      <!-- ══ 4. ACCESSIBILITY ════════════════════════════════════ -->
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
