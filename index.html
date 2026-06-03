@@ -8253,11 +8253,15 @@
 
   /* Phone shell */
   #sf-phone-mock {
+    position: relative;
     width: 375px;
+    height: 720px;
     background: var(--color-background-page);
     border-radius: 24px;
     box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   [data-theme="dark"] #sf-phone-mock {
@@ -8269,11 +8273,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-300) var(--space-500) var(--space-200);
+    padding: var(--space-300) var(--space-500) var(--space-100);
     font-family: var(--font-family-sans);
     font-size: 12px;
     font-weight: var(--font-weight-semibold);
     color: var(--color-content-default);
+    flex-shrink: 0;
   }
 
   .sf-status-icons {
@@ -8282,17 +8287,69 @@
     gap: var(--space-200);
   }
 
-  /* Scrollable results area */
-  .sf-results {
-    padding: var(--space-200) var(--space-400) var(--space-700);
+  /* ── Base screen (home state) ── */
+  .sf-base-screen {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: var(--space-500);
-    overflow-y: auto;
-    max-height: 560px;
+    overflow: hidden;
   }
 
-  /* Chips strip */
+  .sf-app-bar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--space-300) var(--space-400) var(--space-200);
+  }
+
+  .sf-app-title-main {
+    display: block;
+    font-family: var(--font-family-serif);
+    font-size: var(--font-size-heading-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    line-height: 1.15;
+  }
+
+  .sf-app-title-sub {
+    display: block;
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-xs);
+    color: var(--color-content-subtle);
+    margin-top: 2px;
+  }
+
+  .sf-app-actions {
+    display: flex;
+    gap: var(--space-100);
+    margin-top: 2px;
+  }
+
+  .sf-icon-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-radius: var(--corner-radius-round);
+    color: var(--color-content-default);
+    cursor: pointer;
+    transition: background 120ms ease;
+  }
+
+  .sf-icon-btn:hover { background: var(--color-action-hover-subtle); }
+
+  .sf-base-content {
+    padding: var(--space-200) var(--space-400) var(--space-400);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-400);
+    overflow-y: auto;
+  }
+
+  /* Chips strip — shared by base and overlay */
   .sf-chips-row {
     display: flex;
     gap: var(--space-200);
@@ -8322,10 +8379,6 @@
     color: var(--color-background-page);
   }
 
-  .sf-chip:not(.sf-chip--active):hover {
-    background: var(--color-background-selection);
-  }
-
   /* Section label */
   .sf-section-label {
     font-family: var(--font-family-sans);
@@ -8335,48 +8388,135 @@
     margin: 0 0 var(--space-300);
   }
 
-  /* Photo grid */
-  .sf-photo-grid {
+  /* 2-col card tile grid inside phone */
+  .sf-tile-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-300);
   }
 
-  .sf-photo-card {
+  /* card-media--tile overrides inside sf context (tighter photo height) */
+  #sf-phone-mock .card-media--tile .card-media-photo-wrap { height: 120px; }
+  #sf-phone-mock .card-media { border-radius: var(--corner-radius-m); overflow: hidden; }
+
+  /* ── Search overlay (slides up over base screen) ── */
+  .sf-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--color-background-page);
     display: flex;
     flex-direction: column;
-    gap: var(--space-200);
+    transform: translateY(100%);
+    transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
   }
 
-  .sf-photo-img {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    border-radius: var(--corner-radius-l);
-    overflow: hidden;
-    background: var(--color-background-subtle);
+  .sf-overlay.is-open {
+    transform: translateY(0);
   }
 
-  .sf-photo-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  .sf-overlay.is-closing {
+    transition: transform 300ms cubic-bezier(0.4, 0, 1, 1);
   }
 
-  .sf-photo-title {
-    font-family: var(--font-family-sans);
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-content-default);
-    margin: 0;
-    line-height: 1.3;
+  /* Results area (between header and keyboard) */
+  .sf-results {
+    flex: 1;
+    padding: var(--space-300) var(--space-400) var(--space-200);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-400);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
-  .sf-photo-meta {
-    font-family: var(--font-family-sans);
-    font-size: var(--font-size-body-xs);
-    color: var(--color-content-subtle);
-    margin: 0;
+  /* iOS-style keyboard */
+  .sf-kbd {
+    flex-shrink: 0;
+    background: #d1d5db;
+    padding: 8px 3px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  [data-theme="dark"] .sf-kbd { background: #2c2c2e; }
+
+  .sf-kbd-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 2px;
+  }
+
+  .sf-kbd-row--offset { padding: 0 18px; }
+  .sf-kbd-row--bottom { padding: 0 2px; gap: 6px; }
+
+  .sf-key {
+    flex: 1;
+    height: 42px;
+    background: #fff;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,0.3);
+    font-family: -apple-system, var(--font-family-sans);
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    transition: background 60ms;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .sf-key:active { background: #c8ccd4; }
+
+  [data-theme="dark"] .sf-key {
+    background: #4a4a4e;
+    color: #fff;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,0.6);
+  }
+
+  [data-theme="dark"] .sf-key:active { background: #636366; }
+
+  .sf-key--special {
+    background: #adb5bd;
+    font-size: 13px;
+    flex: 1.4;
+  }
+
+  [data-theme="dark"] .sf-key--special {
+    background: #2c2c2e;
+    color: #fff;
+  }
+
+  .sf-key--space {
+    flex: 4;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    background: #fff;
+  }
+
+  [data-theme="dark"] .sf-key--space { background: #4a4a4e; }
+
+  .sf-key--search {
+    background: #adb5bd;
+    font-size: 12px;
+    font-weight: 600;
+    flex: 1.8;
+    color: #000;
+  }
+
+  [data-theme="dark"] .sf-key--search { background: #2c2c2e; color: #fff; }
+
+  /* Blinking cursor animation (overlay input hint) */
+  @keyframes sf-cursor-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
   }
 
   /* Variants states grid */
@@ -11221,100 +11361,202 @@
         <h2 class="doc-section-title">Preview</h2>
         <hr class="doc-rule">
 
-        <div class="btn-controls">
-          <div class="dropdown" id="sf-state-picker">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="sf-state-label">Active</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Field state">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="active"  tabindex="0">Active</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="typing"  tabindex="0">Typing</li>
-            </ul>
-          </div>
-        </div>
-
         <!-- Phone mock -->
         <div class="ls-fs-wrap">
           <div id="sf-phone-mock">
 
-            <!-- Status bar -->
-            <div class="sf-status-bar">
-              <span>9:41</span>
-              <div class="sf-status-icons">
-                <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="0.5" opacity="0.35"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="0.5" opacity="0.55"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.5" opacity="0.75"/><rect x="13.5" y="0" width="3" height="12" rx="0.5"/></svg>
-                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M8 9.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" fill="currentColor"/><path d="M4.93 6.93A4.34 4.34 0 0 1 8 5.7c1.2 0 2.28.48 3.07 1.23" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/><path d="M2.34 4.34A7.64 7.64 0 0 1 8 2c2.11 0 4.03.85 5.42 2.24" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.35"/></svg>
-                <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor"/><path d="M23 4.5v3a1.5 1.5 0 0 0 0-3Z" fill="currentColor" fill-opacity="0.4"/></svg>
-              </div>
-            </div>
+            <!-- ═══ BASE SCREEN ═══ -->
+            <div class="sf-base-screen">
 
-            <!-- Search header (the mobile composition) -->
-            <div class="sf-header">
-              <div class="search-field search-field--active" id="sf-preview-field">
-                <span class="search-field__icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
-                </span>
-                <input class="search-field__input" id="sf-preview-input" type="search" placeholder="Search" aria-label="Search" autocomplete="off" spellcheck="false">
-                <button class="search-field__clear" id="sf-preview-clear" aria-label="Clear search" tabindex="-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
-                </button>
-              </div>
-              <button class="sf-header__cancel" tabindex="-1">Cancel</button>
-            </div>
-
-            <!-- Search results content -->
-            <div class="sf-results">
-
-              <!-- Filter chips -->
-              <div class="sf-chips-row">
-                <button class="sf-chip sf-chip--active" tabindex="-1">All</button>
-                <button class="sf-chip" tabindex="-1">Architecture</button>
-                <button class="sf-chip" tabindex="-1">Interior</button>
-                <button class="sf-chip" tabindex="-1">Nordic</button>
-                <button class="sf-chip" tabindex="-1">Details</button>
-              </div>
-
-              <!-- Trending section -->
-              <div>
-                <p class="sf-section-label">Trending</p>
-                <div class="sf-photo-grid">
-
-                  <div class="sf-photo-card">
-                    <div class="sf-photo-img">
-                      <img src="assets/arch-house.png" alt="Hillside House">
-                    </div>
-                    <p class="sf-photo-title">Hillside House</p>
-                    <p class="sf-photo-meta">Los Angeles, CA</p>
-                  </div>
-
-                  <div class="sf-photo-card">
-                    <div class="sf-photo-img">
-                      <img src="assets/nordic-house.png" alt="Nordic Retreat">
-                    </div>
-                    <p class="sf-photo-title">Nordic Retreat</p>
-                    <p class="sf-photo-meta">Stockholm, SE</p>
-                  </div>
-
-                  <div class="sf-photo-card">
-                    <div class="sf-photo-img">
-                      <img src="assets/twilight.png" alt="Dusk Study">
-                    </div>
-                    <p class="sf-photo-title">Dusk Study</p>
-                    <p class="sf-photo-meta">Barcelona, ES</p>
-                  </div>
-
-                  <div class="sf-photo-card">
-                    <div class="sf-photo-img">
-                      <img src="assets/hands.png" alt="Material Detail">
-                    </div>
-                    <p class="sf-photo-title">Material Detail</p>
-                    <p class="sf-photo-meta">Studio, NY</p>
-                  </div>
-
+              <!-- Status bar -->
+              <div class="sf-status-bar">
+                <span>9:41</span>
+                <div class="sf-status-icons">
+                  <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="0.5" opacity="0.35"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="0.5" opacity="0.55"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.5" opacity="0.75"/><rect x="13.5" y="0" width="3" height="12" rx="0.5"/></svg>
+                  <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M8 9.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" fill="currentColor"/><path d="M4.93 6.93A4.34 4.34 0 0 1 8 5.7c1.2 0 2.28.48 3.07 1.23" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/><path d="M2.34 4.34A7.64 7.64 0 0 1 8 2c2.11 0 4.03.85 5.42 2.24" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.35"/></svg>
+                  <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor"/><path d="M23 4.5v3a1.5 1.5 0 0 0 0-3Z" fill="currentColor" fill-opacity="0.4"/></svg>
                 </div>
               </div>
 
-            </div><!-- /.sf-results -->
+              <!-- App bar -->
+              <div class="sf-app-bar">
+                <div>
+                  <span class="sf-app-title-main">Modernist</span>
+                  <span class="sf-app-title-sub">Architecture &amp; Design</span>
+                </div>
+                <div class="sf-app-actions">
+                  <button class="sf-icon-btn" id="sf-search-trigger" aria-label="Open search">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
+                  </button>
+                  <button class="sf-icon-btn" tabindex="-1" aria-label="Notifications">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Content -->
+              <div class="sf-base-content">
+                <div class="sf-chips-row">
+                  <button class="sf-chip sf-chip--active" tabindex="-1">All</button>
+                  <button class="sf-chip" tabindex="-1">Fleur</button>
+                  <button class="sf-chip" tabindex="-1">Toucher</button>
+                  <button class="sf-chip" tabindex="-1">Sueur</button>
+                  <button class="sf-chip" tabindex="-1">Respire</button>
+                </div>
+                <div>
+                  <p class="sf-section-label">Explore</p>
+                  <div class="sf-tile-grid">
+                    <div class="card-media card-media--tile">
+                      <div class="card-media-photo-wrap"><img src="assets/flower.png" alt="Bloom"></div>
+                      <div class="card-media-content">
+                        <div class="card-media-title-row">
+                          <p class="card-media-title">Bloom</p>
+                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
+                        </div>
+                        <p class="card-media-body">Form &amp; light.</p>
+                      </div>
+                    </div>
+                    <div class="card-media card-media--tile">
+                      <div class="card-media-photo-wrap"><img src="assets/shoulder.png" alt="Sueur"></div>
+                      <div class="card-media-content">
+                        <div class="card-media-title-row">
+                          <p class="card-media-title">Sueur</p>
+                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
+                        </div>
+                        <p class="card-media-body">Effort in light.</p>
+                      </div>
+                    </div>
+                    <div class="card-media card-media--tile">
+                      <div class="card-media-photo-wrap"><img src="assets/lips.png" alt="Respire" style="object-position:center top"></div>
+                      <div class="card-media-content">
+                        <div class="card-media-title-row">
+                          <p class="card-media-title">Respire</p>
+                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
+                        </div>
+                        <p class="card-media-body">Space opens.</p>
+                      </div>
+                    </div>
+                    <div class="card-media card-media--tile">
+                      <div class="card-media-photo-wrap"><img src="assets/hands.png" alt="Toucher"></div>
+                      <div class="card-media-content">
+                        <div class="card-media-title-row">
+                          <p class="card-media-title">Toucher</p>
+                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
+                        </div>
+                        <p class="card-media-body">Quiet contact.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /.sf-base-screen -->
+
+            <!-- ═══ SEARCH OVERLAY (slides up) ═══ -->
+            <div class="sf-overlay" id="sf-overlay" aria-hidden="true">
+
+              <!-- Status bar -->
+              <div class="sf-status-bar">
+                <span>9:41</span>
+                <div class="sf-status-icons">
+                  <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="0.5" opacity="0.35"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="0.5" opacity="0.55"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.5" opacity="0.75"/><rect x="13.5" y="0" width="3" height="12" rx="0.5"/></svg>
+                  <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M8 9.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" fill="currentColor"/><path d="M4.93 6.93A4.34 4.34 0 0 1 8 5.7c1.2 0 2.28.48 3.07 1.23" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/><path d="M2.34 4.34A7.64 7.64 0 0 1 8 2c2.11 0 4.03.85 5.42 2.24" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.35"/></svg>
+                  <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor"/><path d="M23 4.5v3a1.5 1.5 0 0 0 0-3Z" fill="currentColor" fill-opacity="0.4"/></svg>
+                </div>
+              </div>
+
+              <!-- Search header -->
+              <div class="sf-header">
+                <div class="search-field search-field--active" id="sf-overlay-field">
+                  <span class="search-field__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
+                  </span>
+                  <input class="search-field__input" id="sf-overlay-input" type="search"
+                         placeholder="Search" aria-label="Search"
+                         autocomplete="off" spellcheck="false" tabindex="-1">
+                  <button class="search-field__clear" id="sf-overlay-clear"
+                          aria-label="Clear search" tabindex="-1">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+                  </button>
+                </div>
+                <button class="sf-header__cancel" id="sf-cancel-btn" tabindex="-1">Cancel</button>
+              </div>
+
+              <!-- Results content -->
+              <div class="sf-results">
+                <div class="sf-chips-row">
+                  <button class="sf-chip sf-chip--active" tabindex="-1">All</button>
+                  <button class="sf-chip" tabindex="-1">Fleur</button>
+                  <button class="sf-chip" tabindex="-1">Toucher</button>
+                  <button class="sf-chip" tabindex="-1">Sueur</button>
+                  <button class="sf-chip" tabindex="-1">Respire</button>
+                </div>
+                <div>
+                  <p class="sf-section-label">Trending</p>
+                  <div class="sf-tile-grid">
+                    <div class="card-media card-media--tile">
+                      <div class="card-media-photo-wrap"><img src="assets/flower.png" alt="Bloom"></div>
+                      <div class="card-media-content">
+                        <div class="card-media-title-row">
+                          <p class="card-media-title">Bloom</p>
+                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
+                        </div>
+                        <p class="card-media-body">Form &amp; light.</p>
+                      </div>
+                    </div>
+                    <div class="card-media card-media--tile">
+                      <div class="card-media-photo-wrap"><img src="assets/shoulder.png" alt="Sueur"></div>
+                      <div class="card-media-content">
+                        <div class="card-media-title-row">
+                          <p class="card-media-title">Sueur</p>
+                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
+                        </div>
+                        <p class="card-media-body">Effort in light.</p>
+                      </div>
+                    </div>
+                    <div class="card-media card-media--tile">
+                      <div class="card-media-photo-wrap"><img src="assets/lips.png" alt="Respire" style="object-position:center top"></div>
+                      <div class="card-media-content">
+                        <div class="card-media-title-row">
+                          <p class="card-media-title">Respire</p>
+                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
+                        </div>
+                        <p class="card-media-body">Space opens.</p>
+                      </div>
+                    </div>
+                    <div class="card-media card-media--tile">
+                      <div class="card-media-photo-wrap"><img src="assets/hands.png" alt="Toucher"></div>
+                      <div class="card-media-content">
+                        <div class="card-media-title-row">
+                          <p class="card-media-title">Toucher</p>
+                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
+                        </div>
+                        <p class="card-media-body">Quiet contact.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /.sf-results -->
+
+              <!-- iOS-style keyboard -->
+              <div class="sf-kbd" id="sf-kbd" aria-hidden="true">
+                <div class="sf-kbd-row">
+                  <button class="sf-key" data-char="q">q</button><button class="sf-key" data-char="w">w</button><button class="sf-key" data-char="e">e</button><button class="sf-key" data-char="r">r</button><button class="sf-key" data-char="t">t</button><button class="sf-key" data-char="y">y</button><button class="sf-key" data-char="u">u</button><button class="sf-key" data-char="i">i</button><button class="sf-key" data-char="o">o</button><button class="sf-key" data-char="p">p</button>
+                </div>
+                <div class="sf-kbd-row sf-kbd-row--offset">
+                  <button class="sf-key" data-char="a">a</button><button class="sf-key" data-char="s">s</button><button class="sf-key" data-char="d">d</button><button class="sf-key" data-char="f">f</button><button class="sf-key" data-char="g">g</button><button class="sf-key" data-char="h">h</button><button class="sf-key" data-char="j">j</button><button class="sf-key" data-char="k">k</button><button class="sf-key" data-char="l">l</button>
+                </div>
+                <div class="sf-kbd-row">
+                  <button class="sf-key sf-key--special" id="sf-key-shift">⇧</button><button class="sf-key" data-char="z">z</button><button class="sf-key" data-char="x">x</button><button class="sf-key" data-char="c">c</button><button class="sf-key" data-char="v">v</button><button class="sf-key" data-char="b">b</button><button class="sf-key" data-char="n">n</button><button class="sf-key" data-char="m">m</button><button class="sf-key sf-key--special" id="sf-key-delete">⌫</button>
+                </div>
+                <div class="sf-kbd-row sf-kbd-row--bottom">
+                  <button class="sf-key sf-key--special" style="flex:1.2;font-size:12px;">123</button>
+                  <button class="sf-key sf-key--space" data-char=" ">space</button>
+                  <button class="sf-key sf-key--search" id="sf-key-search">search</button>
+                </div>
+              </div><!-- /.sf-kbd -->
+
+            </div><!-- /.sf-overlay -->
 
           </div><!-- /#sf-phone-mock -->
         </div><!-- /.ls-fs-wrap -->
@@ -11456,24 +11698,75 @@
       <script>
       window.addEventListener('DOMContentLoaded', function() {
         (function initSfPreview() {
-          var field     = document.getElementById('sf-preview-field');
-          var input     = document.getElementById('sf-preview-input');
-          var picker    = document.getElementById('sf-state-picker');
-          if (!field || !picker) return;
+          var overlay   = document.getElementById('sf-overlay');
+          var input     = document.getElementById('sf-overlay-input');
+          var clearBtn  = document.getElementById('sf-overlay-clear');
+          var trigger   = document.getElementById('sf-search-trigger');
+          var cancelBtn = document.getElementById('sf-cancel-btn');
+          var kbd       = document.getElementById('sf-kbd');
+          if (!overlay || !input || !trigger) return;
 
-          function setState(val) {
-            field.classList.toggle('search-field--typing', val === 'typing');
-            if (val === 'typing') {
-              input.value = 'modernist';
-            } else {
+          // Open overlay — slides up ease-out-expo
+          trigger.addEventListener('click', function() {
+            overlay.removeAttribute('aria-hidden');
+            overlay.classList.add('is-open');
+            // Focus input after slide-up animation completes
+            setTimeout(function() { input.focus(); }, 430);
+          });
+
+          // Close overlay — slides down ease-in
+          function closeOverlay() {
+            overlay.classList.add('is-closing');
+            overlay.classList.remove('is-open');
+            overlay.addEventListener('transitionend', function cleanup(e) {
+              if (e.propertyName !== 'transform') return;
+              overlay.removeEventListener('transitionend', cleanup);
+              overlay.classList.remove('is-closing');
+              overlay.setAttribute('aria-hidden', 'true');
+              // Reset field state
               input.value = '';
-            }
-            var label = document.getElementById('sf-state-label');
-            var opt   = picker.querySelector('[data-value="' + val + '"]');
-            if (label && opt) label.textContent = opt.textContent;
+              input.dispatchEvent(new Event('input'));
+              trigger.focus();
+            });
           }
 
-          initDropdown(picker, setState);
+          cancelBtn.addEventListener('click', closeOverlay);
+          var searchKey = document.getElementById('sf-key-search');
+          if (searchKey) searchKey.addEventListener('click', closeOverlay);
+
+          // Clear button — only visible when input has text
+          input.addEventListener('input', function() {
+            clearBtn.style.display = input.value.length > 0 ? 'flex' : '';
+          });
+
+          clearBtn.addEventListener('click', function() {
+            input.value = '';
+            clearBtn.style.display = '';
+            input.focus();
+          });
+
+          // iOS keyboard — letter/number/symbol keys
+          if (kbd) {
+            kbd.addEventListener('click', function(e) {
+              var key = e.target.closest('.sf-key');
+              if (!key) return;
+              var char = key.getAttribute('data-char');
+              if (char !== null) {
+                input.value += char;
+                input.dispatchEvent(new Event('input'));
+              }
+            });
+          }
+
+          // Delete key
+          var deleteKey = document.getElementById('sf-key-delete');
+          if (deleteKey) {
+            deleteKey.addEventListener('click', function() {
+              input.value = input.value.slice(0, -1);
+              input.dispatchEvent(new Event('input'));
+            });
+          }
+
         })();
       });
       </script>
