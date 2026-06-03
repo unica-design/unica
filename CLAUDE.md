@@ -100,7 +100,7 @@ grep -n 'id="ico-' index.html
 All icons are `<symbol>` elements in a hidden `<svg>` at the top of `<body>`. Reference with `<use href="#ico-[name]"/>`.
 
 ### Currently defined symbols
-`ico-unica`, `ico-fire`, `ico-heart`, `ico-leaf`, `ico-moon`, `ico-sun`, `ico-bulb`, `ico-bell`, `ico-message`, `ico-cloud`, `ico-arrow`, `ico-eye-show`, `ico-caret-right`, `ico-caret-dn`, `ico-eye-hide`
+`ico-unica`, `ico-fire`, `ico-heart`, `ico-leaf`, `ico-moon`, `ico-sun`, `ico-bulb`, `ico-bell`, `ico-message`, `ico-cloud`, `ico-arrow`, `ico-eye-show`, `ico-search`, `ico-x-sm`, `ico-x-circle`, `ico-caret-right`, `ico-caret-dn`, `ico-eye-hide`
 
 ### Icon rules
 - All icons use `viewBox="0 0 24 24"`. Never change the viewBox.

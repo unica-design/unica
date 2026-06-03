@@ -8147,6 +8147,276 @@
     overflow: hidden;
   }
 
+  /* ─────────────────────────────────────────
+     SEARCH FIELD
+  ───────────────────────────────────────── */
+
+  /* Base field */
+  .search-field {
+    display: flex;
+    align-items: center;
+    gap: var(--space-200);
+    padding: 0 var(--space-300);
+    height: 44px;
+    background: var(--color-background-subtle);
+    border-radius: var(--corner-radius-round);
+    border: 1.5px solid transparent;
+    transition: background 150ms ease, border-color 150ms ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .search-field--small {
+    height: 36px;
+    padding: 0 var(--space-200);
+  }
+
+  /* Focused / active state */
+  .search-field--active,
+  .search-field:focus-within {
+    background: var(--color-background-page);
+    border-color: var(--color-border-default);
+  }
+
+  .search-field__icon {
+    color: var(--color-content-subtle);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-field__input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    color: var(--color-content-default);
+    outline: none;
+    line-height: 1;
+  }
+
+  .search-field--small .search-field__input {
+    font-size: var(--font-size-body-s);
+  }
+
+  .search-field__input::placeholder {
+    color: var(--color-content-subtle);
+  }
+
+  /* Clear button — filled dark circle + white × */
+  .search-field__clear {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--color-content-subtle);
+    border-radius: 50%;
+    border: none;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    color: var(--color-background-page);
+    transition: background 100ms ease;
+  }
+
+  .search-field__clear:hover { background: var(--color-content-default); }
+  .search-field--typing .search-field__clear { display: flex; }
+
+  /* Mobile Search Header */
+  .sf-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-300);
+    padding: var(--space-200) var(--space-400) var(--space-300);
+    background: var(--color-background-page);
+  }
+
+  .sf-header .search-field { flex: 1; }
+
+  .sf-header__cancel {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-content-default);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .sf-header__cancel:hover { opacity: 0.65; }
+
+  /* Phone shell */
+  #sf-phone-mock {
+    width: 375px;
+    background: var(--color-background-page);
+    border-radius: 24px;
+    box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
+    overflow: hidden;
+  }
+
+  [data-theme="dark"] #sf-phone-mock {
+    box-shadow: none;
+    border: var(--border-width-default) solid var(--color-border-default);
+  }
+
+  .sf-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-300) var(--space-500) var(--space-200);
+    font-family: var(--font-family-sans);
+    font-size: 12px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+  }
+
+  .sf-status-icons {
+    display: flex;
+    align-items: center;
+    gap: var(--space-200);
+  }
+
+  /* Scrollable results area */
+  .sf-results {
+    padding: var(--space-200) var(--space-400) var(--space-700);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-500);
+    overflow-y: auto;
+    max-height: 560px;
+  }
+
+  /* Chips strip */
+  .sf-chips-row {
+    display: flex;
+    gap: var(--space-200);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .sf-chips-row::-webkit-scrollbar { display: none; }
+
+  .sf-chip {
+    flex-shrink: 0;
+    padding: 6px var(--space-300);
+    background: var(--color-background-subtle);
+    border-radius: var(--corner-radius-round);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-content-default);
+    border: none;
+    cursor: pointer;
+    transition: background 120ms ease;
+  }
+
+  .sf-chip--active {
+    background: var(--color-content-default);
+    color: var(--color-background-page);
+  }
+
+  .sf-chip:not(.sf-chip--active):hover {
+    background: var(--color-background-selection);
+  }
+
+  /* Section label */
+  .sf-section-label {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    margin: 0 0 var(--space-300);
+  }
+
+  /* Photo grid */
+  .sf-photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-300);
+  }
+
+  .sf-photo-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-200);
+  }
+
+  .sf-photo-img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: var(--corner-radius-l);
+    overflow: hidden;
+    background: var(--color-background-subtle);
+  }
+
+  .sf-photo-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .sf-photo-title {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .sf-photo-meta {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-xs);
+    color: var(--color-content-subtle);
+    margin: 0;
+  }
+
+  /* Variants states grid */
+  .sf-states-grid {
+    display: grid;
+    grid-template-columns: 56px 1fr 1fr 1fr;
+    gap: var(--space-400) var(--space-500);
+    align-items: center;
+    max-width: 700px;
+  }
+
+  .sf-states-size-label {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 11px;
+  }
+
+  .sf-states-col-label {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-subtle);
+    margin: 0;
+  }
+
+  /* Wrap for variants section (constrains search field width) */
+  .sf-variant-wrap {
+    background: var(--color-background-page);
+    border: var(--border-width-default) solid var(--color-border-subtle);
+    border-radius: var(--corner-radius-m);
+    padding: var(--space-400);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-300);
+  }
+
 
   </style>
 </head>
@@ -8229,6 +8499,15 @@
       <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9915 34.3485C19.6243 34.3485 15.3399 31.6601 11.8818 28.4752C10.2063 26.9321 8.84125 25.3797 7.89484 24.2108C7.84097 24.1443 7.78852 24.079 7.73751 24.0152C7.78852 23.9514 7.84097 23.8862 7.89484 23.8196C8.84125 22.6507 10.2063 21.0983 11.8818 19.5553C15.3399 16.3704 19.6243 13.6819 23.9915 13.6819C28.3587 13.6819 32.6432 16.3704 36.1013 19.5553C37.7768 21.0983 39.1418 22.6507 40.0882 23.8196C40.1421 23.8862 40.1946 23.9514 40.2456 24.0152C40.1946 24.079 40.1421 24.1443 40.0882 24.2108C39.1418 25.3797 37.7768 26.9321 36.1013 28.4752C32.6432 31.6601 28.3587 34.3485 23.9915 34.3485ZM23.9915 10.6819C12.9459 10.6819 3.99155 24.0152 3.99155 24.0152C3.99155 24.0152 12.9458 37.3485 23.9915 37.3485C35.0372 37.3485 43.9915 24.0152 43.9915 24.0152C43.9915 24.0152 35.0372 10.6819 23.9915 10.6819ZM27 24C27 25.6569 25.6569 27 24 27C22.3431 27 21 25.6569 21 24C21 22.3431 22.3431 21 24 21C25.6569 21 27 22.3431 27 24ZM30 24C30 27.3137 27.3137 30 24 30C20.6863 30 18 27.3137 18 24C18 20.6863 20.6863 18 24 18C27.3137 18 30 20.6863 30 24Z" fill="currentColor"/>
     </symbol>
     <!-- eye hide: eye with slash — Figma export 481:5519 @2x -->
+    <symbol id="ico-search" viewBox="0 0 24 24">
+      <path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="ico-x-sm" viewBox="0 0 24 24">
+      <path d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="ico-x-circle" viewBox="0 0 24 24">
+      <path d="M15.71,8.29a1,1,0,0,0-1.42,0L12,10.59,9.71,8.29A1,1,0,0,0,8.29,9.71L10.59,12l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l2.29,2.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L13.41,12l2.3-2.29A1,1,0,0,0,15.71,8.29Zm3.36-3.36A10,10,0,1,0,4.93,19.07,10,10,0,1,0,19.07,4.93ZM17.66,17.66A8,8,0,1,1,20,12,7.95,7.95,0,0,1,17.66,17.66Z" fill="currentColor"/>
+    </symbol>
     <symbol id="ico-caret-right" viewBox="0 0 24 24">
       <path d="M14.83,11.29,10.59,7.05a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41L12.71,12,9.17,15.54a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29l4.24-4.24A1,1,0,0,0,14.83,11.29Z" fill="currentColor"/>
     </symbol>
@@ -10922,7 +11201,284 @@
       </script>
 
     </div><!-- /#page-text-fields -->
-    <div class="page-panel" id="page-search-field"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Forms</p><h2 class="section-title">Search Field</h2><p class="section-description">Inline search input with icon and clear action.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-search-field">
+
+      <!-- ── Component header ─────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Forms</p>
+        <h1 class="comp-title">Search Field</h1>
+        <p class="comp-description">A pill-shaped input with a leading search icon and an inline clear action. Available in two sizes. On mobile, it composes into a full-screen Search Header that replaces the app bar when search is triggered.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile · Web</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=343-1384" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══ 1. PREVIEW ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+
+        <div class="btn-controls">
+          <div class="dropdown" id="sf-state-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="sf-state-label">Active</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Field state">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="active"  tabindex="0">Active</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="typing"  tabindex="0">Typing</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Phone mock -->
+        <div class="ls-fs-wrap">
+          <div id="sf-phone-mock">
+
+            <!-- Status bar -->
+            <div class="sf-status-bar">
+              <span>9:41</span>
+              <div class="sf-status-icons">
+                <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="0.5" opacity="0.35"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="0.5" opacity="0.55"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.5" opacity="0.75"/><rect x="13.5" y="0" width="3" height="12" rx="0.5"/></svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M8 9.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" fill="currentColor"/><path d="M4.93 6.93A4.34 4.34 0 0 1 8 5.7c1.2 0 2.28.48 3.07 1.23" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/><path d="M2.34 4.34A7.64 7.64 0 0 1 8 2c2.11 0 4.03.85 5.42 2.24" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.35"/></svg>
+                <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor"/><path d="M23 4.5v3a1.5 1.5 0 0 0 0-3Z" fill="currentColor" fill-opacity="0.4"/></svg>
+              </div>
+            </div>
+
+            <!-- Search header (the mobile composition) -->
+            <div class="sf-header">
+              <div class="search-field search-field--active" id="sf-preview-field">
+                <span class="search-field__icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
+                </span>
+                <input class="search-field__input" id="sf-preview-input" type="search" placeholder="Search" aria-label="Search" autocomplete="off" spellcheck="false">
+                <button class="search-field__clear" id="sf-preview-clear" aria-label="Clear search" tabindex="-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+                </button>
+              </div>
+              <button class="sf-header__cancel" tabindex="-1">Cancel</button>
+            </div>
+
+            <!-- Search results content -->
+            <div class="sf-results">
+
+              <!-- Filter chips -->
+              <div class="sf-chips-row">
+                <button class="sf-chip sf-chip--active" tabindex="-1">All</button>
+                <button class="sf-chip" tabindex="-1">Architecture</button>
+                <button class="sf-chip" tabindex="-1">Interior</button>
+                <button class="sf-chip" tabindex="-1">Nordic</button>
+                <button class="sf-chip" tabindex="-1">Details</button>
+              </div>
+
+              <!-- Trending section -->
+              <div>
+                <p class="sf-section-label">Trending</p>
+                <div class="sf-photo-grid">
+
+                  <div class="sf-photo-card">
+                    <div class="sf-photo-img">
+                      <img src="assets/arch-house.png" alt="Hillside House">
+                    </div>
+                    <p class="sf-photo-title">Hillside House</p>
+                    <p class="sf-photo-meta">Los Angeles, CA</p>
+                  </div>
+
+                  <div class="sf-photo-card">
+                    <div class="sf-photo-img">
+                      <img src="assets/nordic-house.png" alt="Nordic Retreat">
+                    </div>
+                    <p class="sf-photo-title">Nordic Retreat</p>
+                    <p class="sf-photo-meta">Stockholm, SE</p>
+                  </div>
+
+                  <div class="sf-photo-card">
+                    <div class="sf-photo-img">
+                      <img src="assets/twilight.png" alt="Dusk Study">
+                    </div>
+                    <p class="sf-photo-title">Dusk Study</p>
+                    <p class="sf-photo-meta">Barcelona, ES</p>
+                  </div>
+
+                  <div class="sf-photo-card">
+                    <div class="sf-photo-img">
+                      <img src="assets/hands.png" alt="Material Detail">
+                    </div>
+                    <p class="sf-photo-title">Material Detail</p>
+                    <p class="sf-photo-meta">Studio, NY</p>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- /.sf-results -->
+
+          </div><!-- /#sf-phone-mock -->
+        </div><!-- /.ls-fs-wrap -->
+
+      </div><!-- /Preview -->
+
+      <!-- code reveal -->
+      <button class="code-reveal-btn" id="sf-code-toggle" aria-expanded="false" aria-controls="sf-code-reveal" onclick="toggleCodeReveal(this,'sf-code-reveal')">
+        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+        <span class="code-reveal-btn-label">Show code</span>
+      </button>
+      <div class="code-reveal" id="sf-code-reveal" hidden>
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+          <pre><code class="language-html">&lt;!-- Standalone search field --&gt;
+&lt;div class="search-field"&gt;
+  &lt;span class="search-field__icon"&gt;
+    &lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none"&gt;
+      &lt;use href="#ico-search"/&gt;
+    &lt;/svg&gt;
+  &lt;/span&gt;
+  &lt;input class="search-field__input" type="search"
+         placeholder="Search" aria-label="Search"&gt;
+  &lt;button class="search-field__clear" aria-label="Clear search"&gt;
+    &lt;svg width="12" height="12" viewBox="0 0 24 24" fill="none"&gt;
+      &lt;use href="#ico-x-sm"/&gt;
+    &lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Mobile Search Header composition --&gt;
+&lt;div class="sf-header"&gt;
+  &lt;div class="search-field search-field--active"&gt;
+    &lt;span class="search-field__icon"&gt;
+      &lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none"&gt;
+        &lt;use href="#ico-search"/&gt;
+      &lt;/svg&gt;
+    &lt;/span&gt;
+    &lt;input class="search-field__input" type="search"
+           placeholder="Search" aria-label="Search"&gt;
+    &lt;button class="search-field__clear" aria-label="Clear search"&gt;
+      &lt;svg width="12" height="12" viewBox="0 0 24 24" fill="none"&gt;
+        &lt;use href="#ico-x-sm"/&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;button class="sf-header__cancel"&gt;Cancel&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- ══ 2. VARIANTS & STATES ═════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants &amp; States</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Two sizes share the same three states. The clear button appears only in the Typing state and is hidden otherwise.</p>
+
+        <div class="sf-states-grid">
+
+          <!-- Column headers -->
+          <div></div>
+          <p class="sf-states-col-label">Default</p>
+          <p class="sf-states-col-label">Active</p>
+          <p class="sf-states-col-label">Typing</p>
+
+          <!-- Large -->
+          <span class="sf-states-size-label">LARGE</span>
+          <div class="sf-variant-wrap">
+            <div class="search-field">
+              <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+              <input class="search-field__input" type="text" placeholder="Search" tabindex="-1" readonly>
+            </div>
+          </div>
+          <div class="sf-variant-wrap">
+            <div class="search-field search-field--active">
+              <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+              <input class="search-field__input" type="text" placeholder="Search" tabindex="-1" readonly>
+            </div>
+          </div>
+          <div class="sf-variant-wrap">
+            <div class="search-field search-field--active search-field--typing">
+              <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+              <input class="search-field__input" type="text" value="modernist" tabindex="-1" readonly>
+              <button class="search-field__clear" tabindex="-1" aria-label="Clear">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Small -->
+          <span class="sf-states-size-label">SMALL</span>
+          <div class="sf-variant-wrap">
+            <div class="search-field search-field--small">
+              <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+              <input class="search-field__input" type="text" placeholder="Search" tabindex="-1" readonly>
+            </div>
+          </div>
+          <div class="sf-variant-wrap">
+            <div class="search-field search-field--small search-field--active">
+              <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+              <input class="search-field__input" type="text" placeholder="Search" tabindex="-1" readonly>
+            </div>
+          </div>
+          <div class="sf-variant-wrap">
+            <div class="search-field search-field--small search-field--active search-field--typing">
+              <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+              <input class="search-field__input" type="text" value="modernist" tabindex="-1" readonly>
+              <button class="search-field__clear" tabindex="-1" aria-label="Clear" style="width:17px;height:17px;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- /Variants & States -->
+
+      <!-- ══ 3. ACCESSIBILITY ════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Attribute / Pattern</th><th>Usage</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>type="search"</code></td><td>Tells browsers and screen readers this is a search input. Enables OS-level clear gesture on mobile.</td></tr>
+              <tr><td><code>aria-label="Search"</code></td><td>Required on the input when no visible <code>&lt;label&gt;</code> is present.</td></tr>
+              <tr><td><code>aria-label="Clear search"</code></td><td>Applied to the clear button so its purpose is announced.</td></tr>
+              <tr><td><code>role="search"</code></td><td>Optional landmark on a wrapping <code>&lt;form&gt;</code> or <code>&lt;div&gt;</code> to aid navigation.</td></tr>
+              <tr><td>Keyboard: <kbd>Escape</kbd></td><td>Should clear the field and/or dismiss the search overlay, returning focus to the trigger.</td></tr>
+              <tr><td>Focus management</td><td>When the search overlay opens, focus must move to the input immediately. On cancel, return focus to the triggering element.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /Accessibility -->
+
+      <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        (function initSfPreview() {
+          var field     = document.getElementById('sf-preview-field');
+          var input     = document.getElementById('sf-preview-input');
+          var picker    = document.getElementById('sf-state-picker');
+          if (!field || !picker) return;
+
+          function setState(val) {
+            field.classList.toggle('search-field--typing', val === 'typing');
+            if (val === 'typing') {
+              input.value = 'modernist';
+            } else {
+              input.value = '';
+            }
+            var label = document.getElementById('sf-state-label');
+            var opt   = picker.querySelector('[data-value="' + val + '"]');
+            if (label && opt) label.textContent = opt.textContent;
+          }
+
+          initDropdown(picker, setState);
+        })();
+      });
+      </script>
+
+    </div><!-- /#page-search-field -->
     <div class="page-panel" id="page-checkbox">
 
       <!-- ── Component header ─────────────────── -->
