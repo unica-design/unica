@@ -8243,6 +8243,9 @@
   .search-field__clear::before {
     content: '';
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 24px;
     height: 24px;
     background: var(--color-content-default);
@@ -8424,11 +8427,13 @@
     font-family: var(--font-family-sans);
     font-size: var(--font-size-body-m);
     color: var(--color-content-default);
-    transition: color 100ms ease;
   }
 
   .sf-suggestion-item:last-child { border-bottom: none; }
-  .sf-suggestion-item:hover { font-weight: var(--font-weight-semibold); }
+  .sf-suggestion-item:hover {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default); /* prevent browser button :hover color bleed */
+  }
 
   .sf-suggestion-icon {
     color: var(--color-content-subtle);
