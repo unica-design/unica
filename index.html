@@ -7911,39 +7911,94 @@
     color: var(--color-content-subtle);
   }
 
-  /* Caret: starts pointing down (right + 90°), rotates to up when open */
+  /* Caret: ico-caret-dn points down by default; flip 180° when open */
   .list-accordion__chevron {
     color: var(--color-content-subtle);
-    transform: rotate(90deg);
-    transition: transform 300ms cubic-bezier(0.22, 1.25, 0.36, 1);
     display: block;
+    transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1); /* ease-out-back on open */
   }
-
+  .list-accordion.is-closing .list-accordion__chevron {
+    transition: transform 200ms cubic-bezier(0.5, 0, 0.75, 0.19); /* ease-in on close */
+  }
   .list-accordion__header[aria-expanded="true"] .list-accordion__chevron {
-    transform: rotate(270deg);
+    transform: rotate(180deg);
   }
 
-  /* Body: CSS grid height animation — no JS height measurement needed */
+  /* Body: CSS grid height animation — JS injects directional transition */
   .list-accordion__body {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 300ms cubic-bezier(0.22, 1.25, 0.36, 1);
+    transition: grid-template-rows 250ms ease; /* fallback only */
   }
-
   .list-accordion__body.is-open { grid-template-rows: 1fr; }
-
   .list-accordion__body-inner { overflow: hidden; }
 
   .list-accordion__body-text {
-    padding: 0 var(--space-400) var(--space-400);
+    padding: 0 var(--space-400) var(--space-500) calc(var(--space-400) + 24px + var(--space-300));
     font-size: var(--font-size-body-s);
-    color: var(--color-content-subtle);
+    color: var(--color-content-default);
     line-height: var(--font-leading-body-m);
   }
 
-  /* When leading IS visible, indent body text to align under label */
-  #la-phone-mock:not([data-no-leading]) .list-accordion__body-text {
-    padding-left: calc(var(--space-400) + 24px + var(--space-300));
+  /* Custom content: media card + choice buttons */
+  .la-body-custom { display: block; }
+  .la-body-preset { display: none; }
+  #la-phone-mock[data-la-content="preset"] .la-body-preset { display: block; }
+  #la-phone-mock[data-la-content="preset"] .la-body-custom  { display: none; }
+
+  .la-media-card {
+    padding: 0 var(--space-400) var(--space-400);
+  }
+  .la-media-photo {
+    width: 100%;
+    aspect-ratio: 295/153;
+    border-radius: var(--corner-radius-l);
+    background: linear-gradient(135deg, hsl(210 55% 72%) 0%, hsl(255 55% 62%) 55%, hsl(195 60% 58%) 100%);
+    margin-bottom: var(--space-400);
+    overflow: hidden;
+  }
+  [data-theme="dark"] .la-media-photo {
+    background: linear-gradient(135deg, hsl(210 40% 35%) 0%, hsl(255 40% 30%) 55%, hsl(195 45% 28%) 100%);
+  }
+  .la-media-heading {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    line-height: var(--font-leading-body-m);
+    margin-bottom: var(--space-300);
+  }
+  .la-choice-row { display: flex; gap: var(--space-200); }
+  .la-choice-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-200);
+    padding: var(--space-400);
+    background: var(--color-background-page);
+    border: var(--border-width-default) solid var(--color-border-default);
+    border-radius: var(--corner-radius-l);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: background 120ms ease;
+  }
+  .la-choice-btn:hover  { background: var(--color-background-selection); }
+  .la-choice-btn:active { background: var(--color-action-active-subtle); transform: scale(0.97); }
+  .la-choice-btn svg    { color: var(--color-content-default); flex-shrink: 0; }
+  .la-choice-label {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    line-height: var(--font-leading-body-m);
+  }
+  .la-choice-sub {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    color: var(--color-content-subtle);
+    line-height: var(--font-leading-body-s);
   }
 
   .list-accordion__divider {
@@ -18072,14 +18127,14 @@
 
         <!-- Controls — above phone -->
         <div class="btn-controls">
-          <div class="dropdown" id="la-leading-picker">
+          <div class="dropdown" id="la-content-picker">
             <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="la-leading-label">None</span>
+              <span id="la-content-label">Custom content</span>
               <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Leading">
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="none" tabindex="0">None</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="icon" tabindex="0"><svg width="14" height="14" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>Icon</li>
+            <ul class="dropdown-menu" role="listbox" aria-label="Content type">
+              <li class="dropdown-option" role="option" aria-selected="true"  data-value="custom" tabindex="0">Custom content</li>
+              <li class="dropdown-option" role="option" aria-selected="false" data-value="preset" tabindex="0">Preset text</li>
             </ul>
           </div>
         </div>
@@ -18110,106 +18165,156 @@
               <!-- Accordion list -->
               <div class="la-screen-list">
 
-                <!-- ① Password reset — pre-expanded -->
+                <!-- ① Reminder time — pre-expanded -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="true" aria-controls="la-body-1">
                     <div class="list-accordion__content">
                       <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
                       <div class="list-accordion__text">
-                        <span class="list-accordion__overline">Account</span>
-                        <span class="list-accordion__label">How do I reset my password?</span>
-                        <span class="list-accordion__caption">Security</span>
+                        <span class="list-accordion__overline">Preferences</span>
+                        <span class="list-accordion__label">Reminder time</span>
+                        <span class="list-accordion__caption">Daily schedule</span>
                       </div>
-                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-dn"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body is-open" id="la-body-1" role="region">
                     <div class="list-accordion__body-inner">
-                      <p class="list-accordion__body-text">Go to Settings → Account and tap Forgot password. A reset link will be sent to your registered email within a few minutes.</p>
+                      <div class="la-body-custom">
+                        <div class="la-media-card">
+                          <div class="la-media-photo"></div>
+                          <p class="la-media-heading">Day or Night?</p>
+                          <div class="la-choice-row">
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg><span class="la-choice-label">Day</span><span class="la-choice-sub">am reminder</span></button>
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg><span class="la-choice-label">Night</span><span class="la-choice-sub">pm reminder</span></button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="la-body-preset list-accordion__body-text">Set a daily reminder to check in. Choose morning for a fresh start or evening for a wind-down prompt.</p>
                     </div>
                   </div>
                   <div class="list-accordion__divider"></div>
                 </div>
 
-                <!-- ② Email change -->
+                <!-- ② Appearance -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="false" aria-controls="la-body-2">
                     <div class="list-accordion__content">
-                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-message"/></svg></div>
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bulb"/></svg></div>
                       <div class="list-accordion__text">
-                        <span class="list-accordion__overline">Account</span>
-                        <span class="list-accordion__label">Can I change my email address?</span>
-                        <span class="list-accordion__caption">Account details</span>
+                        <span class="list-accordion__overline">Display</span>
+                        <span class="list-accordion__label">Appearance</span>
+                        <span class="list-accordion__caption">Theme</span>
                       </div>
-                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-dn"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body" id="la-body-2" role="region">
                     <div class="list-accordion__body-inner">
-                      <p class="list-accordion__body-text">Yes — visit Settings → Account → Email. You'll receive a confirmation link at your new address before the change takes effect.</p>
+                      <div class="la-body-custom">
+                        <div class="la-media-card">
+                          <div class="la-media-photo"></div>
+                          <p class="la-media-heading">Light or Dark?</p>
+                          <div class="la-choice-row">
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg><span class="la-choice-label">Light</span><span class="la-choice-sub">default</span></button>
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg><span class="la-choice-label">Dark</span><span class="la-choice-sub">low light</span></button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="la-body-preset list-accordion__body-text">Choose between light and dark theme. Dark mode is easier on the eyes in low-light environments.</p>
                     </div>
                   </div>
                   <div class="list-accordion__divider"></div>
                 </div>
 
-                <!-- ③ Payment methods -->
+                <!-- ③ Notifications -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="false" aria-controls="la-body-3">
                     <div class="list-accordion__content">
-                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-message"/></svg></div>
                       <div class="list-accordion__text">
-                        <span class="list-accordion__overline">Billing</span>
-                        <span class="list-accordion__label">What payment methods are accepted?</span>
-                        <span class="list-accordion__caption">Cards and wallets</span>
+                        <span class="list-accordion__overline">Alerts</span>
+                        <span class="list-accordion__label">Notifications</span>
+                        <span class="list-accordion__caption">Push and email</span>
                       </div>
-                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-dn"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body" id="la-body-3" role="region">
                     <div class="list-accordion__body-inner">
-                      <p class="list-accordion__body-text">We accept Visa, Mastercard, American Express, Apple Pay, and PayPal. All transactions are secured with 256-bit SSL encryption.</p>
+                      <div class="la-body-custom">
+                        <div class="la-media-card">
+                          <div class="la-media-photo"></div>
+                          <p class="la-media-heading">How do you want alerts?</p>
+                          <div class="la-choice-row">
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg><span class="la-choice-label">Push</span><span class="la-choice-sub">instant</span></button>
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-message"/></svg><span class="la-choice-label">Email</span><span class="la-choice-sub">digest</span></button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="la-body-preset list-accordion__body-text">Receive push notifications for real-time updates or a daily email digest. You can enable both at the same time.</p>
                     </div>
                   </div>
                   <div class="list-accordion__divider"></div>
                 </div>
 
-                <!-- ④ Delivery -->
+                <!-- ④ Energy mode -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="false" aria-controls="la-body-4">
                     <div class="list-accordion__content">
-                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg></div>
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
                       <div class="list-accordion__text">
-                        <span class="list-accordion__overline">Orders</span>
-                        <span class="list-accordion__label">How long does delivery take?</span>
-                        <span class="list-accordion__caption">Standard and express</span>
+                        <span class="list-accordion__overline">Usage</span>
+                        <span class="list-accordion__label">Energy mode</span>
+                        <span class="list-accordion__caption">Battery saver</span>
                       </div>
-                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-dn"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body" id="la-body-4" role="region">
                     <div class="list-accordion__body-inner">
-                      <p class="list-accordion__body-text">Standard delivery takes 3–5 business days. Express (1–2 days) is available at checkout for most destinations.</p>
+                      <div class="la-body-custom">
+                        <div class="la-media-card">
+                          <div class="la-media-photo"></div>
+                          <p class="la-media-heading">Optimise for…</p>
+                          <div class="la-choice-row">
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-fire"/></svg><span class="la-choice-label">Performance</span><span class="la-choice-sub">full features</span></button>
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg><span class="la-choice-label">Eco</span><span class="la-choice-sub">save battery</span></button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="la-body-preset list-accordion__body-text">Performance mode keeps all features active. Eco mode reduces background activity and extends battery life.</p>
                     </div>
                   </div>
                   <div class="list-accordion__divider"></div>
                 </div>
 
-                <!-- ⑤ Returns -->
+                <!-- ⑤ Backup -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="false" aria-controls="la-body-5">
                     <div class="list-accordion__content">
-                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg></div>
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg></div>
                       <div class="list-accordion__text">
-                        <span class="list-accordion__overline">Orders</span>
-                        <span class="list-accordion__label">How do I return an item?</span>
-                        <span class="list-accordion__caption">30-day return window</span>
+                        <span class="list-accordion__overline">Data</span>
+                        <span class="list-accordion__label">Backup</span>
+                        <span class="list-accordion__caption">Cloud sync</span>
                       </div>
-                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-dn"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body" id="la-body-5" role="region">
                     <div class="list-accordion__body-inner">
-                      <p class="list-accordion__body-text">Items can be returned within 30 days of delivery. Start a return from Orders → Your order → Return item and we'll email you a prepaid label.</p>
+                      <div class="la-body-custom">
+                        <div class="la-media-card">
+                          <div class="la-media-photo"></div>
+                          <p class="la-media-heading">Backup frequency</p>
+                          <div class="la-choice-row">
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg><span class="la-choice-label">Daily</span><span class="la-choice-sub">automatic</span></button>
+                            <button class="la-choice-btn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg><span class="la-choice-label">Manual</span><span class="la-choice-sub">on demand</span></button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="la-body-preset list-accordion__body-text">Daily backup runs automatically overnight. Manual backup lets you trigger a sync whenever you choose.</p>
                     </div>
                   </div>
                 </div>
@@ -18279,7 +18384,7 @@
           &lt;svg class="list-accordion__chevron"
                width="24" height="24" viewBox="0 0 24 24"
                fill="currentColor" aria-hidden="true"&gt;
-            &lt;use href="#ico-caret-right"/&gt;
+            &lt;use href="#ico-caret-dn"/&gt;
           &lt;/svg&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -18300,65 +18405,48 @@
         <h2 class="doc-section-title">Variants &amp; States</h2>
         <hr class="doc-rule">
 
-        <p class="doc-section-description">The leading icon is optional — both configurations share the same trailing chevron and body panel.</p>
+        <p class="doc-section-description">Hover and pressed states are isolated to the 40×40 chevron control — the label row carries no visual state layer. The chevron persists in its hover style while the panel is open.</p>
 
-        <div class="modal-variants-grid">
-          <div class="modal-variant-item">
-            <p class="avatar-group-label">Icon</p>
+        <div class="bs-variants-grid">
+
+          <div class="bs-variant-item">
+            <p class="avatar-group-label">Default</p>
             <div class="la-cell-wrap">
               <div class="list-accordion">
                 <button class="list-accordion__header" aria-expanded="false" tabindex="-1">
-                  <div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div>
+                  <div class="list-accordion__content">
+                    <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                    <div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div>
+                    <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-dn"/></svg></div></div>
+                  </div>
                 </button>
+                <div class="list-accordion__divider"></div>
               </div>
             </div>
           </div>
-          <div class="modal-variant-item">
-            <p class="avatar-group-label">No leading</p>
+
+          <div class="bs-variant-item">
+            <p class="avatar-group-label">Open</p>
             <div class="la-cell-wrap">
               <div class="list-accordion">
-                <button class="list-accordion__header" aria-expanded="false" tabindex="-1">
-                  <div class="list-accordion__content"><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div>
+                <button class="list-accordion__header" aria-expanded="true" tabindex="-1">
+                  <div class="list-accordion__content">
+                    <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                    <div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div>
+                    <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-dn"/></svg></div></div>
+                  </div>
                 </button>
+                <div class="list-accordion__body is-open" role="region">
+                  <div class="list-accordion__body-inner">
+                    <p class="list-accordion__body-text">Receive push notifications for real-time updates, or switch to a daily email digest. You can enable both.</p>
+                  </div>
+                </div>
+                <div class="list-accordion__divider"></div>
               </div>
             </div>
           </div>
+
         </div>
-
-        <!-- States -->
-        <div class="ls-subsection">
-          <h3 class="ls-subsection-title">States</h3>
-          <p class="ls-subsection-desc">Hover and pressed states are isolated to the 40×40 chevron control — the label area carries no visual state layer.</p>
-        </div>
-
-        <div class="ls-states-grid ls-states-grid--5col">
-
-          <div class="ls-state-item">
-            <p class="avatar-group-label" style="margin:0;">Default</p>
-            <div class="la-cell-wrap"><div class="list-accordion"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
-          </div>
-
-          <div class="ls-state-item">
-            <p class="avatar-group-label" style="margin:0;">Hover</p>
-            <div class="la-cell-wrap"><div class="list-accordion list-accordion--hover"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
-          </div>
-
-          <div class="ls-state-item">
-            <p class="avatar-group-label" style="margin:0;">Pressed</p>
-            <div class="la-cell-wrap"><div class="list-accordion list-accordion--pressed"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
-          </div>
-
-          <div class="ls-state-item">
-            <p class="avatar-group-label" style="margin:0;">Focused</p>
-            <div class="la-cell-wrap"><div class="list-accordion list-accordion--focused"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
-          </div>
-
-          <div class="ls-state-item">
-            <p class="avatar-group-label" style="margin:0;">Disabled</p>
-            <div class="la-cell-wrap"><div class="list-accordion list-accordion--disabled"><button class="list-accordion__header" aria-expanded="false" tabindex="-1" disabled><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
-          </div>
-
-        </div><!-- /.ls-states-grid--5col -->
 
       </div><!-- /Variants & States -->
 
@@ -18385,52 +18473,78 @@
       </div><!-- /Accessibility -->
 
       <script>
-      (function initLaPreview() {
-        var phone = document.getElementById('la-phone-mock');
-        if (!phone) return;
+      window.addEventListener('DOMContentLoaded', function() {
+        (function initLaPreview() {
+          var phone = document.getElementById('la-phone-mock');
+          if (!phone) return;
 
-        /* ── All props off by default ── */
-        phone.setAttribute('data-no-leading',  '');
-        phone.setAttribute('data-no-caption',  '');
-        phone.setAttribute('data-no-overline', '');
-        phone.setAttribute('data-no-divider',  '');
+          /* ── Default state: custom content, props off ── */
+          phone.setAttribute('data-la-content', 'custom');
+          phone.setAttribute('data-no-caption',  '');
+          phone.setAttribute('data-no-overline', '');
+          phone.setAttribute('data-no-divider',  '');
 
-        /* ── Accordion toggle ── */
-        phone.addEventListener('click', function(e) {
-          var header = e.target.closest('.list-accordion__header');
-          if (!header) return;
-          var expanded = header.getAttribute('aria-expanded') === 'true';
-          var bodyId = header.getAttribute('aria-controls');
-          var body   = bodyId ? document.getElementById(bodyId) : null;
-          header.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-          if (body) body.classList.toggle('is-open', !expanded);
-        });
+          /* ── Accordion toggle with directional animation ── */
+          phone.addEventListener('click', function(e) {
+            var header    = e.target.closest('.list-accordion__header');
+            if (!header) return;
+            var expanded  = header.getAttribute('aria-expanded') === 'true';
+            var bodyId    = header.getAttribute('aria-controls');
+            var bodyEl    = bodyId ? document.getElementById(bodyId) : null;
+            var accordion = header.closest('.list-accordion');
 
-        /* ── Leading picker ── */
-        var leadPicker = document.getElementById('la-leading-picker');
-        if (leadPicker) {
-          initDropdown(leadPicker, function(val) {
-            phone.toggleAttribute('data-no-leading', val === 'none');
-            var label = document.getElementById('la-leading-label');
-            var opt   = leadPicker.querySelector('[data-value="' + val + '"]');
-            if (label && opt) label.innerHTML = opt.innerHTML;
+            if (expanded) {
+              /* Closing — ease-in, snappy */
+              if (accordion) accordion.classList.add('is-closing');
+              if (bodyEl) {
+                bodyEl.style.transition = 'grid-template-rows 200ms cubic-bezier(0.4, 0, 1, 1)';
+                bodyEl.classList.remove('is-open');
+                bodyEl.addEventListener('transitionend', function cleanup() {
+                  bodyEl.removeEventListener('transitionend', cleanup);
+                  bodyEl.style.transition = '';
+                  if (accordion) accordion.classList.remove('is-closing');
+                });
+              }
+            } else {
+              /* Opening — ease-out-expo, springy */
+              if (bodyEl) {
+                bodyEl.style.transition = 'grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1)';
+                bodyEl.classList.add('is-open');
+                bodyEl.addEventListener('transitionend', function cleanup() {
+                  bodyEl.removeEventListener('transitionend', cleanup);
+                  bodyEl.style.transition = '';
+                });
+              }
+            }
+            header.setAttribute('aria-expanded', expanded ? 'false' : 'true');
           });
-        }
 
-        /* ── Prop toggles ── */
-        function wireProp(id, attr) {
-          var el = document.getElementById(id);
-          if (!el) return;
-          el.addEventListener('change', function() {
-            phone.toggleAttribute('data-no-' + attr, !el.checked);
-          });
-        }
+          /* ── Content picker (Custom content / Preset text) ── */
+          var contentPicker = document.getElementById('la-content-picker');
+          if (contentPicker) {
+            initDropdown(contentPicker, function(val) {
+              phone.setAttribute('data-la-content', val);
+              var label = document.getElementById('la-content-label');
+              var opt   = contentPicker.querySelector('[data-value="' + val + '"]');
+              if (label && opt) label.textContent = opt.textContent;
+            });
+          }
 
-        wireProp('la-prop-overline', 'overline');
-        wireProp('la-prop-caption',  'caption');
-        wireProp('la-prop-divider',  'divider');
+          /* ── Prop toggles ── */
+          function wireProp(id, attr) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('change', function() {
+              phone.toggleAttribute('data-no-' + attr, !el.checked);
+            });
+          }
 
-      })();
+          wireProp('la-prop-overline', 'overline');
+          wireProp('la-prop-caption',  'caption');
+          wireProp('la-prop-divider',  'divider');
+
+        })();
+      });
       </script>
 
     </div><!-- /#page-list-accordion -->
