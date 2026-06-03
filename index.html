@@ -8156,7 +8156,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-200);
-    padding: 0 var(--space-600) 0 var(--space-300); /* right 24px, left 12px — matches Figma */
+    padding: 0 var(--space-500) 0 var(--space-300); /* right 24px (--space-500), left 12px — matches Figma */
     height: 44px;
     background: var(--color-background-ui); /* --primitive-ink-100 = #F2F3F5 */
     border-radius: var(--corner-radius-round);
@@ -8168,7 +8168,7 @@
 
   .search-field--small {
     height: 36px;
-    padding: 0 var(--space-500) 0 var(--space-200); /* right 20px, left 8px */
+    padding: 0 var(--space-400) 0 var(--space-200); /* right 16px, left 8px */
   }
 
   /* Focused / active state — same fill, ink border appears */
@@ -11764,12 +11764,13 @@
       <script>
       window.addEventListener('DOMContentLoaded', function() {
         (function initSfPreview() {
-          var overlay   = document.getElementById('sf-overlay');
-          var input     = document.getElementById('sf-overlay-input');
-          var clearBtn  = document.getElementById('sf-overlay-clear');
-          var trigger   = document.getElementById('sf-search-trigger');
-          var cancelBtn = document.getElementById('sf-cancel-btn');
-          var kbd       = document.getElementById('sf-kbd');
+          var overlay      = document.getElementById('sf-overlay');
+          var input        = document.getElementById('sf-overlay-input');
+          var clearBtn     = document.getElementById('sf-overlay-clear');
+          var overlayField = document.getElementById('sf-overlay-field');
+          var trigger      = document.getElementById('sf-search-trigger');
+          var cancelBtn    = document.getElementById('sf-cancel-btn');
+          var kbd          = document.getElementById('sf-kbd');
           if (!overlay || !input || !trigger) return;
 
           // Open overlay — slides up ease-out-expo
@@ -11800,14 +11801,17 @@
           var searchKey = document.getElementById('sf-key-search');
           if (searchKey) searchKey.addEventListener('click', closeOverlay);
 
-          // Clear button — only visible when input has text
+          // Clear button + typing state — driven by input value
           input.addEventListener('input', function() {
-            clearBtn.style.display = input.value.length > 0 ? 'flex' : '';
+            var hasText = input.value.length > 0;
+            clearBtn.style.display = hasText ? 'flex' : '';
+            if (overlayField) overlayField.classList.toggle('search-field--typing', hasText);
           });
 
           clearBtn.addEventListener('click', function() {
             input.value = '';
             clearBtn.style.display = '';
+            if (overlayField) overlayField.classList.remove('search-field--typing');
             input.focus();
           });
 
