@@ -8160,7 +8160,7 @@
     height: 44px;
     background: var(--color-background-subtle);
     border-radius: var(--corner-radius-round);
-    border: 1.5px solid transparent;
+    border: 1px solid transparent;
     transition: background 150ms ease, border-color 150ms ease;
     width: 100%;
     box-sizing: border-box;
@@ -8171,11 +8171,10 @@
     padding: 0 var(--space-200);
   }
 
-  /* Focused / active state */
+  /* Focused / active state — background stays subtle, border appears */
   .search-field--active,
   .search-field:focus-within {
-    background: var(--color-background-page);
-    border-color: var(--color-border-default);
+    border-color: var(--color-content-default);
   }
 
   .search-field__icon {
@@ -8195,6 +8194,15 @@
     color: var(--color-content-default);
     outline: none;
     line-height: 1;
+    /* Suppress native browser search cancel button */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .search-field__input::-webkit-search-cancel-button,
+  .search-field__input::-webkit-search-decoration {
+    -webkit-appearance: none;
+    display: none;
   }
 
   .search-field--small .search-field__input {
@@ -8205,12 +8213,12 @@
     color: var(--color-content-subtle);
   }
 
-  /* Clear button — filled dark circle + white × */
+  /* Clear button — 24px filled ink circle + white × */
   .search-field__clear {
     flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    background: var(--color-content-subtle);
+    width: 24px;
+    height: 24px;
+    background: var(--color-content-default);
     border-radius: 50%;
     border: none;
     display: none;
@@ -8219,10 +8227,11 @@
     cursor: pointer;
     padding: 0;
     color: var(--color-background-page);
-    transition: background 100ms ease;
+    transition: opacity 100ms ease;
   }
 
-  .search-field__clear:hover { background: var(--color-content-default); }
+  .search-field__clear:hover { opacity: 0.75; }
+  .search-field--small .search-field__clear { width: 20px; height: 20px; }
   .search-field--typing .search-field__clear { display: flex; }
 
   /* Mobile Search Header */
@@ -8295,34 +8304,21 @@
     overflow: hidden;
   }
 
-  .sf-app-bar {
+  /* Page header above the search field */
+  .sf-page-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    padding: var(--space-300) var(--space-400) var(--space-200);
+    padding: var(--space-300) var(--space-400) var(--space-100);
   }
 
-  .sf-app-title-main {
-    display: block;
+  .sf-page-title {
     font-family: var(--font-family-serif);
     font-size: var(--font-size-heading-m);
     font-weight: var(--font-weight-semibold);
     color: var(--color-content-default);
     line-height: 1.15;
-  }
-
-  .sf-app-title-sub {
-    display: block;
-    font-family: var(--font-family-sans);
-    font-size: var(--font-size-body-xs);
-    color: var(--color-content-subtle);
-    margin-top: 2px;
-  }
-
-  .sf-app-actions {
-    display: flex;
-    gap: var(--space-100);
-    margin-top: 2px;
+    margin: 0;
   }
 
   .sf-icon-btn {
@@ -8341,12 +8337,84 @@
 
   .sf-icon-btn:hover { background: var(--color-action-hover-subtle); }
 
+  /* Search trigger on base screen — looks identical to the default field */
+  .sf-base-search-trigger {
+    margin: var(--space-200) var(--space-400) var(--space-100);
+    display: flex;
+    align-items: center;
+    gap: var(--space-200);
+    padding: 0 var(--space-300);
+    height: 44px;
+    background: var(--color-background-subtle);
+    border-radius: var(--corner-radius-round);
+    border: 1px solid transparent;
+    width: calc(100% - var(--space-400) * 2);
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: left;
+    transition: background 120ms ease;
+  }
+
+  .sf-base-search-trigger:hover {
+    background: var(--color-background-selection);
+  }
+
+  .sf-base-search-trigger__icon {
+    color: var(--color-content-subtle);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .sf-base-search-trigger__placeholder {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    color: var(--color-content-subtle);
+    flex: 1;
+  }
+
   .sf-base-content {
-    padding: var(--space-200) var(--space-400) var(--space-400);
+    padding: var(--space-300) var(--space-400) var(--space-400);
     display: flex;
     flex-direction: column;
     gap: var(--space-400);
     overflow-y: auto;
+  }
+
+  /* Suggested searches in overlay (before typing) */
+  .sf-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sf-suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-300);
+    padding: 10px 0;
+    border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+    cursor: pointer;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    color: var(--color-content-default);
+    transition: color 100ms ease;
+  }
+
+  .sf-suggestion-item:last-child { border-bottom: none; }
+  .sf-suggestion-item:hover { color: var(--color-brand-ultraviolet); }
+
+  .sf-suggestion-icon {
+    color: var(--color-content-subtle);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
   }
 
   /* Chips strip — shared by base and overlay */
@@ -11378,21 +11446,21 @@
                 </div>
               </div>
 
-              <!-- App bar -->
-              <div class="sf-app-bar">
-                <div>
-                  <span class="sf-app-title-main">Modernist</span>
-                  <span class="sf-app-title-sub">Architecture &amp; Design</span>
-                </div>
-                <div class="sf-app-actions">
-                  <button class="sf-icon-btn" id="sf-search-trigger" aria-label="Open search">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
-                  </button>
-                  <button class="sf-icon-btn" tabindex="-1" aria-label="Notifications">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
-                  </button>
-                </div>
+              <!-- Page header -->
+              <div class="sf-page-header">
+                <p class="sf-page-title">Discover</p>
+                <button class="sf-icon-btn" tabindex="-1" aria-label="Notifications">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
+                </button>
               </div>
+
+              <!-- Search field — default state (tap to activate) -->
+              <button class="sf-base-search-trigger" id="sf-search-trigger" aria-label="Open search">
+                <span class="sf-base-search-trigger__icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
+                </span>
+                <span class="sf-base-search-trigger__placeholder">Search</span>
+              </button>
 
               <!-- Content -->
               <div class="sf-base-content">
@@ -11484,56 +11552,29 @@
 
               <!-- Results content -->
               <div class="sf-results">
-                <div class="sf-chips-row">
-                  <button class="sf-chip sf-chip--active" tabindex="-1">All</button>
-                  <button class="sf-chip" tabindex="-1">Fleur</button>
-                  <button class="sf-chip" tabindex="-1">Toucher</button>
-                  <button class="sf-chip" tabindex="-1">Sueur</button>
-                  <button class="sf-chip" tabindex="-1">Respire</button>
-                </div>
                 <div>
-                  <p class="sf-section-label">Trending</p>
-                  <div class="sf-tile-grid">
-                    <div class="card-media card-media--tile">
-                      <div class="card-media-photo-wrap"><img src="assets/flower.png" alt="Bloom"></div>
-                      <div class="card-media-content">
-                        <div class="card-media-title-row">
-                          <p class="card-media-title">Bloom</p>
-                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
-                        </div>
-                        <p class="card-media-body">Form &amp; light.</p>
-                      </div>
-                    </div>
-                    <div class="card-media card-media--tile">
-                      <div class="card-media-photo-wrap"><img src="assets/shoulder.png" alt="Sueur"></div>
-                      <div class="card-media-content">
-                        <div class="card-media-title-row">
-                          <p class="card-media-title">Sueur</p>
-                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
-                        </div>
-                        <p class="card-media-body">Effort in light.</p>
-                      </div>
-                    </div>
-                    <div class="card-media card-media--tile">
-                      <div class="card-media-photo-wrap"><img src="assets/lips.png" alt="Respire" style="object-position:center top"></div>
-                      <div class="card-media-content">
-                        <div class="card-media-title-row">
-                          <p class="card-media-title">Respire</p>
-                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
-                        </div>
-                        <p class="card-media-body">Space opens.</p>
-                      </div>
-                    </div>
-                    <div class="card-media card-media--tile">
-                      <div class="card-media-photo-wrap"><img src="assets/hands.png" alt="Toucher"></div>
-                      <div class="card-media-content">
-                        <div class="card-media-title-row">
-                          <p class="card-media-title">Toucher</p>
-                          <button class="card-media-fav" tabindex="-1" aria-label="Favourite"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
-                        </div>
-                        <p class="card-media-body">Quiet contact.</p>
-                      </div>
-                    </div>
+                  <p class="sf-section-label">Suggested</p>
+                  <div class="sf-suggestions">
+                    <button class="sf-suggestion-item" tabindex="-1">
+                      <span class="sf-suggestion-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                      botanical modernism
+                    </button>
+                    <button class="sf-suggestion-item" tabindex="-1">
+                      <span class="sf-suggestion-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                      brutalist architecture
+                    </button>
+                    <button class="sf-suggestion-item" tabindex="-1">
+                      <span class="sf-suggestion-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                      wabi-sabi interior
+                    </button>
+                    <button class="sf-suggestion-item" tabindex="-1">
+                      <span class="sf-suggestion-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                      bauhaus typography
+                    </button>
+                    <button class="sf-suggestion-item" tabindex="-1">
+                      <span class="sf-suggestion-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                      scandinavian minimalism
+                    </button>
                   </div>
                 </div>
               </div><!-- /.sf-results -->
@@ -11664,7 +11705,7 @@
             <div class="search-field search-field--small search-field--active search-field--typing">
               <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
               <input class="search-field__input" type="text" value="modernist" tabindex="-1" readonly>
-              <button class="search-field__clear" tabindex="-1" aria-label="Clear" style="width:17px;height:17px;">
+              <button class="search-field__clear" tabindex="-1" aria-label="Clear">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
               </button>
             </div>
