@@ -7840,8 +7840,10 @@
   }
 
   /* Hover: morph pill → rounded rect (matches btn-clear medium) */
+  /* Also persists when the item is expanded — control stays "active" */
   .list-accordion__header:hover .list-accordion__control-inner,
-  .list-accordion--hover .list-accordion__control-inner {
+  .list-accordion--hover .list-accordion__control-inner,
+  .list-accordion__header[aria-expanded="true"] .list-accordion__control-inner {
     background: var(--color-action-hover-subtle);
     border-radius: var(--corner-radius-m);
   }
