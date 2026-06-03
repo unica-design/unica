@@ -7610,12 +7610,15 @@
     min-width: 0;
     padding: var(--space-200);
     border-radius: var(--corner-radius-m);
-    transition: background 120ms ease;
+    transition: background 120ms ease, transform 80ms ease-in;
   }
   .list-cell--nav:hover .list-cell__state-layer,
   .list-cell--hover     .list-cell__state-layer { background: var(--color-background-selection); }
   .list-cell--nav:active .list-cell__state-layer,
-  .list-cell--pressed    .list-cell__state-layer { background: var(--color-background-selection); }
+  .list-cell--pressed    .list-cell__state-layer {
+    background: var(--color-background-selection);
+    transform: scale(0.97);
+  }
   .list-cell--focused .list-cell__state-layer {
     outline: 2px solid var(--color-border-strong);
     outline-offset: 1px;
