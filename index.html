@@ -7808,7 +7808,7 @@
   .list-accordion__header {
     display: block;
     width: 100%;
-    padding: var(--space-200);
+    padding: var(--space-300) var(--space-400);
     background: none;
     border: none;
     cursor: pointer;
@@ -7817,19 +7817,37 @@
     color: inherit;
   }
 
-  .list-accordion__state-layer {
-    padding: var(--space-200);
-    border-radius: var(--corner-radius-m);
-    transition: background 120ms ease, transform 80ms ease-in;
+  /* Accordion control: isolated 40×40 pill — only this responds to hover/pressed */
+  .list-accordion__control {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
   }
 
-  .list-accordion__header:hover .list-accordion__state-layer,
-  .list-accordion--hover .list-accordion__state-layer  { background: var(--color-background-selection); }
+  .list-accordion__control-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 180px;
+    transition: background 150ms ease, border-radius 150ms ease, transform 80ms ease-in;
+  }
 
-  .list-accordion__header:active .list-accordion__state-layer,
-  .list-accordion--pressed .list-accordion__state-layer {
+  .list-accordion__header:hover .list-accordion__control-inner,
+  .list-accordion--hover .list-accordion__control-inner {
     background: var(--color-background-selection);
-    transform: scale(0.97);
+    border-radius: var(--corner-radius-xs);
+  }
+
+  .list-accordion__header:active .list-accordion__control-inner,
+  .list-accordion--pressed .list-accordion__control-inner {
+    background: var(--color-background-selection);
+    border-radius: var(--corner-radius-xs);
+    transform: scale(0.92);
   }
 
   .list-accordion__header:focus-visible,
@@ -7840,12 +7858,12 @@
   }
 
   .list-accordion--disabled { pointer-events: none; }
-  .list-accordion--disabled .list-accordion__state-layer { opacity: 0.38; }
+  .list-accordion--disabled .list-accordion__content { opacity: 0.38; }
 
   .list-accordion__content {
     display: flex;
     align-items: center;
-    gap: var(--space-300);
+    gap: var(--space-400);
   }
 
   .list-accordion__leading {
@@ -7881,12 +7899,6 @@
     font-size: var(--font-size-body-s);
     line-height: var(--font-leading-body-s);
     color: var(--color-content-subtle);
-  }
-
-  .list-accordion__trailing {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
   }
 
   /* Caret: starts pointing down (right + 90°), rotates to up when open */
@@ -18091,16 +18103,14 @@
                 <!-- ① Password reset — pre-expanded -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="true" aria-controls="la-body-1">
-                    <div class="list-accordion__state-layer">
-                      <div class="list-accordion__content">
-                        <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
-                        <div class="list-accordion__text">
-                          <span class="list-accordion__overline">Account</span>
-                          <span class="list-accordion__label">How do I reset my password?</span>
-                          <span class="list-accordion__caption">Security</span>
-                        </div>
-                        <div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    <div class="list-accordion__content">
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                      <div class="list-accordion__text">
+                        <span class="list-accordion__overline">Account</span>
+                        <span class="list-accordion__label">How do I reset my password?</span>
+                        <span class="list-accordion__caption">Security</span>
                       </div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body is-open" id="la-body-1" role="region">
@@ -18114,16 +18124,14 @@
                 <!-- ② Email change -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="false" aria-controls="la-body-2">
-                    <div class="list-accordion__state-layer">
-                      <div class="list-accordion__content">
-                        <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-message"/></svg></div>
-                        <div class="list-accordion__text">
-                          <span class="list-accordion__overline">Account</span>
-                          <span class="list-accordion__label">Can I change my email address?</span>
-                          <span class="list-accordion__caption">Account details</span>
-                        </div>
-                        <div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    <div class="list-accordion__content">
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-message"/></svg></div>
+                      <div class="list-accordion__text">
+                        <span class="list-accordion__overline">Account</span>
+                        <span class="list-accordion__label">Can I change my email address?</span>
+                        <span class="list-accordion__caption">Account details</span>
                       </div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body" id="la-body-2" role="region">
@@ -18137,16 +18145,14 @@
                 <!-- ③ Payment methods -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="false" aria-controls="la-body-3">
-                    <div class="list-accordion__state-layer">
-                      <div class="list-accordion__content">
-                        <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
-                        <div class="list-accordion__text">
-                          <span class="list-accordion__overline">Billing</span>
-                          <span class="list-accordion__label">What payment methods are accepted?</span>
-                          <span class="list-accordion__caption">Cards and wallets</span>
-                        </div>
-                        <div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    <div class="list-accordion__content">
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
+                      <div class="list-accordion__text">
+                        <span class="list-accordion__overline">Billing</span>
+                        <span class="list-accordion__label">What payment methods are accepted?</span>
+                        <span class="list-accordion__caption">Cards and wallets</span>
                       </div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body" id="la-body-3" role="region">
@@ -18160,16 +18166,14 @@
                 <!-- ④ Delivery -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="false" aria-controls="la-body-4">
-                    <div class="list-accordion__state-layer">
-                      <div class="list-accordion__content">
-                        <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg></div>
-                        <div class="list-accordion__text">
-                          <span class="list-accordion__overline">Orders</span>
-                          <span class="list-accordion__label">How long does delivery take?</span>
-                          <span class="list-accordion__caption">Standard and express</span>
-                        </div>
-                        <div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    <div class="list-accordion__content">
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-cloud"/></svg></div>
+                      <div class="list-accordion__text">
+                        <span class="list-accordion__overline">Orders</span>
+                        <span class="list-accordion__label">How long does delivery take?</span>
+                        <span class="list-accordion__caption">Standard and express</span>
                       </div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body" id="la-body-4" role="region">
@@ -18183,16 +18187,14 @@
                 <!-- ⑤ Returns -->
                 <div class="list-accordion">
                   <button class="list-accordion__header" aria-expanded="false" aria-controls="la-body-5">
-                    <div class="list-accordion__state-layer">
-                      <div class="list-accordion__content">
-                        <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg></div>
-                        <div class="list-accordion__text">
-                          <span class="list-accordion__overline">Orders</span>
-                          <span class="list-accordion__label">How do I return an item?</span>
-                          <span class="list-accordion__caption">30-day return window</span>
-                        </div>
-                        <div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
+                    <div class="list-accordion__content">
+                      <div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg></div>
+                      <div class="list-accordion__text">
+                        <span class="list-accordion__overline">Orders</span>
+                        <span class="list-accordion__label">How do I return an item?</span>
+                        <span class="list-accordion__caption">30-day return window</span>
                       </div>
+                      <div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div>
                     </div>
                   </button>
                   <div class="list-accordion__body" id="la-body-5" role="region">
@@ -18249,20 +18251,21 @@
   &lt;button class="list-accordion__header"
           aria-expanded="false"
           aria-controls="body-id"&gt;
-    &lt;div class="list-accordion__state-layer"&gt;
-      &lt;div class="list-accordion__content"&gt;
-        &lt;!-- Leading icon (optional) --&gt;
-        &lt;div class="list-accordion__leading"&gt;
-          &lt;svg width="24" height="24" viewBox="0 0 24 24" fill="none"&gt;
-            &lt;use href="#ico-bell"/&gt;
-          &lt;/svg&gt;
-        &lt;/div&gt;
-        &lt;div class="list-accordion__text"&gt;
-          &lt;span class="list-accordion__overline"&gt;Category&lt;/span&gt;
-          &lt;span class="list-accordion__label"&gt;Question or topic label&lt;/span&gt;
-          &lt;span class="list-accordion__caption"&gt;Subtitle&lt;/span&gt;
-        &lt;/div&gt;
-        &lt;div class="list-accordion__trailing"&gt;
+    &lt;div class="list-accordion__content"&gt;
+      &lt;!-- Leading icon (optional) --&gt;
+      &lt;div class="list-accordion__leading"&gt;
+        &lt;svg width="24" height="24" viewBox="0 0 24 24" fill="none"&gt;
+          &lt;use href="#ico-bell"/&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;div class="list-accordion__text"&gt;
+        &lt;span class="list-accordion__overline"&gt;Category&lt;/span&gt;
+        &lt;span class="list-accordion__label"&gt;Question or topic label&lt;/span&gt;
+        &lt;span class="list-accordion__caption"&gt;Subtitle&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;!-- Accordion control: only this element shows hover/pressed --&gt;
+      &lt;div class="list-accordion__control"&gt;
+        &lt;div class="list-accordion__control-inner"&gt;
           &lt;svg class="list-accordion__chevron"
                width="24" height="24" viewBox="0 0 24 24"
                fill="currentColor" aria-hidden="true"&gt;
@@ -18295,7 +18298,7 @@
             <div class="la-cell-wrap">
               <div class="list-accordion">
                 <button class="list-accordion__header" aria-expanded="false" tabindex="-1">
-                  <div class="list-accordion__state-layer"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div>
+                  <div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div>
                 </button>
               </div>
             </div>
@@ -18305,7 +18308,7 @@
             <div class="la-cell-wrap">
               <div class="list-accordion">
                 <button class="list-accordion__header" aria-expanded="false" tabindex="-1">
-                  <div class="list-accordion__state-layer"><div class="list-accordion__content"><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div>
+                  <div class="list-accordion__content"><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div>
                 </button>
               </div>
             </div>
@@ -18315,34 +18318,34 @@
         <!-- States -->
         <div class="ls-subsection">
           <h3 class="ls-subsection-title">States</h3>
-          <p class="ls-subsection-desc">States apply to the header button — the body panel is not interactive.</p>
+          <p class="ls-subsection-desc">Hover and pressed states are isolated to the 40×40 chevron control — the label area carries no visual state layer.</p>
         </div>
 
         <div class="ls-states-grid ls-states-grid--5col">
 
           <div class="ls-state-item">
             <p class="avatar-group-label" style="margin:0;">Default</p>
-            <div class="la-cell-wrap"><div class="list-accordion"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__state-layer"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
+            <div class="la-cell-wrap"><div class="list-accordion"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
           </div>
 
           <div class="ls-state-item">
             <p class="avatar-group-label" style="margin:0;">Hover</p>
-            <div class="la-cell-wrap"><div class="list-accordion list-accordion--hover"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__state-layer"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
+            <div class="la-cell-wrap"><div class="list-accordion list-accordion--hover"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
           </div>
 
           <div class="ls-state-item">
             <p class="avatar-group-label" style="margin:0;">Pressed</p>
-            <div class="la-cell-wrap"><div class="list-accordion list-accordion--pressed"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__state-layer"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
+            <div class="la-cell-wrap"><div class="list-accordion list-accordion--pressed"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
           </div>
 
           <div class="ls-state-item">
             <p class="avatar-group-label" style="margin:0;">Focused</p>
-            <div class="la-cell-wrap"><div class="list-accordion list-accordion--focused"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__state-layer"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
+            <div class="la-cell-wrap"><div class="list-accordion list-accordion--focused"><button class="list-accordion__header" aria-expanded="false" tabindex="-1"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
           </div>
 
           <div class="ls-state-item">
             <p class="avatar-group-label" style="margin:0;">Disabled</p>
-            <div class="la-cell-wrap"><div class="list-accordion list-accordion--disabled"><button class="list-accordion__header" aria-expanded="false" tabindex="-1" disabled><div class="list-accordion__state-layer"><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__trailing"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
+            <div class="la-cell-wrap"><div class="list-accordion list-accordion--disabled"><button class="list-accordion__header" aria-expanded="false" tabindex="-1" disabled><div class="list-accordion__content"><div class="list-accordion__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-accordion__text"><span class="list-accordion__label">Notifications</span></div><div class="list-accordion__control"><div class="list-accordion__control-inner"><svg class="list-accordion__chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></button></div></div>
           </div>
 
         </div><!-- /.ls-states-grid--5col -->
