@@ -7833,21 +7833,29 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    border-radius: 180px;
-    transition: background 150ms ease, border-radius 150ms ease, transform 80ms ease-in;
+    border-radius: var(--corner-radius-round);
+    transition:
+      border-radius 150ms ease-out,
+      background    150ms ease-out;
   }
 
+  /* Hover: morph pill → rounded rect (matches btn-clear medium) */
   .list-accordion__header:hover .list-accordion__control-inner,
   .list-accordion--hover .list-accordion__control-inner {
-    background: var(--color-background-selection);
-    border-radius: var(--corner-radius-xs);
+    background: var(--color-action-hover-subtle);
+    border-radius: var(--corner-radius-m);
   }
 
+  /* Pressed: snap back to pill + scale (matches btn:active) */
   .list-accordion__header:active .list-accordion__control-inner,
   .list-accordion--pressed .list-accordion__control-inner {
-    background: var(--color-background-selection);
-    border-radius: var(--corner-radius-xs);
-    transform: scale(0.92);
+    background: var(--color-action-active-subtle);
+    border-radius: var(--corner-radius-round);
+    transform: scale(0.96);
+    transition:
+      transform      80ms ease-in,
+      border-radius  80ms ease-in,
+      background     80ms ease-in;
   }
 
   .list-accordion__header:focus-visible,
