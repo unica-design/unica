@@ -17752,6 +17752,24 @@
           var trailPicker = document.getElementById('ls-trailing-picker');
           if (trailPicker) trailPicker.style.display = state.type === 'action' ? '' : 'none';
 
+          // Suppress Stepper option when avatar leading is selected
+          var stepperOpt = trailPicker && trailPicker.querySelector('[data-value="stepper"]');
+          if (stepperOpt) {
+            var avatarActive = state.leading === 'avatar';
+            stepperOpt.style.display = avatarActive ? 'none' : '';
+            if (avatarActive && state.trailing === 'stepper') {
+              state.trailing = 'radio';
+              // Sync the dropdown label back to Radio
+              var radioOpt = trailPicker.querySelector('[data-value="radio"]');
+              var trailLabel = document.getElementById('ls-trailing-label');
+              if (radioOpt && trailLabel) {
+                trailPicker.querySelectorAll('.dropdown-option').forEach(function(o){ o.setAttribute('aria-selected','false'); });
+                radioOpt.setAttribute('aria-selected','true');
+                trailLabel.innerHTML = radioOpt.innerHTML;
+              }
+            }
+          }
+
           // Show/hide icon-bullet color picker
           var ibColorPicker = document.getElementById('ls-ib-color-picker');
           if (ibColorPicker) ibColorPicker.style.display = state.leading === 'icon-bullet' ? '' : 'none';
