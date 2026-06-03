@@ -17368,77 +17368,75 @@
         <!-- ── PART 2: LEADING MEDIA ─────────────── -->
         <div class="ls-subsection">
           <h3 class="ls-subsection-title">Leading media</h3>
-          <p class="ls-subsection-desc">Leading media is independent of cell type — icon, icon bullet, avatar, and none apply equally to navigation and action cells.</p>
+          <p class="ls-subsection-desc">Available across all cell types — icon, icon bullet, avatar, and none can be combined with both navigation and action cells.</p>
         </div>
 
-        <div class="table-wrap" style="margin-bottom:var(--space-600);">
-          <div class="states-matrix states-matrix--2col" style="margin-bottom:0;">
+        <div class="modal-variants-grid">
 
-            <!-- Icon -->
-            <div class="states-matrix-row">
-              <div class="states-matrix-label">Icon</div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav">
-                  <div class="list-cell__state-layer">
-                    <div class="list-cell__content">
-                      <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
-                      <div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
-                    </div>
+          <!-- Icon -->
+          <div class="modal-variant-item">
+            <p class="avatar-group-label">Icon</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav">
+                <div class="list-cell__state-layer">
+                  <div class="list-cell__content">
+                    <div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div>
+                    <div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div>
+                    <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
                   </div>
                 </div>
-              </div></div>
+              </div>
             </div>
+          </div>
 
-            <!-- Icon Bullet -->
-            <div class="states-matrix-row">
-              <div class="states-matrix-label">Icon Bullet</div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav">
-                  <div class="list-cell__state-layer">
-                    <div class="list-cell__content">
-                      <div class="list-cell__leading"><div class="icon-bullet icon-bullet--small icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg></div></div>
-                      <div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
-                    </div>
+          <!-- Icon Bullet -->
+          <div class="modal-variant-item">
+            <p class="avatar-group-label">Icon Bullet</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav">
+                <div class="list-cell__state-layer">
+                  <div class="list-cell__content">
+                    <div class="list-cell__leading"><div class="icon-bullet icon-bullet--small icon-bullet--violet" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-bell"/></svg></div></div>
+                    <div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div>
+                    <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
                   </div>
                 </div>
-              </div></div>
+              </div>
             </div>
+          </div>
 
-            <!-- Avatar -->
-            <div class="states-matrix-row">
-              <div class="states-matrix-label">Avatar</div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav">
-                  <div class="list-cell__state-layer">
-                    <div class="list-cell__content">
-                      <div class="list-cell__leading"><img class="avatar avatar--medium avatar--circle" src="assets/avatars/avatar-1.png" alt="" aria-hidden="true" style="object-fit:cover;"></div>
-                      <div class="list-cell__text"><span class="list-cell__overline">Team member</span><span class="list-cell__label">Sofia Esposito</span><span class="list-cell__caption">Lead designer</span></div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
-                    </div>
+          <!-- Avatar -->
+          <div class="modal-variant-item">
+            <p class="avatar-group-label">Avatar</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav">
+                <div class="list-cell__state-layer">
+                  <div class="list-cell__content">
+                    <div class="list-cell__leading"><img class="avatar avatar--medium avatar--circle" src="assets/avatars/avatar-1.png" alt="" aria-hidden="true" style="object-fit:cover;"></div>
+                    <div class="list-cell__text"><span class="list-cell__overline">Team member</span><span class="list-cell__label">Sofia Esposito</span><span class="list-cell__caption">Lead designer</span></div>
+                    <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
                   </div>
                 </div>
-              </div></div>
+              </div>
             </div>
+          </div>
 
-            <!-- None -->
-            <div class="states-matrix-row">
-              <div class="states-matrix-label">None</div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav">
-                  <div class="list-cell__state-layer">
-                    <div class="list-cell__content">
-                      <div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div>
-                      <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
-                    </div>
+          <!-- None -->
+          <div class="modal-variant-item">
+            <p class="avatar-group-label">None</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav">
+                <div class="list-cell__state-layer">
+                  <div class="list-cell__content">
+                    <div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div>
+                    <div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div>
                   </div>
                 </div>
-              </div></div>
+              </div>
             </div>
+          </div>
 
-          </div><!-- /.states-matrix--2col -->
-        </div><!-- /.table-wrap -->
+        </div><!-- /.modal-variants-grid -->
 
         <!-- ── PART 3: STATES ─────────────────────── -->
         <div class="ls-subsection">
@@ -17446,36 +17444,49 @@
           <p class="ls-subsection-desc">Navigation cells respond to the full interactive state cycle. Action cells skip hover and pressed — only the trailing control is interactive.</p>
         </div>
 
-        <div class="table-wrap">
-          <div class="states-matrix">
-            <div class="states-matrix-head">
-              <div class="states-matrix-head-spacer"></div>
-              <div class="states-matrix-head-cell">Default</div>
-              <div class="states-matrix-head-cell">Hover</div>
-              <div class="states-matrix-head-cell">Pressed</div>
-              <div class="states-matrix-head-cell">Focused</div>
-              <div class="states-matrix-head-cell">Disabled</div>
+        <div class="ls-states-grid ls-states-grid--5col">
+
+          <!-- Default -->
+          <div class="ls-state-item">
+            <p class="avatar-group-label" style="margin:0;">Default</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
             </div>
-            <div class="states-matrix-row">
-              <div class="states-matrix-label">Navigation</div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
-              </div></div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav list-cell--hover"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
-              </div></div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav list-cell--pressed"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
-              </div></div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav list-cell--focused"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
-              </div></div>
-              <div class="states-matrix-cell" style="padding:var(--space-200) 0;"><div style="width:100%;background:var(--color-background-page);border-radius:var(--corner-radius-m);overflow:hidden;">
-                <div class="list-cell list-cell--nav list-cell--disabled"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
-              </div></div>
+          </div>
+
+          <!-- Hover -->
+          <div class="ls-state-item">
+            <p class="avatar-group-label" style="margin:0;">Hover</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav list-cell--hover"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
             </div>
-          </div><!-- /.states-matrix -->
-        </div><!-- /.table-wrap -->
+          </div>
+
+          <!-- Pressed -->
+          <div class="ls-state-item">
+            <p class="avatar-group-label" style="margin:0;">Pressed</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav list-cell--pressed"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
+            </div>
+          </div>
+
+          <!-- Focused -->
+          <div class="ls-state-item">
+            <p class="avatar-group-label" style="margin:0;">Focused</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav list-cell--focused"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
+            </div>
+          </div>
+
+          <!-- Disabled -->
+          <div class="ls-state-item">
+            <p class="avatar-group-label" style="margin:0;">Disabled</p>
+            <div class="ls-cell-wrap">
+              <div class="list-cell list-cell--nav list-cell--disabled"><div class="list-cell__state-layer"><div class="list-cell__content"><div class="list-cell__leading"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></div><div class="list-cell__text"><span class="list-cell__label">Notifications</span><span class="list-cell__caption">Push, email, and SMS</span></div><div class="list-cell__trailing"><svg class="list-cell__caret" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg></div></div></div></div>
+            </div>
+          </div>
+
+        </div><!-- /.ls-states-grid--5col -->
 
 
       </div><!-- /doc-section: Variants & States -->
