@@ -8156,25 +8156,31 @@
     display: flex;
     align-items: center;
     gap: var(--space-200);
-    padding: 0 var(--space-300);
+    padding: 0 var(--space-600) 0 var(--space-300); /* right 24px, left 12px — matches Figma */
     height: 44px;
-    background: var(--color-background-subtle);
+    background: var(--color-background-ui); /* --primitive-ink-100 = #F2F3F5 */
     border-radius: var(--corner-radius-round);
     border: 1px solid transparent;
-    transition: background 150ms ease, border-color 150ms ease;
+    transition: border-color 150ms ease;
     width: 100%;
     box-sizing: border-box;
   }
 
   .search-field--small {
     height: 36px;
-    padding: 0 var(--space-200);
+    padding: 0 var(--space-500) 0 var(--space-200); /* right 20px, left 8px */
   }
 
-  /* Focused / active state — background stays subtle, border appears */
+  /* Focused / active state — same fill, ink border appears */
   .search-field--active,
   .search-field:focus-within {
     border-color: var(--color-content-default);
+  }
+
+  /* Typing state — tighter right padding to accommodate 40px clear button */
+  .search-field--typing {
+    padding-right: 4px;
+    gap: 4px;
   }
 
   .search-field__icon {
@@ -8194,11 +8200,11 @@
     color: var(--color-content-default);
     outline: none;
     line-height: 1;
-    /* Suppress native browser search cancel button */
     -webkit-appearance: none;
     appearance: none;
   }
 
+  /* Suppress native browser search × — we render our own */
   .search-field__input::-webkit-search-cancel-button,
   .search-field__input::-webkit-search-decoration {
     -webkit-appearance: none;
@@ -8213,25 +8219,44 @@
     color: var(--color-content-subtle);
   }
 
-  /* Clear button — 24px filled ink circle + white × */
+  /*
+   * Clear button — matches Figma `.button-clear-field-atom` exactly:
+   *   Outer: 40×40 touch target, no fill
+   *   Inner visual: 24×24 ink circle via ::before
+   *   Icon: 16×16 inside the circle
+   */
   .search-field__clear {
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    background: var(--color-content-default);
-    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background: none;
     border: none;
     display: none;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     padding: 0;
+    position: relative;
     color: var(--color-background-page);
-    transition: opacity 100ms ease;
   }
 
-  .search-field__clear:hover { opacity: 0.75; }
-  .search-field--small .search-field__clear { width: 20px; height: 20px; }
+  .search-field__clear::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: var(--color-content-default);
+    border-radius: 50%;
+  }
+
+  .search-field__clear svg {
+    position: relative; /* renders above ::before */
+  }
+
+  /* Small variant — 32×32 touch target, 20×20 circle */
+  .search-field--small .search-field__clear { width: 32px; height: 32px; }
+  .search-field--small .search-field__clear::before { width: 20px; height: 20px; }
+
   .search-field--typing .search-field__clear { display: flex; }
 
   /* Mobile Search Header */
@@ -8343,20 +8368,15 @@
     display: flex;
     align-items: center;
     gap: var(--space-200);
-    padding: 0 var(--space-300);
+    padding: 0 var(--space-600) 0 var(--space-300);
     height: 44px;
-    background: var(--color-background-subtle);
+    background: var(--color-background-ui);
     border-radius: var(--corner-radius-round);
     border: 1px solid transparent;
     width: calc(100% - var(--space-400) * 2);
     box-sizing: border-box;
     cursor: pointer;
     text-align: left;
-    transition: background 120ms ease;
-  }
-
-  .sf-base-search-trigger:hover {
-    background: var(--color-background-selection);
   }
 
   .sf-base-search-trigger__icon {
@@ -8431,7 +8451,7 @@
   .sf-chip {
     flex-shrink: 0;
     padding: 6px var(--space-300);
-    background: var(--color-background-subtle);
+    background: var(--color-background-ui);
     border-radius: var(--corner-radius-round);
     font-family: var(--font-family-sans);
     font-size: var(--font-size-body-s);
@@ -11544,7 +11564,7 @@
                          autocomplete="off" spellcheck="false" tabindex="-1">
                   <button class="search-field__clear" id="sf-overlay-clear"
                           aria-label="Clear search" tabindex="-1">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
                   </button>
                 </div>
                 <button class="sf-header__cancel" id="sf-cancel-btn" tabindex="-1">Cancel</button>
@@ -11682,7 +11702,7 @@
               <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
               <input class="search-field__input" type="text" value="modernist" tabindex="-1" readonly>
               <button class="search-field__clear" tabindex="-1" aria-label="Clear">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
               </button>
             </div>
           </div>
@@ -11706,7 +11726,7 @@
               <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
               <input class="search-field__input" type="text" value="modernist" tabindex="-1" readonly>
               <button class="search-field__clear" tabindex="-1" aria-label="Clear">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
               </button>
             </div>
           </div>
