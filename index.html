@@ -8367,11 +8367,11 @@
 
   /* Search trigger on base screen — looks identical to the default field */
   .sf-base-search-trigger {
-    margin: var(--space-200) var(--space-400) var(--space-100);
+    margin: var(--space-200) var(--space-400) var(--space-400); /* bottom: 16px (doubled) */
     display: flex;
     align-items: center;
     gap: var(--space-200);
-    padding: 0 var(--space-600) 0 var(--space-300);
+    padding: 0 var(--space-500) 0 var(--space-300);
     height: 44px;
     background: var(--color-background-ui);
     border-radius: var(--corner-radius-round);
@@ -8382,8 +8382,20 @@
     text-align: left;
   }
 
+  /* Hint animation — briefly lifts and shows ink border when cards are tapped */
+  @keyframes sf-search-hint {
+    0%   { transform: translateY(0);   border-color: transparent;                 box-shadow: none;                              animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+    38%  { transform: translateY(-4px); border-color: var(--color-content-default); box-shadow: 0 8px 20px rgba(15,23,38,0.10);  animation-timing-function: linear; }
+    62%  { transform: translateY(-4px); border-color: var(--color-content-default); box-shadow: 0 8px 20px rgba(15,23,38,0.10);  animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+    100% { transform: translateY(0);   border-color: transparent;                 box-shadow: none; }
+  }
+
+  .sf-base-search-trigger.is-hinting {
+    animation: sf-search-hint 580ms forwards;
+  }
+
   .sf-base-search-trigger__icon {
-    color: var(--color-content-subtle);
+    color: var(--color-content-default);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -8397,7 +8409,7 @@
   }
 
   .sf-base-content {
-    padding: var(--space-300) var(--space-400) var(--space-400);
+    padding: var(--space-500) var(--space-400) var(--space-400); /* top: 24px (doubled) */
     display: flex;
     flex-direction: column;
     gap: var(--space-400);
@@ -11827,6 +11839,21 @@
             deleteKey.addEventListener('click', function() {
               input.value = input.value.slice(0, -1);
               input.dispatchEvent(new Event('input'));
+            });
+          }
+
+          // Card tap → hint animation on search trigger
+          var baseContent = document.querySelector('#sf-phone-mock .sf-base-content');
+          if (baseContent && trigger) {
+            baseContent.addEventListener('click', function() {
+              // Restart animation cleanly if already playing
+              trigger.classList.remove('is-hinting');
+              void trigger.offsetWidth; // force reflow
+              trigger.classList.add('is-hinting');
+              trigger.addEventListener('animationend', function cleanup() {
+                trigger.removeEventListener('animationend', cleanup);
+                trigger.classList.remove('is-hinting');
+              }, { once: true });
             });
           }
 
