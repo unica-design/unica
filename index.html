@@ -8624,7 +8624,7 @@
     50%, 100% { opacity: 0; }
   }
 
-  /* Variants & States — use standard states-matrix, 4-col (label + 3 states), no row borders */
+  /* Variants & States — 4-col matrix (label + 3 states), no row borders */
   #page-search-field .states-matrix-head,
   #page-search-field .states-matrix-row {
     grid-template-columns: 88px repeat(3, 1fr);
@@ -8633,7 +8633,42 @@
   #page-search-field .states-matrix-row { border-bottom: none; }
   #page-search-field .states-matrix-cell {
     padding: var(--space-500) var(--space-400);
-    pointer-events: none; /* prevent focus and layout shift on click */
+    pointer-events: none;
+  }
+
+  /* Mobile: stack to single column */
+  @media (max-width: 560px) {
+    #page-search-field .states-matrix { overflow-x: visible; background-image: none; }
+    #page-search-field .states-matrix-head { display: none; }
+    #page-search-field .states-matrix-row {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-300);
+      border-bottom: var(--border-width-default) solid var(--doc-rule-subtle);
+      padding-bottom: var(--space-500);
+      margin-bottom: var(--space-200);
+    }
+    #page-search-field .states-matrix-row:last-child { border-bottom: none; }
+    #page-search-field .states-matrix-label {
+      padding: 0 0 var(--space-100);
+      font-weight: var(--font-weight-semibold);
+    }
+    #page-search-field .states-matrix-cell {
+      padding: 0;
+      justify-content: flex-start;
+    }
+    /* State label above each cell via data-label */
+    #page-search-field .states-matrix-cell[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      width: 100%;
+      font-size: var(--doc-label-size);
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--doc-label-tracking);
+      color: var(--color-content-subtle);
+      margin-bottom: var(--space-200);
+    }
   }
 
   /* Static field mock — replaces live <input> in variant cells */
@@ -11696,19 +11731,19 @@
           <!-- Large row -->
           <div class="states-matrix-row">
             <div class="states-matrix-label">Large</div>
-            <div class="states-matrix-cell">
+            <div class="states-matrix-cell" data-label="Default">
               <div class="search-field" style="width:100%">
                 <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
                 <span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span>
               </div>
             </div>
-            <div class="states-matrix-cell">
+            <div class="states-matrix-cell" data-label="Active">
               <div class="search-field search-field--active" style="width:100%">
                 <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
-                <span class="sf-field-mock"><span class="sf-cursor"></span></span>
+                <span class="sf-field-mock"><span class="sf-cursor"></span><span class="sf-field-placeholder">Search</span></span>
               </div>
             </div>
-            <div class="states-matrix-cell">
+            <div class="states-matrix-cell" data-label="Typing">
               <div class="search-field search-field--active search-field--typing" style="width:100%">
                 <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
                 <span class="sf-field-mock">morning<span class="sf-cursor"></span></span>
@@ -11722,19 +11757,19 @@
           <!-- Small row -->
           <div class="states-matrix-row">
             <div class="states-matrix-label">Small</div>
-            <div class="states-matrix-cell">
+            <div class="states-matrix-cell" data-label="Default">
               <div class="search-field search-field--small" style="width:100%">
                 <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
                 <span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span>
               </div>
             </div>
-            <div class="states-matrix-cell">
+            <div class="states-matrix-cell" data-label="Active">
               <div class="search-field search-field--small search-field--active" style="width:100%">
                 <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
-                <span class="sf-field-mock"><span class="sf-cursor"></span></span>
+                <span class="sf-field-mock"><span class="sf-cursor"></span><span class="sf-field-placeholder">Search</span></span>
               </div>
             </div>
-            <div class="states-matrix-cell">
+            <div class="states-matrix-cell" data-label="Typing">
               <div class="search-field search-field--small search-field--active search-field--typing" style="width:100%">
                 <span class="search-field__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
                 <span class="sf-field-mock">morning<span class="sf-cursor"></span></span>
