@@ -8697,6 +8697,292 @@
   }
 
 
+  /* ─────────────────────────────────────────────────────────────────
+     TOP NAVIGATION — APP
+  ───────────────────────────────────────────────────────────────── */
+
+  /* Phone mock */
+  #tna-phone-mock {
+    position: relative;
+    width: 375px;
+    height: 720px;
+    background: var(--color-background-page);
+    border-radius: 24px;
+    box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  [data-theme="dark"] #tna-phone-mock {
+    box-shadow: none;
+    border: var(--border-width-default) solid var(--color-border-default);
+  }
+  #tna-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #tna-scroll-container::-webkit-scrollbar { display: none; }
+
+  /* ── Nav component ── */
+  .tna-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-background-page);
+    border-bottom: var(--border-width-default) solid transparent;
+    transition: border-color 220ms ease;
+  }
+  .tna-nav.is-scrolled { border-color: var(--color-border-default); }
+
+  /* Status bar */
+  .tna-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-300) var(--space-500) var(--space-100);
+    font-family: var(--font-family-sans);
+    font-size: 12px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+  }
+  .tna-status-icons { display: flex; align-items: center; gap: var(--space-200); }
+
+  /* Toolbar row */
+  .tna-toolbar {
+    display: flex;
+    align-items: center;
+    padding: var(--space-100) var(--space-400) var(--space-200);
+    gap: 0;
+    min-height: 52px;
+  }
+  .tna-toolbar-leading {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    width: 48px;
+  }
+  .tna-logo-mark {
+    width: 40px;
+    height: 40px;
+    background: var(--color-brand-ink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primitive-cafe-0);
+    flex-shrink: 0;
+  }
+  .tna-back-btn {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-content-default);
+    cursor: pointer;
+    transition: background 120ms ease;
+  }
+  .tna-back-btn:hover { background: var(--color-action-hover-subtle); }
+
+  /* Inline title — fades in when scrolled */
+  .tna-toolbar-center {
+    flex: 1;
+    min-width: 0;
+    padding: 0 var(--space-200);
+    opacity: 0;
+    transition: opacity 220ms ease;
+    font-family: var(--font-family-serif);
+    font-size: 17px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+  .tna-nav.is-scrolled .tna-toolbar-center { opacity: 1; }
+
+  /* Trailing actions */
+  .tna-toolbar-trailing {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .tna-icon-btn-wrap { position: relative; }
+  .tna-icon-btn {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-content-default);
+    cursor: pointer;
+    transition: background 120ms ease;
+  }
+  .tna-icon-btn:hover { background: var(--color-action-hover-subtle); }
+  .tna-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 9px;
+    height: 9px;
+    background: var(--color-brand-ultraviolet);
+    border-radius: 50%;
+    border: 2px solid var(--color-background-page);
+    pointer-events: none;
+  }
+  .tna-avatar-wrap { position: relative; }
+  .tna-avatar-btn {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 120ms ease;
+  }
+  .tna-avatar-btn:hover { opacity: 0.8; }
+  .tna-avatar-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Expandable area — collapses on scroll via grid-template-rows trick */
+  .tna-expandable {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .tna-expandable-inner { overflow: hidden; }
+  .tna-nav.is-scrolled .tna-expandable { grid-template-rows: 0fr; }
+
+  .tna-heading {
+    font-family: var(--font-family-serif);
+    font-size: 34px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    padding: var(--space-100) var(--space-400) var(--space-200);
+    margin: 0;
+  }
+  .tna-search-wrap {
+    padding: var(--space-100) var(--space-400) var(--space-400);
+  }
+
+  /* Type rules — leading slot visibility */
+  .tna-nav[data-type="home"]   .tna-back-btn  { display: none; }
+  .tna-nav[data-type="parent"] .tna-logo-mark { display: none; }
+  .tna-nav[data-type="parent"] .tna-back-btn  { display: none; }
+  .tna-nav[data-type="child"]  .tna-logo-mark { display: none; }
+
+  /* Property data-no-* toggles */
+  #tna-nav[data-no-leading]  .tna-toolbar-leading   { visibility: hidden; }
+  #tna-nav[data-no-heading]  .tna-heading           { display: none; }
+  #tna-nav[data-no-search]   .tna-search-wrap       { display: none; }
+  #tna-nav[data-no-trailing] .tna-toolbar-trailing  { display: none; }
+  #tna-nav[data-no-btn1]     .tna-icon-btn-wrap--btn1  { display: none; }
+  #tna-nav[data-no-badge1]   .tna-badge--btn1       { display: none; }
+  #tna-nav[data-no-btn2]     .tna-icon-btn-wrap--btn2  { display: none; }
+  #tna-nav[data-no-badge2]   .tna-badge--btn2       { display: none; }
+  #tna-nav[data-no-avatar]   .tna-avatar-wrap       { display: none; }
+  #tna-nav[data-no-badge-av] .tna-badge--av         { display: none; }
+
+  /* Scroll content items */
+  .tna-scroll-content { padding-bottom: var(--space-800); }
+  .tna-content-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-400);
+    padding: var(--space-400);
+    border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+    cursor: pointer;
+    transition: background 120ms ease;
+  }
+  .tna-content-item:hover { background: var(--color-background-selection); }
+  .tna-content-item:last-child { border-bottom: none; }
+  .tna-content-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--corner-radius-m);
+    background: var(--color-background-ui);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-content-subtle);
+    flex-shrink: 0;
+  }
+  .tna-content-text { flex: 1; min-width: 0; }
+  .tna-content-label {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-content-default);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .tna-content-caption {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-s);
+    color: var(--color-content-subtle);
+    margin: 0;
+  }
+  .tna-content-caret {
+    color: var(--color-content-subtle);
+    flex-shrink: 0;
+  }
+
+  /* Variants display — nav strip (static component, no phone chrome) */
+  .tna-strip-wrap {
+    width: 100%;
+    max-width: 375px;
+    border-radius: var(--corner-radius-l);
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--color-border-subtle), 0 2px 8px rgba(8,5,13,0.08);
+    background: var(--color-background-page);
+  }
+  [data-theme="dark"] .tna-strip-wrap {
+    box-shadow: 0 0 0 1px var(--color-border-default);
+  }
+  .tna-variants-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-600);
+    max-width: 860px;
+  }
+  .tna-variant-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-300);
+  }
+  .tna-states-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-600);
+    max-width: 860px;
+  }
+  @media (max-width: 640px) {
+    .tna-variants-3col { grid-template-columns: 1fr; }
+    .tna-states-2col   { grid-template-columns: 1fr; }
+  }
+
   </style>
 </head>
 <body>
@@ -8771,6 +9057,9 @@
     <!-- arrow: right-pointing arrow stroke icon -->
     <symbol id="ico-arrow" viewBox="0 0 24 24" fill="none">
       <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ico-arrow-left" viewBox="0 0 24 24" fill="none">
+      <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
 
     <!-- eye show: open eye + pupil rings — Figma export 481:5422 @2x -->
@@ -13594,7 +13883,554 @@
     </div><!-- /#page-stepper -->
 
     <!-- Navigation -->
-    <div class="page-panel" id="page-top-nav-app"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Top Navigation — App</h2><p class="section-description">Mobile app top bar with back, title, and action slots.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-top-nav-app">
+
+      <!-- ── Component header ──────────────────────────────────── -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Navigation</p>
+        <h1 class="comp-title">Top Navigation — App</h1>
+        <p class="comp-description">The mobile app top bar establishes hierarchy and exposes screen-level actions. Three types cover the full navigation stack: Home surfaces global entry points with a brand mark, Parent frames a depth-1 section without back navigation, and Child provides a back button for deep screens. On scroll, the large heading and optional search bar collapse into a compact inline title with a divider border.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+          <span class="comp-badge">v1.0</span>
+          <span class="comp-badge">Mobile</span>
+          <a class="comp-badge" href="https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system?node-id=343-1380" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ══ 1. PREVIEW ══════════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+        <p class="doc-section-description">Scroll the phone to see the heading collapse into its compact state.</p>
+
+        <!-- Type switcher -->
+        <div class="btn-controls">
+          <div class="seg-control" id="tna-type-ctl" role="group" aria-label="Navigation type">
+            <span class="seg-control-slider" aria-hidden="true"></span>
+            <button class="seg-control-btn" data-value="home"   aria-pressed="true">Home</button>
+            <button class="seg-control-btn" data-value="parent" aria-pressed="false">Parent</button>
+            <button class="seg-control-btn" data-value="child"  aria-pressed="false">Child</button>
+          </div>
+        </div>
+
+        <!-- Phone mock -->
+        <div class="ls-fs-wrap" style="justify-content:center;">
+          <div id="tna-phone-mock">
+            <div id="tna-scroll-container">
+
+              <!-- ══ Nav component ══ -->
+              <div class="tna-nav" id="tna-nav" data-type="home">
+
+                <!-- Status bar -->
+                <div class="tna-status-bar">
+                  <span>9:41</span>
+                  <div class="tna-status-icons">
+                    <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="0.5" opacity="0.35"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="0.5" opacity="0.55"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.5" opacity="0.75"/><rect x="13.5" y="0" width="3" height="12" rx="0.5"/></svg>
+                    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M8 9.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" fill="currentColor"/><path d="M4.93 6.93A4.34 4.34 0 0 1 8 5.7c1.2 0 2.28.48 3.07 1.23" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/><path d="M2.34 4.34A7.64 7.64 0 0 1 8 2c2.11 0 4.03.85 5.42 2.24" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.35"/></svg>
+                    <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor"/><path d="M23 4.5v3a1.5 1.5 0 0 0 0-3Z" fill="currentColor" fill-opacity="0.4"/></svg>
+                  </div>
+                </div>
+
+                <!-- Toolbar row -->
+                <div class="tna-toolbar">
+                  <!-- Leading: logo (home) | empty (parent) | back (child) -->
+                  <div class="tna-toolbar-leading">
+                    <div class="tna-logo-mark" aria-label="ůnica">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg>
+                    </div>
+                    <button class="tna-back-btn" aria-label="Go back">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-left"/></svg>
+                    </button>
+                  </div>
+
+                  <!-- Inline title — visible only when scrolled -->
+                  <p class="tna-toolbar-center" id="tna-title-text" aria-hidden="true">Discover</p>
+
+                  <!-- Trailing: icon buttons + avatar -->
+                  <div class="tna-toolbar-trailing">
+                    <div class="tna-icon-btn-wrap tna-icon-btn-wrap--btn1">
+                      <button class="tna-icon-btn" aria-label="Notifications">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
+                      </button>
+                      <span class="tna-badge tna-badge--btn1" aria-hidden="true"></span>
+                    </div>
+                    <div class="tna-icon-btn-wrap tna-icon-btn-wrap--btn2">
+                      <button class="tna-icon-btn" aria-label="Saved">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg>
+                      </button>
+                      <span class="tna-badge tna-badge--btn2" aria-hidden="true"></span>
+                    </div>
+                    <div class="tna-avatar-wrap">
+                      <button class="tna-avatar-btn" aria-label="Profile">
+                        <img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt="">
+                      </button>
+                      <span class="tna-badge tna-badge--av" aria-hidden="true"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Expandable: heading + optional search -->
+                <div class="tna-expandable">
+                  <div class="tna-expandable-inner">
+                    <h1 class="tna-heading" id="tna-heading-text">Discover</h1>
+                    <div class="tna-search-wrap">
+                      <div class="search-field">
+                        <span class="search-field__icon">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
+                        </span>
+                        <span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div><!-- /.tna-nav -->
+
+              <!-- Scroll content — wellness sessions -->
+              <div class="tna-scroll-content">
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Morning Breathwork</p><p class="tna-content-caption">8 min · Breathing</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Body Scan</p><p class="tna-content-caption">12 min · Meditation</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Evening Reflection</p><p class="tna-content-caption">15 min · Journaling</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bulb"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Focus Flow</p><p class="tna-content-caption">25 min · Concentration</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Restorative Rest</p><p class="tna-content-caption">10 min · Recovery</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Guided Sleep</p><p class="tna-content-caption">30 min · Sleep</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Mindful Walking</p><p class="tna-content-caption">20 min · Movement</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Sensory Grounding</p><p class="tna-content-caption">5 min · Awareness</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bulb"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Intention Setting</p><p class="tna-content-caption">8 min · Reflection</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+                <div class="tna-content-item">
+                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg></div>
+                  <div class="tna-content-text"><p class="tna-content-label">Gratitude Practice</p><p class="tna-content-caption">6 min · Mindfulness</p></div>
+                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
+                </div>
+              </div>
+
+            </div><!-- /#tna-scroll-container -->
+          </div><!-- /#tna-phone-mock -->
+        </div>
+
+        <!-- Property toggles -->
+        <div class="card-prop-bar">
+          <p class="card-prop-bar-sub">Show and hide optional properties</p>
+          <div class="card-prop-bar-toggles">
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-leading" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Leading media</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-heading" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Heading</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-search" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Search bar</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-btn1" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Button 1</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-badge1" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Badge 1</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-btn2" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Button 2</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-badge2" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Badge 2</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-avatar" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Avatar</span>
+            </label>
+            <label class="switch-item">
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-badge-av" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Avatar badge</span>
+            </label>
+          </div>
+        </div>
+
+      </div><!-- /Preview -->
+
+      <!-- Code reveal -->
+      <button class="code-reveal-btn" id="tna-code-toggle" aria-expanded="false" aria-controls="tna-code-reveal" onclick="toggleCodeReveal(this,'tna-code-reveal')">
+        <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+        <span class="code-reveal-btn-label">Show code</span>
+      </button>
+      <div class="code-reveal" id="tna-code-reveal" hidden>
+        <div class="code-block">
+          <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+          <pre><code class="language-html">&lt;!-- Home type (default) --&gt;
+&lt;div class="tna-nav" data-type="home"&gt;
+  &lt;div class="tna-toolbar"&gt;
+    &lt;div class="tna-toolbar-leading"&gt;
+      &lt;div class="tna-logo-mark" aria-label="ůnica"&gt;
+        &lt;svg width="18" height="18"&gt;&lt;use href="#ico-unica"/&gt;&lt;/svg&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class="tna-toolbar-center" aria-hidden="true"&gt;Screen heading&lt;/p&gt;
+    &lt;div class="tna-toolbar-trailing"&gt;
+      &lt;div class="tna-icon-btn-wrap"&gt;
+        &lt;button class="tna-icon-btn" aria-label="Notifications"&gt;
+          &lt;svg width="22" height="22"&gt;&lt;use href="#ico-bell"/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+        &lt;span class="tna-badge" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="tna-avatar-wrap"&gt;
+        &lt;button class="tna-avatar-btn" aria-label="Profile"&gt;
+          &lt;img class="tna-avatar-img" src="avatar.png" alt=""&gt;
+        &lt;/button&gt;
+        &lt;span class="tna-badge" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="tna-expandable"&gt;
+    &lt;div class="tna-expandable-inner"&gt;
+      &lt;h1 class="tna-heading"&gt;Screen heading&lt;/h1&gt;
+      &lt;div class="tna-search-wrap"&gt;
+        &lt;div class="search-field"&gt;...&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Add is-scrolled class via JS when content scrolls --&gt;
+&lt;!-- scrollContainer.addEventListener('scroll', () =&gt; {
+  nav.classList.toggle('is-scrolled', scrollContainer.scrollTop &gt; 80);
+}); --&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- ══ 2. VARIANTS & STATES ═══════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Variants &amp; States</h2>
+        <hr class="doc-rule">
+
+        <!-- Three types — expanded state -->
+        <p class="doc-section-description">Three types cover the full navigation stack. Home establishes the app's top-level identity with a brand mark; Parent navigates a depth-1 section without back navigation; Child provides a back button for deep screens.</p>
+
+        <div class="tna-variants-3col" style="margin-bottom:var(--space-700)">
+
+          <div class="tna-variant-item">
+            <p class="avatar-group-label">Home</p>
+            <div class="tna-strip-wrap">
+              <div class="tna-nav" data-type="home" style="position:static;">
+                <div class="tna-toolbar" style="pointer-events:none">
+                  <div class="tna-toolbar-leading"><div class="tna-logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg></div></div>
+                  <p class="tna-toolbar-center" style="opacity:0">Discover</p>
+                  <div class="tna-toolbar-trailing">
+                    <div class="tna-icon-btn-wrap"><button class="tna-icon-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="tna-badge"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-icon-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="tna-badge"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="tna-badge"></span></div>
+                  </div>
+                </div>
+                <div class="tna-expandable" style="grid-template-rows:1fr">
+                  <div class="tna-expandable-inner"><h1 class="tna-heading">Discover</h1></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tna-variant-item">
+            <p class="avatar-group-label">Parent</p>
+            <div class="tna-strip-wrap">
+              <div class="tna-nav" data-type="parent" style="position:static;">
+                <div class="tna-toolbar" style="pointer-events:none">
+                  <div class="tna-toolbar-leading"></div>
+                  <p class="tna-toolbar-center" style="opacity:0">Profile</p>
+                  <div class="tna-toolbar-trailing">
+                    <div class="tna-icon-btn-wrap"><button class="tna-icon-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="tna-badge"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-icon-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="tna-badge"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="tna-badge"></span></div>
+                  </div>
+                </div>
+                <div class="tna-expandable" style="grid-template-rows:1fr">
+                  <div class="tna-expandable-inner"><h1 class="tna-heading">Profile</h1></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tna-variant-item">
+            <p class="avatar-group-label">Child</p>
+            <div class="tna-strip-wrap">
+              <div class="tna-nav" data-type="child" style="position:static;">
+                <div class="tna-toolbar" style="pointer-events:none">
+                  <div class="tna-toolbar-leading"><button class="tna-back-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-left"/></svg></button></div>
+                  <p class="tna-toolbar-center" style="opacity:0">Settings</p>
+                  <div class="tna-toolbar-trailing">
+                    <div class="tna-icon-btn-wrap"><button class="tna-icon-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="tna-badge"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-icon-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="tna-badge"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="tna-badge"></span></div>
+                  </div>
+                </div>
+                <div class="tna-expandable" style="grid-template-rows:1fr">
+                  <div class="tna-expandable-inner"><h1 class="tna-heading">Settings</h1></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Scroll states — expanded vs collapsed -->
+        <p class="doc-section-description" style="margin-top:0">On scroll, the heading and search bar collapse and a divider border appears. The inline title fades in simultaneously.</p>
+
+        <div class="tna-states-2col">
+
+          <div class="tna-variant-item">
+            <p class="avatar-group-label">Default</p>
+            <div class="tna-strip-wrap">
+              <div class="tna-nav" data-type="home" style="position:static;">
+                <div class="tna-toolbar" style="pointer-events:none">
+                  <div class="tna-toolbar-leading"><div class="tna-logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg></div></div>
+                  <p class="tna-toolbar-center" style="opacity:0">Discover</p>
+                  <div class="tna-toolbar-trailing">
+                    <div class="tna-icon-btn-wrap"><button class="tna-icon-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="tna-badge"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="tna-badge"></span></div>
+                  </div>
+                </div>
+                <div class="tna-expandable" style="grid-template-rows:1fr">
+                  <div class="tna-expandable-inner">
+                    <h1 class="tna-heading">Discover</h1>
+                    <div class="tna-search-wrap"><div class="search-field" style="pointer-events:none"><span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-search"/></svg></span><span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tna-variant-item">
+            <p class="avatar-group-label">Scrolled</p>
+            <div class="tna-strip-wrap">
+              <div class="tna-nav is-scrolled" data-type="home" style="position:static;">
+                <div class="tna-toolbar" style="pointer-events:none">
+                  <div class="tna-toolbar-leading"><div class="tna-logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-unica"/></svg></div></div>
+                  <p class="tna-toolbar-center">Discover</p>
+                  <div class="tna-toolbar-trailing">
+                    <div class="tna-icon-btn-wrap"><button class="tna-icon-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="tna-badge"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="tna-badge"></span></div>
+                  </div>
+                </div>
+                <div class="tna-expandable">
+                  <div class="tna-expandable-inner">
+                    <h1 class="tna-heading">Discover</h1>
+                    <div class="tna-search-wrap"><div class="search-field"><span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#ico-search"/></svg></span><span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- /Variants & States -->
+
+      <!-- ══ 3. PROPERTIES ══════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">type</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">home</td>
+                <td>Navigation context. <code style="font-family:monospace;font-size:.9em">home</code> shows the brand logo mark · <code style="font-family:monospace;font-size:.9em">parent</code> omits the leading slot · <code style="font-family:monospace;font-size:.9em">child</code> shows a back button.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">heading</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Large serif heading below the toolbar. Also used as the inline title in the scrolled state. Required unless the screen has no explicit title.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">search-bar</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Shows a search field below the heading. Collapses with the heading on scroll. Most useful on Home and Parent screens with browsable content.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">leading-media</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Controls whether the leading slot renders its element (logo for Home, back button for Child). Has no effect on Parent type.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">button-1 / button-2</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Up to two icon buttons in the trailing area. Each accepts any ůnicon. Use for the screen's primary and secondary global actions.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge-button-1 / badge-button-2</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Notification dot overlaid on each icon button. Rendered as a filled ultraviolet circle with a white border ring.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">avatar</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Shows a circular photo avatar as the rightmost trailing element. Typically navigates to the user's profile screen.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">badge-avatar</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Notification dot on the avatar — same treatment as button badges.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">scrolling</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Applied automatically via JS when the scroll container exceeds the threshold. Collapses the heading and search bar, fades in the inline title, and shows the bottom divider border. Do not set manually.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /Properties -->
+
+      <!-- ══ 4. ACCESSIBILITY ═══════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Attribute / Pattern</th><th>Usage</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Back button</td><td>Use <code>&lt;button aria-label="Go back"&gt;</code>. Never use a generic icon without a label — "Go back" is the expected accessible name.</td></tr>
+              <tr><td>Icon buttons</td><td>Each <code>&lt;button&gt;</code> in the trailing area requires an <code>aria-label</code> describing its action (e.g., <code>"Notifications"</code>, <code>"Saved items"</code>).</td></tr>
+              <tr><td>Avatar button</td><td>Use <code>aria-label="Profile"</code> or the user's name if personalised. The <code>&lt;img&gt;</code> inside should have <code>alt=""</code> (decorative) since the button label carries the accessible name.</td></tr>
+              <tr><td>Notification badges</td><td>Badges are decorative (<code>aria-hidden="true"</code>). Convey the unread count in the button's accessible name if precision matters: <code>aria-label="Notifications, 3 unread"</code>.</td></tr>
+              <tr><td>Inline title</td><td>The compact toolbar title is <code>aria-hidden="true"</code> — the page heading (<code>&lt;h1&gt;</code>) in the expandable area is the authoritative heading. Screen readers skip the duplicate.</td></tr>
+              <tr><td>Heading level</td><td>The large heading uses <code>&lt;h1&gt;</code>. Ensure the page has only one <code>&lt;h1&gt;</code>; sub-sections use <code>&lt;h2&gt;</code> and below.</td></tr>
+              <tr><td>Keyboard: <kbd>Tab</kbd></td><td>Focus moves through the back button (if present), then each icon button, then the avatar. The heading and inline title text are not focusable.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /Accessibility -->
+
+      <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        (function initTnaPreview() {
+
+          var scrollContainer = document.getElementById('tna-scroll-container');
+          var nav             = document.getElementById('tna-nav');
+          var titleText       = document.getElementById('tna-title-text');
+          var headingText     = document.getElementById('tna-heading-text');
+          if (!scrollContainer || !nav) return;
+
+          /* ── Type labels for each type ── */
+          var typeConfig = {
+            home:   { heading: 'Discover',  title: 'Discover'  },
+            parent: { heading: 'Profile',   title: 'Profile'   },
+            child:  { heading: 'Settings',  title: 'Settings'  }
+          };
+
+          /* ── Scroll → collapse ── */
+          scrollContainer.addEventListener('scroll', function() {
+            var isScrolled = scrollContainer.scrollTop > 80;
+            nav.classList.toggle('is-scrolled', isScrolled);
+          });
+
+          /* ── Type switcher (local seg control) ── */
+          (function() {
+            var ctl   = document.getElementById('tna-type-ctl');
+            if (!ctl) return;
+            var btns   = Array.from(ctl.querySelectorAll('.seg-control-btn'));
+            var slider = ctl.querySelector('.seg-control-slider');
+            function move(i) {
+              if (!slider || !btns[i]) return;
+              var x = 0;
+              for (var j = 0; j < i; j++) x += btns[j].offsetWidth;
+              slider.style.width     = btns[i].offsetWidth + 'px';
+              slider.style.transform = 'translateX(' + x + 'px)';
+            }
+            requestAnimationFrame(function() { move(0); });
+            btns.forEach(function(btn, i) {
+              btn.addEventListener('click', function() {
+                btns.forEach(function(b) { b.setAttribute('aria-pressed', 'false'); });
+                btn.setAttribute('aria-pressed', 'true');
+                move(i);
+                var val = btn.dataset.value;
+                nav.dataset.type = val;
+                scrollContainer.scrollTop = 0;
+                nav.classList.remove('is-scrolled');
+                var cfg = typeConfig[val] || typeConfig.home;
+                if (headingText) headingText.textContent = cfg.heading;
+                if (titleText)   titleText.textContent   = cfg.title;
+              });
+            });
+          })();
+
+          /* ── Prop toggles ── */
+          function wireProp(id, attr) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('change', function() {
+              nav.toggleAttribute('data-no-' + attr, !el.checked);
+            });
+          }
+          wireProp('tna-prop-leading',  'leading');
+          wireProp('tna-prop-heading',  'heading');
+          wireProp('tna-prop-search',   'search');
+          wireProp('tna-prop-btn1',     'btn1');
+          wireProp('tna-prop-badge1',   'badge1');
+          wireProp('tna-prop-btn2',     'btn2');
+          wireProp('tna-prop-badge2',   'badge2');
+          wireProp('tna-prop-avatar',   'avatar');
+          wireProp('tna-prop-badge-av', 'badge-av');
+
+        })();
+      });
+      </script>
+
+    </div><!-- /#page-top-nav-app -->
     <div class="page-panel" id="page-top-nav-web"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Top Navigation — Web</h2><p class="section-description">Web header with logo, nav links, and action area.</p></div><span class="stub-pill">In progress</span></section></div>
     <div class="page-panel" id="page-bottom-nav">
 
