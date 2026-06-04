@@ -19130,6 +19130,84 @@
       })();
       </script>
 
+      <!-- ══ 3. PROPERTIES ════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">type</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">navigation</td>
+                <td>Cell interaction model. <code style="font-family:monospace;font-size:.9em">navigation</code> — the entire row is a tap target that navigates to a new screen. <code style="font-family:monospace;font-size:.9em">action</code> — the row hosts an inline control (radio, checkbox, switch, or stepper); only the control itself is interactive.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">leading</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">none</td>
+                <td>Leading media slot. One of <code style="font-family:monospace;font-size:.9em">none</code> · <code style="font-family:monospace;font-size:.9em">icon</code> · <code style="font-family:monospace;font-size:.9em">icon-bullet</code> · <code style="font-family:monospace;font-size:.9em">avatar</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">trailing</td>
+                <td class="td-type">enum</td>
+                <td class="td-subtle">caret</td>
+                <td>Trailing slot. Navigation cells use <code style="font-family:monospace;font-size:.9em">caret</code> by default. Action cells accept <code style="font-family:monospace;font-size:.9em">radio</code> · <code style="font-family:monospace;font-size:.9em">checkbox</code> · <code style="font-family:monospace;font-size:.9em">switch</code> · <code style="font-family:monospace;font-size:.9em">stepper</code>.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">label</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Primary row text. Required.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">overline</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Short all-caps label rendered above the primary text. Use for category or section context.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">caption</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Supporting text rendered below the label. Accepts a secondary line of detail.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">divider</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Horizontal rule separating cells. Omit on the last row of a group or when the list sits on a sectioned background.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /Properties -->
+
+      <!-- ══ 4. ACCESSIBILITY ══════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Attribute / Pattern</th><th>Usage</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Navigation cell</td><td>Wrap the entire row in a <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>. The row tap target must be at least 44×44 pt. Include an <code>aria-label</code> if the label text alone is ambiguous.</td></tr>
+              <tr><td>Action cell</td><td>Only the trailing control (<code>&lt;input&gt;</code>, <code>&lt;button&gt;</code>) should be interactive. The surrounding row is presentational. Associate the control with its label via <code>aria-labelledby</code> pointing at the <code>.list-cell__label</code> element.</td></tr>
+              <tr><td><code>role="list"</code> / <code>role="listitem"</code></td><td>Apply <code>role="list"</code> to the wrapping container and <code>role="listitem"</code> to each cell when the list conveys a meaningful group relationship.</td></tr>
+              <tr><td>Keyboard: <kbd>Tab</kbd></td><td>Navigation cells and action controls must be reachable by tab. Non-interactive row content should not receive focus.</td></tr>
+              <tr><td>Keyboard: <kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activates the focused navigation cell or control.</td></tr>
+              <tr><td>State announcement</td><td>Switch, checkbox, and radio controls announce their checked/unchecked state natively via their <code>&lt;input&gt;</code> type. No additional ARIA is needed.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /Accessibility -->
+
     </div><!-- /#page-list -->
     <div class="page-panel" id="page-list-accordion">
 
@@ -19427,7 +19505,70 @@
 
       </div><!-- /Variants & States -->
 
-      <!-- ══ 3. ACCESSIBILITY ════════════════════════════════════ -->
+      <!-- ══ 3. PROPERTIES ════════════════════════════════════ -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Properties</h2>
+        <hr class="doc-rule">
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-mono">label</td>
+                <td class="td-type">string</td>
+                <td class="td-subtle">—</td>
+                <td>Primary header text. Required.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">body</td>
+                <td class="td-type">string | slot</td>
+                <td class="td-subtle">—</td>
+                <td>Content revealed when expanded. Accepts a text string for simple FAQs or a custom content slot for richer layouts.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">open</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Controls the expanded state. Set to <code style="font-family:monospace;font-size:.9em">true</code> to open on render. Reflected on the header's <code style="font-family:monospace;font-size:.9em">aria-expanded</code> attribute.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">leading</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Shows a leading icon slot in the header row. Use to visually reinforce the topic category.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">overline</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Short all-caps label rendered above the primary header text.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">caption</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Supporting text rendered below the label in the header row.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">divider</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">true</td>
+                <td>Horizontal rule below the accordion row. Omit on the last item in a group.</td>
+              </tr>
+              <tr>
+                <td class="td-mono">disabled</td>
+                <td class="td-type">boolean</td>
+                <td class="td-subtle">false</td>
+                <td>Prevents the header from being toggled. The chevron control dims and pointer events are removed.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- /Properties -->
+
+      <!-- ══ 4. ACCESSIBILITY ════════════════════════════════════ -->
       <div class="doc-section">
         <h2 class="doc-section-title">Accessibility</h2>
         <hr class="doc-rule">
