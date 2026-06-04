@@ -147,7 +147,7 @@
   --color-background-neutral:          var(--primitive-cafe-200);
   --color-background-disabled:         var(--primitive-ink-100);
   --color-background-contrast:         var(--primitive-ink-900);
-  --color-background-selection:        var(--primitive-cafe-100);
+  --color-background-selection:        var(--primitive-ink-50);
   --color-background-ui:               var(--primitive-ink-100);
   --color-background-inverse:          var(--primitive-ink-900);
   --color-background-inverse-selection: var(--primitive-ink-800);
