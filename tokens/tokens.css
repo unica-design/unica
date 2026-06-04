@@ -164,8 +164,8 @@
   --color-brand-violet:      var(--primitive-violet-300);
 
   /* --- Border --- */
-  --color-border-default:        var(--primitive-cafe-400);
-  --color-border-subtle:         var(--primitive-cafe-200);
+  --color-border-default:        var(--primitive-ink-400);
+  --color-border-subtle:         var(--primitive-ink-100);
   --color-border-strong:         var(--primitive-ink-900);
   --color-border-interactive:    var(--primitive-violet-600);
   --color-border-disabled:       var(--primitive-cafe-300);
