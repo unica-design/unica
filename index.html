@@ -8705,7 +8705,7 @@
   #tna-phone-mock {
     position: relative;
     width: 375px;
-    height: 720px;
+    height: 520px;
     background: var(--color-background-page);
     border-radius: 24px;
     box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
@@ -8905,48 +8905,32 @@
   #tna-nav[data-no-avatar]   .tna-avatar-wrap       { display: none; }
   #tna-nav[data-no-badge-av] .tna-badge--av         { display: none; }
 
-  /* Scroll content items */
+  /* Scroll content — skeleton rows */
   .tna-scroll-content { padding-bottom: var(--space-800); }
-  .tna-content-item {
+  .tna-skel-item {
     display: flex;
     align-items: center;
     gap: var(--space-400);
     padding: var(--space-400);
     border-bottom: var(--border-width-default) solid var(--color-border-subtle);
-    cursor: pointer;
-    transition: background 120ms ease;
   }
-  .tna-content-item:hover { background: var(--color-background-selection); }
-  .tna-content-item:last-child { border-bottom: none; }
-  .tna-content-icon {
+  .tna-skel-item:last-child { border-bottom: none; }
+  .tna-skel-thumb {
     width: 44px;
     height: 44px;
     border-radius: var(--corner-radius-m);
     background: var(--color-background-ui);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-content-subtle);
     flex-shrink: 0;
   }
-  .tna-content-text { flex: 1; min-width: 0; }
-  .tna-content-label {
-    font-family: var(--font-family-sans);
-    font-size: var(--font-size-body-m);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-content-default);
-    margin: 0;
-    line-height: 1.4;
+  .tna-skel-lines { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-200); }
+  .tna-skel-bar {
+    height: 11px;
+    border-radius: var(--corner-radius-round);
+    background: var(--color-border-default);
   }
-  .tna-content-caption {
-    font-family: var(--font-family-sans);
-    font-size: var(--font-size-body-s);
-    color: var(--color-content-subtle);
-    margin: 0;
-  }
-  .tna-content-caret {
-    color: var(--color-content-subtle);
-    flex-shrink: 0;
+  .tna-skel-bar--sub {
+    height: 9px;
+    background: var(--color-border-subtle);
   }
 
   /* Variants display — nav strip (static component, no phone chrome) */
@@ -13979,7 +13963,7 @@
                         <span class="search-field__icon">
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
                         </span>
-                        <span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span>
+                        <input class="search-field__input" type="search" placeholder="Search" aria-label="Search" autocomplete="off" spellcheck="false">
                       </div>
                     </div>
                   </div>
@@ -13987,103 +13971,37 @@
 
               </div><!-- /.tna-nav -->
 
-              <!-- Scroll content — wellness sessions -->
-              <div class="tna-scroll-content">
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Morning Breathwork</p><p class="tna-content-caption">8 min · Breathing</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Body Scan</p><p class="tna-content-caption">12 min · Meditation</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Evening Reflection</p><p class="tna-content-caption">15 min · Journaling</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bulb"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Focus Flow</p><p class="tna-content-caption">25 min · Concentration</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Restorative Rest</p><p class="tna-content-caption">10 min · Recovery</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-moon"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Guided Sleep</p><p class="tna-content-caption">30 min · Sleep</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-leaf"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Mindful Walking</p><p class="tna-content-caption">20 min · Movement</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-sun"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Sensory Grounding</p><p class="tna-content-caption">5 min · Awareness</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bulb"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Intention Setting</p><p class="tna-content-caption">8 min · Reflection</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
-                <div class="tna-content-item">
-                  <div class="tna-content-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg></div>
-                  <div class="tna-content-text"><p class="tna-content-label">Gratitude Practice</p><p class="tna-content-caption">6 min · Mindfulness</p></div>
-                  <svg class="tna-content-caret" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-right"/></svg>
-                </div>
+              <!-- Scroll content — skeleton rows -->
+              <div class="tna-scroll-content" aria-hidden="true">
+                <div class="tna-skel-item"><div class="tna-skel-thumb"></div><div class="tna-skel-lines"><div class="tna-skel-bar" style="width:68%"></div><div class="tna-skel-bar tna-skel-bar--sub" style="width:42%"></div></div></div>
+                <div class="tna-skel-item"><div class="tna-skel-thumb"></div><div class="tna-skel-lines"><div class="tna-skel-bar" style="width:82%"></div><div class="tna-skel-bar tna-skel-bar--sub" style="width:35%"></div></div></div>
+                <div class="tna-skel-item"><div class="tna-skel-thumb"></div><div class="tna-skel-lines"><div class="tna-skel-bar" style="width:55%"></div><div class="tna-skel-bar tna-skel-bar--sub" style="width:50%"></div></div></div>
+                <div class="tna-skel-item"><div class="tna-skel-thumb"></div><div class="tna-skel-lines"><div class="tna-skel-bar" style="width:74%"></div><div class="tna-skel-bar tna-skel-bar--sub" style="width:38%"></div></div></div>
+                <div class="tna-skel-item"><div class="tna-skel-thumb"></div><div class="tna-skel-lines"><div class="tna-skel-bar" style="width:60%"></div><div class="tna-skel-bar tna-skel-bar--sub" style="width:55%"></div></div></div>
+                <div class="tna-skel-item"><div class="tna-skel-thumb"></div><div class="tna-skel-lines"><div class="tna-skel-bar" style="width:78%"></div><div class="tna-skel-bar tna-skel-bar--sub" style="width:30%"></div></div></div>
+                <div class="tna-skel-item"><div class="tna-skel-thumb"></div><div class="tna-skel-lines"><div class="tna-skel-bar" style="width:50%"></div><div class="tna-skel-bar tna-skel-bar--sub" style="width:45%"></div></div></div>
+                <div class="tna-skel-item"><div class="tna-skel-thumb"></div><div class="tna-skel-lines"><div class="tna-skel-bar" style="width:65%"></div><div class="tna-skel-bar tna-skel-bar--sub" style="width:40%"></div></div></div>
               </div>
 
             </div><!-- /#tna-scroll-container -->
           </div><!-- /#tna-phone-mock -->
         </div>
 
-        <!-- Property toggles -->
+        <!-- Property toggles — 3 most impactful -->
         <div class="card-prop-bar">
           <p class="card-prop-bar-sub">Show and hide optional properties</p>
           <div class="card-prop-bar-toggles">
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-leading" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
-              <span class="switch-item-text">Leading media</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-heading" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
-              <span class="switch-item-text">Heading</span>
-            </label>
             <label class="switch-item">
               <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-search" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
               <span class="switch-item-text">Search bar</span>
             </label>
             <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-btn1" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
-              <span class="switch-item-text">Button 1</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-badge1" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
-              <span class="switch-item-text">Badge 1</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-btn2" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
-              <span class="switch-item-text">Button 2</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-badge2" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
-              <span class="switch-item-text">Badge 2</span>
+              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-badges" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
+              <span class="switch-item-text">Badges</span>
             </label>
             <label class="switch-item">
               <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-avatar" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
               <span class="switch-item-text">Avatar</span>
-            </label>
-            <label class="switch-item">
-              <div class="toggle-switch toggle-switch--small"><input type="checkbox" id="tna-prop-badge-av" checked><div class="toggle-track"><div class="toggle-handle"></div></div></div>
-              <span class="switch-item-text">Avatar badge</span>
             </label>
           </div>
         </div>
@@ -14416,15 +14334,18 @@
               nav.toggleAttribute('data-no-' + attr, !el.checked);
             });
           }
-          wireProp('tna-prop-leading',  'leading');
-          wireProp('tna-prop-heading',  'heading');
-          wireProp('tna-prop-search',   'search');
-          wireProp('tna-prop-btn1',     'btn1');
-          wireProp('tna-prop-badge1',   'badge1');
-          wireProp('tna-prop-btn2',     'btn2');
-          wireProp('tna-prop-badge2',   'badge2');
-          wireProp('tna-prop-avatar',   'avatar');
-          wireProp('tna-prop-badge-av', 'badge-av');
+          wireProp('tna-prop-search', 'search');
+          wireProp('tna-prop-avatar', 'avatar');
+
+          /* Badges — single toggle controls all three badge dots */
+          var badgeToggle = document.getElementById('tna-prop-badges');
+          if (badgeToggle) {
+            badgeToggle.addEventListener('change', function() {
+              ['badge1', 'badge2', 'badge-av'].forEach(function(attr) {
+                nav.toggleAttribute('data-no-' + attr, !badgeToggle.checked);
+              });
+            });
+          }
 
         })();
       });
