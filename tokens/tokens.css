@@ -164,7 +164,7 @@
   --color-brand-violet:      var(--primitive-violet-300);
 
   /* --- Border --- */
-  --color-border-default:        var(--primitive-ink-400);
+  --color-border-default:        var(--primitive-ink-300);
   --color-border-subtle:         var(--primitive-ink-100);
   --color-border-strong:         var(--primitive-ink-900);
   --color-border-interactive:    var(--primitive-violet-600);
