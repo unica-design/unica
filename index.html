@@ -8764,13 +8764,59 @@
     align-items: center;
     width: 40px;
   }
-  /* Logo mark — 15px wide, proportional height */
-  .tna-logo-img {
-    width: 15px;
-    height: auto;
+  /* Logo brand — 40px dark filled circle, shrinks to 32px when scrolled */
+  .tna-logo-brand {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--corner-radius-round);
+    background: var(--color-background-contrast);
     flex-shrink: 0;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: width 220ms ease, height 220ms ease;
   }
+  .tna-nav.is-scrolled .tna-logo-brand {
+    width: 32px;
+    height: 32px;
+  }
+  /* ů mark — ~37.5% of circle width, centered, inverted to white */
+  .tna-logo-img {
+    width: 37.5%;
+    height: auto;
+    display: block;
+    filter: invert(1) brightness(2);
+  }
+
+  /* TNA action button — 32px visual circle with 24px icon */
+  .tna-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--corner-radius-round);
+    border: 1.5px solid var(--color-border-strong);
+    background: transparent;
+    color: var(--color-content-default);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition:
+      border-radius 150ms ease-out,
+      background    150ms ease-out;
+  }
+  .tna-action-btn:hover:not(:disabled) {
+    background: var(--color-action-hover-subtle);
+    border-radius: var(--corner-radius-s);
+  }
+  .tna-action-btn:active:not(:disabled) {
+    background: var(--color-action-active-subtle);
+    border-radius: var(--corner-radius-round);
+  }
+  .tna-action-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
 
   /* Inline title — fades in when scrolled */
   .tna-toolbar-center {
@@ -8795,7 +8841,7 @@
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: var(--space-300);
   }
   /* Trailing button wraps — position:relative for badge placement */
   .tna-icon-btn-wrap { position: relative; flex-shrink: 0; }
@@ -8803,8 +8849,8 @@
   .tna-icon-btn-wrap .badge-dot,
   .tna-avatar-wrap   .badge-dot {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: -2px;
+    left: 21px;
     pointer-events: none;
   }
   .tna-avatar-wrap { position: relative; }
@@ -13903,34 +13949,34 @@
                 <div class="tna-toolbar">
                   <!-- Leading: logo (home) | empty (parent) | back (child) -->
                   <div class="tna-toolbar-leading">
-                    <img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true">
-                    <button class="btn btn-outlined btn--icon-only btn--small tna-back-btn" aria-label="Go back">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-left"/></svg>
+                    <div class="tna-logo-brand"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div>
+                    <button class="tna-action-btn tna-back-btn" aria-label="Go back">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-left"/></svg>
                     </button>
                   </div>
 
                   <!-- Inline title — visible only when scrolled -->
                   <p class="tna-toolbar-center" id="tna-title-text" aria-hidden="true">Discover</p>
 
-                  <!-- Trailing: small icon buttons + avatar -->
+                  <!-- Trailing: icon buttons + avatar -->
                   <div class="tna-toolbar-trailing">
                     <div class="tna-icon-btn-wrap tna-icon-btn-wrap--btn1">
-                      <button class="btn btn-outlined btn--icon-only btn--small" aria-label="Notifications">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
+                      <button class="tna-action-btn" aria-label="Notifications">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
                       </button>
-                      <span class="badge-dot badge-dot--small tna-badge--btn1" aria-hidden="true"></span>
+                      <span class="badge-dot badge-dot--large tna-badge--btn1" aria-hidden="true"></span>
                     </div>
                     <div class="tna-icon-btn-wrap tna-icon-btn-wrap--btn2">
-                      <button class="btn btn-outlined btn--icon-only btn--small" aria-label="Saved">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg>
+                      <button class="tna-action-btn" aria-label="Saved">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg>
                       </button>
-                      <span class="badge-dot badge-dot--small tna-badge--btn2" aria-hidden="true"></span>
+                      <span class="badge-dot badge-dot--large tna-badge--btn2" aria-hidden="true"></span>
                     </div>
                     <div class="tna-avatar-wrap">
                       <button class="tna-avatar-btn" aria-label="Profile">
                         <img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt="">
                       </button>
-                      <span class="badge-dot badge-dot--small tna-badge--av" aria-hidden="true"></span>
+                      <span class="badge-dot badge-dot--large tna-badge--av" aria-hidden="true"></span>
                     </div>
                   </div>
                 </div>
@@ -14096,12 +14142,12 @@
             <div class="tna-strip-wrap">
               <div class="tna-nav" data-type="home" style="position:static;">
                 <div class="tna-toolbar" style="pointer-events:none">
-                  <div class="tna-toolbar-leading"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div>
+                  <div class="tna-toolbar-leading"><div class="tna-logo-brand"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div></div>
                   <p class="tna-toolbar-center" style="opacity:0">Discover</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-action-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-action-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
                   </div>
                 </div>
                 <div class="tna-expandable" style="grid-template-rows:1fr">
@@ -14119,9 +14165,9 @@
                   <div class="tna-toolbar-leading"></div>
                   <p class="tna-toolbar-center" style="opacity:0">Profile</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-action-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-action-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
                   </div>
                 </div>
                 <div class="tna-expandable" style="grid-template-rows:1fr">
@@ -14136,12 +14182,12 @@
             <div class="tna-strip-wrap">
               <div class="tna-nav" data-type="child" style="position:static;">
                 <div class="tna-toolbar" style="pointer-events:none">
-                  <div class="tna-toolbar-leading"><button class="btn btn-outlined btn--icon-only btn--small tna-back-btn" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-left"/></svg></button></div>
+                  <div class="tna-toolbar-leading"><button class="tna-action-btn tna-back-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-left"/></svg></button></div>
                   <p class="tna-toolbar-center" style="opacity:0">Settings</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-action-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-action-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
                   </div>
                 </div>
                 <div class="tna-expandable" style="grid-template-rows:1fr">
@@ -14163,11 +14209,11 @@
             <div class="tna-strip-wrap">
               <div class="tna-nav" data-type="home" style="position:static;">
                 <div class="tna-toolbar" style="pointer-events:none">
-                  <div class="tna-toolbar-leading"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div>
+                  <div class="tna-toolbar-leading"><div class="tna-logo-brand"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div></div>
                   <p class="tna-toolbar-center" style="opacity:0">Discover</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-action-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
                   </div>
                 </div>
                 <div class="tna-expandable" style="grid-template-rows:1fr">
@@ -14185,11 +14231,11 @@
             <div class="tna-strip-wrap">
               <div class="tna-nav is-scrolled" data-type="home" style="position:static;">
                 <div class="tna-toolbar" style="pointer-events:none">
-                  <div class="tna-toolbar-leading"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div>
+                  <div class="tna-toolbar-leading"><div class="tna-logo-brand"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div></div>
                   <p class="tna-toolbar-center">Discover</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="tna-action-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
+                    <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--large" aria-hidden="true"></span></div>
                   </div>
                 </div>
                 <div class="tna-expandable">
