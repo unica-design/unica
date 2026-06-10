@@ -8762,31 +8762,15 @@
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    width: 48px;
-  }
-  /* Logo mark — uses the real brand image */
-  .tna-logo-img {
     width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
+  }
+  /* Logo mark — 15px wide, proportional height */
+  .tna-logo-img {
+    width: 15px;
+    height: auto;
     flex-shrink: 0;
     display: block;
   }
-  .tna-back-btn {
-    width: 40px;
-    height: 40px;
-    background: none;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-content-default);
-    cursor: pointer;
-    transition: background 120ms ease;
-  }
-  .tna-back-btn:hover { background: var(--color-action-hover-subtle); }
 
   /* Inline title — fades in when scrolled */
   .tna-toolbar-center {
@@ -8824,27 +8808,46 @@
     pointer-events: none;
   }
   .tna-avatar-wrap { position: relative; }
+  /* Avatar button — same shape-shift hover/press as outlined buttons */
   .tna-avatar-btn {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     background: none;
     border: none;
-    border-radius: 50%;
+    border-radius: var(--corner-radius-round);
+    overflow: hidden; /* clips image to button shape */
     padding: 0;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 120ms ease;
+    transition:
+      border-radius 150ms ease-out,
+      transform     80ms ease-in;
   }
-  .tna-avatar-btn:hover { opacity: 0.8; }
+  .tna-avatar-btn:hover  { border-radius: var(--corner-radius-s); }
+  .tna-avatar-btn:active {
+    border-radius: var(--corner-radius-round);
+    transform: scale(0.96);
+    transition: transform 80ms ease-in, border-radius 80ms ease-in;
+  }
   .tna-avatar-img {
     width: 32px;
     height: 32px;
-    border-radius: 50%;
     object-fit: cover;
     display: block;
   }
+
+  /* Search overlay — slides up over the scroll content */
+  .tna-search-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--color-background-page);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 20;
+  }
+  .tna-search-overlay.is-open    { transform: translateY(0); }
+  .tna-search-overlay.is-closing { transition: transform 300ms cubic-bezier(0.4, 0, 1, 1); }
 
   /* Expandable area — collapses on scroll via grid-template-rows trick */
   .tna-expandable {
@@ -13901,25 +13904,25 @@
                   <!-- Leading: logo (home) | empty (parent) | back (child) -->
                   <div class="tna-toolbar-leading">
                     <img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true">
-                    <button class="tna-back-btn" aria-label="Go back">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-left"/></svg>
+                    <button class="btn btn-outlined btn--icon-only btn--small tna-back-btn" aria-label="Go back">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-arrow-left"/></svg>
                     </button>
                   </div>
 
                   <!-- Inline title — visible only when scrolled -->
                   <p class="tna-toolbar-center" id="tna-title-text" aria-hidden="true">Discover</p>
 
-                  <!-- Trailing: icon buttons + avatar -->
+                  <!-- Trailing: small icon buttons + avatar -->
                   <div class="tna-toolbar-trailing">
                     <div class="tna-icon-btn-wrap tna-icon-btn-wrap--btn1">
-                      <button class="btn btn-outlined btn--icon-only btn--medium" aria-label="Notifications">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
+                      <button class="btn btn-outlined btn--icon-only btn--small" aria-label="Notifications">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
                       </button>
                       <span class="badge-dot badge-dot--small tna-badge--btn1" aria-hidden="true"></span>
                     </div>
                     <div class="tna-icon-btn-wrap tna-icon-btn-wrap--btn2">
-                      <button class="btn btn-outlined btn--icon-only btn--medium" aria-label="Saved">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg>
+                      <button class="btn btn-outlined btn--icon-only btn--small" aria-label="Saved">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-heart"/></svg>
                       </button>
                       <span class="badge-dot badge-dot--small tna-badge--btn2" aria-hidden="true"></span>
                     </div>
@@ -13932,22 +13935,65 @@
                   </div>
                 </div>
 
-                <!-- Expandable: heading + optional search -->
+                <!-- Expandable: heading + optional search (tap search to open overlay) -->
                 <div class="tna-expandable">
                   <div class="tna-expandable-inner">
                     <h1 class="tna-heading" id="tna-heading-text">Discover</h1>
-                    <div class="tna-search-wrap">
-                      <div class="search-field">
+                    <div class="tna-search-wrap" id="tna-search-trigger-wrap" style="cursor:pointer">
+                      <div class="search-field" style="pointer-events:none">
                         <span class="search-field__icon">
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
                         </span>
-                        <input class="search-field__input" type="search" placeholder="Search" aria-label="Search" autocomplete="off" spellcheck="false">
+                        <span class="sf-field-mock"><span class="sf-field-placeholder">Search</span></span>
                       </div>
                     </div>
                   </div>
                 </div>
 
               </div><!-- /.tna-nav -->
+
+              <!-- Search overlay — slides up on search field tap -->
+              <div class="tna-search-overlay" id="tna-search-overlay" aria-hidden="true">
+                <!-- Status bar -->
+                <div class="tna-status-bar">
+                  <span>9:41</span>
+                  <div class="tna-status-icons">
+                    <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="0.5" opacity="0.35"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="0.5" opacity="0.55"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.5" opacity="0.75"/><rect x="13.5" y="0" width="3" height="12" rx="0.5"/></svg>
+                    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M8 9.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" fill="currentColor"/><path d="M4.93 6.93A4.34 4.34 0 0 1 8 5.7c1.2 0 2.28.48 3.07 1.23" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/><path d="M2.34 4.34A7.64 7.64 0 0 1 8 2c2.11 0 4.03.85 5.42 2.24" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.35"/></svg>
+                    <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor"/><path d="M23 4.5v3a1.5 1.5 0 0 0 0-3Z" fill="currentColor" fill-opacity="0.4"/></svg>
+                  </div>
+                </div>
+                <!-- Active search header -->
+                <div class="sf-header">
+                  <div class="search-field search-field--active" id="tna-sov-field">
+                    <span class="search-field__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg></span>
+                    <input class="search-field__input" type="search" id="tna-sov-input" placeholder="Search" aria-label="Search" autocomplete="off" spellcheck="false" tabindex="-1">
+                    <button class="search-field__clear" id="tna-sov-clear" aria-label="Clear" tabindex="-1">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-x-sm"/></svg>
+                    </button>
+                  </div>
+                  <button class="sf-header__cancel" id="tna-sov-cancel" tabindex="-1">Cancel</button>
+                </div>
+                <!-- Spacer — no suggested content -->
+                <div style="flex:1"></div>
+                <!-- iOS keyboard -->
+                <div class="sf-kbd" id="tna-sov-kbd" aria-hidden="true">
+                  <div class="sf-kbd-row">
+                    <button class="sf-key" data-char="q">q</button><button class="sf-key" data-char="w">w</button><button class="sf-key" data-char="e">e</button><button class="sf-key" data-char="r">r</button><button class="sf-key" data-char="t">t</button><button class="sf-key" data-char="y">y</button><button class="sf-key" data-char="u">u</button><button class="sf-key" data-char="i">i</button><button class="sf-key" data-char="o">o</button><button class="sf-key" data-char="p">p</button>
+                  </div>
+                  <div class="sf-kbd-row sf-kbd-row--offset">
+                    <button class="sf-key" data-char="a">a</button><button class="sf-key" data-char="s">s</button><button class="sf-key" data-char="d">d</button><button class="sf-key" data-char="f">f</button><button class="sf-key" data-char="g">g</button><button class="sf-key" data-char="h">h</button><button class="sf-key" data-char="j">j</button><button class="sf-key" data-char="k">k</button><button class="sf-key" data-char="l">l</button>
+                  </div>
+                  <div class="sf-kbd-row">
+                    <button class="sf-key sf-key--special">⇧</button><button class="sf-key" data-char="z">z</button><button class="sf-key" data-char="x">x</button><button class="sf-key" data-char="c">c</button><button class="sf-key" data-char="v">v</button><button class="sf-key" data-char="b">b</button><button class="sf-key" data-char="n">n</button><button class="sf-key" data-char="m">m</button><button class="sf-key sf-key--special" id="tna-sov-delete">⌫</button>
+                  </div>
+                  <div class="sf-kbd-row sf-kbd-row--bottom">
+                    <button class="sf-key sf-key--special" style="flex:1.2;font-size:12px">123</button>
+                    <button class="sf-key sf-key--space" data-char=" ">space</button>
+                    <button class="sf-key sf-key--search" id="tna-sov-search-key">search</button>
+                  </div>
+                </div>
+              </div><!-- /.tna-search-overlay -->
 
               <!-- Scroll content — skeleton rows -->
               <div class="tna-scroll-content" aria-hidden="true">
@@ -14053,8 +14099,8 @@
                   <div class="tna-toolbar-leading"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div>
                   <p class="tna-toolbar-center" style="opacity:0">Discover</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--medium" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--medium" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                     <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                   </div>
                 </div>
@@ -14073,8 +14119,8 @@
                   <div class="tna-toolbar-leading"></div>
                   <p class="tna-toolbar-center" style="opacity:0">Profile</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--medium" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--medium" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                     <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                   </div>
                 </div>
@@ -14090,11 +14136,11 @@
             <div class="tna-strip-wrap">
               <div class="tna-nav" data-type="child" style="position:static;">
                 <div class="tna-toolbar" style="pointer-events:none">
-                  <div class="tna-toolbar-leading"><button class="tna-back-btn" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-left"/></svg></button></div>
+                  <div class="tna-toolbar-leading"><button class="btn btn-outlined btn--icon-only btn--small tna-back-btn" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-arrow-left"/></svg></button></div>
                   <p class="tna-toolbar-center" style="opacity:0">Settings</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--medium" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--medium" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-heart"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                     <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                   </div>
                 </div>
@@ -14120,7 +14166,7 @@
                   <div class="tna-toolbar-leading"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div>
                   <p class="tna-toolbar-center" style="opacity:0">Discover</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--medium" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                     <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                   </div>
                 </div>
@@ -14142,7 +14188,7 @@
                   <div class="tna-toolbar-leading"><img class="tna-logo-img" src="assets/unica-mark.png" alt="" aria-hidden="true"></div>
                   <p class="tna-toolbar-center">Discover</p>
                   <div class="tna-toolbar-trailing">
-                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--medium" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
+                    <div class="tna-icon-btn-wrap"><button class="btn btn-outlined btn--icon-only btn--small" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                     <div class="tna-avatar-wrap"><button class="tna-avatar-btn" tabindex="-1"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button><span class="badge-dot badge-dot--small" style="position:absolute;top:4px;right:4px" aria-hidden="true"></span></div>
                   </div>
                 </div>
@@ -14300,6 +14346,44 @@
                 var cfg = typeConfig[val] || typeConfig.home;
                 if (headingText) headingText.textContent = cfg.heading;
                 if (titleText)   titleText.textContent   = cfg.title;
+              });
+            });
+          })();
+
+          /* ── Search overlay ── */
+          (function() {
+            var trigger  = document.getElementById('tna-search-trigger-wrap');
+            var overlay  = document.getElementById('tna-search-overlay');
+            var input    = document.getElementById('tna-sov-input');
+            var clearBtn = document.getElementById('tna-sov-clear');
+            var cancel   = document.getElementById('tna-sov-cancel');
+            var delBtn   = document.getElementById('tna-sov-delete');
+            if (!trigger || !overlay) return;
+
+            function openOverlay() {
+              overlay.classList.remove('is-closing');
+              overlay.classList.add('is-open');
+              overlay.setAttribute('aria-hidden', 'false');
+            }
+            function closeOverlay() {
+              overlay.classList.add('is-closing');
+              overlay.classList.remove('is-open');
+              overlay.setAttribute('aria-hidden', 'true');
+              overlay.addEventListener('transitionend', function onEnd() {
+                overlay.classList.remove('is-closing');
+                overlay.removeEventListener('transitionend', onEnd);
+              });
+              if (input) input.value = '';
+            }
+
+            trigger.addEventListener('click', openOverlay);
+            if (cancel)   cancel.addEventListener('click', closeOverlay);
+            if (clearBtn) clearBtn.addEventListener('click', function() { if (input) input.value = ''; });
+            if (delBtn)   delBtn.addEventListener('click', function() { if (input) input.value = input.value.slice(0, -1); });
+
+            overlay.querySelectorAll('.sf-key[data-char]').forEach(function(key) {
+              key.addEventListener('click', function() {
+                if (input) input.value += key.dataset.char;
               });
             });
           })();
