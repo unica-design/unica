@@ -9124,11 +9124,11 @@
     width: 100%;
     border-radius: 14px;
     overflow: hidden;
-    border: var(--border-width-default) solid var(--color-border-default);
-    box-shadow: 0 2px 16px 0 rgba(8,5,13,0.12);
+    box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
   }
   [data-theme="dark"] .tnw-desktop-shell {
     box-shadow: none;
+    border: var(--border-width-default) solid var(--color-border-default);
   }
   .tnw-browser-chrome {
     display: flex; align-items: center; gap: var(--space-300);
@@ -14713,17 +14713,12 @@
 
         <!-- Breakpoint picker -->
         <div class="btn-controls">
-          <div class="dropdown" id="tnw-bp-picker">
-            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-              <span id="tnw-bp-label">L — 1024px</span>
-              <svg class="dropdown-trigger-caret" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1L4.5 5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <ul class="dropdown-menu" role="listbox" aria-label="Breakpoint">
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="375"  tabindex="0">S — 375px</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="780"  tabindex="0">M — 780px</li>
-              <li class="dropdown-option" role="option" aria-selected="true"  data-value="1024" tabindex="0">L — 1024px</li>
-              <li class="dropdown-option" role="option" aria-selected="false" data-value="1440" tabindex="0">XL — 1440px</li>
-            </ul>
+          <div class="seg-control" id="tnw-bp-seg" role="group" aria-label="Breakpoint">
+            <span class="seg-control-slider" aria-hidden="true"></span>
+            <button class="seg-control-btn" data-value="375"  aria-pressed="false">S</button>
+            <button class="seg-control-btn" data-value="780"  aria-pressed="false">M</button>
+            <button class="seg-control-btn" data-value="1024" aria-pressed="true">L</button>
+            <button class="seg-control-btn" id="tnw-xl-btn"  data-value="1440" aria-pressed="false">XL</button>
           </div>
           <span class="tnw-bp-readout" id="tnw-readout"></span>
         </div>
@@ -14930,19 +14925,12 @@
           var handleL    = document.getElementById('tnw-handle-l');
           var handleR    = document.getElementById('tnw-handle-r');
           var readout    = document.getElementById('tnw-readout');
-          var picker     = null; /* set after initDropdown */
+          var seg        = document.getElementById('tnw-bp-seg');
+          var xlBtn      = document.getElementById('tnw-xl-btn');
           if (!stage) return;
 
-          /* Named breakpoints that appear in the dropdown */
-          var BP_OPTIONS = [
-            { val: 375,  label: 'S — 375px' },
-            { val: 780,  label: 'M — 780px' },
-            { val: 1024, label: 'L — 1024px' },
-            { val: 1440, label: 'XL — 1440px' }
-          ];
-          /* All snap targets including CSS-only boundary */
-          var SNAPS = [375, 640, 780, 1024, 1440];
-          var SNAP_THRESHOLD = 36;
+          /* Named breakpoints — also the only snap targets */
+          var BPS = [375, 780, 1024, 1440];
           var MIN_W = 320;
           var dragging = false, activeHandle = null, startX = 0, startW = 0, animating = false;
 
@@ -14951,24 +14939,26 @@
             return (outer.parentElement || outer).offsetWidth - 40;
           }
 
-          /* Sync dropdown label + aria-selected to nearest named breakpoint */
-          function syncDropdown(w) {
-            if (!picker) return;
-            var opts = picker.querySelectorAll('.dropdown-option');
-            var best = null, bestDist = Infinity;
-            opts.forEach(function(o) {
-              o.setAttribute('aria-selected', 'false');
-              var dist = Math.abs(parseInt(o.dataset.value) - w);
-              if (dist < bestDist) { bestDist = dist; best = o; }
+          /* Move the seg-control slider to the button matching w */
+          function syncSeg(w) {
+            if (!seg) return;
+            var btns = seg.querySelectorAll('.seg-control-btn');
+            var slider = seg.querySelector('.seg-control-slider');
+            var matched = null;
+            btns.forEach(function(b) {
+              b.setAttribute('aria-pressed', 'false');
+              if (parseInt(b.dataset.value) === w) matched = b;
             });
-            /* Only snap label if within 2px of a named breakpoint */
-            if (best && bestDist <= 2) {
-              best.setAttribute('aria-selected', 'true');
-              document.getElementById('tnw-bp-label').textContent = best.textContent.trim();
-            }
+            if (!matched) return;
+            matched.setAttribute('aria-pressed', 'true');
+            /* Animate slider to matched button position */
+            var segRect  = seg.getBoundingClientRect();
+            var btnRect  = matched.getBoundingClientRect();
+            slider.style.width  = btnRect.width  + 'px';
+            slider.style.left   = (btnRect.left - segRect.left) + 'px';
           }
 
-          function setWidth(w, animate) {
+          function setWidth(w, animate, fromSeg) {
             var avail = getAvailW();
             w = Math.max(MIN_W, Math.min(w, avail));
             if (animate && !animating) {
@@ -14978,18 +14968,19 @@
             }
             stage.style.width = (w >= avail - 4) ? '100%' : w + 'px';
             if (readout) readout.textContent = (w >= avail - 4 ? avail : w) + 'px';
-            syncDropdown(w);
+            if (!fromSeg) syncSeg(w);
           }
 
+          /* On release: always snap to nearest named breakpoint that fits */
           function snapOnRelease() {
-            var w = stage.offsetWidth;
+            var w     = stage.offsetWidth;
             var avail = getAvailW();
-            var nearest = SNAPS.reduce(function(prev, cur) {
+            var candidates = BPS.filter(function(bp) { return bp <= avail; });
+            if (!candidates.length) { setWidth(avail, true); return; }
+            var nearest = candidates.reduce(function(prev, cur) {
               return Math.abs(cur - w) < Math.abs(prev - w) ? cur : prev;
             });
-            if (Math.abs(nearest - w) < SNAP_THRESHOLD) setWidth(nearest, true);
-            else if (avail - w < SNAP_THRESHOLD) setWidth(avail, true);
-            else if (readout) readout.textContent = w + 'px';
+            setWidth(nearest, true);
           }
 
           function onPointerDown(e, isLeft) {
@@ -15009,7 +15000,7 @@
             var delta = (activeHandle === handleL) ? -dx : dx;
             var newW = Math.max(MIN_W, Math.min(startW + delta, getAvailW()));
             stage.style.width = newW + 'px';
-            if (readout) readout.textContent = newW + 'px';
+            if (readout) readout.textContent = Math.round(newW) + 'px';
           }
 
           function onPointerUp() {
@@ -15031,33 +15022,37 @@
             handleR.addEventListener('pointerup', onPointerUp);
           }
 
-          /* Dropdown wiring */
-          window.addEventListener('load', function() {
-            picker = document.getElementById('tnw-bp-picker');
-            if (picker && typeof initDropdown === 'function') {
-              /* Hide XL option if viewport can't accommodate 1440px stage */
-              var xlOpt = picker.querySelector('.dropdown-option[data-value="1440"]');
-              if (xlOpt && getAvailW() < 1440) xlOpt.style.display = 'none';
-
-              initDropdown(picker, function(val) {
-                setWidth(parseInt(val), true);
+          /* Segment control wiring */
+          if (seg) {
+            seg.querySelectorAll('.seg-control-btn').forEach(function(btn) {
+              btn.addEventListener('click', function() {
+                var w = parseInt(btn.dataset.value);
+                seg.querySelectorAll('.seg-control-btn').forEach(function(b) { b.setAttribute('aria-pressed', 'false'); });
+                btn.setAttribute('aria-pressed', 'true');
+                setWidth(w, true, true);
+                /* Slide slider */
+                var slider   = seg.querySelector('.seg-control-slider');
+                var segRect  = seg.getBoundingClientRect();
+                var btnRect  = btn.getBoundingClientRect();
+                slider.style.width = btnRect.width + 'px';
+                slider.style.left  = (btnRect.left - segRect.left) + 'px';
               });
-            }
-          });
+            });
+          }
 
           /* Init via ResizeObserver — stage is hidden at DOMContentLoaded */
           var initialized = false;
           var ro = new ResizeObserver(function() {
             var avail = getAvailW();
             if (!avail) return;
-            /* Show/hide XL option based on available width */
-            if (picker) {
-              var xlOpt = picker.querySelector('.dropdown-option[data-value="1440"]');
-              if (xlOpt) xlOpt.style.display = avail >= 1440 ? '' : 'none';
-            }
+            /* Hide XL button if viewport can't fit 1440px stage */
+            if (xlBtn) xlBtn.style.display = avail >= 1440 ? '' : 'none';
             if (!initialized) {
               initialized = true;
-              setWidth(avail, false);
+              /* Start at largest fitting named breakpoint */
+              var candidates = BPS.filter(function(bp) { return bp <= avail; });
+              var startW = candidates.length ? candidates[candidates.length - 1] : avail;
+              setWidth(startW, false);
             } else {
               if (stage.offsetWidth > avail) setWidth(avail, false);
             }
