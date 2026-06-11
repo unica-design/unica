@@ -279,7 +279,7 @@
 :root {
 
   /* --- Font families --- */
-  --font-family-serif: "Noto Serif", Georgia, serif;
+  --font-family-serif: "Unna", Georgia, serif;
   --font-family-sans:  "Inter", system-ui, -apple-system, sans-serif;
 
   /* --- Font weights --- */
