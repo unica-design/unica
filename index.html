@@ -14724,6 +14724,7 @@
         </div>
 
         <!-- Resizable desktop shell -->
+        <div class="preview-canvas" style="padding: var(--space-800) var(--space-700); display:block; overflow:visible;">
         <div class="tnw-stage-outer">
           <div id="tnw-stage" class="tnw-stage">
             <div id="tnw-handle-l" class="tnw-drag-handle tnw-drag-handle--left"  role="separator" aria-label="Resize preview"></div>
@@ -14779,6 +14780,7 @@
             </div>
           </div>
         </div>
+        </div><!-- /.preview-canvas -->
 
       </div><!-- /.doc-section preview -->
 
@@ -14930,7 +14932,8 @@
           var dragging = false, activeHandle = null, startX = 0, startW = 0, animating = false;
 
           function getAvailW() {
-            return stageOuter ? stageOuter.offsetWidth - 40 : stage.parentElement.offsetWidth - 40;
+            var outer = stageOuter || stage.parentElement;
+            return (outer.parentElement || outer).offsetWidth - 40;
           }
 
           function setWidth(w, animate) {
