@@ -14942,23 +14942,23 @@
           /* Move the seg-control slider to the button matching w */
           function syncSeg(w) {
             if (!seg) return;
-            var btns = seg.querySelectorAll('.seg-control-btn');
+            var btns   = Array.from(seg.querySelectorAll('.seg-control-btn'));
             var slider = seg.querySelector('.seg-control-slider');
-            var matched = null;
-            btns.forEach(function(b) {
+            var idx    = -1;
+            btns.forEach(function(b, i) {
               b.setAttribute('aria-pressed', 'false');
-              if (parseInt(b.dataset.value) === w) matched = b;
+              if (parseInt(b.dataset.value) === w) idx = i;
             });
-            if (!matched) return;
-            matched.setAttribute('aria-pressed', 'true');
-            /* Animate slider to matched button position */
-            var segRect  = seg.getBoundingClientRect();
-            var btnRect  = matched.getBoundingClientRect();
-            slider.style.width  = btnRect.width  + 'px';
-            slider.style.left   = (btnRect.left - segRect.left) + 'px';
+            if (idx < 0) return;
+            btns[idx].setAttribute('aria-pressed', 'true');
+            var x = 0;
+            for (var j = 0; j < idx; j++) x += btns[j].offsetWidth;
+            slider.style.width     = btns[idx].offsetWidth + 'px';
+            slider.style.transform = 'translateX(' + x + 'px)';
           }
 
-          function setWidth(w, animate, fromSeg) {
+          function setWidth(w, animate) {
+            var reqBp = w; /* remember the requested BP for seg sync */
             var avail = getAvailW();
             w = Math.max(MIN_W, Math.min(w, avail));
             if (animate && !animating) {
@@ -14968,7 +14968,7 @@
             }
             stage.style.width = (w >= avail - 4) ? '100%' : w + 'px';
             if (readout) readout.textContent = (w >= avail - 4 ? avail : w) + 'px';
-            if (!fromSeg) syncSeg(w);
+            syncSeg(reqBp);
           }
 
           /* On release: always snap to nearest named breakpoint that fits */
@@ -14985,6 +14985,9 @@
 
           function onPointerDown(e, isLeft) {
             e.preventDefault();
+            /* Kill any in-flight snap animation so drag is immediately responsive */
+            stage.style.transition = '';
+            animating = false;
             dragging = true;
             activeHandle = isLeft ? handleL : handleR;
             startX = e.clientX;
@@ -15024,18 +15027,10 @@
 
           /* Segment control wiring */
           if (seg) {
-            seg.querySelectorAll('.seg-control-btn').forEach(function(btn) {
+            var segBtns = Array.from(seg.querySelectorAll('.seg-control-btn'));
+            segBtns.forEach(function(btn, i) {
               btn.addEventListener('click', function() {
-                var w = parseInt(btn.dataset.value);
-                seg.querySelectorAll('.seg-control-btn').forEach(function(b) { b.setAttribute('aria-pressed', 'false'); });
-                btn.setAttribute('aria-pressed', 'true');
-                setWidth(w, true, true);
-                /* Slide slider */
-                var slider   = seg.querySelector('.seg-control-slider');
-                var segRect  = seg.getBoundingClientRect();
-                var btnRect  = btn.getBoundingClientRect();
-                slider.style.width = btnRect.width + 'px';
-                slider.style.left  = (btnRect.left - segRect.left) + 'px';
+                setWidth(parseInt(btn.dataset.value), true);
               });
             });
           }
