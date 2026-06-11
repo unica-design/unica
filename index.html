@@ -8996,6 +8996,204 @@
     .tna-states-2col   { grid-template-columns: 1fr; }
   }
 
+  /* ═══════════════════════════════════════════════════════
+     TOP NAVIGATION — WEB (TNW)
+     ═══════════════════════════════════════════════════════ */
+
+  /* ── Header component ──────────────────────────────── */
+  .tnw-header {
+    width: 100%;
+    background: var(--color-background-page);
+    border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-400) var(--space-600) 0;
+  }
+  .tnw-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-800);
+    padding-bottom: var(--space-800);
+  }
+  .tnw-leading {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: var(--space-600);
+  }
+  .tnw-logo-brand {
+    width: 64px; height: 64px;
+    border-radius: var(--corner-radius-round);
+    background: var(--color-background-contrast);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; position: relative; overflow: hidden;
+    transition: width 220ms ease, height 220ms ease;
+  }
+  .tnw-logo-img { width: 37.5%; height: auto; display: block; flex-shrink: 0; }
+  .tnw-hamburger-btn {
+    display: none; /* L/XL: hidden */
+    width: 32px; height: 32px;
+    border-radius: var(--corner-radius-round);
+    border: none; background: transparent;
+    color: var(--color-content-default);
+    align-items: center; justify-content: center;
+    cursor: pointer; padding: 0; flex-shrink: 0;
+    transition: background 150ms ease-out, border-radius 150ms ease-out;
+  }
+  .tnw-hamburger-btn:hover { background: var(--color-action-hover-subtle); border-radius: var(--corner-radius-s); }
+  .tnw-hamburger-btn:active { background: var(--color-action-active-subtle); border-radius: var(--corner-radius-round); }
+  .tnw-hamburger-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .tnw-search-container {
+    flex: 1 1 0; min-width: 0; display: flex;
+  }
+  .tnw-search-field {
+    display: flex; align-items: center; gap: var(--space-200);
+    width: 100%; height: 56px;
+    background: var(--color-background-ui);
+    border-radius: var(--corner-radius-round);
+    padding: 0 var(--space-600) 0 var(--space-300);
+    overflow: hidden;
+  }
+  .tnw-search-field svg { width: 24px; height: 24px; flex-shrink: 0; color: var(--color-content-subtle); }
+  .tnw-search-placeholder {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body-l, 18px);
+    line-height: var(--font-leading-body-l, 28px);
+    color: var(--color-content-subtle);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .tnw-trailing {
+    display: flex; align-items: center; gap: var(--space-400); flex-shrink: 0;
+  }
+  .tnw-icon-btn-wrap { position: relative; flex-shrink: 0; }
+  .tnw-action-btn {
+    width: 32px; height: 32px;
+    border-radius: var(--corner-radius-round);
+    border: 1.5px solid var(--color-border-strong);
+    background: transparent; color: var(--color-content-default);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0; flex-shrink: 0;
+    transition: border-radius 150ms ease-out, background 150ms ease-out;
+  }
+  .tnw-action-btn:hover { background: var(--color-action-hover-subtle); border-radius: var(--corner-radius-s); }
+  .tnw-action-btn:active { background: var(--color-action-active-subtle); border-radius: var(--corner-radius-round); }
+  .tnw-action-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .tnw-icon-btn-wrap .badge-dot { position: absolute; top: -2px; left: 21px; pointer-events: none; }
+  .tnw-avatar-wrap { position: relative; flex-shrink: 0; width: 40px; height: 40px; }
+  .tnw-avatar-btn {
+    display: block; width: 40px; height: 40px;
+    border-radius: var(--corner-radius-round); overflow: hidden;
+    border: none; background: none; padding: 0; cursor: pointer;
+    transition: border-radius 150ms ease-out;
+  }
+  .tnw-avatar-btn:hover { border-radius: var(--corner-radius-s); }
+  .tnw-avatar-btn:active { border-radius: var(--corner-radius-round); transform: scale(0.96); }
+  .tnw-avatar-img { width: 40px; height: 40px; object-fit: cover; display: block; }
+  .tnw-avatar-wrap .badge-dot { position: absolute; top: 2px; left: 28px; pointer-events: none; }
+  /* Search row — S only (stacks below toolbar) */
+  .tnw-search-row {
+    display: none;
+    padding: var(--space-200) 0 var(--space-400);
+  }
+  .tnw-search-row .tnw-search-field { height: 48px; }
+
+  /* ── Container queries (respond to preview wrapper width) ── */
+  .tnw-preview-inner { container-type: inline-size; }
+
+  @container (max-width: 1023px) {
+    /* M: hamburger visible, logo 48px, search 48px, avatar 32px */
+    .tnw-logo-brand { width: 48px; height: 48px; }
+    .tnw-hamburger-btn { display: flex; }
+    .tnw-search-field { height: 48px; }
+    .tnw-avatar-wrap { width: 32px; height: 32px; }
+    .tnw-avatar-btn { width: 32px; height: 32px; }
+    .tnw-avatar-img { width: 32px; height: 32px; }
+    .tnw-avatar-wrap .badge-dot { top: -2px; left: 21px; }
+  }
+  @container (max-width: 639px) {
+    /* S: logo 40px, inline search hidden, search row visible */
+    .tnw-logo-brand { width: 40px; height: 40px; }
+    .tnw-search-container { display: none; }
+    .tnw-search-row { display: flex; }
+    .tnw-content { padding-bottom: 0; gap: var(--space-400); }
+    .tnw-leading { gap: var(--space-400); }
+  }
+
+  /* ── Resizable preview stage ────────────────────────── */
+  .tnw-stage {
+    position: relative;
+    user-select: none;
+    /* width set by JS */
+  }
+  .tnw-preview-inner { overflow: hidden; width: 100%; }
+  /* iOS-style drag handle */
+  .tnw-drag-handle {
+    position: absolute;
+    top: 50%; right: -5px;
+    transform: translateY(-50%);
+    width: 4px; height: 36px;
+    border-radius: 2px;
+    background: var(--color-content-subtle);
+    opacity: 0.18;
+    cursor: ew-resize;
+    transition: opacity 250ms ease, height 200ms ease;
+    z-index: 10;
+    touch-action: none;
+  }
+  .tnw-drag-handle::before {
+    content: ''; position: absolute; inset: -10px -8px; /* wider hit area */
+  }
+  .tnw-stage:hover .tnw-drag-handle { opacity: 0.4; }
+  .tnw-drag-handle.is-dragging { opacity: 0.65; height: 44px; }
+
+  /* ── Breakpoint bar ─────────────────────────────────── */
+  .tnw-bp-bar {
+    display: flex; align-items: center; gap: var(--space-300);
+    margin-bottom: var(--space-400);
+  }
+  .tnw-bp-chips {
+    display: flex;
+    background: var(--color-background-subtle);
+    border-radius: var(--corner-radius-round);
+    padding: 3px; gap: 2px;
+  }
+  .tnw-bp-chip {
+    font-family: var(--font-family-sans);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+    color: var(--color-content-subtle);
+    padding: 4px 10px;
+    border-radius: var(--corner-radius-round);
+    cursor: pointer;
+    border: none; background: none;
+    transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+    white-space: nowrap;
+  }
+  .tnw-bp-chip:hover { color: var(--color-content-default); }
+  .tnw-bp-chip.is-active {
+    background: var(--color-background-page);
+    color: var(--color-content-default);
+    box-shadow: 0 1px 3px rgba(8,5,13,0.10);
+  }
+  .tnw-bp-readout {
+    font-family: var(--font-family-sans);
+    font-size: 12px;
+    color: var(--color-content-subtle);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Static variant strips ──────────────────────────── */
+  .tnw-variant-strip {
+    width: 100%; overflow: hidden;
+    padding-top: var(--space-600);
+  }
+  .tnw-variant-strip .tnw-header { pointer-events: none; }
+  .tnw-variants-stack {
+    display: flex; flex-direction: column;
+    gap: var(--space-700);
+  }
+  .tnw-variant-label { margin-bottom: var(--space-300); }
+
   </style>
 </head>
 <body>
@@ -9100,6 +9298,12 @@
     </symbol>
     <symbol id="ico-caret-dn" viewBox="0 0 24 24">
       <path d="M11.29,15.54l-4.24-4.24a1,1,0,0,1,0-1.42,1,1,0,0,1,1.41,0L12,13.29l3.54-3.41a1,1,0,0,1,1.41,0,1,1,0,0,1,0,1.42l-4.24,4.24A1,1,0,0,1,11.29,15.54Z" fill="currentColor"/>
+    </symbol>
+    <!-- hamburger: viewBox 0 0 20.001 11.5, translate(2 6) within 24×24 canvas -->
+    <symbol id="ico-hamburger" viewBox="0 0 24 24">
+      <g transform="translate(2 6)">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M20.001 0.75C20.001 0.335797 19.6652 1.64925e-05 19.251 0H0.750015C0.335801 0 1.49608e-05 0.335786 1.49608e-05 0.75C1.49608e-05 1.16421 0.335801 1.5 0.750015 1.5H19.251C19.6652 1.49998 20.001 1.1642 20.001 0.75ZM15.2656 5C15.6798 5.00009 16.0156 5.33584 16.0156 5.75C16.0156 6.16416 15.6798 6.49991 15.2656 6.5H0.750009C0.335796 6.5 9.29832e-06 6.16421 9.29832e-06 5.75C9.29832e-06 5.33579 0.335796 5 0.750009 5H15.2656ZM11.251 10C11.6652 10 12.001 10.3358 12.001 10.75C12.001 11.1642 11.6652 11.5 11.251 11.5H0.75C0.335786 11.5 0 11.1642 0 10.75C0 10.3358 0.335786 10 0.75 10H11.251Z" fill="currentColor"/>
+      </g>
     </symbol>
     <symbol id="ico-eye-hide" viewBox="0 0 48 48">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M43.2637 13.7686C43.9514 14.2305 44.1346 15.1624 43.6727 15.8502L42.4274 15.0139C43.6727 15.8502 43.6724 15.8506 43.6721 15.851L43.6714 15.8521L43.6693 15.8552L43.6629 15.8647L43.641 15.8968C43.6224 15.9239 43.5959 15.9624 43.5616 16.0114C43.493 16.1095 43.3933 16.2501 43.264 16.427C43.0055 16.7807 42.6282 17.2806 42.1445 17.8782C41.1787 19.071 39.7791 20.6644 38.0439 22.2625C37.3254 22.9243 36.5384 23.5969 35.6907 24.2467L38.0607 26.6166C38.6464 27.2024 38.6464 28.1522 38.0607 28.738C37.4749 29.3238 36.5251 29.3238 35.9393 28.738L33.1745 25.9731C31.8592 26.7702 30.4424 27.4637 28.9449 27.9649L30.1863 32.5976C30.4007 33.3978 29.9258 34.2203 29.1256 34.4347C28.3254 34.6492 27.5029 34.1743 27.2885 33.3741L26.0255 28.6606C25.3589 28.7544 24.6804 28.8045 23.9915 28.8045C23.3083 28.8045 22.6352 28.7552 21.9739 28.6629L20.7115 33.3741C20.4971 34.1743 19.6746 34.6492 18.8744 34.4347C18.0742 34.2203 17.5993 33.3978 17.8137 32.5976L19.0537 27.9701C17.5544 27.4699 16.136 26.7766 14.8191 25.9795L12.0607 28.738C11.4749 29.3238 10.5251 29.3238 9.93934 28.738C9.35355 28.1522 9.35355 27.2024 9.93934 26.6166L12.3019 24.2541C11.4506 23.602 10.6604 22.9267 9.93919 22.2625C8.20397 20.6644 6.80433 19.071 5.8386 17.8782C5.35481 17.2806 4.97752 16.7807 4.71907 16.427C4.58979 16.2501 4.49007 16.1095 4.42148 16.0114C4.38718 15.9624 4.36064 15.9239 4.34206 15.8968L4.32018 15.8647L4.31375 15.8552L4.31168 15.8521L4.31093 15.851C4.31063 15.8506 4.31037 15.8502 5.55561 15.0139L4.31037 15.8502C3.8485 15.1624 4.03161 14.2305 4.71934 13.7686C5.40689 13.3069 6.3385 13.4898 6.80049 14.1771L41.5627 13.7877L6.80086 14.1776L6.80309 14.1809L6.81715 14.2015C6.83042 14.2209 6.85148 14.2514 6.88012 14.2924C6.9374 14.3743 7.02496 14.4978 7.14127 14.657C7.37398 14.9755 7.72108 15.4357 8.1702 15.9904C9.07029 17.1021 10.3705 18.5813 11.9715 20.0558C15.2272 23.0543 19.4784 25.8045 23.9915 25.8045C28.5046 25.8045 32.7559 23.0543 36.0115 20.0558C37.6125 18.5813 38.9128 17.1021 39.8129 15.9904C40.262 15.4357 40.6091 14.9755 40.8418 14.657C40.9581 14.4978 41.0457 14.3743 41.1029 14.2924C41.1316 14.2514 41.1526 14.2209 41.1659 14.2015L41.18 14.1809L41.1822 14.1776L41.1826 14.1771C41.2878 14.0206 41.4173 13.8902 41.5627 13.7877L43.2637 13.7686ZM41.5628 13.7877L43.2637 13.7686C42.7327 13.412 42.0562 13.4399 41.5628 13.7877Z" fill="currentColor"/>
@@ -14464,7 +14668,321 @@
       </script>
 
     </div><!-- /#page-top-nav-app -->
-    <div class="page-panel" id="page-top-nav-web"><section class="section"><div class="section-header"><p class="section-eyebrow">Components · Navigation</p><h2 class="section-title">Top Navigation — Web</h2><p class="section-description">Web header with logo, nav links, and action area.</p></div><span class="stub-pill">In progress</span></section></div>
+    <div class="page-panel" id="page-top-nav-web">
+
+      <!-- 1. Component header -->
+      <div class="comp-header">
+        <p class="comp-eyebrow">Components · Navigation</p>
+        <h1 class="comp-title">Top Navigation — Web</h1>
+        <p class="comp-description">Responsive web header with logo, search, and action area. Adapts across S, M, and L breakpoints.</p>
+        <div class="comp-badges">
+          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
+        </div>
+      </div>
+
+      <!-- 2. Preview section -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Preview</h2>
+        <hr class="doc-rule">
+        <!-- breakpoint chips + width readout -->
+        <div class="tnw-bp-bar">
+          <div class="tnw-bp-chips">
+            <button class="tnw-bp-chip" data-bp="S">S</button>
+            <button class="tnw-bp-chip" data-bp="M">M</button>
+            <button class="tnw-bp-chip is-active" data-bp="L">L</button>
+          </div>
+          <span class="tnw-bp-readout" id="tnw-readout"></span>
+        </div>
+        <!-- resizable stage -->
+        <div id="tnw-stage" class="tnw-stage" style="width:100%">
+          <div class="tnw-preview-inner">
+            <div id="tnw-mock" class="tnw-header">
+              <div class="tnw-content">
+                <div class="tnw-leading">
+                  <!-- logo circle -->
+                  <div class="tnw-logo-brand">
+                    <svg class="tnw-logo-img" viewBox="0 0 15 19.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.9 3C9.9 3.99411 9.09411 4.8 8.1 4.8H6.9C5.90589 4.8 5.1 5.60589 5.1 6.6V12.3C5.1 13.2941 5.90589 14.1 6.9 14.1H8.1C9.09411 14.1 9.9 13.2941 9.9 12.3V6.9C9.9 5.90589 10.7059 5.1 11.7 5.1C13.0446 5.1 15 5.1 15 5.1V12.2884L14.9994 12.3817C14.9475 16.3216 11.6098 19.5 7.5 19.5C3.39025 19.5 0.0525232 16.3216 0.000585938 12.3817L0 12.2884V4.5C0 4.5 1.9554 4.5 3.3 4.5C4.29411 4.5 5.1 3.69411 5.1 2.7V1.8C5.1 0.805887 5.90589 0 6.9 0H8.1C9.09411 0 9.9 0.805888 9.9 1.8V3Z" fill="#CFFCFA"/></svg>
+                  </div>
+                  <!-- hamburger (S/M only) -->
+                  <button class="tnw-hamburger-btn" aria-label="Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-hamburger"/></svg>
+                  </button>
+                </div>
+                <!-- search bar (L/M inline) -->
+                <div class="tnw-search-container">
+                  <div class="tnw-search-field">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
+                    <span class="tnw-search-placeholder">Search</span>
+                  </div>
+                </div>
+                <!-- trailing actions -->
+                <div class="tnw-trailing">
+                  <div class="tnw-icon-btn-wrap">
+                    <button class="tnw-action-btn" aria-label="Notifications">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg>
+                    </button>
+                    <span class="badge-dot badge-dot--small badge-dot--alert"></span>
+                  </div>
+                  <div class="tnw-icon-btn-wrap">
+                    <button class="tnw-action-btn" aria-label="Cart">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-shopping-basket"/></svg>
+                    </button>
+                  </div>
+                  <div class="tnw-avatar-wrap">
+                    <button class="tnw-avatar-btn" aria-label="Account">
+                      <img class="tnw-avatar-img" src="assets/user-logo.png" alt="User avatar">
+                    </button>
+                    <span class="badge-dot badge-dot--small badge-dot--alert"></span>
+                  </div>
+                </div>
+              </div>
+              <!-- search row (S only) -->
+              <div class="tnw-search-row">
+                <div class="tnw-search-field">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg>
+                  <span class="tnw-search-placeholder">Search</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="tnw-handle" class="tnw-drag-handle" role="separator" aria-label="Resize preview" aria-valuenow="100" aria-valuemin="375" aria-valuemax="1440"></div>
+        </div>
+      </div>
+
+      <!-- 3. Code reveal -->
+      <button class="code-reveal-btn" onclick="toggleCodeReveal(this,'tnw-code')" aria-expanded="false">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-caret-dn"/></svg>
+        Show code
+      </button>
+      <div id="tnw-code" class="code-reveal" hidden>
+        <pre><code>&lt;header class="tnw-header"&gt;
+  &lt;div class="tnw-content"&gt;
+    &lt;div class="tnw-leading"&gt;
+      &lt;div class="tnw-logo-brand"&gt;...&lt;/div&gt;
+      &lt;button class="tnw-hamburger-btn" aria-label="Menu"&gt;...&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="tnw-search-container"&gt;
+      &lt;div class="tnw-search-field"&gt;...&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="tnw-trailing"&gt;
+      &lt;button class="tnw-action-btn" aria-label="Notifications"&gt;...&lt;/button&gt;
+      &lt;button class="tnw-action-btn" aria-label="Cart"&gt;...&lt;/button&gt;
+      &lt;button class="tnw-avatar-btn" aria-label="Account"&gt;...&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- S breakpoint: search stacks below toolbar --&gt;
+  &lt;div class="tnw-search-row"&gt;...&lt;/div&gt;
+&lt;/header&gt;</code></pre>
+      </div>
+
+      <!-- 4. Variants (static breakpoint strips) -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Breakpoints</h2>
+        <hr class="doc-rule">
+        <div class="tnw-variants-stack">
+
+          <!-- L — ≥1024px -->
+          <div>
+            <p class="avatar-group-label tnw-variant-label">L — ≥ 1024px</p>
+            <div class="tnw-variant-strip" style="max-width:900px">
+              <div class="tnw-preview-inner" style="container-type:inline-size">
+                <div class="tnw-header">
+                  <div class="tnw-content">
+                    <div class="tnw-leading">
+                      <div class="tnw-logo-brand"><svg class="tnw-logo-img" viewBox="0 0 15 19.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.9 3C9.9 3.99411 9.09411 4.8 8.1 4.8H6.9C5.90589 4.8 5.1 5.60589 5.1 6.6V12.3C5.1 13.2941 5.90589 14.1 6.9 14.1H8.1C9.09411 14.1 9.9 13.2941 9.9 12.3V6.9C9.9 5.90589 10.7059 5.1 11.7 5.1C13.0446 5.1 15 5.1 15 5.1V12.2884L14.9994 12.3817C14.9475 16.3216 11.6098 19.5 7.5 19.5C3.39025 19.5 0.0525232 16.3216 0.000585938 12.3817L0 12.2884V4.5C0 4.5 1.9554 4.5 3.3 4.5C4.29411 4.5 5.1 3.69411 5.1 2.7V1.8C5.1 0.805887 5.90589 0 6.9 0H8.1C9.09411 0 9.9 0.805888 9.9 1.8V3Z" fill="#CFFCFA"/></svg></div>
+                    </div>
+                    <!-- L: search always visible inline -->
+                    <div class="tnw-search-container" style="display:flex"><div class="tnw-search-field"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg><span class="tnw-search-placeholder">Search</span></div></div>
+                    <div class="tnw-trailing">
+                      <div class="tnw-icon-btn-wrap"><button class="tnw-action-btn" aria-label="Notifications"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small badge-dot--alert"></span></div>
+                      <div class="tnw-icon-btn-wrap"><button class="tnw-action-btn" aria-label="Cart"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-shopping-basket"/></svg></button></div>
+                      <div class="tnw-avatar-wrap"><button class="tnw-avatar-btn" aria-label="Account"><img class="tnw-avatar-img" src="assets/user-logo.png" alt=""></button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- M — 640–1023px -->
+          <div>
+            <p class="avatar-group-label tnw-variant-label">M — 640 – 1023px</p>
+            <div class="tnw-variant-strip" style="max-width:780px">
+              <div class="tnw-preview-inner" style="container-type:inline-size">
+                <div class="tnw-header">
+                  <div class="tnw-content">
+                    <div class="tnw-leading">
+                      <div class="tnw-logo-brand"><svg class="tnw-logo-img" viewBox="0 0 15 19.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.9 3C9.9 3.99411 9.09411 4.8 8.1 4.8H6.9C5.90589 4.8 5.1 5.60589 5.1 6.6V12.3C5.1 13.2941 5.90589 14.1 6.9 14.1H8.1C9.09411 14.1 9.9 13.2941 9.9 12.3V6.9C9.9 5.90589 10.7059 5.1 11.7 5.1C13.0446 5.1 15 5.1 15 5.1V12.2884L14.9994 12.3817C14.9475 16.3216 11.6098 19.5 7.5 19.5C3.39025 19.5 0.0525232 16.3216 0.000585938 12.3817L0 12.2884V4.5C0 4.5 1.9554 4.5 3.3 4.5C4.29411 4.5 5.1 3.69411 5.1 2.7V1.8C5.1 0.805887 5.90589 0 6.9 0H8.1C9.09411 0 9.9 0.805888 9.9 1.8V3Z" fill="#CFFCFA"/></svg></div>
+                      <!-- M: hamburger always visible -->
+                      <button class="tnw-hamburger-btn" style="display:flex" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-hamburger"/></svg></button>
+                    </div>
+                    <!-- M: search always visible inline -->
+                    <div class="tnw-search-container" style="display:flex"><div class="tnw-search-field" style="height:48px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg><span class="tnw-search-placeholder">Search</span></div></div>
+                    <div class="tnw-trailing">
+                      <div class="tnw-icon-btn-wrap"><button class="tnw-action-btn" aria-label="Notifications"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small badge-dot--alert"></span></div>
+                      <div class="tnw-icon-btn-wrap"><button class="tnw-action-btn" aria-label="Cart"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-shopping-basket"/></svg></button></div>
+                      <div class="tnw-avatar-wrap"><button class="tnw-avatar-btn" aria-label="Account"><img class="tnw-avatar-img" src="assets/user-logo.png" alt=""></button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- S — <640px -->
+          <div>
+            <p class="avatar-group-label tnw-variant-label">S — &lt; 640px</p>
+            <div class="tnw-variant-strip" style="max-width:375px">
+              <div class="tnw-preview-inner" style="container-type:inline-size">
+                <div class="tnw-header">
+                  <div class="tnw-content">
+                    <div class="tnw-leading">
+                      <div class="tnw-logo-brand"><svg class="tnw-logo-img" viewBox="0 0 15 19.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.9 3C9.9 3.99411 9.09411 4.8 8.1 4.8H6.9C5.90589 4.8 5.1 5.60589 5.1 6.6V12.3C5.1 13.2941 5.90589 14.1 6.9 14.1H8.1C9.09411 14.1 9.9 13.2941 9.9 12.3V6.9C9.9 5.90589 10.7059 5.1 11.7 5.1C13.0446 5.1 15 5.1 15 5.1V12.2884L14.9994 12.3817C14.9475 16.3216 11.6098 19.5 7.5 19.5C3.39025 19.5 0.0525232 16.3216 0.000585938 12.3817L0 12.2884V4.5C0 4.5 1.9554 4.5 3.3 4.5C4.29411 4.5 5.1 3.69411 5.1 2.7V1.8C5.1 0.805887 5.90589 0 6.9 0H8.1C9.09411 0 9.9 0.805888 9.9 1.8V3Z" fill="#CFFCFA"/></svg></div>
+                      <button class="tnw-hamburger-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-hamburger"/></svg></button>
+                    </div>
+                    <div class="tnw-trailing">
+                      <div class="tnw-icon-btn-wrap"><button class="tnw-action-btn" aria-label="Notifications"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-bell"/></svg></button><span class="badge-dot badge-dot--small badge-dot--alert"></span></div>
+                      <div class="tnw-icon-btn-wrap"><button class="tnw-action-btn" aria-label="Cart"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#ico-shopping-basket"/></svg></button></div>
+                      <div class="tnw-avatar-wrap"><button class="tnw-avatar-btn" aria-label="Account"><img class="tnw-avatar-img" src="assets/user-logo.png" alt=""></button></div>
+                    </div>
+                  </div>
+                  <div class="tnw-search-row">
+                    <div class="tnw-search-field"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="#ico-search"/></svg><span class="tnw-search-placeholder">Search</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 5. Accessibility -->
+      <div class="doc-section">
+        <h2 class="doc-section-title">Accessibility</h2>
+        <hr class="doc-rule">
+        <table class="doc-table">
+          <thead><tr><th>Element</th><th>Requirement</th></tr></thead>
+          <tbody>
+            <tr><td><code>&lt;header&gt;</code></td><td>Use landmark <code>role="banner"</code> (implicit on <code>&lt;header&gt;</code> at top level)</td></tr>
+            <tr><td>Logo</td><td><code>aria-label="ůnica home"</code> on the link wrapping the logo</td></tr>
+            <tr><td>Hamburger button</td><td><code>aria-label="Menu"</code>; toggles <code>aria-expanded</code> when a nav drawer opens</td></tr>
+            <tr><td>Search field</td><td>Visible label or <code>aria-label="Search"</code> on the input</td></tr>
+            <tr><td>Icon buttons</td><td>Descriptive <code>aria-label</code> on each button (Notifications, Cart)</td></tr>
+            <tr><td>Badge dots</td><td><code>aria-hidden="true"</code> on the dot; add a visually-hidden count to the button label</td></tr>
+            <tr><td>Avatar button</td><td><code>aria-label="Account"</code>; opens account menu with <code>aria-haspopup="menu"</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 6. Page script -->
+      <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        (function initTnwPreview() {
+          var stage   = document.getElementById('tnw-stage');
+          var handle  = document.getElementById('tnw-handle');
+          var readout = document.getElementById('tnw-readout');
+          var chips   = document.querySelectorAll('#page-top-nav-web .tnw-bp-chip');
+          if (!stage || !handle) return;
+
+          var SNAP = { S: 375, M: 780 };
+          var SNAP_THRESHOLD = 40; // px — snap when within this of a breakpoint
+          var dragging = false;
+          var startX, startW;
+          var animating = false;
+
+          function getAvailW() {
+            return stage.parentElement.offsetWidth;
+          }
+
+          function setWidth(w, animate) {
+            var avail = getAvailW();
+            w = Math.max(SNAP.S, Math.min(w, avail));
+            if (animate && !animating) {
+              animating = true;
+              stage.style.transition = 'width 280ms cubic-bezier(0.16, 1, 0.3, 1)';
+              setTimeout(function() { stage.style.transition = ''; animating = false; }, 300);
+            }
+            stage.style.width = (w >= avail - 4) ? '100%' : w + 'px';
+            updateReadout(w >= avail - 4 ? avail : w);
+            updateChips(w >= avail - 4 ? avail : w);
+          }
+
+          function updateReadout(w) {
+            if (readout) readout.textContent = w + 'px';
+          }
+
+          function updateChips(w) {
+            var bp = w >= 1024 ? 'L' : w >= 640 ? 'M' : 'S';
+            chips.forEach(function(c) { c.classList.toggle('is-active', c.dataset.bp === bp); });
+          }
+
+          // chip clicks
+          chips.forEach(function(c) {
+            c.addEventListener('click', function() {
+              var bp = c.dataset.bp;
+              if (bp === 'S') setWidth(SNAP.S, true);
+              else if (bp === 'M') setWidth(SNAP.M, true);
+              else setWidth(getAvailW(), true);
+            });
+          });
+
+          // drag
+          handle.addEventListener('pointerdown', function(e) {
+            e.preventDefault();
+            dragging = true;
+            startX = e.clientX;
+            startW = stage.offsetWidth;
+            handle.setPointerCapture(e.pointerId);
+            handle.classList.add('is-dragging');
+          });
+
+          handle.addEventListener('pointermove', function(e) {
+            if (!dragging) return;
+            var dx = e.clientX - startX;
+            var newW = startX + dx - stage.getBoundingClientRect().left + startW - (startW - stage.offsetWidth);
+            // simpler: just track raw delta
+            newW = startW + dx;
+            var avail = getAvailW();
+            newW = Math.max(SNAP.S, Math.min(newW, avail));
+            stage.style.width = (newW >= avail - 4) ? '100%' : newW + 'px';
+            updateReadout(newW >= avail - 4 ? avail : newW);
+            updateChips(newW >= avail - 4 ? avail : newW);
+          });
+
+          handle.addEventListener('pointerup', function(e) {
+            if (!dragging) return;
+            dragging = false;
+            handle.classList.remove('is-dragging');
+            // snap
+            var w = stage.offsetWidth;
+            var avail = getAvailW();
+            if (Math.abs(w - SNAP.S) < SNAP_THRESHOLD) setWidth(SNAP.S, true);
+            else if (Math.abs(w - SNAP.M) < SNAP_THRESHOLD) setWidth(SNAP.M, true);
+            else if (avail - w < SNAP_THRESHOLD) setWidth(avail, true);
+            else { updateReadout(w); updateChips(w); }
+          });
+
+          // init — defer until stage has real dimensions (panel may be hidden at DOMContentLoaded)
+          var initialized = false;
+          var ro = new ResizeObserver(function(entries) {
+            var avail = getAvailW();
+            if (!avail) return;
+            if (!initialized) {
+              initialized = true;
+              setWidth(avail, false);
+            } else {
+              var w = stage.offsetWidth;
+              if (w > avail) setWidth(avail, false);
+              else { updateReadout(w); updateChips(w); }
+            }
+          });
+          ro.observe(stage.parentElement);
+        })();
+      });
+      </script>
+
+    </div>
     <div class="page-panel" id="page-bottom-nav">
 
       <!-- ── Header ─────────────────────────────── -->
