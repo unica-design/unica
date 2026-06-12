@@ -10468,11 +10468,18 @@
               catView.hidden  = false;
               alphaView.hidden = true;
             }
+            try { localStorage.setItem('cov-view', val); } catch(e) {}
           }
 
           seg.querySelectorAll('.card-seg-btn').forEach(function(btn) {
             btn.addEventListener('click', function() { switchView(this.dataset.value); });
           });
+
+          // Restore last selected view on load
+          try {
+            var saved = localStorage.getItem('cov-view');
+            if (saved === 'alpha') switchView('alpha');
+          } catch(e) {}
 
           if (dropdown && typeof initDropdown === 'function') {
             initDropdown(dropdown, function(val) { switchView(val); });
