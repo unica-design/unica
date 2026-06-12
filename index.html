@@ -10219,7 +10219,7 @@
             </a>
             <a class="card-type-tile" data-nav-target="progress" data-name="Progress Indicators" href="#">
               <div class="card-type-tile-thumb">
-                <div class="ctt-scene ctt-scene--feedback"><svg class="ctt-bg-shape ctt-bg-shape--1" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M224.712 104.04C219.768 114.072 219.768 125.928 224.712 135.96C243.408 173.976 245.76 208.872 227.304 227.304C208.872 245.76 173.976 243.408 135.96 224.712C125.928 219.768 114.072 219.768 104.04 224.712C66.024 243.408 31.128 245.76 12.696 227.304C-5.76 208.872 -3.408 173.976 15.288 135.96C20.232 125.928 20.232 114.072 15.288 104.04C-3.408 66.024 -5.76 31.128 12.696 12.696C31.128 -5.76 66.024 -3.408 104.04 15.288C114.072 20.232 125.928 20.232 135.96 15.288C173.976 -3.408 208.872 -5.76 227.304 12.696C245.76 31.128 243.408 66.024 224.712 104.04Z"/></svg><svg class="ctt-bg-shape ctt-bg-shape--2" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M65 240C85.8858 240 104.28 231.426 117.2 217.676C129.15 205.007 136.5 188.107 136.5 169.5C136.5 131.817 105.683 101 68 101C56.6801 101 45.9755 103.87 36.6294 108.934C22.0203 116.757 11.0851 130.28 6.88547 146.5C5.65149 151.19 5 156.118 5 161.2C5 175.999 10.9585 189.407 20.6625 199.099C30.4265 208.826 43.7944 214.754 58.55 214.754C60.0352 214.754 61.5116 214.7 62.9775 214.592C63.3177 214.567 63.6585 214.539 64 214.508V240H65Z"/></svg><div class="cov-comp"><div style="pointer-events:none;"><svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true"><circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4" style="stroke:var(--primitive-mint-300);"/><circle class="prog-circular-fill prog-circular-fill--anim" cx="24" cy="24" r="20" stroke-width="4"/></svg></div></div>
+                <div class="ctt-scene ctt-scene--feedback"><svg class="ctt-bg-shape ctt-bg-shape--1" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M224.712 104.04C219.768 114.072 219.768 125.928 224.712 135.96C243.408 173.976 245.76 208.872 227.304 227.304C208.872 245.76 173.976 243.408 135.96 224.712C125.928 219.768 114.072 219.768 104.04 224.712C66.024 243.408 31.128 245.76 12.696 227.304C-5.76 208.872 -3.408 173.976 15.288 135.96C20.232 125.928 20.232 114.072 15.288 104.04C-3.408 66.024 -5.76 31.128 12.696 12.696C31.128 -5.76 66.024 -3.408 104.04 15.288C114.072 20.232 125.928 20.232 135.96 15.288C173.976 -3.408 208.872 -5.76 227.304 12.696C245.76 31.128 243.408 66.024 224.712 104.04Z"/></svg><svg class="ctt-bg-shape ctt-bg-shape--2" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M65 240C85.8858 240 104.28 231.426 117.2 217.676C129.15 205.007 136.5 188.107 136.5 169.5C136.5 131.817 105.683 101 68 101C56.6801 101 45.9755 103.87 36.6294 108.934C22.0203 116.757 11.0851 130.28 6.88547 146.5C5.65149 151.19 5 156.118 5 161.2C5 175.999 10.9585 189.407 20.6625 199.099C30.4265 208.826 43.7944 214.754 58.55 214.754C60.0352 214.754 61.5116 214.7 62.9775 214.592C63.3177 214.567 63.6585 214.539 64 214.508V240H65Z"/></svg><div class="cov-comp"><div style="pointer-events:none;"><svg viewBox="0 0 48 48" width="80" height="80" aria-hidden="true"><circle class="prog-circular-track" cx="24" cy="24" r="20" stroke-width="4" style="stroke:var(--primitive-mint-300);"/><circle class="prog-circular-fill" cx="24" cy="24" r="20" stroke-width="4"/></svg></div></div>
                 </div>
               </div>
               <div class="card-type-tile-body">
@@ -10396,6 +10396,25 @@
           var alphaGrid  = alphaView.querySelector('.card-type-tiles');
           var alphaBuilt = false;
 
+          // Spinner: animate on scroll into view, replay each time
+          var spinnerIO = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (!entry.isIntersecting) return;
+              var fill = entry.target.querySelector('.prog-circular-fill');
+              if (!fill) return;
+              fill.classList.remove('prog-circular-fill--anim');
+              void fill.offsetWidth; // reflow to reset animation
+              fill.classList.add('prog-circular-fill--anim');
+            });
+          }, { threshold: 0.5 });
+
+          function observeSpinnerTiles(root) {
+            root.querySelectorAll('[data-nav-target="progress"]').forEach(function(tile) {
+              spinnerIO.observe(tile);
+            });
+          }
+          observeSpinnerTiles(document.getElementById('page-comp-overview'));
+
           function buildAlpha() {
             if (alphaBuilt) return;
             var tiles = Array.from(catView.querySelectorAll('.card-type-tile'));
@@ -10410,6 +10429,7 @@
               alphaGrid.appendChild(clone);
             });
             alphaBuilt = true;
+            observeSpinnerTiles(alphaGrid);
           }
 
           function switchView(val) {
