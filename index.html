@@ -9244,24 +9244,29 @@
     align-items: center;
   }
 
-  .cov-mosaic {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-    aspect-ratio: 3 / 2;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  .cov-mosaic-cell {
-    border-radius: 14px;
-    overflow: hidden;
-    position: relative;
+  .cov-phone-hero {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
   }
-  .cov-mosaic-cell .ctt-center-shape { width: 52px; height: 52px; }
+  .cov-hero-phone-shell {
+    width: 232px;
+    height: 420px;
+    background: var(--color-background-page);
+    border-radius: 24px;
+    box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+  }
+  [data-theme="dark"] .cov-hero-phone-shell {
+    box-shadow: none;
+    border: 1px solid var(--color-border-default);
+  }
+  [data-theme="dark"] .cov-hero-phone-shell svg[viewBox="0 0 15 19.5"] path {
+    fill: var(--color-brand-ink);
+  }
 
   .cov-group { margin-bottom: 60px; }
   .cov-group:last-child { margin-bottom: 0; }
@@ -9314,7 +9319,7 @@
 
   @media (max-width: 800px) {
     .cov-hero-grid { grid-template-columns: 1fr; }
-    .cov-mosaic    { max-width: 300px; }
+    .cov-phone-hero { order: -1; }
   }
 
 
@@ -9882,33 +9887,45 @@
     <!-- comp-overview -->
     <div class="page-panel" id="page-comp-overview">
 
-      <!-- ── Component header ───────────────── -->
-      <div class="comp-header">
-        <p class="comp-eyebrow">Components</p>
-        <h1 class="comp-title">Overview</h1>
-        <p class="comp-description">Precisely what your team needs — nothing more, nothing less. Every component is token-driven, mode-aware, and documented with production-ready code.</p>
-        <div class="comp-badges">
-          <span class="comp-badge"><span class="comp-badge-dot"></span>Stable</span>
-          <span class="comp-badge">v1.0</span>
-          <span class="comp-badge">Web</span>
-          <span class="comp-badge">Mobile</span>
-        </div>
-      </div>
-
       <!-- ── Hero dark box ─────────────────── -->
       <div class="remix-section">
         <div class="remix-grid cov-hero-grid">
-          <div class="cov-mosaic">
-            <div class="cov-mosaic-cell ctt-scene ctt-scene--actions"><svg class="ctt-center-shape" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M65 240C85.8858 240 104.471 230.149 116.363 214.841C118.166 212.519 121.834 212.519 123.637 214.841C135.529 230.149 154.114 240 175 240C210.898 240 240 210.898 240 175C240 154.114 230.149 135.529 214.841 123.637C212.519 121.834 212.519 118.166 214.841 116.363C230.149 104.471 240 85.8858 240 65C240 29.1015 210.898 0 175 0C154.114 0 135.529 9.85068 123.637 25.1595C121.834 27.4812 118.166 27.4812 116.363 25.1595C104.471 9.85068 85.8858 0 65 0C29.1015 0 0 29.1015 0 65C0 85.8858 9.85068 104.471 25.1595 116.363C27.4812 118.166 27.4812 121.834 25.1595 123.637C9.85068 135.529 0 154.114 0 175C0 210.898 29.1015 240 65 240Z"/></svg></div>
-            <div class="cov-mosaic-cell ctt-scene ctt-scene--inputs"><svg class="ctt-center-shape" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M224.712 104.04C219.768 114.072 219.768 125.928 224.712 135.96C243.408 173.976 245.76 208.872 227.304 227.304C208.872 245.76 173.976 243.408 135.96 224.712C125.928 219.768 114.072 219.768 104.04 224.712C66.024 243.408 31.128 245.76 12.696 227.304C-5.76 208.872 -3.408 173.976 15.288 135.96C20.232 125.928 20.232 114.072 15.288 104.04C-3.408 66.024 -5.76 31.128 12.696 12.696C31.128 -5.76 66.024 -3.408 104.04 15.288C114.072 20.232 125.928 20.232 135.96 15.288C173.976 -3.408 208.872 -5.76 227.304 12.696C245.76 31.128 243.408 66.024 224.712 104.04Z"/></svg></div>
-            <div class="cov-mosaic-cell ctt-scene ctt-scene--nav"><svg class="ctt-center-shape" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M107.232 3.528C115.08 -1.176 124.896 -1.176 132.768 3.528L148.848 13.176C152.088 15.12 155.688 16.296 159.432 16.632L178.128 18.264C187.248 19.08 195.192 24.84 198.792 33.288L206.136 50.544C207.6 54.0 209.832 57.072 212.664 59.544L226.824 71.88C233.736 77.88 236.76 87.216 234.72 96.144L230.496 114.432C229.656 118.104 229.656 121.896 230.496 125.568L234.72 143.856C236.76 152.784 233.736 162.12 226.824 168.12L212.664 180.456C209.832 182.928 207.6 186.0 206.136 189.456L198.792 206.712C195.192 215.16 187.248 220.92 178.128 221.736L159.432 223.368C155.688 223.704 152.088 224.88 148.848 226.824L132.768 236.472C124.896 241.176 115.08 241.176 107.232 236.472L91.152 226.824C87.912 224.88 84.312 223.704 80.568 223.368L61.872 221.736C52.752 220.92 44.808 215.16 41.208 206.712L33.864 189.456C32.4 186.0 30.168 182.928 27.336 180.456L13.176 168.12C6.264 162.12 3.24 152.784 5.28 143.856L9.504 125.568C10.344 121.896 10.344 118.104 9.504 114.432L5.28 96.144C3.24 87.216 6.264 77.88 13.176 71.88L27.336 59.544C30.168 57.072 32.4 54.0 33.864 50.544L41.208 33.288C44.808 24.84 52.752 19.08 61.872 18.264L80.568 16.632C84.312 16.296 87.912 15.12 91.152 13.176Z"/></svg></div>
-            <div class="cov-mosaic-cell ctt-scene ctt-scene--feedback"><svg class="ctt-center-shape" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M240 0H60C26.863 0 0 26.863 0 60V240H180C213.137 240 240 213.137 240 180V0Z"/></svg></div>
-            <div class="cov-mosaic-cell ctt-scene ctt-scene--colorblock"><svg class="ctt-center-shape" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M31.992 0C14.328 0 0 14.328 0 31.992V88.008C0 105.672 14.328 120 31.992 120C14.328 120 0 134.328 0 151.992V208.008C0 225.672 14.328 240 31.992 240H88.008C105.672 240 120 225.672 120 208.008C120 225.672 134.328 240 151.992 240H208.008C225.672 240 240 225.672 240 208.008V151.992C240 134.328 225.672 120 208.008 120C225.672 120 240 105.672 240 88.008V31.992C240 14.328 225.672 0 208.008 0H151.992C134.328 0 120 14.328 120 31.992C120 14.328 105.672 0 88.008 0H31.992Z"/></svg></div>
-          </div>
           <div class="remix-info">
-            <p class="remix-eyebrow">ūnica Design System</p>
+            <p class="remix-eyebrow">ůnica Design System</p>
             <h2 class="remix-heading">Built to last.<br>Shipped today.</h2>
             <p class="remix-scene-desc">From a single button to a full navigation system, ůnica is a modular system — every component is token-driven, mode-aware, and documented with code you can copy and ship immediately.</p>
+          </div>
+          <div class="cov-phone-hero">
+            <div class="cov-hero-phone-shell">
+              <!-- Top nav bar -->
+              <div style="display:flex;align-items:center;padding:14px 14px 8px;gap:5px;">
+                <div style="width:28px;height:28px;border-radius:100px;background:var(--color-brand-ink);flex-shrink:0;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 15 19.5" width="10" height="13" fill="none" aria-hidden="true"><path d="M9.9 3C9.9 3.99411 9.09411 4.8 8.1 4.8H6.9C5.90589 4.8 5.1 5.60589 5.1 6.6V12.3C5.1 13.2941 5.90589 14.1 6.9 14.1H8.1C9.09411 14.1 9.9 13.2941 9.9 12.3V6.9C9.9 5.90589 10.7059 5.1 11.7 5.1C13.0446 5.1 15 5.1 15 5.1V12.2884L14.9994 12.3817C14.9475 16.3216 11.6098 19.5 7.5 19.5C3.39025 19.5 0.0525232 16.3216 0.000585938 12.3817L0 12.2884V4.5C0 4.5 1.9554 4.5 3.3 4.5C4.29411 4.5 5.1 3.69411 5.1 2.7V1.8C5.1 0.805887 5.90589 0 6.9 0H8.1C9.09411 0 9.9 0.805888 9.9 1.8V3Z" fill="#CFFCFA"/></svg></div>
+                <div style="flex:1;"></div>
+                <button tabindex="-1" style="width:28px;height:28px;border-radius:100px;border:1px solid var(--color-brand-ink);background:none;padding:0;color:var(--color-content-default);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button>
+                <button tabindex="-1" style="width:28px;height:28px;border-radius:100px;border:1px solid var(--color-brand-ink);background:none;padding:0;color:var(--color-content-default);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#ico-message"/></svg></button>
+                <div style="width:28px;height:28px;border-radius:100px;overflow:hidden;flex-shrink:0;border:1.5px solid var(--color-border-subtle);"><img src="assets/avatars/avatar-1.png" width="28" height="28" style="display:block;width:100%;height:100%;object-fit:cover;" alt=""></div>
+              </div>
+              <!-- Greeting -->
+              <div style="padding:0 14px 8px;"><span style="font-family:var(--font-family-serif);font-size:17px;color:var(--color-content-default);line-height:1.2;">Welcome, Unica.</span></div>
+              <!-- Search bar -->
+              <div style="padding:0 14px 14px;"><div style="display:flex;align-items:center;gap:6px;height:28px;background:var(--color-background-ui);border-radius:100px;padding:0 12px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" style="color:var(--color-content-subtle);flex-shrink:0;"><use href="#ico-search"/></svg><span style="font-size:10px;font-family:var(--font-family-sans);color:var(--color-content-subtle);">Search</span></div></div>
+              <!-- Content cards -->
+              <div style="margin:0 14px 8px;height:76px;border-radius:14px;background:var(--primitive-violet-100);overflow:hidden;position:relative;flex-shrink:0;"><svg style="position:absolute;right:-20px;bottom:-20px;width:90px;height:90px;" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M224.712 104.04C219.768 114.072 219.768 125.928 224.712 135.96C243.408 173.976 245.76 208.872 227.304 227.304C208.872 245.76 173.976 243.408 135.96 224.712C125.928 219.768 114.072 219.768 104.04 224.712C66.024 243.408 31.128 245.76 12.696 227.304C-5.76 208.872 -3.408 173.976 15.288 135.96C20.232 125.928 20.232 114.072 15.288 104.04C-3.408 66.024 -5.76 31.128 12.696 12.696C31.128 -5.76 66.024 -3.408 104.04 15.288C114.072 20.232 125.928 20.232 135.96 15.288C173.976 -3.408 208.872 -5.76 227.304 12.696C245.76 31.128 243.408 66.024 224.712 104.04Z" fill="var(--primitive-violet-300)"/></svg></div>
+              <div style="margin:0 14px 8px;height:76px;border-radius:14px;background:var(--primitive-berry-100);overflow:hidden;position:relative;flex-shrink:0;"><svg style="position:absolute;left:-20px;bottom:-20px;width:90px;height:90px;" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M65 240C85.8858 240 104.471 230.149 116.363 214.841C118.166 212.519 121.834 212.519 123.637 214.841C135.529 230.149 154.114 240 175 240C210.898 240 240 210.898 240 175C240 154.114 230.149 135.529 214.841 123.637C212.519 121.834 212.519 118.166 214.841 116.363C230.149 104.471 240 85.8858 240 65C240 29.1015 210.898 0 175 0C154.114 0 135.529 9.85068 123.637 25.1595C121.834 27.4812 118.166 27.4812 116.363 25.1595C104.471 9.85068 85.8858 0 65 0C29.1015 0 0 29.1015 0 65C0 85.8858 9.85068 104.471 25.1595 116.363C27.4812 118.166 27.4812 121.834 25.1595 123.637C9.85068 135.529 0 154.114 0 175C0 210.898 29.1015 240 65 240Z" fill="var(--primitive-berry-300)"/></svg></div>
+              <div style="margin:0 14px;height:76px;border-radius:14px;background:var(--primitive-mint-100);overflow:hidden;position:relative;flex-shrink:0;"><svg style="position:absolute;right:-20px;top:-20px;width:90px;height:90px;" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M107.232 3.528C115.08 -1.176 124.896 -1.176 132.768 3.528L148.848 13.176C152.088 15.12 155.688 16.296 159.432 16.632L178.128 18.264C187.248 19.08 195.192 24.84 198.792 33.288L206.136 50.544C207.6 54.0 209.832 57.072 212.664 59.544L226.824 71.88C233.736 77.88 236.76 87.216 234.72 96.144L230.496 114.432C229.656 118.104 229.656 121.896 230.496 125.568L234.72 143.856C236.76 152.784 233.736 162.12 226.824 168.12L212.664 180.456C209.832 182.928 207.6 186.0 206.136 189.456L198.792 206.712C195.192 215.16 187.248 220.92 178.128 221.736L159.432 223.368C155.688 223.704 152.088 224.88 148.848 226.824L132.768 236.472C124.896 241.176 115.08 241.176 107.232 236.472L91.152 226.824C87.912 224.88 84.312 223.704 80.568 223.368L61.872 221.736C52.752 220.92 44.808 215.16 41.208 206.712L33.864 189.456C32.4 186.0 30.168 182.928 27.336 180.456L13.176 168.12C6.264 162.12 3.24 152.784 5.28 143.856L9.504 125.568C10.344 121.896 10.344 118.104 9.504 114.432L5.28 96.144C3.24 87.216 6.264 77.88 13.176 71.88L27.336 59.544C30.168 57.072 32.4 54.0 33.864 50.544L41.208 33.288C44.808 24.84 52.752 19.08 61.872 18.264L80.568 16.632C84.312 16.296 87.912 15.12 91.152 13.176Z" fill="var(--primitive-mint-300)"/></svg></div>
+              <!-- spacer -->
+              <div style="flex:1;"></div>
+              <!-- Bottom nav -->
+              <nav class="bnav bnav--icon-only" style="flex-shrink:0;">
+                <div class="bnav-track">
+                  <div class="bnav-pill bnav-pill--snap" style="width:40px;"></div>
+                  <button class="bnav-tab bnav-tab--active" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#ico-unica"/></svg></button>
+                  <button class="bnav-tab" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#ico-search"/></svg></button>
+                  <button class="bnav-tab" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#ico-heart"/></svg></button>
+                  <button class="bnav-tab" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#ico-bell"/></svg></button>
+                </div>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
