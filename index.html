@@ -8793,6 +8793,16 @@
     display: block;
     flex-shrink: 0;
   }
+  /* Dark mode: circle flips to white (--color-background-contrast), so logo mark goes dark */
+  [data-theme="dark"] .tna-logo-img path,
+  [data-theme="dark"] .tnw-logo-img path {
+    fill: var(--color-brand-ink);
+  }
+  /* Same treatment for overview tile cov-comp illustrations */
+  [data-theme="dark"] [data-nav-target="top-nav-app"] .cov-comp svg[viewBox="0 0 15 19.5"] path,
+  [data-theme="dark"] [data-nav-target="top-nav-web"] .cov-comp svg[viewBox="0 0 15 19.5"] path {
+    fill: var(--color-brand-ink);
+  }
 
   /* TNA action button — 32px visual circle with 24px icon */
   .tna-action-btn {
