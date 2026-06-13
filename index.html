@@ -9238,9 +9238,9 @@
   #page-comp-overview .comp-header { max-width: 760px; }
 
   .cov-hero-grid {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(300px, 480px) auto;
     max-width: none;
-    gap: var(--space-1000);
+    gap: 80px;
     align-items: center;
   }
 
@@ -9250,6 +9250,8 @@
   }
   .cov-phone-hero .remix-phone {
     pointer-events: none;
+    display: flex;
+    flex-direction: column;
   }
 
   .cov-group { margin-bottom: 60px; }
@@ -9898,7 +9900,6 @@
                   <p class="tna-toolbar-center" aria-hidden="true">Discover</p>
                   <div class="tna-toolbar-trailing">
                     <button class="tna-action-btn" tabindex="-1" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-bell"/></svg></button>
-                    <button class="tna-action-btn" tabindex="-1" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><use href="#ico-search"/></svg></button>
                     <div class="tna-avatar-wrap">
                       <button class="tna-avatar-btn" tabindex="-1" aria-hidden="true"><img class="tna-avatar-img" src="assets/avatars/avatar-1.png" alt=""></button>
                     </div>
@@ -9919,23 +9920,20 @@
 
               <!-- Content feed -->
               <div class="remix-content" style="flex:1;overflow:hidden;">
-                <!-- Hero media card — butterfly woman, full-bleed -->
-                <div class="card-media card-media--hero">
+                <!-- Inline media card — butterfly woman, face + butterfly crop -->
+                <div class="card-media card-media--inline">
                   <div class="card-media-photo-wrap">
-                    <img src="assets/butterfly-woman-cropped.png" alt="Editorial fashion photograph">
-                    <div class="card-media-nav" aria-hidden="true">
-                      <button class="card-media-nav-btn" tabindex="-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5909 4.46966C10.298 4.17677 9.82309 4.17678 9.5302 4.46967L2.53027 11.4697L1.99994 12L2.53027 12.5303L9.5302 19.5303C9.8231 19.8232 10.298 19.8232 10.5909 19.5303C10.8838 19.2374 10.8838 18.7625 10.5909 18.4696L4.87127 12.75H21.2639C21.6781 12.75 22.0139 12.4142 22.0139 12C22.0139 11.5858 21.6781 11.25 21.2639 11.25H4.87125L10.5909 5.53032C10.8838 5.23743 10.8838 4.76256 10.5909 4.46966Z"/></svg></button>
-                      <button class="card-media-nav-btn card-media-nav-btn--fav" tabindex="-1" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
-                    </div>
+                    <img src="assets/butterfly-woman-cropped.png" alt="Editorial fashion photograph" style="object-position: center 15%;">
                   </div>
                   <div class="card-media-content">
                     <div class="card-media-text">
                       <p class="card-media-title">Métamorphose</p>
                       <p class="card-media-body">Where form dissolves into something entirely new.</p>
                     </div>
+                    <button class="card-media-fav" tabindex="-1" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
                   </div>
                 </div>
-                <!-- Inline media card — shoulder, peeking -->
+                <!-- Inline media card — shoulder -->
                 <div class="card-media card-media--inline">
                   <div class="card-media-photo-wrap">
                     <img src="assets/shoulder.png" alt="Editorial photograph">
