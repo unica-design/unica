@@ -9137,6 +9137,7 @@
     width: 100%;
     border-radius: 14px;
     overflow: hidden;
+    background: var(--color-background-page);
     box-shadow: 0 1px 8px 0 rgba(8,5,13,0.25);
   }
   [data-theme="dark"] .tnw-desktop-shell {
@@ -15548,7 +15549,7 @@
           <div class="seg-control" id="tnw-bp-seg" role="group" aria-label="Breakpoint">
             <span class="seg-control-slider" aria-hidden="true"></span>
             <button class="seg-control-btn" data-value="375"  aria-pressed="false">S</button>
-            <button class="seg-control-btn" data-value="780"  aria-pressed="false">M</button>
+            <button class="seg-control-btn" data-value="640"  aria-pressed="false">M</button>
             <button class="seg-control-btn" data-value="1024" aria-pressed="true">L</button>
             <button class="seg-control-btn" id="tnw-xl-btn"  data-value="1440" aria-pressed="false">XL</button>
           </div>
@@ -15762,7 +15763,7 @@
           if (!stage) return;
 
           /* Named breakpoints — also the only snap targets */
-          var BPS = [375, 780, 1024, 1440];
+          var BPS = [375, 640, 1024, 1440];
           var MIN_W = 320;
           var dragging = false, activeHandle = null, startX = 0, startW = 0, animating = false;
 
