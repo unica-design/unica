@@ -9337,6 +9337,21 @@
     pointer-events: none;
     z-index: 2;
   }
+
+  /* Tile illustrations stay in light mode by default */
+  .ctt-scene { color-scheme: light; }
+
+  /* Allowlist: tiles that look great reversed */
+  [data-theme="dark"] [data-nav-target="bottom-sheet"] .ctt-scene,
+  [data-theme="dark"] [data-nav-target="card"] .ctt-scene,
+  [data-theme="dark"] [data-nav-target="list"] .ctt-scene,
+  [data-theme="dark"] [data-nav-target="list-accordion"] .ctt-scene,
+  [data-theme="dark"] [data-nav-target="modal"] .ctt-scene,
+  [data-theme="dark"] [data-nav-target="scrim"] .ctt-scene,
+  [data-theme="dark"] [data-nav-target="top-nav-app"] .ctt-scene,
+  [data-theme="dark"] [data-nav-target="top-nav-web"] .ctt-scene {
+    color-scheme: dark;
+  }
   </style>
 </head>
 <body>
