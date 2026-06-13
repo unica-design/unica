@@ -9338,20 +9338,6 @@
     z-index: 2;
   }
 
-  /* Tile illustrations stay in light mode by default */
-  .ctt-scene { color-scheme: light; }
-
-  /* Allowlist: tiles that look great reversed */
-  [data-theme="dark"] [data-nav-target="bottom-sheet"] .ctt-scene,
-  [data-theme="dark"] [data-nav-target="card"] .ctt-scene,
-  [data-theme="dark"] [data-nav-target="list"] .ctt-scene,
-  [data-theme="dark"] [data-nav-target="list-accordion"] .ctt-scene,
-  [data-theme="dark"] [data-nav-target="modal"] .ctt-scene,
-  [data-theme="dark"] [data-nav-target="scrim"] .ctt-scene,
-  [data-theme="dark"] [data-nav-target="top-nav-app"] .ctt-scene,
-  [data-theme="dark"] [data-nav-target="top-nav-web"] .ctt-scene {
-    color-scheme: dark;
-  }
   </style>
 </head>
 <body>
@@ -22704,6 +22690,22 @@
     if (sw) sw.checked = document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
+  const CTT_DARK_ALLOWLIST = ['bottom-sheet','card','list','list-accordion','modal','scrim','top-nav-app','top-nav-web'];
+
+  function applyCttSceneThemes(isDark) {
+    const overviewPanel = document.getElementById('page-comp-overview');
+    if (!overviewPanel) return;
+    overviewPanel.querySelectorAll('.ctt-scene').forEach(function(scene) {
+      const tile = scene.closest('[data-nav-target]');
+      const target = tile ? tile.getAttribute('data-nav-target') : null;
+      if (isDark && !CTT_DARK_ALLOWLIST.includes(target)) {
+        scene.setAttribute('data-theme', 'light');
+      } else {
+        scene.removeAttribute('data-theme');
+      }
+    });
+  }
+
   function toggleTheme() {
     const html  = document.documentElement;
     const isDark = html.getAttribute('data-theme') === 'dark';
@@ -22713,6 +22715,7 @@
     document.getElementById('icon-sun').style.display  = isDark ? 'none'  : 'block';
     document.getElementById('icon-moon').style.display = isDark ? 'block' : 'none';
     syncDarkSwitch();
+    applyCttSceneThemes(!isDark);
     setTimeout(computeHexValues, 50);
   }
 
@@ -23343,6 +23346,7 @@
     document.getElementById('icon-sun').style.display  = isDark ? 'none'  : 'block';
     document.getElementById('icon-moon').style.display = isDark ? 'block' : 'none';
     syncDarkSwitch();
+    applyCttSceneThemes(isDark);
     /* Bottom nav demos */
     document.querySelectorAll('.bnav').forEach(initBnav);
 

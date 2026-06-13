@@ -195,6 +195,85 @@
 
 
 /* ==========================================================================
+   SEMANTIC TOKENS — LIGHT MODE (explicit)
+   Applied when data-theme="light" is set on a child element to force light
+   mode tokens regardless of the ancestor data-theme="dark" on <html>.
+   ========================================================================== */
+
+[data-theme="light"] {
+
+  /* --- Action --- */
+  --color-action-default:              var(--primitive-ink-900);
+  --color-action-hover:                var(--primitive-ink-800);
+  --color-action-hover-subtle:         rgba(31, 24, 46, 0.08);
+  --color-action-active:               var(--primitive-ink-900);
+  --color-action-active-subtle:        rgba(31, 24, 46, 0.24);
+  --color-action-inverse-default:       var(--primitive-cafe-0);
+  --color-action-inverse-hover:         var(--primitive-ink-50);
+  --color-action-inverse-active:        var(--primitive-ink-200);
+  --color-action-inverse-hover-subtle:  rgba(255, 255, 255, 0.16);
+  --color-action-inverse-active-subtle: rgba(255, 255, 255, 0.24);
+  --color-action-visited:              var(--primitive-ink-600);
+  --color-action-disabled:             var(--primitive-ink-300);
+
+  /* --- Background --- */
+  --color-background-page:             var(--primitive-cafe-0);
+  --color-background-section:          var(--primitive-cafe-100);
+  --color-background-container:        var(--primitive-cafe-200);
+  --color-background-success:          var(--primitive-mint-100);
+  --color-background-warning:          var(--primitive-apricot-100);
+  --color-background-danger:           var(--primitive-berry-100);
+  --color-background-neutral:          var(--primitive-cafe-200);
+  --color-background-disabled:         var(--primitive-ink-100);
+  --color-background-contrast:         var(--primitive-ink-900);
+  --color-background-selection:        var(--primitive-ink-50);
+  --color-background-ui:               var(--primitive-ink-100);
+  --color-background-inverse:          var(--primitive-ink-900);
+  --color-background-inverse-selection: var(--primitive-ink-800);
+  --color-background-inverse-disabled: var(--primitive-ink-800);
+
+  /* --- Brand --- */
+  --color-brand-berry:       var(--primitive-berry-400);
+  --color-brand-cream:       var(--primitive-cafe-200);
+  --color-brand-pool:        var(--primitive-pool-1000);
+  --color-brand-ink:         var(--primitive-ink-900);
+  --color-brand-mint:        var(--primitive-mint-500);
+  --color-brand-citron:      var(--primitive-citron-300);
+  --color-brand-ultraviolet: #8955F2;
+  --color-brand-violet:      var(--primitive-violet-300);
+
+  /* --- Border --- */
+  --color-border-default:        var(--primitive-ink-300);
+  --color-border-subtle:         var(--primitive-ink-100);
+  --color-border-strong:         var(--primitive-ink-900);
+  --color-border-interactive:    var(--primitive-violet-600);
+  --color-border-disabled:       var(--primitive-cafe-300);
+  --color-border-inverse:           var(--primitive-cafe-0);
+  --color-border-inverse-default:   var(--primitive-ink-700);
+  --color-border-inverse-subtle:    var(--primitive-ink-800);
+  --color-border-disabled-inverse:  var(--primitive-ink-700);
+
+  /* --- Content (text & icons) --- */
+  --color-content-default:          var(--primitive-ink-900);
+  --color-content-subtle:           var(--primitive-ink-700);
+  --color-content-disabled:         rgba(31, 24, 46, 0.5);
+  --color-content-inverse-disabled: rgba(255, 255, 255, 0.5);
+  --color-content-inverse-subtle:   var(--primitive-ink-600);
+
+  /* --- Contrast --- */
+  --color-contrast: var(--primitive-ink-1000);
+  --color-inverse:  var(--primitive-cafe-0);
+
+  /* --- System --- */
+  --color-success: var(--primitive-mint-800);
+  --color-warning: var(--primitive-apricot-800);
+  --color-danger:  var(--primitive-berry-800);
+  --color-info:    var(--color-brand-ink);
+
+}
+
+
+/* ==========================================================================
    SEMANTIC TOKENS — DARK MODE
    Applied when data-theme="dark" is set on <html> or a wrapper element.
    ========================================================================== */
