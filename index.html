@@ -9920,7 +9920,7 @@
               </div><!-- /.tna-nav -->
 
               <!-- Content feed -->
-              <div class="remix-content" style="flex:1;overflow:hidden;">
+              <div class="remix-content" style="flex:1;overflow:hidden;position:relative;">
                 <!-- First card — hero photo height, inline content layout -->
                 <div class="card-media card-media--inline" style="flex-shrink:0;">
                   <div class="card-media-photo-wrap" style="height:343px;">
@@ -9934,23 +9934,23 @@
                     <button class="card-media-fav" tabindex="-1" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
                   </div>
                 </div>
-                <!-- Inline media card — shoulder, peeking -->
+                <!-- Inline media card — flower, peeking -->
                 <div class="card-media card-media--inline" style="flex-shrink:0;">
                   <div class="card-media-photo-wrap">
-                    <img src="assets/shoulder.png" alt="Editorial photograph">
+                    <img src="assets/flower.png" alt="Editorial photograph">
                   </div>
                   <div class="card-media-content">
                     <div class="card-media-text">
-                      <p class="card-media-title">Sueur</p>
-                      <p class="card-media-body">The body at its limit — effort made visible in light and skin.</p>
+                      <p class="card-media-title">Bloom</p>
+                      <p class="card-media-body">Softness as structure. The quiet force of something opening.</p>
                     </div>
                     <button class="card-media-fav" tabindex="-1" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/></svg></button>
                   </div>
                 </div>
               </div>
 
-              <!-- Bottom Nav — floating pill + FAB, 32px from bottom -->
-              <div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:0 16px 32px;flex-shrink:0;">
+              <!-- Bottom Nav — floating pill + FAB, 32px from bottom, over content -->
+              <div style="position:absolute;bottom:32px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:16px;padding:0 16px;">
                 <!-- Pill track -->
                 <div style="display:flex;align-items:center;gap:12px;background:var(--color-background-contrast);padding:8px;border-radius:180px;box-shadow:0 1px 8px rgba(8,5,13,0.25);">
                   <!-- Home — active tab with label -->
