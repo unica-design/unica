@@ -137,32 +137,98 @@
     .nav-toggle:hover { background: var(--color-background-subtle); }
     .nav-toggle svg { width: 20px; height: 20px; }
 
-    /* Mobile nav dropdown */
-    .mobile-nav {
+    /* ── Mobile drawer (slide-in nav) ── */
+    .mobile-drawer-scrim {
       display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 5, 13, 0.4);
+      z-index: 300;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-drawer-scrim.open { display: block; }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 300px;
+      max-width: calc(100vw - 56px);
+      background: var(--color-background-page);
+      z-index: 301;
+      transform: translateX(-100%);
+      transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
       flex-direction: column;
-      padding: var(--space-300) 0 var(--space-400);
-      border-top: var(--border-width-default) solid var(--color-border-default);
+      overflow: hidden;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+
+    .mobile-drawer-header {
+      padding: var(--space-500);
+      border-bottom: var(--border-width-default) solid var(--color-border-default);
+      flex-shrink: 0;
     }
 
-    .mobile-nav.open { display: flex; }
-
-    .mobile-nav .section-tab {
-      height: 48px;
-      padding: 0 var(--space-400);
-      text-align: left;
-      justify-content: flex-start;
-      border-bottom: none;
-      border-radius: var(--corner-radius-m);
-      margin: 0 var(--space-200);
-      width: auto;
+    .mobile-drawer-links {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-300) 0 var(--space-1000);
+      scrollbar-width: none;
     }
+    .mobile-drawer-links::-webkit-scrollbar { display: none; }
 
-    .mobile-nav .section-tab.active {
+    .mobile-drawer-panel { display: block; }
+    .mobile-drawer-panel.hidden { display: none; }
+
+    /* Links inside the drawer — same visual as sidebar-link */
+    .mobile-nav-link {
+      display: block;
+      padding: 7px var(--space-400);
+      margin: 1px var(--space-300);
+      font-size: var(--font-size-body-s);
+      line-height: 1.5;
+      color: var(--color-content-default);
+      text-decoration: none;
+      border-radius: 180px;
+      transition: background 0.15s ease, color 0.15s ease;
+      cursor: pointer;
+    }
+    .mobile-nav-link:hover:not(.active) { background: var(--color-action-hover-subtle); }
+    .mobile-nav-link.active {
       background: var(--color-content-default);
       color: var(--color-background-page);
-      border-bottom-color: transparent;
+      font-weight: var(--font-weight-semibold);
     }
+
+    /* Chunky section selector dropdown */
+    .mobile-section-dropdown {
+      position: relative;
+      width: 100%;
+    }
+    .mobile-section-dropdown .dropdown-trigger {
+      width: 100%;
+      justify-content: space-between;
+      padding: 14px var(--space-500);
+      background: var(--color-background-page);
+      border: var(--border-width-default) solid var(--color-border-default);
+      border-radius: var(--corner-radius-xl);
+      font-size: var(--font-size-body-l);
+      font-weight: 500;
+      letter-spacing: 0;
+      transition: background 150ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-section-dropdown .dropdown-trigger:hover { background: var(--color-action-hover-subtle); }
+    .mobile-section-dropdown .dropdown-trigger:focus { outline: none; }
+    .mobile-section-dropdown .dropdown-trigger:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
+    }
+    .mobile-section-dropdown .dropdown-trigger-caret { width: 9px; height: 9px; }
+    .mobile-section-dropdown .dropdown-menu { width: 100%; top: calc(100% + 8px); left: 0; }
+    .mobile-section-dropdown .dropdown-option { font-size: var(--font-size-body-m); padding: 10px var(--space-400); }
 
     /* ─────────────────────────────────────────
        SECTION TABS (inline in header)
@@ -9517,18 +9583,109 @@
           <path fill-rule="evenodd" clip-rule="evenodd" d="M24.4015 4.00435C23.0583 3.97633 21.7058 4.08354 20.3648 4.33156C18.184 4.7349 16.0336 5.51065 14.0033 6.68283C4.43749 12.2057 1.15998 24.4375 6.68283 34.0033C12.2057 43.5692 24.4375 46.8467 34.0033 41.3238C36.0491 40.1427 37.8073 38.6548 39.2532 36.9516C40.1358 35.9121 40.9021 34.7924 41.5465 33.6135C40.2912 33.8784 39.0222 34.0049 37.7606 33.9987C31.5708 33.9683 25.5618 30.7432 22.2436 24.9959C18.9335 19.2627 19.1358 12.4656 22.1829 7.09603C22.8055 5.99876 23.547 4.96112 24.4015 4.00435ZM18.4401 7.93552C17.4394 8.28348 16.4563 8.73072 15.5033 9.28091C7.37236 13.9753 4.58649 24.3724 9.28091 32.5033C13.9753 40.6343 24.3724 43.4202 32.5033 38.7258C33.4692 38.1681 34.359 37.5308 35.1695 36.8269C28.8955 36.0207 23.0546 32.4007 19.6455 26.4959C16.2459 20.6077 16.023 13.7614 18.4401 7.93552Z" fill="currentColor"/>
         </svg>
       </button>
-      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+      <button class="nav-toggle" onclick="toggleMobileDrawer()" aria-label="Toggle navigation">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M5.50003 12C4.6716 12 4.00003 12.6716 4.00003 13.5C4.00003 14.3284 4.6716 15 5.50003 15H42.5019C43.3303 15 44.0019 14.3284 44.0019 13.5C44.0019 12.6716 43.3303 12 42.5019 12H5.50003ZM4.00002 23.5C4.00002 22.6716 4.67159 22 5.50002 22H34.5309C35.3594 22 36.0309 22.6716 36.0309 23.5C36.0309 24.3284 35.3594 25 34.5309 25H5.50002C4.67159 25 4.00002 24.3284 4.00002 23.5ZM4 33.5C4 32.6716 4.67157 32 5.5 32H26.5027C27.3311 32 28.0027 32.6716 28.0027 33.5C28.0027 34.3284 27.3311 35 26.5027 35H5.5C4.67157 35 4 34.3284 4 33.5Z" fill="currentColor"/>
         </svg>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile site sections">
-    <button class="section-tab active" data-section="foundations" data-mobile="true">Foundations</button>
-    <button class="section-tab" data-section="components" data-mobile="true">Components</button>
-  </nav>
 </header>
+
+<!-- ══ MOBILE DRAWER ══ -->
+<div class="mobile-drawer-scrim" id="mobile-drawer-scrim" onclick="closeMobileDrawer()"></div>
+<nav class="mobile-drawer" id="mobile-drawer" aria-label="Site navigation">
+
+  <!-- Section selector -->
+  <div class="mobile-drawer-header">
+    <div class="mobile-section-dropdown dropdown" id="mobile-section-dd">
+      <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Select section">
+        <span class="dropdown-trigger-label">Foundations</span>
+        <svg class="dropdown-trigger-caret" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1 3L4.5 6.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <ul class="dropdown-menu" role="listbox" aria-label="Section">
+        <li class="dropdown-option" role="option" data-value="foundations" aria-selected="true">Foundations</li>
+        <li class="dropdown-option" role="option" data-value="components" aria-selected="false">Components</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Nav links -->
+  <div class="mobile-drawer-links">
+
+    <!-- Foundations -->
+    <div class="mobile-drawer-panel" id="mobile-panel-foundations">
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Tokens</span>
+        <a class="mobile-nav-link active" href="#" data-page="color">Color</a>
+        <a class="mobile-nav-link" href="#" data-page="typography">Typography</a>
+        <a class="mobile-nav-link" href="#" data-page="spacing">Spacing</a>
+        <a class="mobile-nav-link" href="#" data-page="shape">Shape</a>
+        <a class="mobile-nav-link" href="#" data-page="size">Size</a>
+        <a class="mobile-nav-link" href="#" data-page="style">Style</a>
+        <a class="mobile-nav-link" href="#" data-page="border">Border</a>
+      </div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Layout</span>
+        <a class="mobile-nav-link" href="#" data-page="breakpoints">Breakpoints</a>
+        <a class="mobile-nav-link" href="#" data-page="grid">Grid</a>
+      </div>
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">Media</span>
+        <a class="mobile-nav-link" href="#" data-page="icons">Icons</a>
+        <a class="mobile-nav-link" href="#" data-page="logo">Logo</a>
+        <a class="mobile-nav-link" href="#" data-page="photography">Photography</a>
+        <a class="mobile-nav-link" href="#" data-page="illustration">Illustration</a>
+      </div>
+    </div>
+
+    <!-- Components -->
+    <div class="mobile-drawer-panel hidden" id="mobile-panel-components">
+      <div class="sidebar-group">
+        <a class="mobile-nav-link" href="#" data-page="comp-overview" style="font-weight:var(--font-weight-semibold);padding-top:var(--space-300)">Overview</a>
+        <a class="mobile-nav-link" href="#" data-page="avatar">Avatar</a>
+        <a class="mobile-nav-link" href="#" data-page="badge">Badge</a>
+        <a class="mobile-nav-link" href="#" data-page="bottom-nav">Bottom Navigation</a>
+        <a class="mobile-nav-link" href="#" data-page="bottom-sheet">Bottom Sheet</a>
+        <a class="mobile-nav-link" href="#" data-page="button">Button</a>
+        <a class="mobile-nav-link" href="#" data-page="card">Card</a>
+        <div class="sidebar-children">
+          <a class="mobile-nav-link sidebar-child-link" href="#" data-page="card-color-block">Color Block</a>
+          <a class="mobile-nav-link sidebar-child-link" href="#" data-page="card-media">Media</a>
+          <a class="mobile-nav-link sidebar-child-link" href="#" data-page="card-multi">Multifunctional</a>
+        </div>
+        <a class="mobile-nav-link" href="#" data-page="checkbox">Check Box</a>
+        <a class="mobile-nav-link" href="#" data-page="chips">Chips</a>
+        <a class="mobile-nav-link" href="#" data-page="choice-button">Choice Button</a>
+        <a class="mobile-nav-link" href="#" data-page="date-picker">Date Picker Calendar</a>
+        <a class="mobile-nav-link" href="#" data-page="date-tabs">Date Tabs</a>
+        <a class="mobile-nav-link" href="#" data-page="divider">Divider</a>
+        <a class="mobile-nav-link" href="#" data-page="icon-bullet">Icon Bullet</a>
+        <a class="mobile-nav-link" href="#" data-page="link">Link Standalone</a>
+        <a class="mobile-nav-link" href="#" data-page="list">List</a>
+        <a class="mobile-nav-link" href="#" data-page="list-accordion">List Accordion</a>
+        <a class="mobile-nav-link" href="#" data-page="modal">Modal Dialog</a>
+        <a class="mobile-nav-link" href="#" data-page="pagination">Pagination</a>
+        <a class="mobile-nav-link" href="#" data-page="progress">Progress Indicators</a>
+        <a class="mobile-nav-link" href="#" data-page="radio">Radio</a>
+        <a class="mobile-nav-link" href="#" data-page="scrim">Scrim</a>
+        <a class="mobile-nav-link" href="#" data-page="search-field">Search Field</a>
+        <a class="mobile-nav-link" href="#" data-page="segmented-control">Segmented Control</a>
+        <a class="mobile-nav-link" href="#" data-page="stepper">Stepper</a>
+        <a class="mobile-nav-link" href="#" data-page="switch">Switch</a>
+        <a class="mobile-nav-link" href="#" data-page="tabs">Tabs</a>
+        <a class="mobile-nav-link" href="#" data-page="tags">Tags</a>
+        <a class="mobile-nav-link" href="#" data-page="text-fields">Text Fields &amp; Selects</a>
+        <a class="mobile-nav-link" href="#" data-page="toast">Toast</a>
+        <a class="mobile-nav-link" href="#" data-page="top-nav-app">Top Navigation — App</a>
+        <a class="mobile-nav-link" href="#" data-page="top-nav-web">Top Navigation — Web</a>
+      </div>
+    </div>
+
+  </div>
+</nav>
 
 <!-- ══ SITE BODY ══ -->
 <div class="site-body">
@@ -22654,29 +22811,75 @@
     document.documentElement.style.setProperty('--chrome-h', h + 'px');
   }
 
-  /* ── Mobile nav toggle ── */
-  function toggleMobileNav() {
-    const nav = document.getElementById('mobile-nav');
-    nav.classList.toggle('open');
-    updateChrome(); // recompute after height change
+  /* ── Mobile drawer ── */
+  function toggleMobileDrawer() {
+    const drawer = document.getElementById('mobile-drawer');
+    const scrim  = document.getElementById('mobile-drawer-scrim');
+    const open   = drawer.classList.toggle('open');
+    scrim.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
   }
+
+  function closeMobileDrawer() {
+    document.getElementById('mobile-drawer').classList.remove('open');
+    document.getElementById('mobile-drawer-scrim').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('mobile-drawer').classList.contains('open')) {
+      closeMobileDrawer();
+    }
+  });
+
+  /* Wire mobile section dropdown */
+  window.addEventListener('DOMContentLoaded', function() {
+    const dd = document.getElementById('mobile-section-dd');
+    if (dd) {
+      initDropdown(dd, function(val) {
+        // Swap drawer panels
+        document.querySelectorAll('.mobile-drawer-panel').forEach(p => p.classList.add('hidden'));
+        const panel = document.getElementById('mobile-panel-' + val);
+        if (panel) panel.classList.remove('hidden');
+        // Sync desktop section tabs + sidebar panels
+        document.querySelectorAll('.section-tab').forEach(t => {
+          t.classList.toggle('active', t.dataset.section === val);
+        });
+        document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.add('hidden'));
+        const sp = document.getElementById('sidebar-' + val);
+        if (sp) sp.classList.remove('hidden');
+      });
+    }
+
+    // Mobile nav link clicks — navigate and close drawer
+    document.querySelectorAll('.mobile-nav-link[data-page]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const page = this.dataset.page;
+        // Update active state in drawer
+        document.querySelectorAll('.mobile-nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        if (this.classList.contains('sidebar-child-link')) {
+          const parentLink = this.closest('.sidebar-children')?.previousElementSibling;
+          if (parentLink) parentLink.classList.add('active');
+        }
+        // Navigate and close
+        navigateTo(page);
+        history.pushState(null, '', '#' + page);
+        closeMobileDrawer();
+      });
+    });
+  });
 
   /* ── Section tab switching ── */
   document.querySelectorAll('.section-tab').forEach(tab => {
     tab.addEventListener('click', function() {
       const section = this.dataset.section;
 
-      // Sync all tabs (desktop + mobile) to new active state
+      // Sync all tabs to new active state
       document.querySelectorAll('.section-tab').forEach(t => {
         t.classList.toggle('active', t.dataset.section === section);
       });
-
-      // Close mobile nav after selection
-      const mobileNav = document.getElementById('mobile-nav');
-      if (mobileNav.classList.contains('open')) {
-        mobileNav.classList.remove('open');
-        updateChrome();
-      }
 
       // Swap sidebar panels
       document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.add('hidden'));
@@ -22729,6 +22932,30 @@
     if (link.classList.contains('sidebar-child-link')) {
       const parentLink = link.closest('.sidebar-children')?.previousElementSibling;
       if (parentLink?.classList.contains('sidebar-link')) parentLink.classList.add('active');
+    }
+
+    // Sync mobile drawer active link + section dropdown
+    document.querySelectorAll('.mobile-nav-link').forEach(l => l.classList.remove('active'));
+    const mobileLink = document.querySelector(`.mobile-nav-link[data-page="${page}"]`);
+    if (mobileLink) {
+      mobileLink.classList.add('active');
+      if (mobileLink.classList.contains('sidebar-child-link')) {
+        const parentLink = mobileLink.closest('.sidebar-children')?.previousElementSibling;
+        if (parentLink) parentLink.classList.add('active');
+      }
+      // Sync mobile drawer section panel
+      const drawerPanel = mobileLink.closest('.mobile-drawer-panel');
+      if (drawerPanel) {
+        document.querySelectorAll('.mobile-drawer-panel').forEach(p => p.classList.add('hidden'));
+        drawerPanel.classList.remove('hidden');
+        // Update chunky dropdown label
+        const sectionVal = drawerPanel.id.replace('mobile-panel-', '');
+        const label = document.querySelector('#mobile-section-dd .dropdown-trigger-label');
+        if (label) label.textContent = sectionVal.charAt(0).toUpperCase() + sectionVal.slice(1);
+        document.querySelectorAll('#mobile-section-dd .dropdown-option').forEach(o => {
+          o.setAttribute('aria-selected', o.dataset.value === sectionVal ? 'true' : 'false');
+        });
+      }
     }
 
     // Swap page panels
