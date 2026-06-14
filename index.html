@@ -983,12 +983,11 @@
       /* Hide the desktop search wrap on mobile */
       .header-actions .search-wrap { display: none; }
 
-      /* Show expandable row */
+      /* Show expandable row — no divider, flows as one header unit */
       .header-expandable {
         display: grid;
         grid-template-rows: 1fr;
         transition: grid-template-rows 250ms cubic-bezier(0.4, 0, 1, 1);
-        border-top: var(--border-width-default) solid var(--color-border-default);
       }
       .header-expandable.collapsed {
         grid-template-rows: 0fr;
@@ -22887,10 +22886,8 @@
       var collapsed = expandable.classList.contains('collapsed');
       if (y > 40 && !collapsed) {
         expandable.classList.add('collapsed');
-        updateChrome();
       } else if (y <= 10 && collapsed) {
         expandable.classList.remove('collapsed');
-        updateChrome();
       }
       lastY = y;
     }, { passive: true });
