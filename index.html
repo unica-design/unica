@@ -182,13 +182,13 @@
     .mobile-drawer-panel { display: block; }
     .mobile-drawer-panel.hidden { display: none; }
 
-    /* Links inside the drawer — same visual as sidebar-link */
+    /* Links inside the drawer — same visual as sidebar-link, larger for mobile */
     .mobile-nav-link {
       display: block;
-      padding: 7px var(--space-400);
+      padding: 10px var(--space-400);
       margin: 1px var(--space-300);
-      font-size: var(--font-size-body-s);
-      line-height: 1.5;
+      font-size: var(--font-size-body-m);
+      line-height: 1.4;
       color: var(--color-content-default);
       text-decoration: none;
       border-radius: 180px;
@@ -201,6 +201,7 @@
       color: var(--color-background-page);
       font-weight: var(--font-weight-semibold);
     }
+    .mobile-drawer .sidebar-group-label { font-size: 12px; padding-top: var(--space-600); }
 
     /* Chunky section selector dropdown */
     .mobile-section-dropdown {
@@ -891,6 +892,9 @@
       .search-field { width: 36px; padding: 0; justify-content: center; }
       .search-field:focus-within { width: 36px; }
       .search-input { display: none; }
+      /* Exception: mobile expandable row search is always fully expanded */
+      .header-expandable-search .search-field { width: 100%; padding: 0 var(--space-300) 0 var(--space-400); justify-content: flex-start; }
+      .header-expandable-search .search-input { display: block; }
     }
 
     /* ─────────────────────────────────────────
@@ -938,14 +942,58 @@
       .border-row { grid-template-columns: 160px 40px 1fr; }
     }
 
+    /* ── Mobile expandable header row ── */
+    .header-expandable {
+      display: none; /* desktop: hidden */
+    }
+    .header-expandable-inner { overflow: hidden; }
+    .header-expandable-content {
+      padding: var(--space-300) var(--space-500) var(--space-500);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-300);
+    }
+    .header-expandable-title {
+      font-family: var(--font-family-sans);
+      font-weight: 300;
+      font-size: 26px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--color-brand-ink);
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .header-expandable-title { color: var(--color-content-default); }
+    .header-expandable-search { position: relative; width: 100%; }
+    .header-expandable-search .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      z-index: 100;
+    }
+
     /* ─────────────────────────────────────────
        RESPONSIVE ≤640px — mobile
     ───────────────────────────────────────── */
     @media (max-width: 640px) {
       .header-logo-mark { width: 36px; height: 36px; }
-      .header-identity { gap: var(--space-300); margin-right: var(--space-400); }
-      .header-wordmark { font-size: 26px; }
-      .header-inner { min-height: 60px; }
+      .header-identity { gap: var(--space-300); }
+      .header-wordmark { display: none; } /* lives in expandable row instead */
+      .header-inner { min-height: 56px; }
+      /* Hide the desktop search wrap on mobile */
+      .header-actions .search-wrap { display: none; }
+
+      /* Show expandable row */
+      .header-expandable {
+        display: grid;
+        grid-template-rows: 1fr;
+        transition: grid-template-rows 250ms cubic-bezier(0.4, 0, 1, 1);
+        border-top: var(--border-width-default) solid var(--color-border-default);
+      }
+      .header-expandable.collapsed {
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 200ms cubic-bezier(0.4, 0, 1, 1);
+      }
       /* padding stays at 24px — inherited from ≤860px */
       .site-footer { padding: var(--space-500) var(--space-500); }
 
@@ -9588,6 +9636,23 @@
           <path fill-rule="evenodd" clip-rule="evenodd" d="M5.50003 12C4.6716 12 4.00003 12.6716 4.00003 13.5C4.00003 14.3284 4.6716 15 5.50003 15H42.5019C43.3303 15 44.0019 14.3284 44.0019 13.5C44.0019 12.6716 43.3303 12 42.5019 12H5.50003ZM4.00002 23.5C4.00002 22.6716 4.67159 22 5.50002 22H34.5309C35.3594 22 36.0309 22.6716 36.0309 23.5C36.0309 24.3284 35.3594 25 34.5309 25H5.50002C4.67159 25 4.00002 24.3284 4.00002 23.5ZM4 33.5C4 32.6716 4.67157 32 5.5 32H26.5027C27.3311 32 28.0027 32.6716 28.0027 33.5C28.0027 34.3284 27.3311 35 26.5027 35H5.5C4.67157 35 4 34.3284 4 33.5Z" fill="currentColor"/>
         </svg>
       </button>
+    </div>
+  </div>
+  <!-- Mobile expandable row: title + search — hidden on desktop -->
+  <div class="header-expandable" id="header-expandable">
+    <div class="header-expandable-inner">
+      <div class="header-expandable-content">
+        <span class="header-expandable-title">ůnica Design System</span>
+        <div class="header-expandable-search search-wrap" id="search-wrap-mobile">
+          <div class="search-field">
+            <svg class="search-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M29.1924 10.8076C34.2692 15.8844 34.2692 24.1156 29.1924 29.1924C24.1155 34.2692 15.8844 34.2692 10.8076 29.1924C5.73077 24.1156 5.73077 15.8844 10.8076 10.8076C15.8844 5.7308 24.1155 5.7308 29.1924 10.8076ZM32.3547 30.1684C37.5403 23.883 37.1933 14.5659 31.3137 8.68629C25.0653 2.4379 14.9347 2.4379 8.68627 8.68629C2.43788 14.9347 2.43788 25.0653 8.68627 31.3137C14.5881 37.2155 23.9534 37.5429 30.2395 32.2957L41.4796 43.5359C42.0654 44.1217 43.0152 44.1217 43.6009 43.5359C44.1867 42.9501 44.1867 42.0004 43.6009 41.4146L32.3547 30.1684Z" fill="currentColor"/>
+            </svg>
+            <input class="search-input" id="search-input-mobile" type="search" placeholder="Search…" autocomplete="off" aria-label="Search design system" />
+          </div>
+          <div class="search-results" id="search-results-mobile" role="listbox"></div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -22811,6 +22876,26 @@
     document.documentElement.style.setProperty('--chrome-h', h + 'px');
   }
 
+  /* ── Mobile expandable header: collapse on scroll ── */
+  (function() {
+    var expandable = document.getElementById('header-expandable');
+    if (!expandable) return;
+    var lastY = 0;
+    window.addEventListener('scroll', function() {
+      if (window.innerWidth > 640) return;
+      var y = window.scrollY;
+      var collapsed = expandable.classList.contains('collapsed');
+      if (y > 40 && !collapsed) {
+        expandable.classList.add('collapsed');
+        updateChrome();
+      } else if (y <= 10 && collapsed) {
+        expandable.classList.remove('collapsed');
+        updateChrome();
+      }
+      lastY = y;
+    }, { passive: true });
+  })();
+
   /* ── Mobile drawer ── */
   function toggleMobileDrawer() {
     const drawer = document.getElementById('mobile-drawer');
@@ -23156,8 +23241,8 @@
     ).slice(0, 8);
   }
 
-  function renderResults(results, query) {
-    const box = document.getElementById('search-results');
+  function renderResults(results, query, box) {
+    if (!box) box = document.getElementById('search-results');
     focusedResult = -1;
 
     if (!query.trim()) { box.classList.remove('visible'); box.innerHTML = ''; return; }
@@ -23199,24 +23284,23 @@
   }
 
   function closeSearch() {
-    const box   = document.getElementById('search-results');
-    const input = document.getElementById('search-input');
-    box.classList.remove('visible');
-    box.innerHTML = '';
-    if (input) input.value = '';
+    ['search-results', 'search-results-mobile'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.classList.remove('visible'); el.innerHTML = ''; }
+    });
+    ['search-input', 'search-input-mobile'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
     focusedResult = -1;
   }
 
-  function initSearch() {
-    const input = document.getElementById('search-input');
-    const box   = document.getElementById('search-results');
-    if (!input) return;
-
+  function wireSearchInput(input, box) {
+    if (!input || !box) return;
     input.addEventListener('input', () => {
       const results = searchQuery(input.value);
-      renderResults(results, input.value);
+      renderResults(results, input.value, box);
     });
-
     input.addEventListener('keydown', e => {
       const items = box.querySelectorAll('.search-result-item');
       if (e.key === 'ArrowDown') {
@@ -23235,10 +23319,20 @@
         input.blur();
       }
     });
+  }
 
+  function initSearch() {
+    wireSearchInput(
+      document.getElementById('search-input'),
+      document.getElementById('search-results')
+    );
+    wireSearchInput(
+      document.getElementById('search-input-mobile'),
+      document.getElementById('search-results-mobile')
+    );
     // Close on outside click
     document.addEventListener('click', e => {
-      if (!e.target.closest('#search-wrap')) closeSearch();
+      if (!e.target.closest('#search-wrap') && !e.target.closest('#search-wrap-mobile')) closeSearch();
     });
   }
 
