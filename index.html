@@ -22879,9 +22879,14 @@
   (function() {
     var expandable = document.getElementById('header-expandable');
     if (!expandable) return;
-    var lastY = 0;
+    var searchFocused = false;
+    var mobileInput = document.getElementById('search-input-mobile');
+    if (mobileInput) {
+      mobileInput.addEventListener('focus',  function() { searchFocused = true; });
+      mobileInput.addEventListener('blur',   function() { searchFocused = false; });
+    }
     window.addEventListener('scroll', function() {
-      if (window.innerWidth > 640) return;
+      if (window.innerWidth > 640 || searchFocused) return;
       var y = window.scrollY;
       var collapsed = expandable.classList.contains('collapsed');
       if (y > 40 && !collapsed) {
@@ -22889,7 +22894,6 @@
       } else if (y <= 10 && collapsed) {
         expandable.classList.remove('collapsed');
       }
-      lastY = y;
     }, { passive: true });
   })();
 
