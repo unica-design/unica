@@ -1,18 +1,26 @@
 # ůnica Design System — Claude Code Context
 
+## Design Context
+
+Strategic and visual design context lives alongside this file — read them before any `/impeccable` design task:
+- **[PRODUCT.md](PRODUCT.md)** — register (product), users, brand personality, anti-references, design principles, accessibility bar (WCAG 2.1 AA).
+- **[DESIGN.md](DESIGN.md)** — visual system: real tokens (colors, typography, shape, elevation), component specs, Do's and Don'ts. Sidecar at `.impeccable/design.json` extends it with tonal ramps and self-contained component snippets.
+
 ## What this project is
-A single-file coded design system documentation site for **ůnica** — Elona Jaquez's personal design system and studio brand. Everything lives in one file: `index.html`. All CSS is in `<style>` blocks at the top, all JS inline at the bottom. No build step. No framework. No npm.
+A single-file coded design system documentation site for **ůnica** — Elona Jaquez's personal design system and studio brand. The doc site itself is one file: `index.html`. All CSS is in `<style>` blocks at the top, all JS inline at the bottom. No build step. No framework. No npm.
+
+**Design tokens live outside index.html, in `tokens/tokens.css`** (linked via `<link rel="stylesheet" href="tokens/tokens.css">`), so the same tokens ship as the actual design system package and get consumed by the doc site's `var(--token-name)` usages. `index.html` never *declares* a `--space-*`/`--breakpoint-*`/`--grid-*`/etc. custom property — only `tokens/tokens.css` does. When adding or auditing a token, check there, not in index.html.
 
 **Live site:** https://unica-design.github.io/unica  
 **GitHub:** https://github.com/unica-design/unica  
 **Figma file:** https://www.figma.com/design/gmjSnvSRO1Xb4WKwb4YXsv/unica-design-system  
-**Local path:** `/Users/elona/ůnica/Claude/`
+**Local path:** `/Users/elona/ůnica/Claude/Unica Design System/`
 
 ---
 
-## Critical architecture: one 22,000-line HTML file
+## Critical architecture: one 26,000-line HTML file
 
-`index.html` is ~22,500 lines. Every component page is a `<div class="page-panel" id="page-[name]">` inside a shared shell. The sidebar uses `data-page` attributes and JS to show/hide panels. **Never split this into multiple files.**
+`index.html` is ~26,500 lines. Every component page is a `<div class="page-panel" id="page-[name]">` inside a shared shell. The sidebar uses `data-page` attributes and JS to show/hide panels. **Never split this into multiple files.**
 
 ### Finding things in the file
 ```bash
@@ -77,9 +85,14 @@ grep -n 'id="ico-' index.html
 | `page-avatar` | Avatar |
 | `page-divider` | Divider |
 | `page-icon-bullet` | Icon Bullet |
+| `page-search-field` | Search Field |
+| `page-top-nav-app` | Top Navigation App |
+| `page-top-nav-web` | Top Navigation Web |
+| `page-comp-overview` | Components Overview |
+| `page-breakpoints` | Breakpoints & Grid (Foundations) |
 
 ### 🚧 Stub (In Progress pill, no content yet)
-`page-search-field`, `page-top-nav-app`, `page-top-nav-web`, `page-style`, `page-breakpoints`, `page-grid`, `page-icons`, `page-logo`, `page-photography`, `page-illustration`, `page-comp-overview`
+Foundation pages only: `page-style`, `page-icons`, `page-logo`, `page-photography`, `page-illustration`
 
 ---
 
@@ -92,6 +105,8 @@ grep -n 'id="ico-' index.html
 **`toggleCodeReveal(btn, id)`** — expand/collapse code snippet panels. Called inline via `onclick`.
 
 **`wireProp(id, attr)`** — local pattern (defined inside each page's init), not global. Wires a checkbox toggle to set/remove a `data-no-[attr]` attribute on the preview phone mock. Unchecked = attribute present = property hidden.
+
+**`initBreakpointsPreview()`** — local pattern (IIFE inside `#page-breakpoints`'s own `<script>` block), not global. Drives the Breakpoints & Grid page: binds the dropdown and the two `.bp-drag-handle` elements (`#bp-handle-l`/`#bp-handle-r`) to one shared `index` state (0–4, XS→XL). The drag mechanics are a direct port of `initTnwPreview`'s `.tnw-stage` resize logic (free continuous drag via pointer capture on both edge handles, live px readout during drag, snap to the nearest tier only on pointer-up) — reused verbatim rather than reinvented, per `#top-nav-web` being the canonical reference. Candidate widths are each tier's representative width (375/768/1024/1440/1920) scaled by `min(1, getAvailW() / 1920)`, recomputed via `ResizeObserver` on `.bp-stage-outer` (deferred until the panel has real layout, since `page-panel` is `display:none` until active — same guard pattern as `initTnwPreview`). The grid overlay's column count/margin/gutter scale by the same factor. `.bp-stage` itself reuses the `.tnw-desktop-shell` recipe exactly (14px radius, `--shadow-elevation-s`, no light-mode border — see DESIGN.md § 4, "The Device-Shell Consistency Rule"). Keyboard access to the 5 tiers is via the dropdown only (`initDropdown`'s existing arrow/enter/escape handling) — the drag handles are a pointer-only enhancement, matching `initTnwPreview`'s own precedent (its handles aren't keyboard-operable either; keyboard users go through its segmented control).
 
 ---
 
@@ -210,9 +225,25 @@ Always `class="avatar-group-label"` for variant/state tile labels. Never invent 
 --color-action-hover-subtle  /* hover state bg */
 --color-action-active-subtle /* pressed state bg */
 
-/* Spacing scale */
---space-200: 8px  --space-300: 12px  --space-400: 16px
---space-500: 20px --space-600: 24px  --space-800: 32px  --space-1000: 40px
+/* Spacing scale — verified against tokens/tokens.css and Figma (2026-08-19); all 14 steps match exactly */
+--space-100: 4px   --space-200: 8px   --space-300: 12px  --space-400: 16px
+--space-500: 24px  --space-600: 32px  --space-700: 40px  --space-800: 48px
+--space-900: 56px  --space-1000: 64px --space-1100: 72px --space-1200: 80px
+--space-1300: 88px --space-1400: 96px
+
+/* Breakpoints (Layout/Breakpoint/* in Figma) */
+--breakpoint-xs-min: 360px  --breakpoint-xs-max: 767px
+--breakpoint-s-min:  768px  --breakpoint-s-max:  1023px
+--breakpoint-m-min:  1024px --breakpoint-m-max:  1439px
+--breakpoint-l-min:  1440px --breakpoint-l-max:  1919px
+--breakpoint-xl-min: 1920px
+
+/* Grid — columns / margin / gutter (Grid/XS…XL styles in Figma) */
+--grid-xs-columns: 4  --grid-xs-margin: 16px --grid-xs-gutter: 16px
+--grid-s-columns:  8  --grid-s-margin:  24px --grid-s-gutter:  24px
+--grid-m-columns:  12 --grid-m-margin:  32px --grid-m-gutter:  24px
+--grid-l-columns:  12 --grid-l-margin:  48px --grid-l-gutter:  24px
+--grid-xl-columns: 12 --grid-xl-margin: 64px --grid-xl-gutter: 24px
 
 /* Shape */
 --corner-radius-m      /* medium rounding */
@@ -221,7 +252,7 @@ Always `class="avatar-group-label"` for variant/state tile labels. Never invent 
 
 /* Type */
 --font-family-sans: 'Inter', sans-serif
---font-family-serif: 'Noto Serif', serif
+--font-family-serif: 'Unna', Georgia, serif
 --font-weight-semibold: 600
 ```
 
@@ -285,7 +316,7 @@ Elona is a design leader with 12+ years experience building design systems at CV
 
 References: Dieter Rams ("Less, but better"), Josef Albers lineage, editorial fashion photography (Vogue, Dazed & Confused).
 
-**Aesthetic:** Warm cream/apricot neutrals. Moments of expressive color (violet, ultraviolet, berry, mint). Noto Serif for editorial display moments. Inter for UI precision.
+**Aesthetic:** Warm cream/apricot neutrals. Moments of expressive color (violet, ultraviolet, berry, mint). Unna for editorial display moments. Inter for UI precision.
 
 ---
 

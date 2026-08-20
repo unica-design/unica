@@ -756,6 +756,89 @@
     }
 
     /* ─────────────────────────────────────────
+       BREAKPOINTS & GRID
+       Drag mechanics mirror #top-nav-web's .tnw-stage
+       exactly (see .tnw-drag-handle); shell styling
+       mirrors .tnw-desktop-shell (see DESIGN.md § 4,
+       "The Device-Shell Consistency Rule").
+    ───────────────────────────────────────── */
+    .bp-readout {
+      font-family: var(--font-family-sans);
+      font-size: 12px;
+      color: var(--color-content-subtle);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.01em;
+    }
+
+    .bp-stage-outer {
+      position: relative;
+      padding: 0 20px; /* space for handles on each side */
+    }
+
+    /* .bp-stage is the resize/handle container — width & height are set by JS,
+       and it must NOT clip, or the handles (positioned outside its box at
+       left/right: -16px) get cut off. The visual shell (radius, elevation,
+       clipping) lives one level in, on .bp-shell. */
+    .bp-stage {
+      position: relative;
+      margin: 0 auto;
+      user-select: none;
+    }
+
+    .bp-shell {
+      width: 100%;
+      height: 100%;
+      background: var(--color-background-page);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px 0 rgba(8, 5, 13, 0.25);
+    }
+
+    [data-theme="dark"] .bp-shell {
+      box-shadow: none;
+      border: var(--border-width-default) solid var(--color-border-default);
+    }
+
+    .bp-drag-handle {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px; height: 36px;
+      border-radius: 2px;
+      background: var(--color-content-subtle);
+      opacity: 0.18;
+      cursor: ew-resize;
+      transition: opacity 250ms ease, height 200ms ease;
+      z-index: 10;
+      touch-action: none;
+    }
+    .bp-drag-handle::before {
+      content: ''; position: absolute; inset: -10px -8px;
+    }
+    .bp-drag-handle--left  { left:  -16px; }
+    .bp-drag-handle--right { right: -16px; }
+    .bp-stage:hover .bp-drag-handle { opacity: 0.4; }
+    .bp-drag-handle.is-dragging { opacity: 0.65; height: 44px; }
+
+    .bp-grid-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      pointer-events: none;
+    }
+
+    .bp-grid-overlay[hidden] { display: none; }
+
+    .bp-grid-col {
+      flex: 1;
+      background: rgba(121, 242, 236, 0.2); /* #79F2EC @ 20% */
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bp-stage { transition: none; }
+    }
+
+    /* ─────────────────────────────────────────
        FOOTER
     ───────────────────────────────────────── */
     .site-footer {
@@ -1489,6 +1572,15 @@
     .token.comment        { color: var(--syntax-comment); font-style: italic; }
     .token.entity         { color: var(--syntax-attr-name); }
     .token.doctype        { color: var(--syntax-comment); font-style: italic; }
+    /* CSS grammar (prism-css) — mapped onto the same syntax palette */
+    .token.property       { color: var(--syntax-attr-name); }
+    .token.punctuation    { color: var(--syntax-punctuation); }
+    .token.selector       { color: var(--syntax-tag); }
+    .token.atrule         { color: var(--syntax-tag); }
+    .token.string,
+    .token.url             { color: var(--syntax-attr-value); }
+    .token.function        { color: var(--syntax-attr-value); }
+    .token.important       { color: var(--syntax-boolean); }
 
     /* Code block */
     .code-block {
@@ -9745,8 +9837,7 @@
       </div>
       <div class="sidebar-group">
         <span class="sidebar-group-label">Layout</span>
-        <a class="mobile-nav-link" href="#" data-page="breakpoints">Breakpoints</a>
-        <a class="mobile-nav-link" href="#" data-page="grid">Grid</a>
+        <a class="mobile-nav-link" href="#" data-page="breakpoints">Breakpoints &amp; Grid</a>
       </div>
       <div class="sidebar-group">
         <span class="sidebar-group-label">Media</span>
@@ -9842,8 +9933,7 @@
       </div>
       <div class="sidebar-group">
         <span class="sidebar-group-label">Layout</span>
-        <a class="sidebar-link" href="#" data-page="breakpoints">Breakpoints</a>
-        <a class="sidebar-link" href="#" data-page="grid">Grid</a>
+        <a class="sidebar-link" href="#" data-page="breakpoints">Breakpoints &amp; Grid</a>
       </div>
       <div class="sidebar-group">
         <span class="sidebar-group-label">Media</span>
@@ -10141,6 +10231,334 @@
     </div><!-- /page-border -->
 
 
+    <!-- ════════════════════════════════════════
+         FOUNDATIONS › BREAKPOINTS & GRID
+    ════════════════════════════════════════ -->
+    <div class="page-panel" id="page-breakpoints">
+
+      <section class="section" id="bp-interactive">
+        <div class="section-header">
+          <p class="section-eyebrow">Foundations · Layout</p>
+          <h2 class="section-title">Breakpoints &amp; grid</h2>
+          <p class="section-description">Five responsive tiers, each with a defined viewport range and column grid. Drag the handle or use the dropdown to preview each breakpoint.</p>
+        </div>
+        <hr class="doc-rule">
+
+        <div class="btn-controls">
+          <div class="dropdown" id="bp-picker">
+            <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Select breakpoint">
+              <span>M · 1024–1439</span>
+              <svg class="dropdown-trigger-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul class="dropdown-menu" role="listbox" aria-label="Select breakpoint">
+              <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="xs">XS · 360–767</li>
+              <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="s">S · 768–1023</li>
+              <li class="dropdown-option" role="option" tabindex="-1" aria-selected="true"  data-value="m">M · 1024–1439</li>
+              <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="l">L · 1440–1919</li>
+              <li class="dropdown-option" role="option" tabindex="-1" aria-selected="false" data-value="xl">XL · 1920+</li>
+            </ul>
+          </div>
+          <label class="switch-item">
+            <div class="toggle-switch">
+              <input type="checkbox" id="bp-grid-toggle" checked>
+              <div class="toggle-track">
+                <div class="toggle-handle">
+                  <div class="toggle-icon">
+                    <svg class="icon-check" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="icon-x"     viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3L9 9M9 3L3 9"   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="switch-item-text">Grid overlay</span>
+          </label>
+          <span class="bp-readout" id="bp-readout"></span>
+        </div>
+
+        <div class="preview-canvas" style="padding: var(--space-800) var(--space-700); display:block; overflow:visible;">
+          <div class="bp-stage-outer" id="bp-stage-outer">
+            <div id="bp-stage" class="bp-stage">
+              <div id="bp-handle-l" class="bp-drag-handle bp-drag-handle--left"  role="separator" aria-label="Resize preview"></div>
+              <div id="bp-handle-r" class="bp-drag-handle bp-drag-handle--right" role="separator" aria-label="Resize preview"></div>
+              <div class="bp-shell">
+                <div class="bp-grid-overlay" id="bp-grid-overlay"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="code-reveal-btn" id="bp-code-toggle" aria-expanded="false" aria-controls="bp-code-reveal" onclick="toggleCodeReveal(this,'bp-code-reveal')">
+          <span class="code-reveal-btn-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span class="code-reveal-btn-label">Show code</span>
+        </button>
+        <div class="code-reveal" id="bp-code-reveal" hidden>
+          <div class="code-block">
+            <button class="code-copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').textContent)">Copy</button>
+            <pre><code id="bp-code-snippet" class="language-css"></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-rule" />
+
+      <section class="section" id="bp-breakpoints-table">
+        <div class="section-header">
+          <p class="section-eyebrow">Foundations · Layout</p>
+          <h2 class="section-title">Breakpoints</h2>
+          <p class="section-description">Viewport ranges and their associated device class.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Breakpoint</th><th>Range (px)</th><th>Device</th></tr></thead>
+            <tbody>
+              <tr><td class="td-mono">XS</td><td>360–767</td><td class="td-subtle">Mobile</td></tr>
+              <tr><td class="td-mono">S</td><td>768–1023</td><td class="td-subtle">Tablet</td></tr>
+              <tr><td class="td-mono">M</td><td>1024–1439</td><td class="td-subtle">Small desktop</td></tr>
+              <tr><td class="td-mono">L</td><td>1440–1919</td><td class="td-subtle">Desktop</td></tr>
+              <tr><td class="td-mono">XL</td><td>1920+</td><td class="td-subtle">Large desktop</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="section-rule" />
+
+      <section class="section" id="bp-grid-table">
+        <div class="section-header">
+          <p class="section-eyebrow">Foundations · Layout</p>
+          <h2 class="section-title">Grid</h2>
+          <p class="section-description">Column count, margin, and gutter at each breakpoint.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Breakpoint</th><th>Columns</th><th>Margin</th><th>Gutter</th></tr></thead>
+            <tbody>
+              <tr><td class="td-mono">XS</td><td>4</td><td>16px</td><td>16px</td></tr>
+              <tr><td class="td-mono">S</td><td>8</td><td>24px</td><td>24px</td></tr>
+              <tr><td class="td-mono">M</td><td>12</td><td>32px</td><td>24px</td></tr>
+              <tr><td class="td-mono">L</td><td>12</td><td>48px</td><td>24px</td></tr>
+              <tr><td class="td-mono">XL</td><td>12</td><td>64px</td><td>24px</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Page script -->
+      <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        (function initBreakpointsPreview() {
+          var panelEl = document.getElementById('page-breakpoints');
+          if (!panelEl) return;
+
+          /* repWidth/repHeight = each tier's representative device size (Figma "🧡 Screen Sizes" page,
+             screen-size component set). XS uses the Figma symbol's 375 rather than the breakpoint's
+             360px floor; S/M/L/XL representative widths already equal their breakpoint min. */
+          var TIERS = [
+            { key: 'xs', label: 'XS', device: 'Mobile',        min: 360,  max: 767,  repWidth: 375,  repHeight: 812,  columns: 4,  margin: 16, gutter: 16 },
+            { key: 's',  label: 'S',  device: 'Tablet',        min: 768,  max: 1023, repWidth: 768,  repHeight: 1024, columns: 8,  margin: 24, gutter: 24 },
+            { key: 'm',  label: 'M',  device: 'Small desktop', min: 1024, max: 1439, repWidth: 1024, repHeight: 768,  columns: 12, margin: 32, gutter: 24 },
+            { key: 'l',  label: 'L',  device: 'Desktop',       min: 1440, max: 1919, repWidth: 1440, repHeight: 900,  columns: 12, margin: 48, gutter: 24 },
+            { key: 'xl', label: 'XL', device: 'Large desktop', min: 1920, max: null, repWidth: 1920, repHeight: 1080, columns: 12, margin: 64, gutter: 24 }
+          ];
+
+          var picker      = document.getElementById('bp-picker');
+          var stageOuter  = document.querySelector('#page-breakpoints .bp-stage-outer');
+          var stage       = document.getElementById('bp-stage');
+          var handleL     = document.getElementById('bp-handle-l');
+          var handleR     = document.getElementById('bp-handle-r');
+          var readout     = document.getElementById('bp-readout');
+          var overlay     = document.getElementById('bp-grid-overlay');
+          var gridToggle  = document.getElementById('bp-grid-toggle');
+          var codeSnippet = document.getElementById('bp-code-snippet');
+
+          var index = 2; /* default: M */
+          var dragging = false, activeHandle = null, startX = 0, startW = 0, animating = false;
+
+          function rangeText(t) { return t.max ? (t.min + '–' + t.max) : (t.min + '+'); }
+          function valueText(t) { return t.label + ' · ' + rangeText(t); }
+
+          function getAvailW() {
+            return stageOuter.offsetWidth - 40; /* 20px handle padding each side */
+          }
+
+          function currentScale() {
+            return Math.min(1, getAvailW() / 1920);
+          }
+
+          /* Representative widths scaled to fit the available content column — XL always fills getAvailW() exactly */
+          function candidateWidths() {
+            var scale = currentScale();
+            return TIERS.map(function(t) { return Math.round(t.repWidth * scale); });
+          }
+
+          /* Heights scale by the same factor as width, so each tier keeps its real device aspect ratio */
+          function candidateHeights() {
+            var scale = currentScale();
+            return TIERS.map(function(t) { return Math.round(t.repHeight * scale); });
+          }
+
+          function renderReadoutTier() {
+            var t = TIERS[index];
+            readout.textContent = t.label + ' · ' + t.device + ' · ' + rangeText(t) + 'px';
+          }
+
+          function renderPicker() {
+            var t = TIERS[index];
+            picker.querySelector('.dropdown-trigger span').textContent = valueText(t);
+            Array.from(picker.querySelectorAll('.dropdown-option')).forEach(function(opt) {
+              opt.setAttribute('aria-selected', String(opt.dataset.value === t.key));
+            });
+          }
+
+          function renderCode() {
+            var t = TIERS[index];
+            var lines = ['--breakpoint-' + t.key + '-min: ' + t.min + 'px;'];
+            if (t.max) lines.push('--breakpoint-' + t.key + '-max: ' + t.max + 'px;');
+            lines.push('--grid-' + t.key + '-columns: ' + t.columns + ';');
+            lines.push('--grid-' + t.key + '-margin: ' + t.margin + 'px;');
+            lines.push('--grid-' + t.key + '-gutter: ' + t.gutter + 'px;');
+            codeSnippet.textContent = lines.join('\n');
+            if (window.Prism) Prism.highlightElement(codeSnippet);
+          }
+
+          function renderOverlay() {
+            var scale  = currentScale();
+            var t      = TIERS[index];
+            var margin = t.margin * scale;
+            var gutter = t.gutter * scale;
+
+            overlay.innerHTML = '';
+            overlay.style.padding = '0 ' + margin + 'px';
+            overlay.style.gap = gutter + 'px';
+            for (var i = 0; i < t.columns; i++) {
+              var col = document.createElement('div');
+              col.className = 'bp-grid-col';
+              overlay.appendChild(col);
+            }
+          }
+
+          /* Width tracks the pointer continuously while dragging; height only ever changes here,
+             snapping to the target tier's aspect-correct height together with width on settle —
+             so mid-drag the box resizes horizontally without distorting vertically. */
+          function setDims(w, h, animate) {
+            var avail = getAvailW();
+            w = Math.max(0, Math.min(w, avail));
+            if (animate && !animating) {
+              animating = true;
+              stage.style.transition = 'width 280ms cubic-bezier(0.16, 1, 0.3, 1), height 280ms cubic-bezier(0.16, 1, 0.3, 1)';
+              setTimeout(function() { stage.style.transition = ''; animating = false; }, 300);
+            } else if (!animate) {
+              stage.style.transition = '';
+            }
+            stage.style.width = w + 'px';
+            stage.style.height = h + 'px';
+          }
+
+          function applyIndex(i, animate) {
+            index = Math.max(0, Math.min(TIERS.length - 1, i));
+            renderPicker();
+            renderReadoutTier();
+            renderOverlay();
+            renderCode();
+            setDims(candidateWidths()[index], candidateHeights()[index], animate);
+          }
+
+          function nearestIndexFromWidth(w) {
+            var cands = candidateWidths(), best = 0, bestDist = Infinity;
+            cands.forEach(function(c, i) {
+              var d = Math.abs(c - w);
+              if (d < bestDist) { bestDist = d; best = i; }
+            });
+            return best;
+          }
+
+          /* ── Dropdown ── */
+          if (typeof initDropdown === 'function') {
+            initDropdown(picker, function(val) {
+              var i = TIERS.findIndex(function(t) { return t.key === val; });
+              if (i >= 0) applyIndex(i, true);
+            });
+          }
+
+          /* ── Grid overlay toggle ── */
+          if (gridToggle) {
+            gridToggle.addEventListener('change', function() {
+              overlay.hidden = !gridToggle.checked;
+            });
+          }
+
+          /* ── Drag handles — free drag, mirrors #top-nav-web's .tnw-stage exactly; snaps to the nearest of the 5 tiers on release ── */
+          function snapOnRelease() {
+            applyIndex(nearestIndexFromWidth(stage.offsetWidth), true);
+          }
+
+          function onPointerDown(e, isLeft) {
+            e.preventDefault();
+            stage.style.transition = '';
+            animating = false;
+            dragging = true;
+            activeHandle = isLeft ? handleL : handleR;
+            startX = e.clientX;
+            startW = stage.offsetWidth;
+            activeHandle.setPointerCapture(e.pointerId);
+            handleL.classList.add('is-dragging');
+            handleR.classList.add('is-dragging');
+          }
+
+          function onPointerMove(e) {
+            if (!dragging) return;
+            var dx = e.clientX - startX;
+            var delta = (activeHandle === handleL) ? -dx : dx;
+            var newW = Math.max(80, Math.min(startW + delta, getAvailW()));
+            stage.style.width = newW + 'px';
+            readout.textContent = Math.round(newW) + 'px';
+          }
+
+          function onPointerUp() {
+            if (!dragging) return;
+            dragging = false;
+            handleL.classList.remove('is-dragging');
+            handleR.classList.remove('is-dragging');
+            snapOnRelease();
+          }
+
+          if (handleL) {
+            handleL.addEventListener('pointerdown', function(e) { onPointerDown(e, true); });
+            handleL.addEventListener('pointermove', onPointerMove);
+            handleL.addEventListener('pointerup', onPointerUp);
+            handleL.addEventListener('pointercancel', onPointerUp);
+          }
+          if (handleR) {
+            handleR.addEventListener('pointerdown', function(e) { onPointerDown(e, false); });
+            handleR.addEventListener('pointermove', onPointerMove);
+            handleR.addEventListener('pointerup', onPointerUp);
+            handleR.addEventListener('pointercancel', onPointerUp);
+          }
+
+          /* ── Stage sizing — deferred until the panel has real layout, then debounced on resize ── */
+          var initialized = false;
+          var resizeTimer = null;
+          var ro = new ResizeObserver(function() {
+            var avail = getAvailW();
+            if (!avail) return;
+            if (!initialized) {
+              initialized = true;
+              applyIndex(index, false);
+              return;
+            }
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() { applyIndex(index, false); }, 150);
+          });
+          ro.observe(stageOuter);
+        })();
+      });
+      </script>
+
+    </div><!-- /page-breakpoints -->
+
+
     <!-- ════════════════════
          STUB PAGES — inline macro
          Usage: copy-paste, fill in eyebrow/title/description
@@ -10148,12 +10566,6 @@
 
     <!-- style -->
     <div class="page-panel" id="page-style"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Tokens</p><h2 class="section-title">Style</h2><p class="section-description">Shadows, overlays, and elevation tokens.</p></div><span class="stub-pill">In progress</span></section></div>
-
-    <!-- breakpoints -->
-    <div class="page-panel" id="page-breakpoints"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Layout</p><h2 class="section-title">Breakpoints</h2><p class="section-description">Viewport widths and their corresponding layout adjustments.</p></div><span class="stub-pill">In progress</span></section></div>
-
-    <!-- grid -->
-    <div class="page-panel" id="page-grid"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Layout</p><h2 class="section-title">Grid</h2><p class="section-description">Column grids, gutters, and responsive spacing.</p></div><span class="stub-pill">In progress</span></section></div>
 
     <!-- icons -->
     <div class="page-panel" id="page-icons"><section class="section"><div class="section-header"><p class="section-eyebrow">Foundations · Media</p><h2 class="section-title">Icons</h2><p class="section-description">ůnicons — the ůnica icon library.</p></div><span class="stub-pill">In progress</span></section></div>
@@ -26541,5 +26953,6 @@ ${accessoryMarkup}
 <!-- Prism.js — syntax highlighting for code blocks -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
 </body>
 </html>

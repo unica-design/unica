@@ -440,6 +440,43 @@
 
 
 /* ==========================================================================
+   LAYOUT — Breakpoints & Grid
+   Values sourced from Figma Layout/Breakpoint/* variables and Grid/XS…XL
+   grid styles (unica-design-system, "🧡 Screen Sizes" page).
+   ========================================================================== */
+
+:root {
+
+  --breakpoint-xs-min: 360px;
+  --breakpoint-xs-max: 767px;
+  --breakpoint-s-min:  768px;
+  --breakpoint-s-max:  1023px;
+  --breakpoint-m-min:  1024px;
+  --breakpoint-m-max:  1439px;
+  --breakpoint-l-min:  1440px;
+  --breakpoint-l-max:  1919px;
+  --breakpoint-xl-min: 1920px;
+
+  --grid-xs-columns: 4;
+  --grid-xs-margin:  16px;
+  --grid-xs-gutter:  16px;
+  --grid-s-columns:  8;
+  --grid-s-margin:   24px;
+  --grid-s-gutter:   24px;
+  --grid-m-columns:  12;
+  --grid-m-margin:   32px;
+  --grid-m-gutter:   24px;
+  --grid-l-columns:  12;
+  --grid-l-margin:   48px;
+  --grid-l-gutter:   24px;
+  --grid-xl-columns: 12;
+  --grid-xl-margin:  64px;
+  --grid-xl-gutter:  24px;
+
+}
+
+
+/* ==========================================================================
    SIZE — Fixed component sizes (icons, avatars, controls)
    ========================================================================== */
 
