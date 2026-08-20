@@ -16507,6 +16507,11 @@
           var BPS   = [375, bpVar('s-min'), bpVar('m-min'), bpVar('l-min'), bpVar('xl-min')];
           var MIN_W = bpVar('xs-min');
           var dragging = false, activeHandle = null, startX = 0, startW = 0, animating = false;
+          /* Tracks the drag's true, unclamped intended width — lets dragging past the visible
+             edge (the preview column is only ~750-850px, narrower than M/L/XL) still register
+             as "further right" so the snap can reach those tiers, instead of the pointer's
+             progress being thrown away the moment the displayed box hits its ceiling. */
+          var dragW = 0;
 
           function getAvailW() {
             var outer = stageOuter || stage.parentElement;
@@ -16545,14 +16550,13 @@
             syncSeg(reqBp);
           }
 
-          /* On release: always snap to nearest named breakpoint that fits */
+          /* On release: snap to whichever named breakpoint dragW is nearest to — always all
+             5, never pre-filtered by what currently fits (that was the earlier bug: filtering
+             out anything > avail meant dragging right could only ever reach XS again, since
+             S/M/L/XL were never candidates at this site's ~750-850px preview column width). */
           function snapOnRelease() {
-            var w     = stage.offsetWidth;
-            var avail = getAvailW();
-            var candidates = BPS.filter(function(bp) { return bp <= avail; });
-            if (!candidates.length) { setWidth(avail, true); return; }
-            var nearest = candidates.reduce(function(prev, cur) {
-              return Math.abs(cur - w) < Math.abs(prev - w) ? cur : prev;
+            var nearest = BPS.reduce(function(prev, cur) {
+              return Math.abs(cur - dragW) < Math.abs(prev - dragW) ? cur : prev;
             });
             setWidth(nearest, true);
           }
@@ -16566,6 +16570,7 @@
             activeHandle = isLeft ? handleL : handleR;
             startX = e.clientX;
             startW = stage.offsetWidth;
+            dragW = startW;
             activeHandle.setPointerCapture(e.pointerId);
             if (handleL) handleL.classList.add('is-dragging');
             if (handleR) handleR.classList.add('is-dragging');
@@ -16575,9 +16580,10 @@
             if (!dragging) return;
             var dx = e.clientX - startX;
             var delta = (activeHandle === handleL) ? -dx : dx;
-            var newW = Math.max(MIN_W, Math.min(startW + delta, getAvailW()));
-            stage.style.width = newW + 'px';
-            if (readout) readout.textContent = Math.round(newW) + 'px';
+            dragW = Math.max(MIN_W, startW + delta); /* unclamped — can exceed avail */
+            var displayW = Math.min(dragW, getAvailW());
+            stage.style.width = displayW + 'px';
+            if (readout) readout.textContent = Math.round(displayW) + 'px';
           }
 
           function onPointerUp() {
@@ -16610,16 +16616,17 @@
           }
 
           /* Init via ResizeObserver — stage is hidden at DOMContentLoaded */
-          var segBtnsAll = seg ? Array.from(seg.querySelectorAll('.seg-control-btn')) : [];
           var initialized = false;
           var ro = new ResizeObserver(function() {
             var avail = getAvailW();
             if (!avail) return;
-            /* Hide any tier the container can't actually fit — was XL-only, generalized
-               now that there are 5 stops instead of 4 */
-            segBtnsAll.forEach(function(b) {
-              b.style.display = parseInt(b.dataset.value, 10) <= avail ? '' : 'none';
-            });
+            /* All 5 tiers always stay visible and clickable. A tier wider than the
+               available preview column just clamps to 100% (see setWidth) and reports
+               its real clamped width in the readout — that's an honest, useful state,
+               not a reason to hide the button. (A per-button "hide if it can't fit"
+               check was tried here and reverted: on this site's own ~750–850px content
+               column, S/M/L/XL (768/1024/1440/1920) ALL exceed it, so every tier but
+               XS disappeared — a segmented control with one visible option.) */
             if (!initialized) {
               initialized = true;
               /* Start at largest fitting named breakpoint */
